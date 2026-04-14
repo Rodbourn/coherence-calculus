@@ -1,0 +1,43 @@
+# Generated build outputs
+build/
+artifacts/
+tmp/
+
+# Lean caches
+CoherenceCalculus/.lake/
+CoherenceCalculusMathlibBridge/.lake/
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.bcf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+*.vrb
+*.run.xml
+*.synctex.gz
+
+# Temporary files
+*.tmp
+*.tmp.*
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
