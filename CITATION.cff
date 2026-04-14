@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Coherence Calculus"
+message: "If you use this repository, please cite the tagged repository snapshot and the associated monograph release when available."
+type: software
+authors:
+  - family-names: "Cook"
+    given-names: "Charles Rodbourn"
+repository-code: "https://github.com/rodbourn/coherence-calculus"
+license: "MIT"
+keywords:
+  - "mathematical physics"
+  - "formalization"
+  - "Lean 4"
+  - "finite observability"
+  - "operator calculus"
+abstract: >-
+  Public source repository for the Coherence Calculus monograph, including the
+  LaTeX manuscript, Lean 4 formalization, and reproducibility tooling for the
+  current public release.

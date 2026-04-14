@@ -1,0 +1,19 @@
+{
+  "title": "Coherence Calculus",
+  "upload_type": "software",
+  "description": "Public source repository for the Coherence Calculus monograph, including LaTeX manuscript sources, Lean 4 formalization, and reproducibility tooling for the current public release. Software and source code are released under the MIT License. Manuscript text, figures, and other non-software content are released under CC BY 4.0; see LICENSE-docs.",
+  "creators": [
+    {
+      "name": "Cook, Charles Rodbourn"
+    }
+  ],
+  "access_right": "open",
+  "license": "mit-license",
+  "keywords": [
+    "mathematical physics",
+    "Lean 4",
+    "formalization",
+    "finite observability",
+    "operator calculus"
+  ]
+}
