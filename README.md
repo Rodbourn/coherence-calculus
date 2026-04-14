@@ -1,5 +1,7 @@
 # Coherence Calculus
 
+[![DOI](https://zenodo.org/badge/1209883768.svg)](https://doi.org/10.5281/zenodo.19570230)
+
 This repository contains the public source for *Coherence Calculus*, a research
 program in structural mathematics built around finite observability, reduction,
 and closure from a deliberately narrow foundational bedrock. It includes the
@@ -91,6 +93,13 @@ closer scrutiny, please open an issue.
 Public source snapshots are intended to be tied to tagged repository releases
 and corresponding Zenodo records. The repository is the living source tree; a
 release tag is the citation target for a specific public snapshot.
+
+Current DOI map:
+
+- Source release family (Zenodo concept DOI): `10.5281/zenodo.19570230`
+- Source snapshot for `cc-v9-source`: `10.5281/zenodo.19570231`
+- Manuscript release family (Zenodo concept DOI): `10.5281/zenodo.18110358`
+- Coherence Calculus v0.9 manuscript: `10.5281/zenodo.19570278`
 
 ## Licensing
 
