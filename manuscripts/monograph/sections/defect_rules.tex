@@ -1,0 +1,462 @@
+% ============================================================
+\section{Coherence Defect Rules (Chain and Product Laws)}
+\label{sec:defect-rules}
+% ============================================================
+
+\begin{quote}\small
+\textbf{Goal:} Record exact rules for how coherence defects transform under composition and bilinear operations.\\
+\textbf{Key objects:} Coherence defect $\CCTau{h}{F}{x}$, bilinear defect $\CCTauBi{h}{B}{x}{y}$, leakage correction.\\
+\textbf{Payoff:} These are the chain and product rules of Coherence Calculus.
+\end{quote}
+
+This section records exact algebraic rules for how coherence defects behave under composition and bilinear operations.
+These are the chain and product rules of Coherence Calculus. They are
+analogous to the Leibniz and chain rules of classical calculus, but stated
+without derivatives or limits.
+Proofs use the Resolution-of-Identity Expansion (Lemma~\ref{lem:resolution-identity}) and Block Splitting (Lemma~\ref{lem:block-splitting}) from Section~\ref{sec:foundational-lemmas}.
+
+\subsection{Coherence defect of a map}
+
+\begin{definition}[Coherence defect of a map]
+\label{def:coherence-defect}\lean{coherenceDefect}
+Let $\CCPi{h}$ be a horizon projection on a Hilbert space $\cH$ and let $\mathcal{F}:\cH \to \cH$ be a map (linear or nonlinear, defined on the relevant domain).
+The \emph{coherence defect} of $\mathcal{F}$ at $x$ is
+\[
+\CCTau{h}{\mathcal{F}}{x} := \CCPi{h} \mathcal{F}(x) - \mathcal{F}(\CCPi{h} x).
+\]
+\end{definition}
+
+\begin{remark}[Realized image of the closure defect]
+\label{rem:coherence-defect-realized-closure-defect}\lean{CoherenceCalculus.coherenceDefect, CoherenceCalculus.closureDefect}
+The bedrock closure defect \(\Lambda\) measures failure of Constancy to lift to
+an incidence as a whole
+(Definition~\ref{def:closure-defect}). Once a horizon realization has been
+chosen, that abstract obstruction is seen on the realized side through the
+mismatch between ``apply the law, then restrict'' and ``restrict, then apply
+the realized law.'' The coherence defect \(\CCTau{h}{\mathcal F}{x}\) is
+exactly that realized restriction-side image. It therefore records not the
+origin of nonclosure, but its observable failure to commute with a chosen
+realization map.
+\end{remark}
+
+\subsection{Scale autonomy and realized exactification}
+
+\begin{definition}[Realized exactification generator]
+\label{def:realized-exactification-generator}\lean{CoherenceCalculus.RealizedExactificationGenerator}
+Let \(\cH\) carry a horizon tower \((\CCPi{h})\). A map
+\[
+\mathbb X:\cH\to\cH
+\]
+is called a \emph{realized exactification generator} if a realized selection
+rule has been fixed on the chosen horizon family and there exists a
+realization of incidences by states \(I\mapsto x_I\in\cH\) such that
+\(\mathbb X(x_I)\) records the realized continuation selected by that rule.
+Thus \(\mathbb X\) is not an arbitrary operator but a realized image of the
+bedrock termination/exactification law pair relative to a chosen realized
+selection of exactifying continuations on the given horizon family.
+\end{definition}
+
+\begin{definition}[Autonomous scale law]
+\label{def:autonomous-scale-law}\lean{CoherenceCalculus.AutonomousScaleLaw}
+Fix a realized exactification generator \(\mathbb X\). A map
+\[
+\mathcal L_h:\CCHobs{h}\to\CCHobs{h}
+\]
+is an \emph{autonomous scale law} at horizon \(h\) if it closes the realized
+generator on that observed sector.
+\end{definition}
+
+\begin{definition}[Autonomy defect]
+\label{def:autonomy-defect}\lean{CoherenceCalculus.autonomyDefect}
+Fix a realized exactification generator \(\mathbb X\) and an autonomous scale
+candidate \(\mathcal L_h\). The \emph{autonomy defect} at horizon \(h\) is
+\[
+\mathfrak D_h(x)
+:=
+\CCPi{h}\mathbb X(x)-\mathcal L_h(\CCPi{h}x).
+\]
+Equivalently, the scale-autonomy equation is
+\[
+\CCPi{h}\mathbb X = \mathcal L_h\CCPi{h},
+\]
+and it holds exactly precisely when \(\mathfrak D_h(x)=0\) for all \(x\) in the
+domain under consideration.
+\end{definition}
+
+\begin{definition}[Autonomous horizon]
+\label{def:autonomous-horizon}\lean{CoherenceCalculus.AutonomousHorizon}
+A horizon \(h\) is \emph{autonomous} for the realized exactification generator
+\(\mathbb X\) if there exists an autonomous scale law \(\mathcal L_h\) whose
+autonomy defect vanishes identically:
+\[
+\mathfrak D_h(x)=0
+\qquad
+\text{for all }x.
+\]
+\end{definition}
+
+\begin{proposition}[Autonomy criterion and uniqueness]
+\label{prop:autonomy-criterion-uniqueness}\lean{CoherenceCalculus.autonomy_criterion_uniqueness, CoherenceCalculus.autonomous_scale_law_unique}
+Let \(\mathbb X:\cH\to\cH\) be a realized exactification generator and fix a
+horizon \(h\). Then the following are equivalent:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exists a map \(\mathcal L_h:\CCHobs{h}\to\CCHobs{h}\) such that
+      \[
+      \CCPi{h}\mathbb X=\mathcal L_h\CCPi{h};
+      \]
+\item whenever \(\CCPi{h}x=\CCPi{h}x'\), one has
+      \[
+      \CCPi{h}\mathbb X(x)=\CCPi{h}\mathbb X(x').
+      \]
+\end{enumerate}
+When these conditions hold, the autonomous scale law \(\mathcal L_h\) is
+unique and is given by
+\[
+\mathcal L_h(y):=\CCPi{h}\mathbb X(x)
+\qquad
+\text{for any }x\text{ with }\CCPi{h}x=y.
+\]
+\end{proposition}
+
+\begin{proof}
+If \(\CCPi{h}\mathbb X=\mathcal L_h\CCPi{h}\), then equal horizon data imply
+equal horizon outputs, proving \emph{(ii)}. Conversely, if \emph{(ii)} holds,
+define \(\mathcal L_h\) on \(\CCHobs{h}\) by the displayed formula. The
+assumption guarantees that this is well defined, and then by construction
+\(\CCPi{h}\mathbb X=\mathcal L_h\CCPi{h}\). Uniqueness is immediate.
+\end{proof}
+
+\begin{definition}[Approximate autonomy]
+\label{def:approximate-autonomy}\lean{CoherenceCalculus.ApproximateAutonomy}
+Let \(\mathbb X\) be a realized exactification generator, let
+\(\mathcal C\subseteq\cH\), and let \(\varepsilon\ge 0\). A horizon \(h\) is
+\emph{\(\varepsilon\)-autonomous} on \(\mathcal C\) if there exists a map
+\(\mathcal L_h:\CCHobs{h}\to\CCHobs{h}\) such that
+\[
+\|\CCPi{h}\mathbb X(x)-\mathcal L_h(\CCPi{h}x)\|\le \varepsilon
+\qquad
+(x\in\mathcal C).
+\]
+\end{definition}
+
+\begin{remark}[Hydrodynamic interpretation]
+\label{rem:hydrodynamic-approximate-autonomy}\lean{CoherenceCalculus.ApproximateAutonomy}
+Approximate autonomy is the natural scale-law criterion for effective physics.
+A hydrodynamic law exists on coarse conserved variables when the corresponding
+horizon is \(\varepsilon\)-autonomous with small \(\varepsilon\); the mean free
+path marks the scale below which that defect is no longer small and
+hydrodynamic closure fails.
+\end{remark}
+
+\begin{proposition}[Coherence defect and autonomy defect]
+\label{prop:coherence-defect-and-autonomy-defect}\lean{CoherenceCalculus.coherence_defect_and_autonomy_defect}
+Let \(\mathbb X:\cH\to\cH\) be a realized exactification generator and let
+\(\mathcal L_h:\CCHobs{h}\to\CCHobs{h}\) be an autonomous scale candidate at
+horizon \(h\). Then for every \(x\in\cH\),
+\[
+\CCTau{h}{\mathbb X}{x}
+\;=\;
+\mathfrak D_h(x)
++
+\bigl(\mathcal L_h(\CCPi{h}x)-\mathbb X(\CCPi{h}x)\bigr).
+\]
+In particular, if
+\[
+\mathcal L_h(y)=\mathbb X(y)
+\qquad
+\text{for every }y\in\CCHobs{h},
+\]
+then
+\[
+\CCTau{h}{\mathbb X}{x}=\mathfrak D_h(x).
+\]
+\end{proposition}
+
+\begin{proof}
+Add and subtract \(\mathcal L_h(\CCPi{h}x)\):
+\begin{align*}
+\CCTau{h}{\mathbb X}{x}
+&=
+\CCPi{h}\mathbb X(x)-\mathbb X(\CCPi{h}x)\\
+&=
+\bigl(\CCPi{h}\mathbb X(x)-\mathcal L_h(\CCPi{h}x)\bigr)
++
+\bigl(\mathcal L_h(\CCPi{h}x)-\mathbb X(\CCPi{h}x)\bigr)\\
+&=
+\mathfrak D_h(x)
++
+\bigl(\mathcal L_h(\CCPi{h}x)-\mathbb X(\CCPi{h}x)\bigr).
+\end{align*}
+If \(\mathcal L_h\) is the restriction of \(\mathbb X\) to \(\CCHobs{h}\), the
+second term vanishes.
+\end{proof}
+
+\begin{remark}[Meaning of the scale-autonomy equation]
+\label{rem:meaning-of-scale-autonomy-equation}\lean{CoherenceCalculus.AutonomousScaleLaw, CoherenceCalculus.autonomyDefect, CoherenceCalculus.AutonomousHorizon}
+The equation
+\[
+\CCPi{h}\mathbb X = \mathcal L_h\CCPi{h}
+\]
+is the realized form of autonomous closure at scale \(h\). When it holds, the
+observed sector has a law of its own. When it fails, unresolved structure leaks
+across the horizon and the scale is still open. The coherence defect is
+therefore the native operator-side witness of failure of scale autonomy.
+\end{remark}
+
+\begin{quote}\small
+\textbf{Intuition.} The defect $\CCTau{h}{\mathcal{F}}{x}$ measures how much $\mathcal{F}$ fails to commute with the horizon projection.
+If $\CCTau{h}{\mathcal{F}}{x} = 0$, then applying $\mathcal{F}$ before or after projecting gives the same observed result.
+Nonzero defect means the observer at level $h$ cannot faithfully represent the action of $\mathcal{F}$.
+\end{quote}
+
+\paragraph{Linear vs.\ nonlinear.}
+If $\mathcal{F}$ is linear and $\CCPi{h} \mathcal{F} = \mathcal{F} \CCPi{h}$, then $\CCTau{h}{\mathcal{F}}{x} = 0$ for all $x$.
+For nonlinear $\mathcal{F}$, the defect is generically nonzero.
+For example, if $\mathcal{F}(x) = x^2$ (pointwise square) and $\CCPi{h}$ is
+block averaging, then $\CCTau{h}{\mathcal{F}}{x}$ equals the within-block
+variance, which is the unresolved fluctuation contribution.
+
+\begin{definition}[Two-argument defect for bilinear maps]
+\label{def:bilinear-defect}\lean{bilinearDefect}
+For a bilinear map $B:\cH \times \cH \to \cH$, define
+\[
+\CCTauBi{h}{B}{x}{y} := \CCPi{h} B(x,y) - B(\CCPi{h} x, \CCPi{h} y).
+\]
+\end{definition}
+
+\subsection{Chain rule (composition)}
+
+\begin{proposition}[Chain rule (exact decomposition)]
+\label{prop:chain-rule}\lean{chain_rule_statement}
+Let $\mathcal{F},\mathcal{G}:\cH \to \cH$ be maps and $\CCPi{h}$ a horizon projection.
+Then
+\[
+\CCTau{h}{\mathcal{F} \circ \mathcal{G}}{x}
+\;=\;
+\CCTau{h}{\mathcal{F}}{\mathcal{G}(x)} \;+\; \bigl[ \mathcal{F}(\CCPi{h} \mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x)) \bigr].
+\]
+The first term is the defect of $\mathcal{F}$ evaluated at the full output $\mathcal{G}(x)$.
+The second term is a \emph{mismatch term} measuring how $\mathcal{F}$ amplifies the defect of $\mathcal{G}$.
+\end{proposition}
+
+\begin{proof}[Proof: direct expansion]
+Write
+\begin{align*}
+\CCTau{h}{\mathcal{F} \circ \mathcal{G}}{x}
+&= \CCPi{h} \mathcal{F}(\mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x)) \\
+&= \bigl[\CCPi{h} \mathcal{F}(\mathcal{G}(x)) - \mathcal{F}(\CCPi{h} \mathcal{G}(x))\bigr] + \bigl[\mathcal{F}(\CCPi{h} \mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x))\bigr] \\
+&= \CCTau{h}{\mathcal{F}}{\mathcal{G}(x)} + \bigl[\mathcal{F}(\CCPi{h} \mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x))\bigr]. \qedhere
+\end{align*}
+\end{proof}
+
+\paragraph{Mismatch term structure.}
+The mismatch term $\mathcal{F}(\CCPi{h} \mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x))$ measures how $\mathcal{F}$ transforms the difference $\CCPi{h} \mathcal{G}(x) - \mathcal{G}(\CCPi{h} x) = \CCTau{h}{\mathcal{G}}{x}$.
+If $\mathcal{F}$ is Lipschitz with constant $L$, then
+\[
+\|\mathcal{F}(\CCPi{h} \mathcal{G}(x)) - \mathcal{F}(\mathcal{G}(\CCPi{h} x))\| \;\le\; L \cdot \|\CCTau{h}{\mathcal{G}}{x}\|.
+\]
+If $\mathcal{F}$ is linear, the mismatch term equals $\mathcal{F}(\CCTau{h}{\mathcal{G}}{x})$ exactly.
+
+\paragraph{Comparison with classical chain rule.}
+In classical calculus, $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.
+Here the decomposition is additive rather than multiplicative, and the ``derivative'' is replaced by the defect functional.
+The mismatch term plays the role of the $g'(x)$ factor, encoding how inner-map defects propagate through the outer map.
+
+\subsection{Product rule (bilinear maps)}
+
+\begin{proposition}[Product rule for bilinear $B$]
+\label{prop:product-rule}\lean{product_rule_bilinear}
+Let $B:\cH \times \cH \to \cH$ be bilinear and $\CCPi{h}$ a horizon projection with $\CCPibar{h} := I - \CCPi{h}$.
+Assume the \emph{closure condition}: $\CCPi{h} B(\CCPi{h} x, \CCPi{h} y) = B(\CCPi{h} x, \CCPi{h} y)$, i.e., $B$ applied to two observable elements remains observable.
+Then
+\[
+\CCTauBi{h}{B}{x}{y}
+\;=\;
+\CCPi{h} B(\CCPi{h} x, \CCPibar{h} y)
+\;+\;
+\CCPi{h} B(\CCPibar{h} x, \CCPi{h} y)
+\;+\;
+\CCPi{h} B(\CCPibar{h} x, \CCPibar{h} y).
+\]
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{quote}\small
+\textbf{Intuition.} The bilinear defect decomposes into three ``cross terms'':
+observable $\times$ shadow, shadow $\times$ observable, and shadow $\times$ shadow.
+These are the contributions from unresolved components interacting.
+For $B(x,y) = x \cdot y$ (pointwise product) and block averaging, this is exactly the covariance structure: the defect is the ``within-block covariance'' of $x$ and $y$.
+\end{quote}
+
+\begin{corollary}[Quadratic case]
+\label{cor:quadratic-defect}\lean{quadratic_defect}
+For $B(x,x)$ (e.g., $x \mapsto x^2$ or $x \mapsto \|x\|^2$),
+\[
+\CCTauBi{h}{B}{x}{x}
+\;=\;
+2\,\CCPi{h} B(\CCPi{h} x, \CCPibar{h} x)
+\;+\;
+\CCPi{h} B(\CCPibar{h} x, \CCPibar{h} x).
+\]
+If $B$ is symmetric and
+$\CCPi{h} B(\CCPi{h} x, \CCPibar{h} x) = 0$ (orthogonality), then
+$\CCTauBi{h}{B}{x}{x} = \CCPi{h} B(\CCPibar{h} x, \CCPibar{h} x)$, so the
+defect is purely the shadow self-interaction.
+\end{corollary}
+
+\paragraph{Variance interpretation.}
+For $B(x,y) = xy$ (scalar multiplication) and $\CCPi{h}$ a conditional expectation (block average), the identity $\CCTauBi{h}{B}{x}{x} = \CCPi{h}[(\CCPibar{h} x)^2]$ is the within-block variance.
+This is the ``closure term'' that arises in any coarse-graining of a quadratic nonlinearity.
+
+\subsection{Operator multiplication as a bilinear map}
+
+A key special case of Proposition~\ref{prop:product-rule} is operator composition on $\cB(\cH)$, treated as a bilinear map.
+
+\begin{lemma}[Operator product closure under compression]
+\label{lem:operator-product-closure}\lean{leakageCorrection}
+For bounded operators $A, B \in \cB(\cH)$ and horizon projection $\CCPi{h}$ with $\CCPibar{h} = I - \CCPi{h}$, define the \emph{horizon-compressed product}
+\[
+\CCRestr{(AB)}{h} := \CCPi{h} A B \CCPi{h}.
+\]
+Then
+\[
+\CCRestr{(AB)}{h} = \CCObs{A}{h} \CCObs{B}{h} + \CCLeakCorr{h}{A}{B},
+\]
+where $\CCObs{A}{h} = \CCRestr{A}{h}$, $\CCObs{B}{h} = \CCRestr{B}{h}$, and the \emph{leakage correction} is
+\[
+\CCLeakCorr{h}{A}{B} := \CCPi{h} A \CCPibar{h} B \CCPi{h}.
+\]
+\end{lemma}
+
+\begin{proof}
+Insert $I = \CCPi{h} + \CCPibar{h}$ between $A$ and $B$:
+\[
+\CCPi{h} A B \CCPi{h} = \CCPi{h} A (\CCPi{h} + \CCPibar{h}) B \CCPi{h} = \CCPi{h} A \CCPi{h} B \CCPi{h} + \CCPi{h} A \CCPibar{h} B \CCPi{h} = \CCObs{A}{h} \CCObs{B}{h} + \CCLeakCorr{h}{A}{B}. \qedhere
+\]
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.} The compressed product $\CCRestr{(AB)}{h}$ is not simply the product of compressed operators $\CCObs{A}{h} \CCObs{B}{h}$. The correction $\CCLeakCorr{h}{A}{B}$ captures ``round trips through the shadow'': the intermediate result $B \CCPi{h} x$ may have components in the shadow ($\CCPibar{h} B \CCPi{h} x$), which $A$ then maps back into the observable.
+\end{quote}
+
+\begin{corollary}[Connection to Proposition~\ref{prop:product-rule}]
+\label{cor:product-connection}\lean{operator_mult_defect_eq_leakage}
+Define the bilinear map $M: \cB(\cH) \times \cB(\cH) \to \cB(\cH)$ by $M(A, B) = AB$. The coherence defect for operator multiplication satisfies
+\[
+\CCTauBi{h}{M}{A}{B} = \CCPi{h} (AB) - (\CCRestr{A}{h})(\CCRestr{B}{h}) = \CCLeakCorr{h}{A}{B}.
+\]
+This is exactly the correction term from Lemma~\ref{lem:operator-product-closure}.
+\end{corollary}
+
+\paragraph{Relation to defect operator.}
+When $A = B = d$ is a nilpotent differential, the leakage correction $\CCLeakCorr{h}{d}{d} = \CCDefectExpr{d}{h} = \CCDefect{d}{h}$ is precisely the defect operator from the Horizon Fundamental Theorem (Section~\ref{sec:hft}).
+
+\subsection{Defect energy under bilinear maps}
+
+\begin{lemma}[Defect energy bound for bilinear maps]
+\label{lem:bilinear-energy}\lean{bilinear_defect_bound_statement}
+Let $B:\cH \times \cH \to \cH$ be a bounded bilinear map with $\|B(x,y)\| \le M\|x\|\,\|y\|$.
+Then
+\[
+\|\CCTauBi{h}{B}{x}{y}\| \;\le\; M \bigl( \|\CCPi{h} x\|\,\|\CCPibar{h} y\| + \|\CCPibar{h} x\|\,\|\CCPi{h} y\| + \|\CCPibar{h} x\|\,\|\CCPibar{h} y\| \bigr).
+\]
+In particular, if $\|\CCPibar{h} x\| \le \epsilon$ and $\|\CCPibar{h} y\| \le \epsilon$, then $\|\CCTauBi{h}{B}{x}{y}\| = O(\epsilon)$.
+\end{lemma}
+
+\begin{proof}
+Apply the triangle inequality to Proposition~\ref{prop:product-rule} and use $\|\CCPi{h}\| \le 1$.
+\end{proof}
+
+\subsection{Kernel defect under nested horizons}
+
+The following lemma describes how kernel defects behave under horizon refinement.
+
+\begin{lemma}[Kernel monotonicity under domain restriction]
+\label{lem:kernel-monotonicity}\lean{kernel_monotone}
+Let $(\CCPi{h})$ be a transitive horizon tower with $\CCPi{h} \CCPi{h'} = \CCPi{h}$ for $h \le h'$.
+Let $C:\cH \to \cH'$ be a constraint map.
+Define the \emph{domain-restricted constraint map} $C_h := C|_{\CCHobs{h}}$.
+\begin{enumerate}[label=(\roman*)]
+\item $\Ker(C_h) = \Ker(C) \cap \CCHobs{h}$.
+\item For nested horizons $h \le h'$: $\Ker(C_h) \subseteq \Ker(C_{h'})$, and hence $\dim\Ker(C_h) \le \dim\Ker(C_{h'})$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) If $x \in \CCHobs{h}$, then $C_h x = C x$, so $C_h x = 0$ iff $C x = 0$.
+
+(ii) If $x \in \Ker(C_h) = \Ker(C) \cap \CCHobs{h}$, then $x \in \Ker(C)$ and $x \in \CCHobs{h} \subseteq \CCHobs{h'}$, so $x \in \Ker(C) \cap \CCHobs{h'} = \Ker(C_{h'})$.
+\end{proof}
+
+\paragraph{Monotonicity direction.}
+The direction of kernel monotonicity depends on whether horizon restriction is applied to the domain or codomain of $C$.
+For domain restriction (as above), finer horizons have larger kernels.
+For codomain restriction ($C_h = R_h \circ C$ where $R_h$ restricts the target), the direction may reverse.
+We record the domain-restriction case as the default.
+
+\subsection{Calculator lemma: carrying resolution terms for linear operators}
+\label{subsec:calculator-lemma}
+
+This lemma provides a practical recipe for computing with defects when applying linear operators under finite observability.
+
+\begin{lemma}[Resolution correction for linear operators]
+\label{lem:resolution-correction}\lean{resolution_correction}
+Let $L: \cH \to \cH$ be a bounded linear operator (or closed with appropriate domain) and $\CCPi{h}$ a horizon projection. For any $x \in \cH$,
+\[
+\CCPi{h} L x = (\CCRestr{L}{h}) x + \CCPi{h} L \CCPibar{h} x.
+\]
+Equivalently:
+\[
+\text{(projected truth)} = \text{(observed computation)} + \text{(shadow correction)}.
+\]
+\end{lemma}
+
+\begin{proof}
+Insert $I = \CCPi{h} + \CCPibar{h}$ before $x$:
+\[
+\CCPi{h} L x = \CCPi{h} L (\CCPi{h} + \CCPibar{h}) x = \CCPi{h} L \CCPi{h} x + \CCPi{h} L \CCPibar{h} x. \qedhere
+\]
+\end{proof}
+
+\paragraph{Computational interpretation.}
+The observed operator $\CCObs{L}{h} = \CCRestr{L}{h}$ acting on the observed state $\CCPi{h} x$ gives only part of the projected truth. The shadow correction $\CCPi{h} L \CCPibar{h} x$ accounts for how $L$ maps the unobserved part of $x$ into the observable subspace.
+
+\begin{lemma}[Finite-rank computation recipe]
+\label{lem:finite-rank-recipe}\lean{finite_rank_observable}
+Suppose $\CCPi{h}$ has finite rank with orthonormal basis $\{\psi_1, \ldots, \psi_r\}$ for $\CCHobs{h}$.
+Define coefficient vectors $c(x) \in \mathbb{R}^r$ by $c_i(x) := \langle x, \psi_i \rangle$.
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item The horizon-restricted operator $\CCObs{L}{h} = \CCRestr{L}{h}$ has matrix representation $(\CCObs{L}{h})_{ij} = \langle \psi_i, L \psi_j \rangle$ (the Gram matrix of $L$ in the basis).
+\item The projected result is
+\[
+c(\CCPi{h} L x) = \CCObs{L}{h} \cdot c(\CCPi{h} x) + \delta_h(x),
+\]
+where the defect vector $\delta_h(x)_i = \langle \psi_i, L \CCPibar{h} x \rangle$ encodes the shadow correction in coordinates.
+\item If $x \in \CCHobs{h}$ (i.e., $\CCPibar{h} x = 0$), then $\delta_h(x) = 0$ and $c(\CCPi{h} L x) = \CCObs{L}{h} \cdot c(x)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) For $y = \sum_j c_j \psi_j \in \CCHobs{h}$, $(\CCObs{L}{h} y)_i = \langle \psi_i, \CCObs{L}{h} y \rangle = \langle \psi_i, \CCRestr{L}{h} y \rangle = \langle \psi_i, L y \rangle = \sum_j c_j \langle \psi_i, L \psi_j \rangle$.
+
+(ii) Apply Lemma~\ref{lem:resolution-correction} and project onto the basis.
+
+(iii) Immediate from (ii) with $\CCPibar{h} x = 0$.
+\end{proof}
+
+\begin{quote}\small
+\textbf{By-hand usability.} For finite-rank horizons, represent $\CCObs{L}{h}$ as an $r \times r$ matrix by computing inner products $\langle \psi_i, L \psi_j \rangle$. The defect vector $\delta_h(x)$ measures how much information from the shadow ``leaks back in'' when $L$ is applied. This recipe reduces infinite-dimensional computations to linear algebra plus controlled error terms.
+\end{quote}
+
+\paragraph{Further developments.}
+The defect rules in this section provide the basic calculus of coherence defects.
+Subsequent sections extend this machinery:
+\begin{itemize}[itemsep=0.2em]
+\item Section~\ref{sec:constraint-compiler} uses these rules within the admissible-completion selection scheme.
+\item Section~\ref{sec:resolvent-defect} provides exact resummation via the Feshbach--Schur identity.
+\item Section~\ref{sec:coherence-gap} derives spectral bounds from defect positivity.
+\item Section~\ref{sec:log-periodic} specializes to log-scale horizon families.
+\item Section~\ref{sec:advanced-operators} packages scale flow, spectral selection, trace aggregation, and canonical leakage direction.
+\end{itemize}

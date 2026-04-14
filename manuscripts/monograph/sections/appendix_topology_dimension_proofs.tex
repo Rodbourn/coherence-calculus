@@ -1,0 +1,339 @@
+% Appendix B: Topology and Dimension Proofs (Chapters 3--4)
+\label{sec:appendix-topology}
+
+\begin{proof}[Proof of Theorem~\ref{thm:closure-balance-realizes-interface}]
+\label{proof:thm:closure-balance-realizes-interface}
+Theorem~\ref{thm:forced-stable-dimension} identifies $D=4$ as the unique
+nontrivial balanced dimension. Definition~\ref{def:closure-realized-state}
+therefore gives the canonical nontrivial finite state space selected by the
+counting bedrock, and Definition~\ref{def:closure-realized-pairing} equips it
+with its canonical energy pairing. Theorem~\ref{thm:state-transport} shows that
+the active state layer carries no additional data beyond that realized state.
+Theorem~\ref{thm:true-boundary-realized} and
+Theorem~\ref{thm:full-boundary-closes} provide the full nilpotent boundary.
+Definition~\ref{def:coherence-tower}, Theorem~\ref{thm:realized-uniqueness},
+and Lemma~\ref{lem:coherence-tower-faithful} provide the canonical tower and
+its faithfulness. These are exactly the ingredients required by the structural
+interface of Part~I.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:canonical-tail-laws}]
+\label{proof:thm:canonical-tail-laws}
+The explicit projection law gives
+\[
+\CCPi{0}x=0,\qquad
+\CCPi{1}x=(x_0,0,0,0),\qquad
+\CCPi{2}x=(x_0,x_1,0,0),
+\]
+\[
+\CCPi{3}x=(x_0,x_1,x_2,0),\qquad
+\CCPi{h}x=x \quad (h\ge 4).
+\]
+Hence the corresponding shadows are
+\[
+x-\CCPi{0}x=(x_0,x_1,x_2,x_3),\qquad
+x-\CCPi{1}x=(0,x_1,x_2,x_3),
+\]
+\[
+x-\CCPi{2}x=(0,0,x_2,x_3),\qquad
+x-\CCPi{3}x=(0,0,0,x_3),\qquad
+x-\CCPi{h}x=0 \quad (h\ge 4).
+\]
+Since the canonical energy is the coordinate sum of the signed-count energies,
+the stated formulas for $E_h(x)$ follow immediately.
+
+Likewise,
+\[
+(\CCPi{1}-\CCPi{0})x=(x_0,0,0,0),\quad
+(\CCPi{2}-\CCPi{1})x=(0,x_1,0,0),
+\]
+\[
+(\CCPi{3}-\CCPi{2})x=(0,0,x_2,0),\quad
+(\CCPi{4}-\CCPi{3})x=(0,0,0,x_3),
+\]
+and $(\CCPi{h+1}-\CCPi{h})x=0$ for $h\ge 4$. Taking energies again gives the
+formulas for $\mu_h(x)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:barrier-uniqueness}]
+\label{proof:thm:barrier-uniqueness}
+Direct computation gives
+\[
+\cH(2)=0,\qquad \cH(3)=1,\qquad \cH(4)=0.
+\]
+For $D=1$, one has $\cH(1)= -1$. It therefore remains to treat $D\ge 5$.
+At $D=5$,
+\[
+\binom{5}{2}=10<24=4!.
+\]
+Assume now that $(D-1)!>\binom{D}{2}$ for some $D\ge 5$. Then
+\[
+D! = D(D-1)! > D\binom{D}{2} = \frac{D^2(D-1)}{2}.
+\]
+Since $D(D-1)>D+1$ for every $D\ge 3$, it follows that
+\[
+\frac{D^2(D-1)}{2} > \frac{D(D+1)}{2} = \binom{D+1}{2}.
+\]
+Hence $D!>\binom{D+1}{2}$, so by induction
+\[
+(D-1)!>\binom{D}{2}
+\qquad\text{for all }D\ge 5.
+\]
+Therefore $\cH(D)<0$ for every $D\ge 5$, and the only positive value occurs at
+$D=3$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:unit-seed-and-six-slot-carrier}]
+\label{proof:thm:unit-seed-and-six-slot-carrier}
+Theorem~\ref{thm:forced-stable-dimension} shows that the only balanced
+dimensions are $D=2$ and $D=4$. Direct computation gives
+\[
+N_{\mathrm{cl}}(2)=\binom{2}{2}=1!=1,
+\qquad
+N_{\mathrm{cl}}(4)=\binom{4}{2}=3!=6.
+\]
+The two conclusions are exactly these two values read as local balanced slot
+counts.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:d2-primitive-support-profile}]
+\label{proof:cor:d2-primitive-support-profile}
+Fix \(C\in\mathcal C\). If \(C\) is primitive, take \(P=C\) and \(m=1\). If
+\(C\) is a repeat, then by Definition~\ref{def:primitive-transport-cycle} it
+has the form \(C=W^{\times m_1}\) for some shorter cycle \(W\) and some
+\(m_1>1\). If \(W\) is primitive, set \(P=W\). Otherwise repeat the same
+reduction on \(W\). Because cycle length strictly decreases at each nontrivial
+repeat reduction, this process terminates at a primitive core \(P\). Repeated
+application of Proposition~\ref{prop:repeat-cycle-monodromy-factorization}
+then gives
+\[
+\mathcal M(C)=\mathcal M(P)^m
+\]
+for some \(m\ge 1\). Doing this for each \(C\in\mathcal C\) produces the
+finite family \(\mathcal P\). Since
+Corollary~\ref{cor:single-channel-unit-seed} shows that the seed admits only
+one irreducible local channel, these repeat powers introduce no new seed
+carrier type.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:finite-local-type-profiles}]
+\label{proof:thm:finite-local-type-profiles}
+Theorem~\ref{thm:barrier-uniqueness} identifies $D=3$ as the unique residual
+dimension, and Theorem~\ref{thm:unit-seed-and-six-slot-carrier} identifies
+$D=2$ and $D=4$ as the only balanced dimensions. Hence any passage from the
+unit-balanced seed to the nontrivial balanced carrier crosses the unique
+residual interface at $D=3$.
+
+For $D=4$, Theorem~\ref{thm:unit-seed-and-six-slot-carrier} gives
+$N_{\mathrm{cl}}(4)=6$. By Definition~\ref{def:local-type-profile}, every
+local type profile on the balanced carrier is therefore a partition of $6$.
+The displayed list is the complete constructive enumeration of those
+partitions.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:symmetry-refined-logical-type}]
+\label{proof:prop:symmetry-refined-logical-type}
+Because the nonzero isotypic components form a direct-sum decomposition of the
+six-dimensional carrier,
+\[
+6=\dim V=\sum_{\rho}\dim V_\rho,
+\]
+where every summand is a positive integer. This is exactly a partition of $6$,
+proving (i). Since each nonzero isotypic component has dimension at least $1$,
+there can be at most six such components, proving (ii). Statement (iii)
+follows because Theorem~\ref{thm:finite-local-type-profiles} is precisely the
+constructive enumeration of the partitions of $6$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:intrinsic-six-slot-decomposition}]
+\label{proof:thm:intrinsic-six-slot-decomposition}
+Define the uniform vector
+\[
+u_0:=\sum_{1\le i<j\le 4} e_{ij},
+\]
+and set $U_1:=\bbR u_0$. This space is $S_4$-invariant because relabeling
+permutes the six basis vectors.
+
+Next define the three perfect-matching sums
+\[
+m_1:=e_{12}+e_{34},\qquad
+m_2:=e_{13}+e_{24},\qquad
+m_3:=e_{14}+e_{23}.
+\]
+Set
+\[
+U_2:=\Span\{m_1-m_2,\; m_1-m_3\}.
+\]
+Relabeling permutes the three perfect matchings, so $U_2$ is $S_4$-invariant.
+Since $m_1-m_2$ and $m_1-m_3$ are linearly independent, $\dim U_2=2$.
+
+Now define the four vertex-star vectors
+\[
+s_1:=e_{12}+e_{13}+e_{14},\qquad
+s_2:=e_{12}+e_{23}+e_{24},
+\]
+\[
+s_3:=e_{13}+e_{23}+e_{34},\qquad
+s_4:=e_{14}+e_{24}+e_{34}.
+\]
+For $x=(x_1,x_2,x_3,x_4)\in\bbR^4$ with $x_1+x_2+x_3+x_4=0$, define
+\[
+\Phi(x):=\sum_{i=1}^4 x_i s_i.
+\]
+Set
+\[
+U_3:=\Phi\bigl(\{x\in\bbR^4:\ x_1+x_2+x_3+x_4=0\}\bigr).
+\]
+Because relabeling permutes the four stars, $U_3$ is $S_4$-invariant.
+Moreover $\Phi(x)$ has edge coefficients $x_i+x_j$. If $\Phi(x)=0$, then
+\[
+x_1+x_2=x_1+x_3=x_2+x_3=0.
+\]
+Subtracting the first two equations gives $x_2=x_3$, and then
+$x_2+x_3=0$ implies $x_2=x_3=0$. Hence $x_1=0$ from $x_1+x_2=0$, and finally
+$x_4=0$ from $x_1+x_2+x_3+x_4=0$. Thus $\Phi$ is injective on the
+three-dimensional hyperplane $\sum x_i=0$, so $\dim U_3=3$.
+
+It remains to prove the sum is direct. Define the star-sum functional at
+vertex $i$ by summing the coefficients on the three edges incident to $i$.
+For every vector in $U_2$, each star sum is $0$, because the coefficients in
+$m_1-m_2$ and $m_1-m_3$ cancel at every vertex. For $\Phi(x)\in U_3$, the star
+sum at vertex $i$ equals
+\[
+2x_i+\sum_{j\ne i}x_j=x_i
+\]
+since $\sum_k x_k=0$. Therefore $U_2\cap U_3=\{0\}$.
+
+Also $u_0\notin U_2$ because $u_0$ has nonzero star sums, while every vector of
+$U_2$ has zero star sums. And $u_0\notin U_3$ because every vector of $U_3$
+has star sums summing to $0$, whereas $u_0$ has star sum $3$ at each vertex.
+Hence
+\[
+U_1\cap U_2=U_1\cap U_3=\{0\}.
+\]
+Since
+\[
+\dim U_1+\dim U_2+\dim U_3=1+2+3=6=\dim V_{\mathrm{slot}},
+\]
+the sum is direct and exhausts $V_{\mathrm{slot}}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:six-slot-carrier-is-symmetric-square-of-u3}]
+\label{proof:thm:six-slot-carrier-is-symmetric-square-of-u3}
+In the proof of Theorem~\ref{thm:intrinsic-six-slot-decomposition}, the channel
+\(U_3\) is constructed as the image of the zero-sum hyperplane
+\[
+H:=\{x\in\bbR^4:\ x_1+x_2+x_3+x_4=0\}
+\]
+under the injective map
+\[
+\Phi(x)=\sum_{i=1}^4 x_i s_i.
+\]
+Thus \(\Phi\) identifies \(H\) canonically with \(U_3\).
+
+Define a symmetric bilinear map on \(H\) by
+\[
+B(x,y):=\sum_{1\le i<j\le 4}(x_i y_j+x_j y_i)e_{ij}.
+\]
+Because the coefficient of \(e_{ij}\) is symmetric bilinear in \((x,y)\), the
+map \(B\) is symmetric bilinear. Transport it to \(U_3\) through \(\Phi\): for
+\(u=\Phi(x)\) and \(v=\Phi(y)\), set
+\[
+\beta_{\mathrm{slot}}(u,v):=B(x,y).
+\]
+Since \(\Phi\) is injective on \(H\), this is well-defined and symmetric
+bilinear on \(U_3\times U_3\).
+
+To prove that the image generates \(V_{\mathrm{slot}}\), fix any slot
+\(\{i,j\}\in\mathcal S_4\) and let \(u_{ij}\in H\) be the vector with \(+1\) in
+slot \(i\), \(-1\) in slot \(j\), and \(0\) elsewhere. Then
+\[
+B(u_{ij},u_{ij})=-2\,e_{ij}.
+\]
+Hence every basis vector \(e_{ij}\) lies in the image of \(B\), so the image of
+\(\beta_{\mathrm{slot}}\) generates all of \(V_{\mathrm{slot}}\).
+
+Because \(\beta_{\mathrm{slot}}\) is symmetric bilinear, the universal property
+of the symmetric square yields a unique linear map
+\[
+\overline\beta_{\mathrm{slot}}:\mathrm{Sym}^2(U_3)\to V_{\mathrm{slot}}
+\]
+whose value on the class of \(u\otimes v\) is \(\beta_{\mathrm{slot}}(u,v)\).
+The preceding paragraph shows that \(\overline\beta_{\mathrm{slot}}\) is
+surjective. Since \(\dim U_3=3\),
+\[
+\dim \mathrm{Sym}^2(U_3)=\frac{3(3+1)}2=6,
+\]
+and Definition~\ref{def:local-slot-carrier} gives \(\dim V_{\mathrm{slot}}=6\).
+Therefore a surjective linear map between these two six-dimensional spaces is
+an isomorphism.
+
+Finally, every ingredient in the construction is intrinsic: the hyperplane
+\(H\), the map \(\Phi\), and the slot basis are all defined from the canonical
+balanced four-incidence and its relabeling action. Hence the resulting
+identification \(V_{\mathrm{slot}}\cong \mathrm{Sym}^2(U_3)\) is canonical and
+compatible with intrinsic relabeling.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:intrinsic-slot-normal-form}]
+\label{proof:thm:intrinsic-slot-normal-form}
+Because $S_4$ acts transitively on the six slots, the diagonal coefficients
+$A_{\alpha\alpha}$ are all equal; call the common value $a$.
+
+Next consider off-diagonal ordered pairs $(\alpha,\beta)$ with
+$\alpha\neq\beta$. Under the relabeling action of $S_4$, such pairs fall into
+exactly two orbit types: adjacent and disjoint. Indeed, if two ordered pairs
+share one primitive, a relabeling sends one to the other; if they are disjoint,
+a relabeling again sends one to the other; and adjacency cannot be relabeled to
+disjointness because the intersection size is preserved. Since $A$ commutes
+with the action, its matrix coefficients are constant on each orbit type. Call
+those constants $b$ on adjacent pairs and $c$ on disjoint pairs. This gives the
+displayed formula.
+
+Uniqueness of $a,b,c$ is immediate because the three slot-pair classes are
+nonempty and disjoint.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:intrinsic-channel-eigenvalues}]
+\label{proof:cor:intrinsic-channel-eigenvalues}
+For the uniform vector
+\[
+u_0=\sum_{1\le i<j\le 4} e_{ij},
+\]
+each basis slot sees one diagonal contribution, four adjacent contributions,
+and one disjoint contribution. Hence
+\[
+Au_0=(a+4b+c)u_0.
+\]
+So the one-dimensional channel is $A$-invariant with eigenvalue $\lambda_1$.
+
+Now use the perfect-matching basis of Theorem~\ref{thm:intrinsic-six-slot-decomposition}:
+\[
+m_1=e_{12}+e_{34},\qquad
+m_2=e_{13}+e_{24},\qquad
+m_3=e_{14}+e_{23}.
+\]
+A direct substitution into the normal form gives
+\[
+A(m_1-m_2)=(a-2b+c)(m_1-m_2),
+\]
+\[
+A(m_1-m_3)=(a-2b+c)(m_1-m_3).
+\]
+Therefore $A$ acts on the two-dimensional channel by the scalar
+$\lambda_2=a-2b+c$.
+
+Finally use the vertex-star differences
+\[
+s_1-s_2,\qquad s_1-s_3,\qquad s_1-s_4
+\]
+from the proof of Theorem~\ref{thm:intrinsic-six-slot-decomposition}. A direct
+substitution again yields
+\[
+A(s_1-s_2)=(a-c)(s_1-s_2),\qquad
+A(s_1-s_3)=(a-c)(s_1-s_3),\qquad
+A(s_1-s_4)=(a-c)(s_1-s_4).
+\]
+Hence $A$ acts on the three-dimensional channel by the scalar
+$\lambda_3=a-c$.
+\end{proof}

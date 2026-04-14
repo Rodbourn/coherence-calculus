@@ -1,0 +1,204 @@
+% ============================================================
+\section{Coherence Gap: Spectral Lower Bounds from PSD Defect}
+\label{sec:coherence-gap}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this automates.}
+When the defect energy operator $\CCDefOp{d}{h} = \CCLeak{d}{h}^* \CCLeak{d}{h}$ is strictly positive on the observable subspace, this positivity translates into a spectral gap.
+This section provides the rigorous mechanism for converting ``defect is strictly positive'' into a quantitative lower bound on spectra.
+\end{quote}
+
+\subsection{Defect energy operator}
+
+Recall from the Horizon Fundamental Theorem (Section~\ref{sec:hft}) that the leakage operator is $\CCLeak{d}{h} = \CCLeakExpr{d}{h}$ and the defect energy is $\CCDefEnergy{h}{x} = \|\CCLeak{d}{h} x\|^2$.
+
+\begin{definition}[Defect energy operator]
+\label{def:defect-energy-gap-operator}\lean{defectEnergyOp}
+The \emph{defect energy operator} is
+\[
+\CCDefOp{d}{h} := \CCLeak{d}{h}^* \CCLeak{d}{h} = \CCPi{h} d^* \CCPibar{h} d \CCPi{h}.
+\]
+This is a positive semidefinite operator on $\cH$ with $\langle x, \CCDefOp{d}{h} x \rangle = \|\CCLeak{d}{h} x\|^2 = \CCDefEnergy{h}{x}$.
+\end{definition}
+
+\paragraph{PSD structure.}
+Since $\CCDefOp{d}{h} = \CCLeak{d}{h}^* \CCLeak{d}{h}$, we have $\CCDefOp{d}{h} \succeq 0$ automatically.
+The question is whether $\CCDefOp{d}{h}$ has a \emph{gap}, that is, a strictly
+positive lower bound on the observable subspace.
+
+\subsection{Spectral gap from PSD lower bound}
+
+\begin{theorem}[Coherence gap theorem]
+\label{thm:coherence-gap}\lean{coherence_gap_theorem}
+Let $\CCDefOp{d}{h} = \CCLeak{d}{h}^* \CCLeak{d}{h} \succeq 0$ be the defect energy operator.
+Suppose there exists $\mu > 0$ such that
+\[
+\CCDefOp{d}{h} \succeq \mu \, \CCPi{h}
+\]
+as operators on $\cH$, meaning $\langle x, \CCDefOp{d}{h} x \rangle \ge \mu \|\CCPi{h} x\|^2$ for all $x \in \cH$.
+
+Then for all $x \in \cH_{\mathrm{obs}} = \CCPi{h} \cH$:
+\[
+\langle x, \CCDefOp{d}{h} x \rangle \ge \mu \|x\|^2,
+\]
+and consequently the spectrum of $\CCDefOp{d}{h}$ restricted to $\cH_{\mathrm{obs}}$ satisfies
+\[
+\mathrm{spec}(\CCDefOp{d}{h}|_{\cH_{\mathrm{obs}}}) \subseteq [\mu, \infty).
+\]
+\end{theorem}
+
+\begin{proof}
+For $x \in \cH_{\mathrm{obs}}$, we have $\CCPi{h} x = x$, so $\|\CCPi{h} x\|^2 = \|x\|^2$.
+The hypothesis $\CCDefOp{d}{h} \succeq \mu \CCPi{h}$ gives
+\[
+\langle x, \CCDefOp{d}{h} x \rangle \ge \mu \|\CCPi{h} x\|^2 = \mu \|x\|^2.
+\]
+By the Rayleigh quotient characterization of spectra, if $\langle x, \CCDefOp{d}{h} x \rangle \ge \mu \|x\|^2$ for all nonzero $x$ in a subspace, then all eigenvalues of $\CCDefOp{d}{h}$ on that subspace are at least $\mu$.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The coherence gap theorem converts a uniform positivity condition on defect energy into a spectral statement.
+If every observable state leaks at least $\mu$ units of energy into the shadow, then no observable state can have defect energy below $\mu$.
+This is the calculus mechanism for ``the defect cannot be arbitrarily small on observable states.''
+\end{quote}
+
+\subsection{Converse and gap detection}
+
+\begin{lemma}[Gap detection via Rayleigh quotient]
+\label{lem:gap-detection}\lean{gap_detection_ratio}
+The largest $\mu \ge 0$ such that $\CCDefOp{d}{h} \succeq \mu \CCPi{h}$ is
+\[
+\mu_{\min} := \inf_{x \in \cH_{\mathrm{obs}},\, x \ne 0} \frac{\langle x, \CCDefOp{d}{h} x \rangle}{\|x\|^2}
+= \inf_{x \in \cH_{\mathrm{obs}},\, x \ne 0} \frac{\|\CCLeak{d}{h} x\|^2}{\|x\|^2}.
+\]
+If $\mu_{\min} > 0$, then $\CCDefOp{d}{h}$ has a coherence gap of size $\mu_{\min}$ on $\cH_{\mathrm{obs}}$.
+\end{lemma}
+
+\begin{proof}
+This is the standard Rayleigh quotient characterization of the smallest eigenvalue (or infimum of the spectrum) of a self-adjoint operator restricted to a subspace.
+\end{proof}
+
+\paragraph{Zero gap.}
+If $\mu_{\min} = 0$, then there exist observable states with arbitrarily small
+defect energy, so the defect can be screened by choosing appropriate states.
+The coherence gap theorem does not apply in this case.
+
+\begin{corollary}[Kernel and gap]
+\label{cor:kernel-gap}\lean{kernel_gap_injective_statement}
+If $\Ker(\CCLeak{d}{h}) \cap \cH_{\mathrm{obs}} = \{0\}$, then $\CCDefOp{d}{h}|_{\cH_{\mathrm{obs}}}$ is injective.
+If additionally $\cH_{\mathrm{obs}}$ is finite-dimensional, then $\CCDefOp{d}{h}|_{\cH_{\mathrm{obs}}}$ has a strictly positive coherence gap.
+\end{corollary}
+
+\begin{proof}
+Injectivity follows from $\langle x, \CCDefOp{d}{h} x \rangle = \|\CCLeak{d}{h} x\|^2 = 0 \Rightarrow \CCLeak{d}{h} x = 0 \Rightarrow x = 0$ for $x \in \cH_{\mathrm{obs}}$.
+In finite dimensions, a self-adjoint positive definite operator has strictly positive smallest eigenvalue.
+\end{proof}
+
+\subsection{Finite shadow-transport invariants}
+
+On a finite observed sector, the defect operator carries more than a single gap.
+It determines a complete finite invariant family: spectrum, trace moments, and a
+determinant polynomial. These are exact structural invariants of the horizon
+cut, not additional hypotheses.
+
+\begin{definition}[Shadow-transport invariant family]
+\label{def:shadow-transport-invariants}\lean{shadow_transport_invariants}
+Assume $\cH_{\mathrm{obs}}=\CCPi{h}\cH$ is finite-dimensional and define
+\[
+T_h := \CCDefOp{d}{h}\big|_{\cH_{\mathrm{obs}}}
+=
+\CCLeak{d}{h}^* \CCLeak{d}{h}\big|_{\cH_{\mathrm{obs}}}.
+\]
+The associated \emph{shadow-transport invariant family} at horizon $h$ consists
+of:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item the multiset
+      \[
+      \Lambda_h(d):=\mathrm{spec}(T_h)
+      \]
+      of nonnegative eigenvalues of $T_h$;
+\item the spectral moments
+      \[
+      M_k(h):=\Tr(T_h^k)
+      \qquad (k\ge 1);
+      \]
+\item the determinant polynomial
+      \[
+      \Delta_h(t):=\det(I+tT_h).
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Finite shadow-transport package]
+\label{thm:shadow-transport-package}\lean{shadow_transport_package}
+Assume $\cH_{\mathrm{obs}}$ is finite-dimensional and let
+$r:=\dim(\cH_{\mathrm{obs}})$. Then:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item every element of $\Lambda_h(d)$ is nonnegative;
+\item the following are equivalent:
+      \[
+      \Lambda_h(d)=\{0,\dots,0\},
+      \qquad
+      T_h=0,
+      \qquad
+      \CCLeak{d}{h}\big|_{\cH_{\mathrm{obs}}}=0;
+      \]
+\item if $U$ is unitary and preserves both $d$ and $\CCPi{h}$, then
+      $\Lambda_h(d)$, all moments $M_k(h)$, and $\Delta_h(t)$ are unchanged;
+\item if $\Lambda_h(d)=\{\lambda_1,\dots,\lambda_r\}$ with multiplicity, then
+      \[
+      M_k(h)=\sum_{j=1}^r \lambda_j^k,
+      \qquad
+      \Delta_h(t)=\prod_{j=1}^r (1+t\lambda_j).
+      \]
+      Hence either the determinant polynomial $\Delta_h$ or the finite list of
+      moments $M_1(h),\dots,M_r(h)$ determines the full multiset
+      $\Lambda_h(d)$.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Symmetry factorization of the invariant family]
+\label{cor:shadow-transport-factorization}\lean{shadow_transport_factorization}
+Assume $\cH_{\mathrm{obs}}$ is finite-dimensional and carries a unitary action
+of a finite group $G$ preserving both $d$ and $\CCPi{h}$. Let
+\[
+\cH_{\mathrm{obs}}=\bigoplus_\rho \cH_\rho
+\]
+be the isotypic decomposition from
+Theorem~\ref{thm:symmetry-reduction-admissibility}, and write
+$T_{h,\rho}:=T_h|_{\cH_\rho}$. Then
+\[
+T_h=\bigoplus_\rho T_{h,\rho},
+\qquad
+M_k(h)=\sum_\rho \Tr(T_{h,\rho}^k),
+\qquad
+\Delta_h(t)=\prod_\rho \det(I+tT_{h,\rho}).
+\]
+Thus the shadow-transport invariant family decomposes into independent symmetry
+blocks.
+\end{corollary}
+
+\begin{proof}
+By symmetry reduction, $T_h$ preserves each isotypic component and is
+block-diagonal across the decomposition $\cH_{\mathrm{obs}}=\bigoplus_\rho
+\cH_\rho$. Trace is additive on block sums and determinant is multiplicative on
+block-diagonal operators, giving the stated formulas.
+\end{proof}
+
+\paragraph{Two-mode reductions.}
+\label{rem:two-mode-reduction}
+In a two-dimensional reduced block, the determinant and trace already fix the
+entire spectrum. If $T$ is such a block, then its eigenvalues are the two roots
+of
+\[
+\lambda^2-\Tr(T)\lambda+\det(T)=0.
+\]
+Thus whenever admissibility or symmetry reduction cuts a candidate family down
+to a rank-two block with fixed trace and determinant data, the remaining choice
+is an explicit algebraic branch-selection problem. The old trace/determinant
+``trick'' is therefore not discarded; it appears here as the rank-two edge of a
+general shadow-transport invariant family.

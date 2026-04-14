@@ -1,0 +1,150 @@
+% ============================================================
+\section{Admissibility and Branch Selection}
+\label{sec:admissibility}
+% ============================================================
+
+Many problems produce more than one algebraic completion.
+In Coherence Calculus, admissibility is a \emph{minimum completion} principle
+on quadratic forms; no external parameter is required.
+
+\paragraph{Generator versus selector.}
+Admissibility does not generate continuation or change. The generator lies at
+bedrock in nonretroactive exactification
+(Axiom~\ref{ax:nonretroactive-exactification}): if an incidence is nonterminal,
+it must continue by strict extension. The role of admissibility begins only
+after a realized defect or required lower bound has already been produced. It
+then selects a minimum-burden completion among those continuations that are
+already compelled on the realized surface.
+
+\begin{definition}[Completion by a boundary term]
+\label{def:boundary-completion}\lean{CoherenceCalculus.BoundaryCompletion}
+Let $Q_0$ be a positive semidefinite quadratic form on a test space $\cX$.
+A \emph{boundary completion} is
+\[
+Q_\kappa(\Phi) := Q_0(\Phi) + \kappa\,|\Phi(0)|^2,\qquad \kappa\ge 0.
+\]
+\end{definition}
+
+\begin{definition}[Admissibility (minimum completion)]
+\label{def:admissibility-formal}\lean{CoherenceCalculus.AdmissibleCompletion}
+Let $D$ be a self-adjoint ``required lower bound'' operator.
+A completion $Q$ is \emph{admissible} if:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Completion constraint:} $D + Q \succeq 0$ (bounded below), and
+\item \textbf{Minimality:} $Q$ is minimal in PSD order among candidates satisfying (i).
+\end{enumerate}
+This is the same admissibility notion used by the completion-and-selection
+algebra of Section~\ref{sec:constraint-compiler}.
+\end{definition}
+
+\begin{remark}[Non-uniqueness]
+\lean{CoherenceCalculus.admissible_completion_nonunique_example}
+The PSD order is partial, so minimal completions need not be unique.
+When multiple minimal completions exist, see
+Section~\ref{sec:constraint-compiler} for canonical tie-breakers.
+\end{remark}
+
+\subsection{Selection archetype: trace and determinant}
+
+The following minimal algebra captures a large class of ``two-branch'' problems.
+
+\begin{definition}[Local transfer matrix]
+\label{def:transfer-matrix}\lean{CoherenceCalculus.TransferMatrix}
+Fix a scalar $D$ (a trace/invariant).
+Define the $2\times 2$ transfer matrix
+\[
+M_D := \begin{pmatrix} D & -1\\ 1 & 0 \end{pmatrix},
+\qquad \det(M_D)=1,\ \Tr(M_D)=D.
+\]
+\end{definition}
+
+\begin{lemma}[Eigenvalues]
+\label{lem:eigenvalues}\lean{CoherenceCalculus.eigenvalue_equation}
+The eigenvalues of $M_D$ satisfy
+\[
+\lambda^2 - D\lambda + 1 = 0,
+\quad\text{so}\quad
+\lambda_\pm = \frac{D\pm \sqrt{D^2-4}}{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Compute $\det(\lambda I - M_D)=\lambda^2-D\lambda+1$.
+\end{proof}
+
+\begin{definition}[Ratio iteration]
+\label{def:ratio-iteration}\lean{CoherenceCalculus.RatioIteration}
+Let $(\Psi_n)$ satisfy $(\Psi_{n+1},\Psi_n)^\top = M_D(\Psi_n,\Psi_{n-1})^\top$.
+Define $z_n:=\Psi_n/\Psi_{n-1}$. Then
+\[
+z_{n+1} = D - \frac{1}{z_n}.
+\]
+\end{definition}
+
+\begin{proposition}[Branch selection as stability]
+\label{prop:branch-selection}\lean{CoherenceCalculus.expanding_branch_selected}
+If $D>2$, then $\lambda_+>1$ and $\lambda_-<1$.
+Under a minimum-completion admissibility rule, the selected branch is $\lambda_+$.
+\end{proposition}
+
+\begin{proof}
+For $D>2$, $\sqrt{D^2-4}\in(0,D)$ so $\lambda_+ > 1$ and $\lambda_- \in (0,1)$.
+Stability/minimum completion excludes the contracting branch when it corresponds to an ill-posed completion.
+\end{proof}
+
+\begin{remark}[Two roots plus selection]
+\lean{CoherenceCalculus.expanding_branch_selected}
+The ``two roots + selection'' structure is the algebraic core of branch selection:
+conservation invariants give the polynomial; admissibility selects the branch.
+No external parameter is needed.
+\end{remark}
+
+% ============================================================
+\subsection{Minimal scalar completion (Rayleigh quotient characterization)}
+\label{subsec:scalar-completion}
+% ============================================================
+
+This subsection provides a closed-form solution for the simplest admissibility problem: completing along a one-parameter ray.
+
+\begin{theorem}[Minimal scalar completion]
+\label{thm:scalar-completion}
+\lean{CoherenceCalculus.minimal_scalar_completion}
+Let $\cH$ be a finite-dimensional real Hilbert space.
+Let $D = D^*$ be self-adjoint (the ``required lower bound'') and let $L = L^* \succeq 0$ be a fixed PSD template.
+Consider the ray of completions $\{Q_\nu := \nu L : \nu \ge 0\}$.
+
+Assume the \emph{kernel compatibility} condition: for all $x \in \Ker(L)$, $\langle x, D x \rangle \ge 0$.
+(Otherwise, $D + \nu L \succeq 0$ is infeasible for all $\nu$.)
+
+Define the \emph{critical coefficient}
+\[
+\nu_* := \max_{x \ne 0,\, \langle x, Lx \rangle > 0} \frac{-\langle x, D x \rangle}{\langle x, L x \rangle},
+\]
+with the convention $\nu_* := 0$ if this maximum is nonpositive.
+
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Feasibility:} $D + \nu L \succeq 0$ if and only if $\nu \ge \nu_*$.
+\item \textbf{Minimality:} $\nu_*$ is the unique minimal admissible scalar completion coefficient.
+\item \textbf{Certificate:} Any maximizer $x_*$ achieving $\nu_*$ satisfies $\langle x_*, (D + \nu_* L) x_* \rangle = 0$; this is a \emph{tight mode} certifying that $\nu_*$ is sharp.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{remark}[Closed-form minimal completion]
+\label{rem:compiler-output}
+\lean{CoherenceCalculus.scalar_completion_compiler_output}
+Theorem~\ref{thm:scalar-completion} is the closed-form solution for the
+simplest admissible cone, namely a one-parameter family.
+It produces both a value ($\nu_*$) and a certificate ($x_*$).
+The template $L$ is fixed by earlier structural constraints (C1)--(C4); this theorem does not choose $L$.
+\end{remark}
+
+\begin{remark}[Generalized eigenvalue formulation]
+\label{rem:generalized-eigenvalue}
+\lean{CoherenceCalculus.generalized_eigenvalue_formulation}
+When $L \succ 0$ (strictly positive definite), $\nu_*$ is the largest eigenvalue of the generalized eigenvalue problem $D x = -\lambda L x$, clamped to be nonnegative.
+This connects admissibility to standard spectral theory.
+On the current finite Lean surface, this is recorded at the least-feasible-scalar level underlying that spectral interpretation.
+\end{remark}

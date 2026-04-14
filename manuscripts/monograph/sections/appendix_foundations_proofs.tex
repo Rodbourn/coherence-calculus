@@ -1,0 +1,15 @@
+% Appendix A: Foundations Proofs (Chapters 1--2)
+\label{sec:appendix-foundations}
+
+\begin{proof}[Proof of Theorem~\ref{thm:choice}]
+\label{proof:thm:choice}
+The Axiom of Choice (AC) asserts: for any collection of non-empty sets, there exists a function selecting one element from each. For \emph{infinite} collections, this requires a non-constructive principle.
+
+In the finite setting of this paper:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item Every configuration is finite, already on the incidence-count surface.
+\item Each finite family is represented together with an explicit enumeration of each fiber.
+\item Given such an explicitly enumerated family, we construct a choice function by taking the first listed element at each index.
+\end{enumerate}
+The construction is explicit and constructive: once each finite fiber is enumerated, one simply selects the first listed element at each index. No global choice principle is used.
+\end{proof}

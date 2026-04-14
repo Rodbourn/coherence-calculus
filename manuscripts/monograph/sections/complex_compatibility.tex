@@ -1,0 +1,1174 @@
+% ============================================================
+\section{Complex Compatibility Under Splits}
+\label{sec:complex-compatibility}
+% ============================================================
+
+\begin{quote}\small
+\textbf{Goal:} Connect split projections to Hilbert complexes.\\
+\textbf{Payoff:} When a projection commutes with the differential, the complex restricts cleanly; otherwise, spurious cohomology may appear.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Intertwining Projections and Subcomplexes}
+\label{subsec:intertwining}
+% ------------------------------------------------------------
+
+\begin{definition}[Intertwining projection]
+\label{def:intertwining}\lean{IntertwiningProj}
+Let $(H^k, D_k)$ be a Hilbert complex.
+A family of orthogonal projections $P_k : H^k \to H^k$ is \emph{intertwining} (or \emph{chain-compatible}) if
+\[
+P_{k+1} D_k = D_k P_k \quad \text{for all } k.
+\]
+\end{definition}
+
+\begin{theorem}[Subcomplex from intertwining projections]
+\label{thm:subcomplex}\lean{subcomplex_nilpotent}
+If $(P_k)$ is an intertwining family for $(H^k, D_k)$, then:
+\begin{enumerate}[label=(\roman*)]
+\item $(P_k H^k, D_k|_{P_k H^k})$ is a subcomplex: $D_{k+1} D_k|_{P_k H^k} = 0$.
+\item The inclusion $\iota: (P_k H^k, D_k|_{P_k}) \hookrightarrow (H^k, D_k)$ is a chain map.
+\item If the full complex is exact at degree $k$, then the restricted complex is exact at $k$.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Cohomology splits]
+\label{cor:cohomology-splits}\lean{complement_intertwines}
+If $(P_k)$ is intertwining, then
+\[
+\CCCoh{k}(D) \cong \CCCoh{k}(D|_P) \oplus \CCCoh{k}(D|_{\CCComp}),
+\]
+where $\CCComp_k = I - P_k$.
+In particular, if the full complex is exact, both restricted complexes are exact.
+\end{corollary}
+
+\begin{proof}
+The Hodge decomposition on each $H^k$ respects the $P_k / \CCComp_k$ splitting when the projections intertwine.
+Harmonics in $P_k H^k$ and $\CCComp_k H^k$ are independent.
+\end{proof}
+
+% ------------------------------------------------------------
+\subsection{Non-Intertwining and Spurious Cohomology}
+\label{subsec:spurious-cohomology}
+% ------------------------------------------------------------
+
+\begin{definition}[Projection defect for complex]
+\label{def:projection-defect-complex}\lean{projectionDefect}
+The \emph{projection defect} of $(P_k)$ with respect to $(D_k)$ is the family of operators
+\[
+\delta_k := P_{k+1} D_k - D_k P_k : H^k \to H^{k+1}.
+\]
+The projections are intertwining iff $\delta_k = 0$ for all $k$.
+\end{definition}
+
+\begin{proposition}[Source of spurious harmonics]
+\label{prop:spurious-source}\lean{spurious_vanishes_when_intertwining}
+If $(P_k)$ is not intertwining, then the restricted operators $D_{k,P} := P_{k+1} D_k P_k$ may fail to form a complex:
+\[
+D_{k+1,P} D_{k,P} = P_{k+2} D_{k+1} P_{k+1} \cdot P_{k+1} D_k P_k = P_{k+2} D_{k+1} D_k P_k - P_{k+2} D_{k+1} \delta_k P_k.
+\]
+The first term vanishes by nilpotency; the second is $-P_{k+2} D_{k+1} \delta_k P_k$.
+Thus $D_{k+1,P} D_{k,P} \ne 0$ generically when $\delta_k \ne 0$.
+\end{proposition}
+
+\begin{remark}[Interpretation]\lean{spurious_harmonics_interpretation}
+Non-intertwining projections create ``spurious harmonics,'' meaning states
+that appear closed and co-closed in the restricted complex but are not truly
+harmonic in the full complex.
+This is the cohomological manifestation of the projection defect.
+\end{remark}
+
+% ------------------------------------------------------------
+\subsection{Boundary Compatibility}
+\label{subsec:boundary-compatibility}
+% ------------------------------------------------------------
+
+\begin{definition}[Boundary-compatible projection]
+\label{def:boundary-compatible}\lean{isBoundaryCompatible}
+Let $R_k : H^k \to B^k$ be a boundary restriction map.
+A projection $P_k$ is \emph{boundary-compatible} if
+\[
+R_k P_k = R_k.
+\]
+Equivalently, $R_k \CCComp_k = 0$: boundary data is determined by the $P$-component.
+\end{definition}
+
+\begin{proposition}[Saturation under compatible projections]
+\label{prop:saturation-compatible}\lean{saturation_preserved}
+If $P_k$ is boundary-compatible ($R_k P_k = R_k$) and $R_k D_{k-1} = 0$ (exact forms have zero boundary data), then:
+\begin{enumerate}[label=(\roman*)]
+\item $R_k D_{k-1}|_{P_{k-1}} = 0$ (restricted exact forms still have zero boundary data).
+\item If the full complex is holographically saturated at $k$, so is the restricted complex.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) $R_k D_{k-1} P_{k-1} = R_k P_k D_{k-1} P_{k-1}$ (if intertwining) $= R_k D_{k-1} P_{k-1}$.
+By assumption $R_k D_{k-1} = 0$, so $R_k D_{k-1}|_{P_{k-1}} = 0$.
+
+(ii) Saturation at $k$ means $\Ker(R_k) = \Img(D_{k-1})$.
+Restricted: $\Ker(R_k|_{P_k}) = \Ker(R_k) \cap P_k H^k = \Img(D_{k-1}) \cap P_k H^k = \Img(D_{k-1}|_{P_{k-1}})$ (last equality uses intertwining).
+\end{proof}
+
+\subsection{Compatible complex structures under split transform}
+\label{subsec:compatible-complex-structures}
+
+\begin{definition}[Phase carrier / compatible complex structure]
+\label{def:phase-carrier}\lean{PhaseCarrier}
+Let $A:\cH\to\cH$ be a bounded operator and let $P$ be an orthogonal projection
+on the Hilbert space $\cH$. A \emph{phase carrier} (equivalently, a
+\emph{compatible complex structure}) for the split data $(A,P)$ is a bounded
+unitary operator $J:\cH\to\cH$ satisfying
+\[
+J^2=-I,
+\qquad
+JA=AJ,
+\qquad
+JP=PJ.
+\]
+On the observed sector $P\cH$, define the induced phase operator
+\[
+J_P:=PJ\big|_{P\cH}.
+\]
+\end{definition}
+
+\begin{theorem}[Phase-compatible split transform]\lean{phase_compatible_schur_tower}
+\label{thm:phase-compatible-schur-tower}
+Let $A:\cH\to\cH$ be bounded, let $P$ be an orthogonal projection, let
+$z\in\mathbb{C}$ be such that $(I-z\CCBlockQQ{A})^{-1}$ exists, and assume that
+the split data $(A,P)$ carries a phase carrier $J$ in the sense of
+Definition~\ref{def:phase-carrier}. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the induced operator $J_P$ on $P\cH$ is unitary and satisfies
+      $J_P^2=-I$;
+\item $J_P$ commutes with the Schur correction:
+      \[
+      J_P\,\CCSigmaP{P}{z}=\CCSigmaP{P}{z}\,J_P;
+      \]
+\item $J_P$ commutes with the effective operator:
+      \[
+      J_P\,\CCAeff{A}{P}(z)=\CCAeff{A}{P}(z)\,J_P.
+      \]
+\end{enumerate}
+If $(\CCPi{h})_{h\in\bbN}$ is a faithful horizon tower and the same $J$
+commutes with every $\CCPi{h}$, then the exact Schur tower is phase-compatible
+at every horizon.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{definition}[Complex-type symmetry package]
+\label{def:complex-type-symmetry-package}\lean{ComplexTypeSymmetryPackage}
+Let $G$ be a finite group acting unitarily on the observed sector $P\cH$, and
+assume the representation is multiplicity-free:
+\[
+P\cH \cong \bigoplus_{\rho} V_{\rho}.
+\]
+A \emph{complex-type symmetry package} for the split data $(A,P)$ consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $A$ is $G$-equivariant on $P\cH$;
+\item for each appearing channel $\rho$, a distinguished skew-adjoint unitary
+      \[
+      J_{\rho}:V_{\rho}\to V_{\rho}
+      \]
+      commuting with the $G$-action and satisfying
+      \[
+      J_{\rho}^2=-I_{V_{\rho}};
+      \]
+\item every $G$-equivariant endomorphism of $V_{\rho}$ is of the form
+      \[
+      a I_{V_{\rho}} + b J_{\rho}
+      \qquad(a,b\in\bbR).
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Phase-carrier equivalence]
+\label{def:phase-carrier-equivalence}\lean{PhaseCarrierEquivalence}
+Assume the setting of Definition~\ref{def:complex-type-symmetry-package}. Two
+$G$-equivariant phase carriers $J$ and $J'$ on $P\cH$ are
+\emph{phase-equivalent} if, on each irreducible channel $V_{\rho}$, there is a
+sign $\varepsilon_{\rho}\in\{\pm 1\}$ such that
+\[
+J'|_{V_{\rho}}=\varepsilon_{\rho}\,J|_{V_{\rho}}.
+\]
+\end{definition}
+
+\begin{theorem}[Multiplicity-free complex-type phase carriers are unique up to channel signs]\lean{phase_carrier_sign_rigidity}
+\label{thm:phase-carrier-sign-rigidity}
+Assume the split data $(A,P)$ carries a complex-type symmetry package in the
+sense of Definition~\ref{def:complex-type-symmetry-package}. Let $J$ be a
+$G$-equivariant phase carrier on $P\cH$ that commutes with $A$. Then on each
+channel $V_{\rho}$ there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}}=\varepsilon_{\rho}\,J_{\rho}.
+\]
+Consequently, all such phase carriers are phase-equivalent in the sense of
+Definition~\ref{def:phase-carrier-equivalence}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Forced phase-carrier class on a complex-type observed sector]\lean{forced_phase_carrier_class}
+\label{cor:forced-phase-carrier-class}
+Assume the setting of Theorem~\ref{thm:phase-carrier-sign-rigidity}. Then the
+observed sector $P\cH$ carries a unique phase-carrier class modulo
+phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+Existence is part of the symmetry package, via the direct sum
+\[
+\bigoplus_{\rho} J_{\rho}.
+\]
+Uniqueness modulo phase-equivalence is exactly
+Theorem~\ref{thm:phase-carrier-sign-rigidity}.
+\end{proof}
+
+\begin{definition}[Complex-type multiplicity package]
+\label{def:complex-type-multiplicity-package}\lean{ComplexTypeMultiplicityPackage}
+Let $G$ be a finite group acting unitarily on the observed sector $P\cH$, and
+assume an isotypic decomposition
+\[
+P\cH \cong \bigoplus_{\rho} V_{\rho}\otimes M_{\rho}.
+\]
+A \emph{complex-type multiplicity package} for the split data $(A,P)$ consists
+of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $A$ is $G$-equivariant on $P\cH$;
+\item for each appearing channel $\rho$, a distinguished skew-adjoint unitary
+      \[
+      J_{\rho}:V_{\rho}\to V_{\rho}
+      \]
+      commuting with the $G$-action and satisfying
+      \[
+      J_{\rho}^2=-I_{V_{\rho}};
+      \]
+\item every $G$-equivariant endomorphism of $V_{\rho}\otimes M_{\rho}$ has the
+      form
+      \[
+      I_{V_{\rho}}\otimes B_{\rho} + J_{\rho}\otimes C_{\rho}
+      \]
+      for real-linear endomorphisms $B_{\rho},C_{\rho}$ of $M_{\rho}$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Multiplicity-gauge equivalence]
+\label{def:multiplicity-gauge-equivalence}\lean{MultiplicityGaugeEquivalence}
+Assume the setting of Definition~\ref{def:complex-type-multiplicity-package}.
+Two $G$-equivariant phase carriers $J$ and $J'$ on $P\cH$ are
+\emph{multiplicity-gauge equivalent} if, on each isotypic channel
+$V_{\rho}\otimes M_{\rho}$, there is a unitary
+\[
+U_{\rho}:M_{\rho}\to M_{\rho}
+\]
+such that
+\[
+J'|_{V_{\rho}\otimes M_{\rho}}
+=
+(I_{V_{\rho}}\otimes U_{\rho})\,
+J|_{V_{\rho}\otimes M_{\rho}}\,
+(I_{V_{\rho}}\otimes U_{\rho})^{-1}.
+\]
+\end{definition}
+
+\begin{theorem}[Phase-carrier normal form on complex-type sectors with multiplicity]\lean{phase_carrier_normal_form_multiplicity}
+\label{thm:phase-carrier-normal-form-multiplicity}
+Assume the split data $(A,P)$ carries a complex-type multiplicity package in
+the sense of Definition~\ref{def:complex-type-multiplicity-package}. Let $J$ be
+a $G$-equivariant phase carrier on $P\cH$ that commutes with $A$. Then on each
+channel $V_{\rho}\otimes M_{\rho}$ there exist real-linear endomorphisms
+$B_{\rho},C_{\rho}$ of $M_{\rho}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+I_{V_{\rho}}\otimes B_{\rho}
++ J_{\rho}\otimes C_{\rho},
+\]
+and these operators satisfy
+\[
+B_{\rho}^*=-B_{\rho},
+\qquad
+C_{\rho}^*=C_{\rho},
+\qquad
+B_{\rho}C_{\rho}+C_{\rho}B_{\rho}=0,
+\qquad
+B_{\rho}^2-C_{\rho}^2=-I_{M_{\rho}}.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{definition}[Scalar multiplicity commutant]
+\label{def:scalar-multiplicity-commutant}\lean{ScalarMultiplicityCommutant}
+Let $\mathcal A_{\rho}$ be a family of operators on the multiplicity space
+$M_{\rho}$. Its \emph{multiplicity commutant} is
+\[
+\mathrm{Comm}(\mathcal A_{\rho})
+:=
+\{X\in \mathrm{End}(M_{\rho}) : XB=BX \text{ for all } B\in \mathcal A_{\rho}\}.
+\]
+The family $\mathcal A_{\rho}$ has \emph{scalar multiplicity commutant} if
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+\end{definition}
+
+\begin{theorem}[Scalar multiplicity commutant collapses phase gauge]\lean{scalar_commutant_collapses_phase_gauge}
+\label{thm:scalar-commutant-collapses-phase-gauge}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For each channel
+$\rho$, let $\mathcal A_{\rho}$ be a family of operators on $M_{\rho}$ such
+that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with $A_{\rho}\in\mathcal A_{\rho}$;
+\item the phase carrier $J$ commutes with that selected-law family;
+\item $\mathcal A_{\rho}$ has scalar multiplicity commutant.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+Consequently, the phase-carrier class is forced modulo channel signs even in
+the presence of multiplicity spaces.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{remark}[Where the unresolved freedom lives]\lean{phase_obstruction_multiplicity_commutant}
+\label{rem:phase-obstruction-multiplicity-commutant}
+Theorem~\ref{thm:scalar-commutant-collapses-phase-gauge} identifies the exact
+obstruction to forcing a phase-carrier class beyond multiplicity-free sectors.
+If the multiplicity commutant is larger than scalars, the residual phase
+freedom lives there. In that case the correct conclusion is not uniqueness of a
+single phase carrier but a gauge class on the multiplicity spaces.
+\end{remark}
+
+\begin{definition}[Observable irreducibility on a multiplicity space]
+\label{def:observable-irreducibility}\lean{ObservableIrreducibility}
+Let $\mathcal A_{\rho}$ be a family of operators on a finite-dimensional real
+Hilbert space $M_{\rho}$. The family is \emph{observable-irreducible} if the
+only subspaces
+\[
+W\subseteq M_{\rho}
+\]
+that satisfy
+\[
+A(W)\subseteq W
+\qquad\text{for every }A\in\mathcal A_{\rho}
+\]
+are
+\[
+W=\{0\}
+\qquad\text{and}\qquad
+W=M_{\rho}.
+\]
+\end{definition}
+
+\begin{theorem}[Irreducible commutant trichotomy]\lean{irreducible_commutant_trichotomy}
+\label{thm:irreducible-commutant-trichotomy}
+Let $\mathcal A_{\rho}$ be an observable-irreducible family on the
+finite-dimensional real Hilbert space $M_{\rho}$. Then its commutant
+\[
+\mathrm{Comm}(\mathcal A_{\rho})
+\]
+is a finite-dimensional real division algebra. Consequently, it is isomorphic
+to exactly one of
+\[
+\bbR,\qquad \mathbb{C},\qquad \mathbb{H}.
+\]
+\end{theorem}
+
+\begin{proof}
+Observable irreducibility is exactly the hypothesis under which the real form
+of Schur's lemma applies: every operator commuting with the family
+$\mathcal A_{\rho}$ is either invertible or zero, so the commutant is a real
+division algebra. Finite-dimensional real division algebras are classified by
+the Frobenius theorem, and the only possibilities are $\bbR$, $\mathbb{C}$,
+and $\mathbb{H}$.
+\end{proof}
+
+\begin{corollary}[Self-adjoint commutant scalarization]\lean{self_adjoint_commutant_scalarization}
+\label{cor:self-adjoint-commutant-scalarization}
+Let $\mathcal A_{\rho}$ be an observable-irreducible family on
+$M_{\rho}$. If
+\[
+K\in\mathrm{Comm}(\mathcal A_{\rho})
+\]
+is self-adjoint, then there exists a unique real number $\lambda_{\rho}$ such
+that
+\[
+K=\lambda_{\rho}I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:irreducible-commutant-trichotomy}, the commutant is
+isomorphic to $\bbR$, $\mathbb{C}$, or $\mathbb{H}$. Relative to the invariant
+inner product, the nonreal generators in the complex and quaternionic cases
+are skew-adjoint. Hence the self-adjoint part of each of these division
+algebras is exactly the real scalar line. Therefore any self-adjoint element
+of the commutant is a real scalar multiple of the identity.
+\end{proof}
+
+\begin{definition}[Real-type observable channel]
+\label{def:real-type-observable-channel}\lean{RealTypeObservableChannel}
+An observable-irreducible family $\mathcal A_{\rho}$ on $M_{\rho}$ is of
+\emph{real type} if its commutant is exactly
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+\end{definition}
+
+\begin{corollary}[Real-type observable irreducibility collapses phase gauge]\lean{real_type_irreducibility_collapses_phase_gauge}
+\label{cor:real-type-irreducibility-collapses-phase-gauge}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is observable-irreducible and of real
+      type;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+The real-type hypothesis is exactly the scalar multiplicity commutant
+condition of Definition~\ref{def:scalar-multiplicity-commutant}. The
+conclusion is therefore Theorem~\ref{thm:scalar-commutant-collapses-phase-gauge}.
+\end{proof}
+
+\begin{remark}[What irreducibility does and does not discharge]\lean{irreducibility_versus_phase}
+\label{rem:irreducibility-versus-phase}
+Observable irreducibility alone does not force a unique phase carrier. It
+forces only the commutant trichotomy of
+Theorem~\ref{thm:irreducible-commutant-trichotomy}. The self-adjoint part of
+the commutant is always scalar by
+Corollary~\ref{cor:self-adjoint-commutant-scalarization}, which is enough to
+force quadratic energies and self-adjoint closures. Residual phase gauge can
+still survive in the skew-adjoint part unless the channel is of real type.
+\end{remark}
+
+\begin{definition}[Observable completeness on a multiplicity space]
+\label{def:observable-completeness}\lean{ObservableCompleteness}
+Let $\mathcal A_{\rho}$ be a family of operators on the finite-dimensional
+real Hilbert space $M_{\rho}$. The family is \emph{observable-complete} if the
+unital real algebra generated by $\mathcal A_{\rho}$ is all of
+\[
+\mathrm{End}(M_{\rho}).
+\]
+\end{definition}
+
+\begin{theorem}[Observable completeness forces scalar commutant]\lean{observable_completeness_scalar_commutant}
+\label{thm:observable-completeness-scalar-commutant}
+Let $\mathcal A_{\rho}$ be observable-complete on $M_{\rho}$. Then
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+\end{theorem}
+
+\begin{proof}
+If an operator $X$ commutes with every element of $\mathcal A_{\rho}$, then it
+commutes with every polynomial expression in that family and hence with the
+entire generated unital algebra. By observable completeness, that algebra is
+all of $\mathrm{End}(M_{\rho})$. Therefore $X$ commutes with every
+endomorphism of $M_{\rho}$, which forces $X$ to lie in the center of the full
+matrix algebra. Over $\bbR$, that center is exactly $\bbR\,I_{M_{\rho}}$.
+\end{proof}
+
+\begin{theorem}[Observable completeness forces irreducibility]\lean{observable_completeness_irreducible}
+\label{thm:observable-completeness-irreducible}
+Let $\mathcal A_{\rho}$ be observable-complete on the finite-dimensional real
+Hilbert space $M_{\rho}$. Then $\mathcal A_{\rho}$ is
+observable-irreducible.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Observable completeness yields real type]\lean{observable_completeness_real_type}
+\label{cor:observable-completeness-real-type}
+Let $\mathcal A_{\rho}$ be observable-complete on $M_{\rho}$. Then
+$\mathcal A_{\rho}$ is of real type in the sense of
+Definition~\ref{def:real-type-observable-channel}.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:observable-completeness-irreducible},
+$\mathcal A_{\rho}$ is observable-irreducible, and by
+Theorem~\ref{thm:observable-completeness-scalar-commutant},
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+This is exactly Definition~\ref{def:real-type-observable-channel}.
+\end{proof}
+
+\begin{corollary}[Observable completeness collapses phase gauge]\lean{observable_completeness_collapses_phase_gauge}
+\label{cor:observable-completeness-collapses-phase-gauge}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is observable-complete;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:observable-completeness-real-type}, the family
+$\mathcal A_{\rho}$ is of real type. The conclusion is then exactly
+Corollary~\ref{cor:real-type-irreducibility-collapses-phase-gauge}.
+\end{proof}
+
+\begin{definition}[Adjoint-closed generated observable algebra]
+\label{def:adjoint-closed-generated-observable-algebra}\lean{AdjointClosedGeneratedObservableAlgebra}
+Let $\mathcal A_{\rho}$ be a family of operators on the finite-dimensional
+real Hilbert space $M_{\rho}$, and let
+\[
+\langle\mathcal A_{\rho}\rangle
+\subseteq
+\mathrm{End}(M_{\rho})
+\]
+be the unital real algebra generated by that family. The family
+$\mathcal A_{\rho}$ is \emph{adjoint-closed in generation} if
+\[
+T\in\langle\mathcal A_{\rho}\rangle
+\qquad\Longrightarrow\qquad
+T^*\in\langle\mathcal A_{\rho}\rangle.
+\]
+\end{definition}
+
+\begin{theorem}[Adjoint-closed real type forces observable completeness]\lean{adjoint_closed_real_type_complete}
+\label{thm:adjoint-closed-real-type-complete}
+Let $\mathcal A_{\rho}$ be a family of operators on the finite-dimensional
+real Hilbert space $M_{\rho}$. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathcal A_{\rho}$ is observable-irreducible;
+\item $\mathcal A_{\rho}$ is of real type;
+\item $\mathcal A_{\rho}$ is adjoint-closed in generation in the sense of
+      Definition~\ref{def:adjoint-closed-generated-observable-algebra}.
+\end{enumerate}
+Then $\mathcal A_{\rho}$ is observable-complete.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Adjoint-closed real type generates matrix units]\lean{adjoint_closed_real_type_matrix_units}
+\label{cor:adjoint-closed-real-type-matrix-units}
+Assume the hypotheses of
+Theorem~\ref{thm:adjoint-closed-real-type-complete}. Fix any orthonormal basis
+$\{e_i\}_{i=1}^m$ of $M_{\rho}$. Then the generated algebra
+$\langle\mathcal A_{\rho}\rangle$ contains every matrix unit
+\[
+E_{ij}(e_k)=\delta_{jk}e_i.
+\]
+In particular, the generated algebra contains a matrix-unit observable
+scaffold.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:adjoint-closed-real-type-complete},
+\[
+\langle\mathcal A_{\rho}\rangle=\mathrm{End}(M_{\rho}).
+\]
+For a fixed orthonormal basis, the rank-one operators $\{E_{ij}\}_{i,j=1}^m$
+are elements of $\mathrm{End}(M_{\rho})$, hence they lie in
+$\langle\mathcal A_{\rho}\rangle$. These operators are exactly a matrix-unit
+observable scaffold.
+\end{proof}
+
+\begin{corollary}[Adjoint-closed real type collapses phase gauge]\lean{adjoint_closed_real_type_phase}
+\label{cor:adjoint-closed-real-type-phase}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is observable-irreducible, of real type,
+      and adjoint-closed in generation;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:adjoint-closed-real-type-complete}, the family
+$\mathcal A_{\rho}$ is observable-complete. The conclusion is therefore
+exactly Corollary~\ref{cor:observable-completeness-collapses-phase-gauge}.
+\end{proof}
+
+\begin{definition}[Rank-one observable seed]
+\label{def:rank-one-observable-seed}\lean{RankOneObservableSeed}
+Let $M$ be a finite-dimensional real Hilbert space. A family of operators
+$\mathcal A\subseteq \mathrm{End}(M)$ is said to carry a
+\emph{rank-one observable seed} if the unital generated algebra
+$\langle\mathcal A\rangle$ contains a rank-one orthogonal projection
+\[
+P_{\ell}:M\to M
+\]
+onto some one-dimensional subspace $\ell\subseteq M$.
+\end{definition}
+
+\begin{definition}[Simple-spectrum observable]
+\label{def:simple-spectrum-observable}\lean{SimpleSpectrumObservable}
+Let $M$ be a finite-dimensional real Hilbert space. A self-adjoint operator
+\[
+S\in \mathrm{End}(M)
+\]
+has \emph{simple spectrum} if there exists an orthonormal basis
+$\{e_i\}_{i=1}^m$ of $M$ and pairwise distinct real numbers
+$\lambda_1,\dots,\lambda_m$ such that
+\[
+Se_i=\lambda_i e_i
+\qquad(i=1,\dots,m).
+\]
+\end{definition}
+
+\begin{theorem}[Simple spectrum yields a rank-one observable seed]\lean{simple_spectrum_gives_rank_one_seed}
+\label{thm:simple-spectrum-gives-rank-one-seed}
+Let $\mathcal A$ be a family of operators on the finite-dimensional real
+Hilbert space $M$. Assume the generated algebra $\langle\mathcal A\rangle$
+contains a self-adjoint simple-spectrum observable
+\[
+S\in\langle\mathcal A\rangle.
+\]
+Then $\mathcal A$ carries a rank-one observable seed.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Simple spectrum plus irreducibility forces observable completeness]\lean{simple_spectrum_complete}
+\label{cor:simple-spectrum-complete}
+Let $\mathcal A$ be a family of operators on the finite-dimensional real
+Hilbert space $M$. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the family $\mathcal A$ is observable-irreducible;
+\item the generated algebra $\langle\mathcal A\rangle$ is adjoint-closed;
+\item the generated algebra $\langle\mathcal A\rangle$ contains a self-adjoint
+      simple-spectrum observable.
+\end{enumerate}
+Then $\mathcal A$ is observable-complete.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:simple-spectrum-gives-rank-one-seed}, the family carries a
+rank-one observable seed. The conclusion is then exactly
+Theorem~\ref{thm:rank-one-seed-forces-completeness}.
+\end{proof}
+
+\begin{corollary}[Simple spectrum collapses phase gauge]\lean{simple_spectrum_phase}
+\label{cor:simple-spectrum-phase}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is observable-irreducible, adjoint-closed
+      in generation, and the generated algebra contains a self-adjoint
+      simple-spectrum observable;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:simple-spectrum-complete}, the family
+$\mathcal A_{\rho}$ is observable-complete. The conclusion is therefore
+exactly Corollary~\ref{cor:observable-completeness-collapses-phase-gauge}.
+\end{proof}
+
+\begin{theorem}[Rank-one seed plus irreducibility forces observable completeness]\lean{rank_one_seed_forces_completeness}
+\label{thm:rank-one-seed-forces-completeness}
+Let $\mathcal A$ be a family of operators on the finite-dimensional real
+Hilbert space $M$. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the family $\mathcal A$ is observable-irreducible;
+\item the generated algebra $\langle\mathcal A\rangle$ is adjoint-closed;
+\item the family $\mathcal A$ carries a rank-one observable seed.
+\end{enumerate}
+Then $\mathcal A$ is observable-complete.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Rank-one observable seed forces scalar commutant]\lean{rank_one_seed_scalar_commutant}
+\label{cor:rank-one-seed-scalar-commutant}
+Assume the hypotheses of
+Theorem~\ref{thm:rank-one-seed-forces-completeness}. Then
+\[
+\mathrm{Comm}(\mathcal A)=\bbR\,I_M.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:rank-one-seed-forces-completeness}, the family
+$\mathcal A$ is observable-complete. The claim is then exactly
+Theorem~\ref{thm:observable-completeness-scalar-commutant}.
+\end{proof}
+
+\begin{corollary}[Rank-one observable seed collapses phase gauge]\lean{rank_one_seed_phase}
+\label{cor:rank-one-seed-phase}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is observable-irreducible, adjoint-closed
+      in generation, and carries a rank-one observable seed;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:rank-one-seed-forces-completeness}, the family
+$\mathcal A_{\rho}$ is observable-complete. The conclusion is therefore
+exactly Corollary~\ref{cor:observable-completeness-collapses-phase-gauge}.
+\end{proof}
+
+\begin{definition}[Orbit line family of a rank-one seed]
+\label{def:observable-orbit-line-family}\lean{ObservableOrbitLineFamily}
+Let $M$ be a finite-dimensional real Hilbert space, let
+\[
+U:G\to O(M)
+\]
+be an orthogonal action, and let
+\[
+P_0:M\to M
+\]
+be a rank-one orthogonal projection onto the line $\ell_0\subseteq M$. The
+\emph{orbit line family} of $P_0$ is
+\[
+\mathcal L(P_0):=\{U(g)\ell_0 : g\in G\}.
+\]
+Its associated \emph{nonorthogonality graph} has vertex set
+$\mathcal L(P_0)$ and an edge between $\ell,\ell'\in\mathcal L(P_0)$ whenever
+\[
+\ell\not\perp \ell'.
+\]
+The orbit line family is \emph{nonorthogonally connected} if this graph is
+connected.
+\end{definition}
+
+\begin{lemma}[Invariant subspaces of a rank-one projection]\lean{rank_one_projection_invariant_subspace}
+\label{lem:rank-one-projection-invariant-subspace}
+Let $P_{\ell}:M\to M$ be the orthogonal projection onto a one-dimensional
+subspace $\ell\subseteq M$, and let $W\subseteq M$ be a subspace invariant
+under $P_{\ell}$. Then either
+\[
+\ell\subseteq W
+\qquad\text{or}\qquad
+\ell\subseteq W^{\perp}.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{theorem}[Connected rank-one symmetry orbits force observable irreducibility]\lean{connected_rank_one_orbit_irreducible}
+\label{thm:connected-rank-one-orbit-irreducible}
+Let $M$ be a finite-dimensional real Hilbert space, let
+\[
+U:G\to O(M)
+\]
+be an orthogonal action, and let
+\[
+P_0:M\to M
+\]
+be a rank-one orthogonal projection onto the line $\ell_0\subseteq M$. For
+each $g\in G$, write
+\[
+P_g:=U(g)P_0U(g)^*
+\qquad\text{and}\qquad
+\ell_g:=U(g)\ell_0.
+\]
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the orbit lines span $M$, that is
+      \[
+      \mathrm{span}\,\mathcal L(P_0)=M;
+      \]
+\item the orbit line family $\mathcal L(P_0)$ is nonorthogonally connected in
+      the sense of Definition~\ref{def:observable-orbit-line-family}.
+\end{enumerate}
+Then the orbit projection family
+\[
+\mathcal O(P_0):=\{P_g : g\in G\}
+\]
+is observable-irreducible on $M$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Sphere-transitive observable orbit forces observable completeness]\lean{sphere_transitive_orbit_observable_completeness}
+\label{cor:sphere-transitive-orbit-observable-completeness}
+Let $M$ be a finite-dimensional real Hilbert space, let
+\[
+U:G\to O(M)
+\]
+be an orthogonal action that is transitive on the unit sphere of $M$, and let
+\[
+P_0:M\to M
+\]
+be a rank-one orthogonal projection. Let $\mathcal A$ be any family of
+operators on $M$ containing the orbit family
+\[
+\mathcal O(P_0)=\{U(g)P_0U(g)^* : g\in G\}.
+\]
+Then $\mathcal A$ is observable-complete.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{definition}[Matrix-unit observable scaffold]
+\label{def:matrix-unit-observable-scaffold}\lean{MatrixUnitObservableScaffold}
+Let $M$ be a finite-dimensional real Hilbert space with orthonormal basis
+$\{e_i\}_{i=1}^m$. A family of operators $\mathcal A\subseteq\mathrm{End}(M)$
+is a \emph{matrix-unit observable scaffold} if, for every pair $(i,j)$, it
+contains the rank-one operator
+\[
+E_{ij}:M\to M,
+\qquad
+E_{ij}(e_k)=\delta_{jk}e_i.
+\]
+\end{definition}
+
+\begin{corollary}[Matrix-unit scaffold forces observable completeness]\lean{matrix_unit_scaffold_complete}
+\label{cor:matrix-unit-scaffold-complete}
+Let $\mathcal A$ be a matrix-unit observable scaffold on $M$. Then
+$\mathcal A$ is observable-complete.
+\end{corollary}
+
+\begin{proof}
+The operators $\{E_{ij}\}_{i,j=1}^m$ form a basis of the full matrix algebra
+\[
+\mathrm{End}(M).
+\]
+If $\mathcal A$ contains all of them, then the unital algebra generated by
+$\mathcal A$ is already all of $\mathrm{End}(M)$. This is exactly
+Definition~\ref{def:observable-completeness}.
+\end{proof}
+
+\begin{corollary}[Matrix-unit scaffold collapses phase gauge]\lean{matrix_unit_scaffold_phase}
+\label{cor:matrix-unit-scaffold-phase}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose the selected-law family on the multiplicity space $M_{\rho}$
+contains a matrix-unit observable scaffold and the phase carrier commutes with
+that family. Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:matrix-unit-scaffold-complete}, the selected-law family
+is observable-complete on $M_{\rho}$. The conclusion is then exactly
+Corollary~\ref{cor:observable-completeness-collapses-phase-gauge}.
+\end{proof}
+
+\begin{theorem}[Finite observable rigidity]\lean{finite_observable_rigidity}
+\label{thm:finite-observable-rigidity}
+Let $M$ be a finite-dimensional real Hilbert space and let
+\[
+\mathcal A\subseteq \mathrm{End}(M)
+\]
+be a family of operators whose generated unital algebra
+\[
+\mathfrak A:=\langle\mathcal A\rangle
+\]
+is adjoint-closed and observable-irreducible. Then the following are
+equivalent:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathcal A$ is observable-complete;
+\item $\mathcal A$ carries a rank-one observable seed;
+\item $\mathfrak A$ contains a self-adjoint simple-spectrum observable;
+\item there exists an orthonormal basis of $M$ for which $\mathfrak A$
+      contains the corresponding matrix-unit observable scaffold.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Finite observable rigidity collapses phase gauge]\lean{finite_observable_rigidity_phase}
+\label{cor:finite-observable-rigidity-phase}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the generated algebra
+      \[
+      \mathfrak A_{\rho}:=\langle\mathcal A_{\rho}\rangle
+      \]
+      is adjoint-closed and observable-irreducible;
+\item at least one of the equivalent conditions of
+      Theorem~\ref{thm:finite-observable-rigidity} holds for
+      $\mathcal A_{\rho}$;
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:finite-observable-rigidity}, the selected-law family is
+observable-complete on $M_{\rho}$. The conclusion is therefore exactly
+Corollary~\ref{cor:observable-completeness-collapses-phase-gauge}.
+\end{proof}
+
+\begin{corollary}[Finite observable rigidity forces real type]\lean{finite_observable_rigidity_real_type}
+\label{cor:finite-observable-rigidity-real-type}
+Assume the hypotheses of Theorem~\ref{thm:finite-observable-rigidity}. Then
+\[
+\mathrm{Comm}(\mathcal A)=\bbR\,I_M.
+\]
+Equivalently, $\mathcal A$ is of real type.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:finite-observable-rigidity}, the family $\mathcal A$ is
+observable-complete. The claim is then exactly
+Theorem~\ref{thm:observable-completeness-scalar-commutant}.
+\end{proof}
+
+\begin{definition}[Phase-rigid observable family]
+\label{def:phase-rigid-observable-family}\lean{PhaseRigidObservableFamily}
+Let $\mathcal A_{\rho}$ be a family of operators on a finite-dimensional real
+Hilbert space $M_{\rho}$. The family is \emph{phase-rigid} if
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+\end{definition}
+
+\begin{corollary}[Phase rigidity collapses phase gauge]\lean{phase_rigidity_collapses_phase_gauge}
+\label{cor:phase-rigidity-collapses-phase-gauge}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the family $\mathcal A_{\rho}$ is phase-rigid in the sense of
+      Definition~\ref{def:phase-rigid-observable-family};
+\item the phase carrier $J$ commutes with the selected-law family.
+\end{enumerate}
+Then there is a sign $\varepsilon_{\rho}\in\{\pm1\}$ such that
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}.
+\]
+\end{corollary}
+
+\begin{proof}
+The phase-rigidity hypothesis is exactly the scalar multiplicity commutant
+condition of Definition~\ref{def:scalar-multiplicity-commutant}. The
+conclusion is therefore Theorem~\ref{thm:scalar-commutant-collapses-phase-gauge}.
+\end{proof}
+
+\begin{definition}[Phase-generating observable family]
+\label{def:phase-generating-observable-family}\lean{PhaseGeneratingObservableFamily}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, a selected-law family on $V_{\rho}\otimes M_{\rho}$ is
+\emph{phase-generating} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law acts on $V_{\rho}\otimes M_{\rho}$ through operators of
+      the form $I_{V_{\rho}}\otimes A_{\rho}$ with
+      $A_{\rho}\in\mathcal A_{\rho}$;
+\item the phase carrier $J$ commutes with the selected-law family;
+\item at least one of the following holds:
+      \begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+      \item the family $\mathcal A_{\rho}$ is phase-rigid in the sense of
+            Definition~\ref{def:phase-rigid-observable-family};
+      \item the family $\mathcal A_{\rho}$ satisfies the hypotheses of
+            Corollary~\ref{cor:finite-observable-rigidity-phase};
+      \item the family $\mathcal A_{\rho}$ satisfies the hypotheses of
+            Corollary~\ref{cor:adjoint-closed-real-type-phase}.
+      \end{enumerate}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Phase-generation forces a unique phase-carrier class]\lean{phase_generation_forces_phase_class}
+\label{thm:phase-generation-forces-phase-class}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose the selected-law family is phase-generating in the sense of
+Definition~\ref{def:phase-generating-observable-family}. Then the selected law
+on $V_{\rho}\otimes M_{\rho}$ carries a unique phase-carrier class modulo
+phase-equivalence.
+\end{theorem}
+
+\begin{proof}
+By Definition~\ref{def:phase-generating-observable-family}, one of cases
+(iii.a)--(iii.c) holds. In case (iii.a), the conclusion is exactly
+Corollary~\ref{cor:phase-rigidity-collapses-phase-gauge}. In case (iii.b), it
+is exactly Corollary~\ref{cor:finite-observable-rigidity-phase}. In case
+(iii.c), it is exactly Corollary~\ref{cor:adjoint-closed-real-type-phase}.
+\end{proof}
+
+\begin{corollary}[Phase generation forces phase rigidity]\lean{phase_generation_forces_phase_rigidity}
+\label{cor:phase-generation-forces-phase-rigidity}
+Assume the setting of
+Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}. For a fixed channel
+$\rho$, suppose the selected-law family is phase-generating in the sense of
+Definition~\ref{def:phase-generating-observable-family}. Then the selected-law
+family on the multiplicity space $M_{\rho}$ is phase-rigid:
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{definition}[Channel transport network]
+\label{def:channel-transport-network}\lean{ChannelTransportNetwork}
+Let $\Lambda=(\Lambda^0,\Lambda^1)$ be a finite directed graph. A
+\emph{channel transport network} on $\Lambda$ consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a finite-dimensional Hilbert fiber $F_x$ at each site $x\in\Lambda^0$;
+\item for each oriented edge $(x,y)\in\Lambda^1$, a unitary transport map
+      \[
+      U_{xy}:F_y\to F_x.
+      \]
+\end{enumerate}
+A \emph{channel configuration} is a section
+\[
+\psi=(\psi_x)_{x\in\Lambda^0}
+\qquad
+(\psi_x\in F_x).
+\]
+\end{definition}
+
+\begin{definition}[Transport energy on a channel network]
+\label{def:channel-transport-energy}\lean{ChannelTransportEnergy}
+For a channel transport network, define the \emph{transport energy}
+\[
+E[\psi,U]
+:=
+\sum_{(x,y)\in\Lambda^1}\|\psi_x-U_{xy}\psi_y\|^2.
+\]
+\end{definition}
+
+\begin{theorem}[Local unitary covariance of scalar channel transport]\lean{local_unitary_covariance}
+\label{thm:local-unitary-covariance}
+Assume a channel transport network in the sense of
+Definition~\ref{def:channel-transport-network}. Suppose that at each site
+$x\in\Lambda^0$, the selected local observable algebra on $F_x$ is scalar, so
+the channel data are invariant under unitary frame changes on $F_x$. For any
+choice of unitary maps
+\[
+V_x\in U(F_x)
+\qquad(x\in\Lambda^0),
+\]
+define
+\[
+\psi_x' := V_x\psi_x,
+\qquad
+U_{xy}' := V_xU_{xy}V_y^{-1}.
+\]
+Then
+\[
+E[\psi',U']=E[\psi,U].
+\]
+In particular, scalar local channel data together with transport consistency
+determine a local unitary gauge covariance of the transport network.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Unimodular reduction of channel transport]\lean{unimodular_channel_reduction}
+\label{cor:unimodular-channel-reduction}
+Assume the setting of Theorem~\ref{thm:local-unitary-covariance}, and suppose
+in addition that each fiber $F_x$ carries a fixed unit volume form $\omega_x$
+preserved by admissible frame changes. Then the allowed local frame group
+reduces from $U(F_x)$ to the unimodular subgroup
+\[
+SU(F_x)=\{V_x\in U(F_x):\det(V_x)=1\}.
+\]
+\end{corollary}
+
+\begin{proof}
+Preservation of the fixed unit volume form means precisely that an admissible
+frame change $V_x$ satisfies
+\[
+V_x^*\omega_x=\omega_x,
+\]
+which in an oriented unitary frame is equivalent to $\det(V_x)=1$. Thus the
+allowed frame changes are exactly the unimodular ones.
+\end{proof}
+
+\begin{remark}[Mathematical gauge mechanism]\lean{mathematical_gauge_mechanism}
+\label{rem:mathematical-gauge-mechanism}
+Theorem~\ref{thm:local-unitary-covariance} and
+Corollary~\ref{cor:unimodular-channel-reduction} are purely structural. They do
+not identify any physical gauge field. They show only that scalar local
+channel content plus transport consistency produces a local unitary, and
+optionally unimodular, frame covariance on the resulting transport network.
+\end{remark}
+
+% ------------------------------------------------------------
+\subsection{Summary: When Splits Preserve Structure}
+\label{subsec:split-summary}
+% ------------------------------------------------------------
+
+\begin{tcolorbox}[colback=black!3, colframe=black!50, title={Compatibility Checklist}]
+\begin{itemize}[itemsep=0.3em]
+\item \textbf{Exactness preserved:} Check $P_{k+1} D_k = D_k P_k$ (intertwining).
+\item \textbf{Saturation preserved:} Check $R_k P_k = R_k$ (boundary compatibility) and intertwining.
+\item \textbf{Spurious harmonics:} If intertwining fails, compute $\delta_k = P_{k+1} D_k - D_k P_k$ to quantify.
+\item \textbf{Safe to split:} Intertwining + boundary compatibility $\Rightarrow$ all cohomological structure restricts cleanly.
+\end{itemize}
+\end{tcolorbox}

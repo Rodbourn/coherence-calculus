@@ -1,0 +1,892 @@
+% Appendix F: Part I Continuum Bridge Proofs (Chapter 9)
+\label{sec:appendix-continuum}
+
+% --- Proofs from classical_limit_bridge.tex ---
+
+\begin{proof}[Proof of Proposition~\ref{prop:faithful-operator-recovery}]
+\label{proof:prop:faithful-operator-recovery}
+Fix $x\in\mathcal D(d)$ and set $y_h:=d\CCPi{h}x$. By hypothesis,
+$y_h\to y:=dx$. Since each $\CCPi{h}$ is an orthogonal projection,
+\[
+\|\CCPibar{h}y_h\|
+\le
+\|\CCPibar{h}(y_h-y)\|+\|\CCPibar{h}y\|
+\le
+\|y_h-y\|+\|\CCPibar{h}y\|.
+\]
+The first term tends to zero because $y_h\to y$, and the second tends to zero
+by faithfulness applied to $y\in\cH$. Hence
+\[
+\|\CCPibar{h}d\CCPi{h}x\|=\|\CCPibar{h}y_h\|\to 0.
+\]
+Now
+\[
+\CCObs{d}{h}x-dx
+=
+\CCPi{h}d\CCPi{h}x-dx
+=
+(y_h-y)-\CCPibar{h}y_h,
+\]
+so
+\[
+\|\CCObs{d}{h}x-dx\|
+\le
+\|y_h-y\|+\|\CCPibar{h}y_h\|
+\to 0.
+\]
+This proves both claims.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hilbert-completion}]
+\label{proof:thm:hilbert-completion}
+The compatible inner products make $\cH_{\mathrm{alg}}$ into a pre-Hilbert
+space, whose completion is a separable Hilbert space because it is the closure
+of a countable union of finite-dimensional stages. This proves (i), and (ii) is
+the standard extension of isometric inclusions to the completion.
+
+For (iii), the nested stage structure implies
+\[
+\CCHobs{h}\subseteq \CCHobs{h'}
+\qquad(h\le h'),
+\]
+so orthogonal projection satisfies
+\[
+\CCPi{h}\CCPi{h'}=\CCPi{\min(h,h')}.
+\]
+Thus $(\CCPi{h})$ is a transitive horizon tower in the sense of
+Definition~\ref{def:horizon-tower}.
+
+For (iv), if $x\in\cH_{\mathrm{alg}}$, then $x$ belongs to some stage
+$\CCHobs{h_0}$, hence $\CCPi{h}x=x$ for all $h\ge h_0$. Density of
+$\cH_{\mathrm{alg}}$ in $\cH_\infty$ and uniform boundedness of orthogonal
+projections then imply $\CCPi{h}x\to x$ for every $x\in\cH_\infty$.
+\end{proof}
+
+% --- Proofs from continuum_identification.tex ---
+
+\begin{proof}[Proof of Theorem~\ref{thm:continuum-identification}]
+\label{proof:thm:continuum-identification}
+For (i), let $u\in\cX_0$. By asymptotic consistency,
+\[
+Lu=\lim_{n\to\infty}E_nL_nP_nu=L'u.
+\]
+Hence $L=L'$ on $\cX_0$.
+
+For (ii), fix $u\in\cX_0$. Using asymptotic consistency together with the
+intertwining hypotheses,
+\begin{align*}
+SLu
+&=
+S\Bigl(\lim_{n\to\infty}E_nL_nP_nu\Bigr) \\
+&=
+\lim_{n\to\infty}SE_nL_nP_nu \\
+&=
+\lim_{n\to\infty}E_nS_nL_nP_nu \\
+&=
+\lim_{n\to\infty}E_nL_nS_nP_nu \\
+&=
+\lim_{n\to\infty}E_nL_nP_n(Su) \\
+&=
+LSu.
+\end{align*}
+So any symmetry transported through the discrete family survives the continuum
+identification.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:refinement-coherent-core-realization}]
+\label{proof:thm:refinement-coherent-core-realization}
+Fix \(u\in\cX_0\) and \(n\le m\). By refinement coherence,
+\[
+P_m u = J_{n,m}P_nu
+\qquad\text{and}\qquad
+E_n = E_mJ_{n,m}.
+\]
+Using the intertwining relation from
+Definition~\ref{def:refinement-compatible-family},
+\[
+J_{n,m}L_n = L_mJ_{n,m},
+\]
+we obtain
+\[
+E_mL_mP_mu
+=
+E_mL_mJ_{n,m}P_nu
+=
+E_mJ_{n,m}L_nP_nu
+=
+E_nL_nP_nu.
+\]
+This proves (i).
+
+Statement (i) shows that the formula
+\[
+L_\sharp u:=E_nL_nP_nu
+\]
+is independent of \(n\), so \(L_\sharp:\cX_0\to\cX\) is well defined. For
+every \(u\in\cX_0\), the sequence \((E_nL_nP_nu)_{n\in\bbN}\) is constant, so
+it converges to \(L_\sharp u\). Hence \(L_\sharp\) is asymptotically
+consistent with \(\mathcal F\). If \(L:\cX_0\to\cX\) is any other
+asymptotically consistent operator, then
+Theorem~\ref{thm:continuum-identification}(i) gives \(L=L_\sharp\) on
+\(\cX_0\). This proves (ii).
+
+Assume now that \(L_\sharp\) is bounded on \(\cX_0\). Then for every
+\(u\in\cX_0\) and every \(n\),
+\[
+\|E_nL_nP_nu\|_{\cX}
+=
+\|L_\sharp u\|_{\cX}
+\le
+\|L_\sharp\|\,\|u\|_{\cX},
+\]
+so \(\mathcal F\) is stable. Also, for every \(n\),
+\[
+E_{n+1}L_{n+1}P_{n+1}u-E_nL_nP_nu=0,
+\]
+so \(\mathcal F\) is summably refinement-consistent with
+\(\varepsilon_n=0\). Because \(L_\sharp\) is bounded on the dense subspace
+\(\cX_0\), it extends uniquely to a bounded operator \(L_\infty:\cX\to\cX\).
+This proves (iii).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:one-stage-bounded-exact-core-forcing}]
+\label{proof:thm:one-stage-bounded-exact-core-forcing}
+By Theorem~\ref{thm:refinement-coherent-core-realization}, the exact core law
+\[
+L_\sharp u:=E_nL_nP_nu
+\qquad (u\in\cX_0)
+\]
+is already well defined and independent of \(n\). In particular, for every
+\(u\in\cX_0\),
+\[
+L_\sharp u
+=
+E_{n_\ast}L_{n_\ast}P_{n_\ast}u.
+\]
+The assumed bound at the single stage \(n_\ast\) therefore gives
+\[
+\|L_\sharp u\|_{\cX}
+=
+\|E_{n_\ast}L_{n_\ast}P_{n_\ast}u\|_{\cX}
+\le
+C\|u\|_{\cX}
+\qquad (u\in\cX_0).
+\]
+Thus \(L_\sharp\) is bounded on \(\cX_0\), proving item \emph{(i)}.
+
+Now apply item \emph{(iii)} of
+Theorem~\ref{thm:refinement-coherent-core-realization}: because \(L_\sharp\) is
+bounded on the dense core, it extends uniquely to a bounded operator
+\(L_\infty:\cX\to\cX\), and the family is stable and summably
+refinement-consistent with zero refinement defect. Since \(L_\infty\) agrees
+with \(L_\sharp\) on \(\cX_0\), the exact identity
+\[
+E_nL_nP_nu=L_\infty u
+\qquad (u\in\cX_0,\ n\in\bbN)
+\]
+holds for every reconstructed stage. This proves item \emph{(ii)}.
+
+If \(L:\cX_0\to\cX\) is any asymptotically consistent operator, then
+Theorem~\ref{thm:continuum-identification}(i) applied to \(L\) and
+\(L_\infty|_{\cX_0}\) gives
+\[
+L=L_\infty|_{\cX_0}.
+\]
+This proves item \emph{(iii)}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-core-graph-completion}]
+\label{proof:thm:exact-core-graph-completion}
+By Theorem~\ref{thm:refinement-coherent-core-realization}, the exact core law
+\[
+L_\sharp u:=E_nL_nP_nu
+\qquad (u\in\cX_0)
+\]
+is well defined and independent of \(n\). Endow \(\cX_0\) with the graph norm
+\[
+\|u\|_{\mathrm{gr}}=\|u\|_{\cX}+\|L_\sharp u\|_{\cX},
+\]
+let \(\cX_{\mathrm{gr}}\) be its Banach completion, and let
+\(\iota_{\mathrm{gr}}:\cX_0\to\cX_{\mathrm{gr}}\) be the canonical dense
+embedding.
+
+For every \(u\in\cX_0\),
+\[
+\|u\|_{\cX}\le \|u\|_{\mathrm{gr}}.
+\]
+Hence the identity map \(u\mapsto u\) from \((\cX_0,\|\cdot\|_{\mathrm{gr}})\)
+to \(\cX\) is bounded with norm at most \(1\), so it extends uniquely to a
+bounded map
+\[
+I_{\mathrm{gr}}:\cX_{\mathrm{gr}}\to\cX
+\]
+with \(\|I_{\mathrm{gr}}\|\le 1\) and
+\[
+I_{\mathrm{gr}}\iota_{\mathrm{gr}}u=u
+\qquad (u\in\cX_0).
+\]
+This proves item \emph{(i)}.
+
+Similarly,
+\[
+\|L_\sharp u\|_{\cX}\le \|u\|_{\mathrm{gr}}
+\qquad (u\in\cX_0),
+\]
+so \(L_\sharp:(\cX_0,\|\cdot\|_{\mathrm{gr}})\to\cX\) is bounded with norm at
+most \(1\). It therefore extends uniquely to a bounded map
+\[
+\overline L:\cX_{\mathrm{gr}}\to\cX
+\]
+with \(\|\overline L\|\le 1\) and
+\[
+\overline L\,\iota_{\mathrm{gr}}u=L_\sharp u
+\qquad (u\in\cX_0).
+\]
+Because \(L_\sharp u=E_nL_nP_nu\) for every \(n\), item \emph{(ii)} follows.
+
+Now assume \(Y\), \(J\), \(C\), \(I\), and \(G\) satisfy the hypotheses of
+item \emph{(iii)}. The inequality
+\[
+\|Ju\|_Y\le C\|u\|_{\mathrm{gr}}
+\qquad (u\in\cX_0)
+\]
+shows that \(J:(\cX_0,\|\cdot\|_{\mathrm{gr}})\to Y\) is bounded. Hence it
+extends uniquely to a bounded map
+\[
+U:\cX_{\mathrm{gr}}\to Y
+\]
+with
+\[
+U\iota_{\mathrm{gr}}=J.
+\]
+For every \(u\in\cX_0\),
+\[
+I\,U\,\iota_{\mathrm{gr}}u=IJu=u=I_{\mathrm{gr}}\iota_{\mathrm{gr}}u,
+\]
+so \(I\,U=I_{\mathrm{gr}}\) by density of \(\iota_{\mathrm{gr}}(\cX_0)\).
+Likewise,
+\[
+G\,U\,\iota_{\mathrm{gr}}u=GJu=L_\sharp u
+=\overline L\,\iota_{\mathrm{gr}}u,
+\]
+hence \(G\,U=\overline L\). Uniqueness of \(U\) again follows from density.
+This proves item \emph{(iii)}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:finite-exact-stage-closes-continuum-bridge}]
+\label{proof:cor:finite-exact-stage-closes-continuum-bridge}
+Because \(\cH_{n_\ast}\) is finite-dimensional, every linear map on
+\(\cH_{n_\ast}\) is bounded. In particular, there exists \(M_\ast\ge 0\) such
+that
+\[
+\|L_{n_\ast}x\|_{\cH_{n_\ast}}\le M_\ast\|x\|_{\cH_{n_\ast}}
+\qquad (x\in\cH_{n_\ast}).
+\]
+By Definition~\ref{def:continuum-reconstruction-datum}, the sampling and
+reconstruction maps are bounded, so there exist constants \(A_\ast,B_\ast\ge0\)
+with
+\[
+\|P_{n_\ast}u\|_{\cH_{n_\ast}}\le A_\ast\|u\|_{\cX}
+\qquad (u\in\cX_0),
+\]
+\[
+\|E_{n_\ast}y\|_{\cX}\le B_\ast\|y\|_{\cH_{n_\ast}}
+\qquad (y\in\cH_{n_\ast}).
+\]
+Therefore
+\[
+\|E_{n_\ast}L_{n_\ast}P_{n_\ast}u\|_{\cX}
+\le
+B_\ast M_\ast A_\ast \|u\|_{\cX}
+\qquad (u\in\cX_0).
+\]
+This is exactly the one-stage bound required by
+Theorem~\ref{thm:one-stage-bounded-exact-core-forcing}, which then yields the
+unique bounded continuum law on \(\cX\).
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-continuum-realization-no-ambiguity}]
+\label{proof:cor:exact-continuum-realization-no-ambiguity}
+Item \emph{(i)} is exactly
+Theorem~\ref{thm:exact-core-graph-completion}(iii).
+
+For item \emph{(ii)}, let \(L_\infty:\cX\to\cX\) be the bounded continuum law
+given by Theorem~\ref{thm:one-stage-bounded-exact-core-forcing}. By that
+theorem,
+\[
+L_\infty u=L_\sharp u
+\qquad (u\in\cX_0),
+\]
+where \(L_\sharp\) is the exact core law of
+Theorem~\ref{thm:refinement-coherent-core-realization}. Apply
+Theorem~\ref{thm:exact-core-graph-completion}(iii) with
+\[
+Y:=\cX,
+\qquad
+J:=\mathrm{id}_{\cX_0},
+\qquad
+I:=\mathrm{id}_{\cX},
+\qquad
+G:=L_\infty.
+\]
+The required bound holds because
+\[
+\|Ju\|_{\cX}=\|u\|_{\cX}\le \|u\|_{\mathrm{gr}}
+\qquad (u\in\cX_0),
+\]
+and the intertwining identities hold because
+\[
+IJu=u,
+\qquad
+GJu=L_\infty u=L_\sharp u
+\qquad (u\in\cX_0).
+\]
+Therefore there exists a unique bounded map
+\[
+U:\cX_{\mathrm{gr}}\to\cX
+\]
+such that
+\[
+U\iota_{\mathrm{gr}}=J,
+\qquad
+I\,U=I_{\mathrm{gr}},
+\qquad
+G\,U=\overline L.
+\]
+Since \(I=\mathrm{id}_{\cX}\), the identity \(I\,U=I_{\mathrm{gr}}\) gives
+\[
+U=I_{\mathrm{gr}}.
+\]
+Substituting into \(G\,U=\overline L\) yields
+\[
+L_\infty I_{\mathrm{gr}}=\overline L.
+\]
+Thus the bounded original-space law is exactly the unique descent of the
+canonical graph-completed realization.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:selected-family-continuum-realization}]
+\label{proof:thm:selected-family-continuum-realization}
+Fix $u\in\cX_0$. For $m>n$, telescoping gives
+\[
+E_mL_mP_mu-E_nL_nP_nu
+=
+\sum_{j=n}^{m-1}
+\bigl(E_{j+1}L_{j+1}P_{j+1}u-E_jL_jP_ju\bigr).
+\]
+Hence
+\[
+\|E_mL_mP_mu-E_nL_nP_nu\|_{\cX}
+\le
+\Bigl(\sum_{j=n}^{m-1}\varepsilon_j\Bigr)\|u\|_{\cX}.
+\]
+Because \(\sum_j\varepsilon_j<\infty\), the sequence
+\((E_nL_nP_nu)_{n\in\bbN}\) is Cauchy in the Banach space \(\cX\), hence
+convergent. This proves (i).
+
+Define
+\[
+L_\infty u:=\lim_{n\to\infty}E_nL_nP_nu
+\qquad (u\in\cX_0).
+\]
+Linearity follows from linearity of each \(E_nL_nP_n\). Stability gives
+\[
+\|L_\infty u\|_{\cX}
+=
+\lim_{n\to\infty}\|E_nL_nP_nu\|_{\cX}
+\le
+C\|u\|_{\cX}
+\qquad (u\in\cX_0).
+\]
+So \(L_\infty\) is bounded on the dense subspace \(\cX_0\), hence extends
+uniquely to a bounded operator \(\cX\to\cX\), still denoted \(L_\infty\). By
+construction, the restriction \(L_\infty|_{\cX_0}\) is asymptotically
+consistent with \(\mathcal F\). This proves (ii).
+
+If \(L:\cX_0\to\cX\) is any other asymptotically consistent operator, then
+Theorem~\ref{thm:continuum-identification}(i) applied to
+\(L\) and \(L_\infty|_{\cX_0}\) gives
+\[
+L=L_\infty|_{\cX_0}
+\]
+on \(\cX_0\). This proves (iii).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:stencil-forcing-principle}]
+\label{proof:thm:stencil-forcing-principle}
+Theorem~\ref{thm:forced-discrete-families} records that the discrete selected
+law is already forced at each refinement stage of \(\mathcal F\). By
+Theorem~\ref{thm:selected-family-continuum-realization}, hypotheses
+\emph{(ii)}--\emph{(iii)} then produce a unique bounded operator
+\[
+L_\infty:\cX\to\cX
+\]
+whose restriction to \(\cX_0\) is asymptotically consistent with
+\(\mathcal F\). The same theorem also says that no second operator on
+\(\cX_0\) can be asymptotically consistent with the same reconstructed
+selected laws. Therefore the continuum law carried by \(\mathcal F\) is
+forced.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-stencil-forcing-principle}]
+\label{proof:thm:exact-stencil-forcing-principle}
+Theorem~\ref{thm:forced-discrete-families} records that the discrete selected
+law is already forced at each refinement stage of \(\mathcal F\). By
+Theorem~\ref{thm:one-stage-bounded-exact-core-forcing}, hypothesis
+\emph{(ii)} upgrades the refinement-coherent reconstructed family directly to a
+unique bounded operator
+\[
+L_\infty:\cX\to\cX
+\]
+whose restriction to \(\cX_0\) is asymptotically consistent with
+\(\mathcal F\), and no second asymptotically consistent operator can exist on
+\(\cX_0\). Therefore the continuum law encoded by the selected family is
+forced on the exact branch.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:continuous-effective-flow}]
+\label{proof:thm:continuous-effective-flow}
+The map $\ell\mapsto A_{QQ}(\ell)$ is $C^1$ by
+Lemma~\ref{lem:continuous-block-derivatives}. Since inversion is $C^1$ on the
+open set of invertible operators, the uniform resolvent hypothesis gives
+\[
+\frac{d}{d\ell}R_{Q,\ell}(z)
+=
+z\,R_{Q,\ell}(z)\,\frac{d}{d\ell}A_{QQ}(\ell)\,R_{Q,\ell}(z).
+\]
+Now differentiate
+\[
+A_{\mathrm{eff},\ell}(z)
+=
+A_{PP}(\ell)+zA_{PQ}(\ell)R_{Q,\ell}(z)A_{QP}(\ell)
+\]
+using the product rule and substitute the derivative of the shadow resolvent.
+This yields exactly the stated formula.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:characteristic-scale-promotion}]
+\label{proof:thm:characteristic-scale-promotion}
+For (i), Theorem~\ref{thm:nonlinear-shadow-elimination} identifies full
+solutions of $F(u)=0$ in the graph of $\Psi$ with observed solutions of the
+effective law
+\[
+F_{\mathrm{eff}}(p)=PF(u_p)=0.
+\]
+Since
+\[
+PF(u_p)=P\mathcal D_\chi u_p + PN(u_p)=F_{\mathrm{prom},P}(p),
+\]
+the reduced equation is exactly the promoted observed law.
+
+For (ii), let $g\in \mathrm{Ran}(P)$ be smooth. Because $P$ is orthogonal and
+$Pg=g$,
+\[
+\int_U (P\mathcal D_\chi u_p)\,g\,\nu
+=
+\int_U \mathcal D_\chi u_p\,(Pg)\,\nu
+=
+\int_U \mathcal D_\chi u_p\,g\,\nu.
+\]
+Applying Theorem~\ref{thm:characteristic-ibp} with $f=u_p$ gives
+\[
+\int_U \mathcal D_\chi u_p\,g\,\nu
+=
+\int_{\partial U}u_p g\,\iota_{\widetilde V}\nu
+-
+\int_U u_p(\mathcal D_\chi g)\,\nu.
+\]
+Adding the term $\int_U K_P(p)\,g\,\nu$ yields the stated identity.
+
+Statement (iii) is the special case of (ii) in which $\mathcal D_\chi g=0$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:admissible-promotion}]
+\label{proof:cor:admissible-promotion}
+By Theorem~\ref{thm:characteristic-scale-promotion}, each admissible horizon
+cut produces a canonically defined promoted observed law. Assumptions (i)--(iii)
+place that promoted law inside the finite selection interface of
+Theorem~\ref{thm:selection-interface}, and
+Corollary~\ref{cor:selection-to-forcing} then yields uniqueness up to
+horizon-preserving equivalence at that step. Because $\mathfrak C$ is closed
+under promotion, the same argument applies again after each finite number of
+steps. An induction on the length of the horizon chain proves the recursive
+statement.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:inherited-minimal-order-closure-class}]
+\label{proof:cor:inherited-minimal-order-closure-class}
+For each \(n\), Corollary~\ref{cor:realized-transport-order-forcing} forces the
+distinguished admissible transport-order class on the transport-order
+disciplined realized class carrying \(R_n\). Since the minimal-order
+admissible subclass is singleton modulo the chosen realized equivalence
+relation in that definition, the selected law \(L_n\) lies in that
+distinguished class. This proves (a).
+
+Now restrict attention to the refinement-compatible families whose levelwise
+selected laws lie in those distinguished admissible minimal-order subclasses.
+By part (a), the family \(\mathcal F\) already belongs to that restricted
+class. Hypotheses (ii) and (iii) therefore place that restricted family inside
+the scope of Theorem~\ref{thm:selected-family-continuum-realization}, which
+produces a unique bounded operator \(L_\infty:\cX\to\cX\) asymptotically
+consistent with the distinguished minimal-order selected laws. Because the
+restricted family was defined using exactly those minimal-order subclasses,
+\(L_\infty|_{\cX_0}\) belongs to the inherited distinguished minimal-order
+closure class generated by \(\mathcal F\). This proves (b). The uniqueness
+statement (c) is the uniqueness clause of
+Theorem~\ref{thm:selected-family-continuum-realization} applied to the same
+restricted family.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:primitive-support-continuum-spectral-defect}]
+\label{proof:cor:primitive-support-continuum-spectral-defect}
+Definition~\ref{def:primitive-support-spectral-defect-family} already places
+\(\mathcal F_{\mathrm{prim}}\) inside the scope of the selected-family
+continuum realization theorem. Hypotheses \emph{(ii)}--\emph{(iii)} are
+exactly the stability and summable refinement-consistency assumptions of
+Theorem~\ref{thm:selected-family-continuum-realization}, so there is a unique
+bounded operator \(L_{\infty}^{\mathrm{prim}}:\cX\to\cX\) asymptotically
+consistent with the reconstructed primitive-support family. Hypothesis
+\emph{(iv)} says that every reconstructed stage law is self-adjoint and
+positive semidefinite; these properties pass to the limit on the dense test
+domain \(\cX_0\). Therefore the displayed quadratic form is well defined and is
+the continuum spectral defect form forced by the primitive-support tower.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:scalar-recursion-identifies-continuum-generator}]
+\label{proof:thm:scalar-recursion-identifies-continuum-generator}
+Apply Theorem~\ref{thm:selected-family-continuum-realization} to the discrete
+operator family
+\[
+\Theta_n=\varepsilon_n^{-2}(B_n-2I_{F_n})
+\]
+with reconstruction datum
+\((\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})\).
+Hypotheses \emph{(ii)}--\emph{(iii)} are exactly the stability and summable
+refinement-consistency conditions required there, so the theorem produces a
+unique bounded operator \(\Theta:\mathcal T\to\mathcal T\) satisfying
+\[
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\to \Theta u
+\qquad (u\in\mathcal T_0).
+\]
+
+Now let \(x^{(n)}=(x_m^{(n)})_{m\in\bbZ}\) be a selected transport sequence
+with \(x_0^{(n)}=P_n^{\mathcal T}u\) and recursion law
+\[
+x_{m+1}^{(n)}=B_nx_m^{(n)}-x_{m-1}^{(n)}.
+\]
+Evaluating at \(m=0\) gives
+\[
+x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}
+=(B_n-2I_{F_n})x_0^{(n)}
+=(B_n-2I_{F_n})P_n^{\mathcal T}u.
+\]
+After dividing by \(\varepsilon_n^2\) and applying \(E_n^{\mathcal T}\), the
+left-hand side becomes exactly
+\[
+E_n^{\mathcal T}\frac{x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}}{\varepsilon_n^2},
+\]
+while the right-hand side is \(E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\).
+The already proved convergence to \(\Theta u\) therefore yields the second
+statement.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:one-stage-bounded-exact-scalar-recursion-forces-generator}]
+\label{proof:thm:one-stage-bounded-exact-scalar-recursion-forces-generator}
+Fix \(u\in\mathcal T_0\) and \(n\le m\). By hypothesis \emph{(ii)},
+\[
+P_m^{\mathcal T}u=J_{n,m}^{\mathcal T}P_n^{\mathcal T}u
+\qquad\text{and}\qquad
+E_n^{\mathcal T}=E_m^{\mathcal T}J_{n,m}^{\mathcal T},
+\]
+while the exact recursion-generator family satisfies
+\[
+J_{n,m}^{\mathcal T}\Theta_n=\Theta_mJ_{n,m}^{\mathcal T}.
+\]
+Therefore
+\[
+E_m^{\mathcal T}\Theta_mP_m^{\mathcal T}u
+=
+E_m^{\mathcal T}\Theta_mJ_{n,m}^{\mathcal T}P_n^{\mathcal T}u
+=
+E_m^{\mathcal T}J_{n,m}^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+=
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u.
+\]
+So
+\[
+\Theta_\sharp u:=E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+\qquad (u\in\mathcal T_0)
+\]
+is well defined and independent of \(n\).
+
+Taking \(n=n_\ast\) in the displayed identity and using hypothesis
+\emph{(iii)} gives
+\[
+\|\Theta_\sharp u\|_{\mathcal T}
+=
+\|E_{n_\ast}^{\mathcal T}\Theta_{n_\ast}P_{n_\ast}^{\mathcal T}u\|_{\mathcal T}
+\le
+C\|u\|_{\mathcal T}
+\qquad (u\in\mathcal T_0).
+\]
+Hence \(\Theta_\sharp\) is bounded on the dense subspace \(\mathcal T_0\), so
+it extends uniquely to a bounded operator \(\Theta:\mathcal T\to\mathcal T\).
+Because \(\Theta\) agrees with \(\Theta_\sharp\) on \(\mathcal T_0\), one has
+\[
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u=\Theta u
+\qquad (u\in\mathcal T_0,\ n\in\bbN).
+\]
+
+Now let \(x^{(n)}=(x_m^{(n)})_{m\in\bbZ}\) be any selected transport sequence
+with \(x_0^{(n)}=P_n^{\mathcal T}u\) and
+\[
+x_{m+1}^{(n)}=B_nx_m^{(n)}-x_{m-1}^{(n)}.
+\]
+Evaluating at \(m=0\) gives
+\[
+x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}
+=(B_n-2I_{F_n})P_n^{\mathcal T}u
+=
+\varepsilon_n^2\Theta_nP_n^{\mathcal T}u.
+\]
+After dividing by \(\varepsilon_n^2\) and applying \(E_n^{\mathcal T}\), the
+previous exact identity yields
+\[
+E_n^{\mathcal T}\frac{x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}}{\varepsilon_n^2}
+=
+\Theta u.
+\]
+
+Finally, if \(L:\mathcal T_0\to\mathcal T\) is any asymptotically consistent
+operator for the same exact recursive family, then for each \(u\in\mathcal T_0\)
+the sequence \((E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u)_{n\in\bbN}\) is
+constant with value \(\Theta_\sharp u=\Theta u\). Its limit is therefore
+\(\Theta u\), so \(L=\Theta|_{\mathcal T_0}\). This proves uniqueness.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-scalar-recursion-graph-realization}]
+\label{proof:thm:exact-scalar-recursion-graph-realization}
+Fix \(u\in\mathcal T_0\) and \(n\le m\). By hypothesis,
+\[
+P_m^{\mathcal T}u=J_{n,m}^{\mathcal T}P_n^{\mathcal T}u
+\qquad\text{and}\qquad
+E_n^{\mathcal T}=E_m^{\mathcal T}J_{n,m}^{\mathcal T},
+\]
+while
+\[
+J_{n,m}^{\mathcal T}\Theta_n=\Theta_mJ_{n,m}^{\mathcal T}.
+\]
+Therefore
+\[
+E_m^{\mathcal T}\Theta_mP_m^{\mathcal T}u
+=
+E_m^{\mathcal T}\Theta_mJ_{n,m}^{\mathcal T}P_n^{\mathcal T}u
+=
+E_m^{\mathcal T}J_{n,m}^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+=
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u.
+\]
+So
+\[
+\Theta_\sharp u:=E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+\qquad (u\in\mathcal T_0)
+\]
+is well defined and independent of \(n\).
+
+Endow \(\mathcal T_0\) with the graph norm
+\[
+\|u\|_{\Theta,\mathrm{gr}}
+=
+\|u\|_{\mathcal T}+\|\Theta_\sharp u\|_{\mathcal T},
+\]
+let \(\mathcal T_{\Theta,\mathrm{gr}}\) be its completion, and let
+\(\iota_\Theta:\mathcal T_0\to\mathcal T_{\Theta,\mathrm{gr}}\) be the
+canonical dense embedding. Then
+\[
+\|u\|_{\mathcal T}\le \|u\|_{\Theta,\mathrm{gr}}
+\qquad\text{and}\qquad
+\|\Theta_\sharp u\|_{\mathcal T}\le \|u\|_{\Theta,\mathrm{gr}}
+\qquad (u\in\mathcal T_0).
+\]
+Hence the identity map \(u\mapsto u\) and the operator
+\(u\mapsto \Theta_\sharp u\) are both bounded from the graph normed core to
+\(\mathcal T\), each with norm at most \(1\). They therefore extend uniquely
+to bounded maps
+\[
+I_\Theta,\overline\Theta:\mathcal T_{\Theta,\mathrm{gr}}\to\mathcal T
+\]
+with \(\|I_\Theta\|\le 1\), \(\|\overline\Theta\|\le 1\), and
+\[
+I_\Theta\iota_\Theta u=u,
+\qquad
+\overline\Theta\,\iota_\Theta u=\Theta_\sharp u
+\qquad (u\in\mathcal T_0).
+\]
+Since \(\Theta_\sharp u=E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\) for every
+\(n\), this proves item \emph{(i)}.
+
+If \(L:\mathcal T_0\to\mathcal T\) is any asymptotically consistent operator
+for the same exact recursive family, then for every \(u\in\mathcal T_0\) the
+sequence \((E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u)_{n\in\bbN}\) is
+constant with value \(\Theta_\sharp u\). Therefore its limit is
+\(\Theta_\sharp u\), so \(L=\Theta_\sharp\) on \(\mathcal T_0\). This proves
+item \emph{(ii)}.
+
+Item \emph{(iii)} is the same graph-completion argument as
+Theorem~\ref{thm:exact-core-graph-completion}, applied to the exact recursive
+core operator \(\Theta_\sharp\): any graph-norm continuous Banach realization
+of the same exact family factors uniquely through
+\((\mathcal T_{\Theta,\mathrm{gr}},I_\Theta,\overline\Theta)\).
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:finite-exact-channel-stage-forces-bounded-generator}]
+\label{proof:cor:finite-exact-channel-stage-forces-bounded-generator}
+Because \(F_{n_\ast}\) is finite-dimensional, every linear map on \(F_{n_\ast}\)
+is bounded. In particular, there exists \(M_\ast\ge 0\) such that
+\[
+\|\Theta_{n_\ast}x\|_{F_{n_\ast}}\le M_\ast\|x\|_{F_{n_\ast}}
+\qquad (x\in F_{n_\ast}).
+\]
+Because \(P_{n_\ast}^{\mathcal T}\) and \(E_{n_\ast}^{\mathcal T}\) are
+bounded, there exist constants \(A_\ast,B_\ast\ge 0\) such that
+\[
+\|P_{n_\ast}^{\mathcal T}u\|_{F_{n_\ast}}
+\le
+A_\ast\|u\|_{\mathcal T}
+\qquad (u\in\mathcal T_0),
+\]
+\[
+\|E_{n_\ast}^{\mathcal T}y\|_{\mathcal T}
+\le
+B_\ast\|y\|_{F_{n_\ast}}
+\qquad (y\in F_{n_\ast}).
+\]
+Hence
+\[
+\|E_{n_\ast}^{\mathcal T}\Theta_{n_\ast}P_{n_\ast}^{\mathcal T}u\|_{\mathcal T}
+\le
+B_\ast M_\ast A_\ast\|u\|_{\mathcal T}
+\qquad (u\in\mathcal T_0).
+\]
+This is exactly hypothesis \emph{(iii)} of
+Theorem~\ref{thm:one-stage-bounded-exact-scalar-recursion-forces-generator}, so
+that theorem applies and yields the unique bounded operator
+\(\Theta:\mathcal T\to\mathcal T\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}]
+\label{proof:thm:exact-recursive-transport-yields-temporal-interface}
+Because \(\mathcal F\) is anchored to the canonical closure-balance
+realization, Corollary~\ref{cor:residual-localization-on-d3} again localizes
+the unique residual mediation layer at \(D=3\). This gives item (i) of
+Definition~\ref{def:temporal-interface-datum}.
+
+Next fix \(n\). Hypothesis \emph{(ii)} places the selected channel system at
+level \(n\) in the scope of
+Corollary~\ref{cor:transport-generation-yields-scalar-recursive}. Hence that
+selected channel system is scalar-recursive, so every bi-infinite selected
+transport sequence satisfies
+\[
+x_{m+1}=B_nx_m-x_{m-1}.
+\]
+This is item (ii) of
+Definition~\ref{def:temporal-interface-datum}.
+
+Now fix \(u\in\mathcal T_0\) and \(n\le m\). By hypothesis \emph{(iii)},
+\[
+P_m^{\mathcal T}u=J^{\mathcal T}_{n,m}P_n^{\mathcal T}u
+\qquad\text{and}\qquad
+E_n^{\mathcal T}=E_m^{\mathcal T}J^{\mathcal T}_{n,m},
+\]
+while the rescaled recursion-generator family satisfies
+\[
+J^{\mathcal T}_{n,m}\Theta_n=\Theta_mJ^{\mathcal T}_{n,m}.
+\]
+Therefore
+\[
+E_m^{\mathcal T}\Theta_mP_m^{\mathcal T}u
+=
+E_m^{\mathcal T}\Theta_mJ^{\mathcal T}_{n,m}P_n^{\mathcal T}u
+=
+E_m^{\mathcal T}J^{\mathcal T}_{n,m}\Theta_nP_n^{\mathcal T}u
+=
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u.
+\]
+Thus
+\[
+\Theta_\sharp u:=E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+\]
+is independent of \(n\), so it defines an operator
+\[
+\Theta_\sharp:\mathcal T_0\to\mathcal T.
+\]
+The sequence \((E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u)_{n\in\bbN}\) is
+constant for every \(u\in\mathcal T_0\), hence asymptotically consistent with
+\(\Theta_\sharp\). If \(L:\mathcal T_0\to\mathcal T\) is any other
+asymptotically consistent operator for the same rescaled family, then both
+\(\Theta_\sharp u\) and \(Lu\) are limits of the same sequence, so
+\(L=\Theta_\sharp\) on \(\mathcal T_0\). Therefore the selected recursive
+transport determines a unique continuum-equivalence class \([\Theta_\sharp]\),
+which is item (iii) of Definition~\ref{def:temporal-interface-datum}.
+
+The three items together are exactly a temporal interface datum, and each
+component is unique. Hence \(\mathcal F\) carries a unique temporal interface
+datum.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}]
+\label{proof:cor:exact-recursive-transport-forces-graph-temporal-generator}
+Hypothesis \emph{(ii)} of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface} places
+every selected channel system in the scope of
+Corollary~\ref{cor:transport-generation-yields-scalar-recursive}, so the
+scalar-recursive hypothesis of
+Theorem~\ref{thm:exact-scalar-recursion-graph-realization} is satisfied.
+Hypothesis \emph{(iii)} of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface} is
+exactly the recursive comparison and reconstruction datum required there.
+Therefore
+Theorem~\ref{thm:exact-scalar-recursion-graph-realization} applies directly.
+Its core operator \(\Theta_\sharp\) is the same operator constructed in the
+proof of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}, so its
+graph completion represents the generator component of that unique temporal
+interface datum.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:finite-exact-channel-stage-yields-bounded-temporal-generator}]
+\label{proof:cor:finite-exact-channel-stage-yields-bounded-temporal-generator}
+The hypotheses of
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}
+place the exact recursive family inside the scope of
+Theorem~\ref{thm:exact-scalar-recursion-graph-realization}. The additional
+finite-dimensionality hypothesis on \(F_{n_\ast}\) is exactly the extra
+hypothesis of
+Corollary~\ref{cor:finite-exact-channel-stage-forces-bounded-generator}.
+Therefore that corollary applies and yields the unique bounded operator on
+\(\mathcal T\) representing the generator component of the temporal interface.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:certified-local-ray-recursion-closes-temporal-bridge}]
+\label{proof:cor:certified-local-ray-recursion-closes-temporal-bridge}
+By Proposition~\ref{prop:word-local-ray-stencil}, the global word-local ray
+carrier comes equipped with refinement comparison maps and a refinement-
+coherent reconstruction datum for its selected observed law. By hypothesis,
+the rescaled recursion-generator family \(\Theta_n\) is exactly that selected
+observed law. Therefore hypothesis \emph{(iii)} of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface} is
+satisfied, and the temporal-interface conclusion follows directly from that
+theorem. The same data also satisfy
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator},
+which gives the canonical graph-completed continuum realization of the
+generator component.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:temporal-interface-from-d3}]
+\label{proof:thm:temporal-interface-from-d3}
+Hypotheses \emph{(i)}--\emph{(iii)} are exactly the hypotheses of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}. That
+theorem therefore applies directly and yields a unique temporal interface
+datum. The appended statement on the graph-completed generator is then exactly
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}.
+\end{proof}

@@ -1,0 +1,533 @@
+% ============================================================
+\subsection{Causal-Structural Persistence and Geometric Realization}
+\label{sec:flagship-geometry}
+% ============================================================
+
+The geometric lane is the realization of \emph{causal-structural persistence}:
+the causal order itself persists visibly by symmetric response to prior
+exchange. The geometric question is therefore how coherent visible exchange
+deforms the symmetric response carrier on the realized cut. Characteristic
+endpoint reduction and intrinsic symmetry then determine the physical
+geometric response law class using the inherited machinery of the earlier
+structural chapters together with the continuum bridge. The
+final carrier-level identification of the canonical representative is
+completed below by local endpoint rigidity on the selected symmetric-tensor
+carrier.
+
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+identifies the visible symmetric source term as balanced exchange with
+preceding selected carriers rather than primitive creation. In this sense the
+geometric lane is kept on the intrinsic side of Part~II: any constitutive
+closure issue belongs to the preceding sector furnishing the exchange tensor
+\(T\), not to the Einstein-side geometric response law itself.
+
+The relevant compatibility identity on this carrier is covariant divergence
+compatibility: the selected cut is the smallest one on which that tensor-side
+compatibility law is faithfully visible.
+
+\paragraph{Carrier status.}
+Geometry is not introduced here as a fourth primitive sector. By
+Theorems~\ref{thm:geometry-unique-lift-of-primitive-three-channel} and
+\ref{thm:geometric-symmetric-square-factorization}, together with
+\ref{thm:three-forcing-bridges-from-bedrock-to-primitive-physics}, the
+geometric lane is already forced on the selected bundle as the unique
+symmetric-response lift of the primitive \(3\)-channel. The local endpoint
+package below should therefore be read as the final compatibility and
+representative collapse on an already forced carrier class.
+
+\subsubsection{Weak-Field Geometric Response}
+
+\begin{definition}[Weak-field geometric response data]
+\label{def:weak-field-symmetric-response-branch}\lean{GeometricLane.WeakFieldResponseData}
+Let \(T\) be a symmetric exchange field furnished by a preceding selected law. A
+\emph{weak-field geometric response datum} consists of:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item an observable carrier consisting of symmetric \(2\)-tensor fields \(h\);
+\item an admissible local response class on that carrier whose leading order is
+      second order, self-adjoint, and divergence-compatible, with the
+      corresponding realized class transport-order disciplined on the selected
+      symmetric-tensor carrier;
+\item a leading response that is orthogonally equivariant on the
+      symmetric tensor carrier, so the carrier has no preferred direction at
+      the linear response level;
+\item quadratic and higher response terms subordinate to the leading
+      linear response.
+\end{enumerate}
+\end{definition}
+
+\subsubsection{Least-Motion Geometric Carrier}
+
+\begin{theorem}[Least-motion geometric observer]
+\label{thm:least-motion-geometric-observer}\lean{GeometricLane.leastMotionObserver}
+Assume the hypotheses of
+Definition~\ref{def:weak-field-symmetric-response-branch}. Suppose:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item the symmetric \(2\)-tensor carrier is faithful, closure-admissible, and
+      stable under admissible promotion for the promoted source/transport
+      family;
+\item no proper visible subcarrier still supports a faithful
+      divergence-compatible second-order response law at the observed scale;
+\item any characteristic observer datum satisfying \emph{(i)}--\emph{(ii)} is
+      horizon-preserving equivalent to the symmetric \(2\)-tensor carrier.
+\end{enumerate}
+Then the symmetric \(2\)-tensor carrier is the unique least-motion
+characteristic observer for the promoted source/transport family.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\subsubsection{Induced Weak-Field Law}
+
+\begin{theorem}[Induced weak-field geometric law]
+\label{thm:weak-field-geometric-response-law}\lean{GeometricLane.weakFieldLaw}
+Assume the hypotheses of
+Theorem~\ref{thm:least-motion-geometric-observer}. Then there are
+induced scalar coefficients \(\Lambda_{\mathrm{ind}},\kappa_{\mathrm{ind}}\), a
+unique divergence-compatible leading response operator
+\(\mathcal E_{\mathrm{lin}}\) on symmetric \(2\)-tensor fields, and a
+higher-order remainder \(\mathsf R_{\mathrm{grav}}\) such that
+\[
+\mathcal E_{\mathrm{lin}}(h)+\Lambda_{\mathrm{ind}}h
+=
+\kappa_{\mathrm{ind}}T+\mathsf R_{\mathrm{grav}}.
+\]
+If \(\mathsf R_{\mathrm{grav}}=0\), this is the forced weak-field law on the
+selected cut.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\subsubsection{Covariant Completion and Induced Law}
+
+\begin{remark}[Nonlinear completion locus]
+\label{rem:nonlinear-completion-locus}\lean{GeometricLane.NonlinearCompletionLocus}
+Up to this point, the geometric derivation is carrier forcing plus endpoint
+reduction. The nonlinear step concerns classification of the admissible
+minimal-order covariant completion class on the selected carrier rather than
+selection of the carrier itself. The earlier structural chapters together with
+the temporal
+realization principle and its universal clauses reduce the nonlinear geometric
+problem to that classification question.
+\end{remark}
+
+\begin{theorem}[Forced covariant geometric law on the selected cut]
+\label{thm:characteristic-covariant-geometric-reduction}\lean{GeometricLane.covariantReduction}
+Assume the hypotheses of
+Theorem~\ref{thm:least-motion-geometric-observer}. Assume moreover:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item the exchange field \(T\) is divergence-compatible at the observed scale;
+\item for each spacetime point \((x,t)\), with \(\Gamma_{x,t}\) the realized
+      characteristic congruence through \((x,t)\), there is a rapidly decaying
+      covariant memory family \(\mathcal M_{x,t}(s)\) on \(s\le 0\) such that
+      the nonlinear correction admits the representation
+      \[
+      \mathcal N_{\mathrm{geom}}(x,t)
+      =
+      \int_{-\infty}^0
+      \mathcal M_{x,t}(s)\bigl[
+      \mathsf C(g,T)(\Gamma_{x,t}(s),t+s)
+      \bigr]\,ds
+      \]
+      for a local symmetric curvature/exchange datum \(\mathsf C(g,T)\);
+\item the bulk part of this characteristic integral reduces to endpoint data by
+      Corollary~\ref{cor:characteristic-boundary-reduction};
+\item on the decay scale of \(\mathcal M_{x,t}\), the geometric fields vary
+      slowly enough that the characteristic integral admits a first-order
+      endpoint expansion;
+\item the induced endpoint map is covariant, divergence-compatible, and has no
+      preferred transverse direction on the symmetric tensor carrier.
+\item the admissible covariant completion class on the selected carrier is
+      filtered by local differential order, its distinguished admissible order
+      is \(2\), and the selected response operator lies in that minimal-order
+      class.
+\end{enumerate}
+Then there are induced scalar coefficients
+\(\Lambda_{\mathrm{ind}},\kappa_{\mathrm{ind}}\), a covariant
+divergence-compatible response operator \(\mathcal G(g)\) of minimal local
+order, and a local symmetric remainder \(\mathsf N_{\mathrm{grav}}(g,T)\) such
+that
+\[
+\mathcal G(g)+\Lambda_{\mathrm{ind}}g
+=
+\kappa_{\mathrm{ind}}T+\mathsf N_{\mathrm{grav}}(g,T),
+\qquad
+\nabla^\mu\bigl(\mathcal G_{\mu\nu}(g)+\Lambda_{\mathrm{ind}}g_{\mu\nu}\bigr)=0.
+\]
+If the characteristic endpoint reduction is lossless at leading order, so that
+\(\mathsf N_{\mathrm{grav}}=0\), this is the forced covariant law on the
+selected cut.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{remark}[Characteristic-return mechanism]
+\label{rem:characteristic-path-origin-of-geometric-response}\lean{GeometricLane.CharacteristicReturnOrigin}
+Theorem~\ref{thm:characteristic-covariant-geometric-reduction} is the symmetric
+\(2\)-tensor analogue of Theorem~\ref{cor:hydrodynamic-closure-law}. The
+nonlinear response is not inserted as an independent constitutive tensor. It is
+carried by characteristic return, its bulk part cancels, and the surviving
+endpoint map is forced onto the trace and traceless channels of the least-motion
+observed carrier.
+\end{remark}
+
+Thus the geometric carrier is already reduced to a local representative
+problem on the selected cut: identify the canonical divergence-compatible
+representative inside the forced geometric closure class. The local collapse
+below first identifies the intrinsic selected-cut trace-adjusted curvature
+representative; the recognizable Einstein notation is then a downstream
+Levi-Civita/Bianchi readout of that already forced representative.
+
+\subsubsection{Endpoint Identification}
+
+In standard covariant notation, the recognized endpoint law is the Einstein
+equation with cosmological term \cite{Einstein1915,Wald1984}. On this carrier
+the last representative identification is likewise a local endpoint-rigidity
+statement. Once the selected symmetric-tensor carrier is read on an
+energy-orthogonal realized cut and the canonical Levi-Civita/Bianchi-side
+covariant duality is fixed there, the intrinsic trace-adjusted curvature
+representative is read as the trace-adjusted Ricci / Einstein one.
+
+\begin{definition}[Geometric local endpoint-rigidity package]
+\label{def:geometric-local-endpoint-rigidity-package}\lean{GeometricLane.EndpointCollapse}
+Assume the hypotheses of
+Theorem~\ref{thm:characteristic-covariant-geometric-reduction}. A
+\emph{geometric local endpoint-rigidity package} on the selected
+symmetric-tensor carrier consists of:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item the realized family satisfies a canonical selected Schur bridge on that
+      same selected cut;
+\item the minimal covariant response family on the selected symmetric-tensor
+      carrier is represented levelwise by a refinement-compatible local
+      symmetric-tensor differential family of minimal local order \(2\);
+\item the minimal covariant response family carries a
+      refinement-coherent reconstruction datum on its dense test domain whose
+      exact core realization is bounded.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Geometric local endpoint collapse to the canonical trace-adjusted curvature form]
+\label{thm:geometric-local-endpoint-collapse}\lean{GeometricLane.endpointCollapse}
+Assume the hypotheses of
+Definition~\ref{def:geometric-local-endpoint-rigidity-package}. Then the forced
+geometric endpoint class on the selected symmetric-tensor carrier has the
+canonical trace-adjusted curvature representative
+\[
+\mathcal G_{\chi}(g),
+\]
+characterized as the unique pairing-compatible divergence-compatible
+representative of that forced endpoint class on the trace/traceless scalar
+channels of the selected symmetric-response carrier. Hence
+\[
+\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g
+=
+\kappa_{\mathrm{ind}}T+\mathsf N_{\mathrm{grav}}(g,T),
+\qquad
+\operatorname{Div}_{\chi}\bigl(\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g\bigr)=0,
+\]
+where \(\operatorname{Div}_{\chi}\) is the canonical selected-cut divergence
+operator on the symmetric-tensor carrier. If the characteristic endpoint
+reduction is lossless at leading order, so that \(\mathsf N_{\mathrm{grav}}=0\),
+this is the lossless intrinsic geometric law on the selected carrier.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\paragraph{Einstein is emergent.}
+The geometric carrier \(\mathrm{Sym}^2(U_3)\cong V_{\mathrm{slot}}\) is not a fourth
+primitive direct channel. It is the algebraic self-coupling of the gauge
+channel. The Einstein-side representative is therefore not inserted as an
+independent law; it is the self-consistency condition forced on that
+symmetric-response lift by the same nilpotent closure grammar that already
+controls the direct lanes. In this sense Einstein is emergent from internal
+carrier coupling, whereas hydrodynamic closure remains emergent from
+resolution-integrated loss of visible detail.
+
+\begin{corollary}[Recognizable Einstein identity]
+\label{cor:recognizable-einstein-identity}\lean{GeometricLane.recognizableIdentity}
+Assume the hypotheses of
+Theorem~\ref{thm:geometric-local-endpoint-collapse}. Assume in addition that
+the generated symmetric-tensor carrier carries the canonical
+Levi-Civita/Bianchi-side covariant duality induced by the selected metric on
+\(M\), so the selected-cut divergence is read as covariant divergence and the
+trace/traceless scalarization of the selected symmetric-response carrier is
+read through the Ricci/scalar-curvature decomposition.
+Then
+\[
+G(g)+\Lambda_{\mathrm{ind}}g
+=
+\kappa_{\mathrm{ind}}T+\mathsf N_{\mathrm{grav}}(g,T),
+\qquad
+\nabla^\mu\bigl(G_{\mu\nu}(g)+\Lambda_{\mathrm{ind}}g_{\mu\nu}\bigr)=0.
+\]
+If the characteristic endpoint reduction is lossless at leading order, so that
+\(\mathsf N_{\mathrm{grav}}=0\), this is exactly the Einstein equation with
+cosmological term and induced coupling \(\kappa_{\mathrm{ind}}\), with \(T\)
+recognized as the visible exchange tensor.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:geometric-local-endpoint-collapse}, the forced endpoint
+class has a unique pairing-compatible divergence-compatible representative
+\(\mathcal G_{\chi}(g)\) on the trace and traceless scalar channels. Under the
+stated Levi-Civita/Bianchi readout, any such second-order natural
+representative has the form
+\[
+\mathcal T(g)=a\,\operatorname{Ric}(g)+b\,R(g)\,g.
+\]
+Taking covariant divergence and using the contracted Bianchi identity gives
+\[
+\nabla^\mu \mathcal T_{\mu\nu}
+=
+a\,\nabla^\mu\operatorname{Ric}_{\mu\nu}+b\,\partial_\nu R
+=
+\Bigl(\frac a2+b\Bigr)\partial_\nu R.
+\]
+Hence divergence compatibility forces \(b=-a/2\), so
+\(\mathcal T(g)=a\,G(g)\). Absorbing the nonzero scalar \(a\) into the induced
+coupling coefficient \(\kappa_{\mathrm{ind}}\) leaves the forced endpoint
+representative in the normalized Einstein form
+\[
+\mathcal G_{\chi}(g)=G(g)=\operatorname{Ric}(g)-\frac12 R(g)\,g.
+\]
+Substituting this readout into
+Theorem~\ref{thm:geometric-local-endpoint-collapse} gives the displayed
+identity.
+\end{proof}
+
+\begin{corollary}[Exact Schur form of the selected geometric remainder]
+\label{cor:geometric-schur-remainder-identity}\lean{GeometricLane.schurRemainder}
+Assume the hypotheses of
+Theorem~\ref{thm:geometric-local-endpoint-collapse}. Assume in addition that
+the same selected datum satisfies a canonical selected Schur bridge. Then there
+is a unique geometric-projected Schur correction
+\[
+\Sigma_{h,\mathrm{grav}}(z)
+\]
+obtained by reading the common selected Schur correction \(\CCSigma{h}{z}\)
+through the forced geometric endpoint identification on the selected carrier,
+and
+\[
+\mathsf N_{\mathrm{grav}}(g,T)=\Sigma_{h,\mathrm{grav}}(z).
+\]
+Accordingly,
+\[
+\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g
+=
+\kappa_{\mathrm{ind}}T+\Sigma_{h,\mathrm{grav}}(z),
+\qquad
+\operatorname{Div}_{\chi}\bigl(\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g\bigr)=0.
+\]
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\subsubsection{Concrete Hidden-Channel Geometric Mode}
+
+The exact Schur form above becomes computationally informative once one
+computes the returned symmetric response on a concrete realized family. The
+least committal solvable model is a linearized visible symmetric mode locally
+coupled to one hidden symmetric mode on the same primitive lattice. On
+that model the geometric remainder is an exact symmetric-response
+self-energy on a selected tracefree polarization sector.
+
+\begin{definition}[Coupled visible-shadow geometric mode model]
+\label{def:coupled-visible-shadow-geometric-mode-model}\lean{GeometricLane.HiddenChannel.LatticeModel}
+Assume the hypotheses of
+Corollary~\ref{cor:geometric-schur-remainder-identity}. A
+\emph{coupled visible-shadow geometric mode model} consists of:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item a one-dimensional primitive lattice with spacing \(\ell_{\chi}>0\)
+      and a fixed transverse-traceless symmetric polarization tensor
+      \(E\);
+\item a selected visible geometric mode and external visible symmetric source
+      \[
+      h_n(t)=u\,E\,e^{i(nk\ell_{\chi}-\omega t)},
+      \qquad
+      T_n^{\mathrm{ext}}(t)=\tau_0\,E\,e^{i(nk\ell_{\chi}-\omega t)};
+      \]
+\item a hidden symmetric mode
+      \[
+      q_n(t)=v\,E\,e^{i(nk\ell_{\chi}-\omega t)};
+      \]
+\item visible and hidden linearized symmetric-response profiles
+      \[
+      \Omega_{\mathrm{grav,vis}}(k)^2
+      :=
+      \frac{4c_{\chi}^2}{\ell_{\chi}^2}
+      \sin^2\!\left(\frac{k\ell_{\chi}}{2}\right),
+      \]
+      \[
+      \Omega_{\mathrm{grav,hid}}(k)^2
+      :=
+      \nu_{\chi}^2
+      +
+      \frac{4\widetilde c_{\chi}^2}{\ell_{\chi}^2}
+      \sin^2\!\left(\frac{k\ell_{\chi}}{2}\right),
+      \]
+      where \(c_{\chi}>0\), \(\widetilde c_{\chi}>0\), \(\nu_{\chi}\ge 0\),
+      and \(\gamma_{\chi}\ge 0\);
+\item a local coupling on the selected polarization sector such that the
+      visible and hidden mode amplitudes satisfy
+      \[
+      \bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\omega^2\bigr)u
+      =
+      \tau_0+\gamma_{\chi}v,
+      \]
+      \[
+      \bigl(\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2\bigr)v
+      =
+      \gamma_{\chi}u.
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Exact hidden-channel geometric remainder and branch splitting]
+\label{thm:hidden-channel-geometric-remainder-and-branch-splitting}\lean{GeometricLane.HiddenChannel.splitting}
+Assume the hypotheses of
+Definition~\ref{def:coupled-visible-shadow-geometric-mode-model}. Then on
+every mode with \(\Omega_{\mathrm{grav,hid}}(k)^2\neq\omega^2\), exact
+elimination of the hidden symmetric amplitude gives the returned geometric
+profile
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{
+\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2
+}.
+\]
+Accordingly the visible linearized response law is
+\[
+\bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\omega^2\bigr)u
+=
+\tau_0+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)\,u,
+\]
+so the returned symmetric-tensor remainder on that sector is
+\[
+\Sigma_{h,\mathrm{grav}}^{\mathrm{hid}}(k,\omega)
+=
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)\,
+u\,E\,e^{i(nk\ell_{\chi}-\omega t)}.
+\]
+If \(\tau_0=0\), then
+\[
+(\omega^2-\Omega_{\mathrm{grav,vis}}(k)^2)
+(\omega^2-\Omega_{\mathrm{grav,hid}}(k)^2)
+=
+\gamma_{\chi}^2,
+\]
+and the two exact mixed geometric branches are
+\[
+\omega_{\pm}(k)^2
+=
+\frac{
+\Omega_{\mathrm{grav,vis}}(k)^2+\Omega_{\mathrm{grav,hid}}(k)^2
+\pm
+\sqrt{
+\bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\Omega_{\mathrm{grav,hid}}(k)^2\bigr)^2
++
+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{corollary}[Exact off-resonant geometric pole shifts]
+\label{cor:exact-off-resonant-geometric-pole-shifts}\lean{GeometricLane.HiddenChannel.offResonantShifts}
+Assume the hypotheses of
+Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting} and
+\(\tau_0=0\). Define
+\[
+\delta_{\chi}^{\mathrm{grav}}(k)
+:=
+\Omega_{\mathrm{grav,hid}}(k)^2-\Omega_{\mathrm{grav,vis}}(k)^2.
+\]
+If \(\delta_{\chi}^{\mathrm{grav}}(k)>0\), then
+\[
+\omega_-(k)^2
+=
+\Omega_{\mathrm{grav,vis}}(k)^2
+-
+\frac{2\gamma_{\chi}^2}{
+\delta_{\chi}^{\mathrm{grav}}(k)
++
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{grav}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+},
+\]
+\[
+\omega_+(k)^2
+=
+\Omega_{\mathrm{grav,hid}}(k)^2
++
+\frac{2\gamma_{\chi}^2}{
+\delta_{\chi}^{\mathrm{grav}}(k)
++
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{grav}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}.
+\]
+In particular, away from hidden resonance the visible-like geometric pole is
+shifted downward and the hidden symmetric pole upward.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{corollary}[Exact avoided crossing of the coupled geometric branches]
+\label{cor:exact-avoided-crossing-coupled-geometric-branches}\lean{GeometricLane.HiddenChannel.avoidedCrossing}
+Assume the hypotheses of
+Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting} and
+\(\tau_0=0\). Suppose there exists a selected mode \(k_\ast\) such that
+\[
+\Omega_{\mathrm{grav,vis}}(k_\ast)^2
+=
+\Omega_{\mathrm{grav,hid}}(k_\ast)^2
+=:
+\Omega_{\ast}^2.
+\]
+Then
+\[
+\omega_{\pm}(k_\ast)^2=\Omega_{\ast}^2\pm\gamma_{\chi},
+\]
+so the squared-frequency gap at the would-be crossing is exactly
+\[
+\omega_+(k_\ast)^2-\omega_-(k_\ast)^2=2\gamma_{\chi}.
+\]
+In particular, if \(\gamma_{\chi}>0\), the two geometric branches do not
+cross.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{corollary}[Low-frequency induced geometric susceptibility]
+\label{cor:low-frequency-induced-geometric-susceptibility}\lean{GeometricLane.HiddenChannel.lowFrequencySusceptibility}
+Assume the hypotheses of
+Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting} and
+\(\nu_{\chi}>0\). Then as \((k,\omega)\to(0,0)\),
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^2}
+-
+\frac{\gamma_{\chi}^2\widetilde c_{\chi}^2}{\nu_{\chi}^4}k^2
++
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^4}\omega^2
++
+O(k^4+k^2\omega^2+\omega^4).
+\]
+Thus on the long-wave low-frequency sector the hidden return acts as an
+induced local symmetric-response susceptibility with static amplitude
+\(\gamma_{\chi}^2/\nu_{\chi}^2\) together with the first dispersive
+corrections.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+The two-channel linearized geometric model gives an exact realization of the
+returned geometric profile on a controlled symmetric mode sector. On this
+model, the remainder manifests as geometric-pole shifts, avoided crossing, and
+low-frequency induced symmetric-response susceptibility on the visible
+geometric sector.

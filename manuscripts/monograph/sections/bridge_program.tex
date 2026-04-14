@@ -1,0 +1,2544 @@
+% ============================================================
+\section{Characteristic Realization}
+\label{sec:characteristic-realization}
+% ============================================================
+
+The calculus of Part~I admits a natural realization on conservative systems
+that can be organized simultaneously by observer cuts, transported
+characteristics, and variational trajectories. In the language introduced
+earlier, this is the passage from the abstract horizon complex to a realized
+characteristic field on that complex. Along characteristics, conservative
+transport collapses bulk evolution to boundary flux. On a horizon complex,
+finite horizon cuts reproduce the exact defect algebra of Part~I. When the
+same dynamics arise from a regular action principle, the observer-side
+characteristic field is recovered from the classical variational triad.
+Together these constructions furnish a bridge from conservative transport to
+the operator calculus. The transport-side Eulerian/Lagrangian/characteristic
+descriptions and the dynamics-side Lagrangian/Hamiltonian/Hamilton--Jacobi
+descriptions are classical; see, for example,
+\cite{Evans2010,Arnold1989}.
+
+In this realized setting, the abstract vocabulary of the closure-balance
+realization acquires the standard dynamical labels used in applications. A
+realized primitive will be called a \emph{characteristic}, and a realized
+incidence of such primitives will be called an \emph{event}. Nothing in the
+structural calculus depends on those labels; they serve only to place the
+realized chapter in standard dynamical language.
+
+\subsection{Conservative Characteristic Transport}
+
+Let $J \subset \bbR$ be a time interval, let $M$ be a smooth manifold with
+volume form $\mu$, and let $V_t$ be a smooth time-dependent vector field on
+$M$. Write $\Phi_{t,s}$ for the associated flow, and define the spacetime
+manifold $X := J \times M$ with spacetime vector field
+\[
+\widetilde V := \partial_t + V_t
+\]
+and spacetime volume form
+\[
+\nu := dt \wedge \mu.
+\]
+Assume throughout that the flow is conservative in the sense
+\[
+\mathcal L_{V_t}\mu = 0 \qquad \text{for all } t \in J.
+\]
+Then $\mathcal L_{\widetilde V}\nu = 0$.
+
+\begin{definition}[Eulerian Presentation]
+\label{def:eulerian-presentation}
+\lean{EulerianPresentation}
+For a time-dependent scalar observable $\Theta_t \in C^\infty(M)$, the
+\emph{Eulerian presentation} of conservative transport is the first-order
+equation
+\[
+\mathcal D_\chi \Theta := \partial_t \Theta + \mathcal L_{V_t}\Theta = 0.
+\]
+\end{definition}
+
+\begin{definition}[Lagrangian Presentation]
+\label{def:lagrangian-presentation}
+\lean{LagrangianPresentation}
+The \emph{Lagrangian presentation} of the same transport law is the constancy of
+the pullback along the flow:
+\[
+\frac{d}{dt}\bigl(\Phi_{t,0}^* \Theta_t\bigr)=0.
+\]
+\end{definition}
+
+\begin{definition}[Characteristic Presentation]
+\label{def:characteristic-presentation}
+\lean{CharacteristicPresentation}
+Fix $a \in M$ and let $\gamma_a(t):=\Phi_{t,0}(a)$ be the characteristic
+through $a$. The \emph{characteristic presentation} is the constancy of the
+transported quantity along each such curve:
+\[
+\frac{d}{dt}\Theta_t(\gamma_a(t))=0.
+\]
+\end{definition}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=3.2cm, scale=1.05, every node/.style={scale=1.05}]
+  \node[ccbox, align=center, minimum width=2.8cm] (E) at (-3.2,0) {\textbf{Eulerian}\\$\partial_t \Theta + \mathcal L_{V_t}\Theta = 0$};
+  \node[ccbox, align=center, minimum width=2.8cm] (L) at (3.2,0) {\textbf{Lagrangian}\\$\dfrac{d}{dt}(\Phi_{t,0}^*\Theta_t)=0$};
+  \node[ccbox, align=center, minimum width=2.8cm] (C) at (0,2.8) {\textbf{Characteristic}\\$\dfrac{d}{dt}\Theta_t(\gamma_a(t))=0$};
+
+  \draw[ccarrow] (E) -- node[below, cclabel] {pullback by $\Phi_{t,0}$} (L);
+  \draw[ccarrow] (E) -- node[left, cclabel] {restriction to $\gamma_a$} (C);
+  \draw[ccarrow] (L) -- node[right, cclabel] {evaluation on labels $a$} (C);
+\end{tikzpicture}
+\caption{Observer-side compatibility of the Eulerian, Lagrangian, and characteristic presentations of a conservative transport law.}
+\label{fig:observer-triad}
+\end{figure}
+
+\begin{proposition}[Observer-Side Compatibility]
+\label{prop:observer-triad}
+\lean{observer_triad}
+Under the standing hypotheses above, Definitions~\ref{def:eulerian-presentation},
+\ref{def:lagrangian-presentation}, and
+\ref{def:characteristic-presentation} are equivalent.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Characteristic Flux Form]
+\label{def:characteristic-flux-form}
+\lean{CharacteristicFluxForm}
+For a transported scalar $\Theta$ on $X$, define the \emph{characteristic flux
+form}
+\[
+J_\Theta := \Theta \,\iota_{\widetilde V}\nu.
+\]
+\end{definition}
+
+\begin{lemma}[Flux Differential Identity]
+\label{lem:flux-differential}
+\lean{flux_differential}
+With notation as above,
+\[
+dJ_\Theta = (\mathcal D_\chi \Theta)\,\nu.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Cut Conservation]
+\label{thm:cut-conservation}
+\lean{cut_conservation}
+Let $U \subset X$ be a compact spacetime tube whose boundary decomposes as
+\[
+\partial U = \Sigma_1 - \Sigma_0 + \Sigma_{\mathrm{side}},
+\]
+where $\Sigma_0$ and $\Sigma_1$ are transverse cuts and
+$\widetilde V$ is tangent to the side boundary
+$\Sigma_{\mathrm{side}}$. If $\mathcal D_\chi \Theta = 0$ on $U$, then
+\[
+\int_{\Sigma_1} J_\Theta = \int_{\Sigma_0} J_\Theta.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Characteristic Integration by Parts]
+\label{thm:characteristic-ibp}
+\lean{characteristic_ibp}
+Let $f,g \in C^\infty(U)$ on a compact spacetime tube $U \subset X$. Then
+\[
+\int_U \bigl((\mathcal D_\chi f)g + f(\mathcal D_\chi g)\bigr)\,\nu
+=
+\int_{\partial U} fg\,\iota_{\widetilde V}\nu.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Characteristic Boundary Reduction]
+\label{cor:characteristic-boundary-reduction}
+\lean{characteristic_boundary_reduction}
+If $\mathcal D_\chi f = 0$ on $U$, then
+\[
+\int_U f(\mathcal D_\chi g)\,\nu
+=
+\int_{\partial U} fg\,\iota_{\widetilde V}\nu.
+\]
+Thus conservative transport along characteristic directions removes the bulk
+term and leaves only the boundary contribution.
+\end{corollary}
+
+\begin{proof}
+Substitute $\mathcal D_\chi f = 0$ into
+Theorem~\ref{thm:characteristic-ibp}.
+\end{proof}
+
+The same elimination mechanism has a direct cellular formulation closer to the
+finite observer setting of the structural calculus.
+
+\begin{definition}[Cellular Conservative Current]
+\label{def:cellular-current}
+\lean{CellularConservativeCurrent}
+Let $K$ be a locally finite oriented cell complex. A cochain
+$J \in C^1(K;\bbR)$ is called a \emph{cellular conservative current} on a finite
+$2$-chain $C$ if
+\[
+\langle \delta J,\sigma\rangle = 0
+\]
+for every $2$-cell $\sigma$ in the support of $C$.
+\end{definition}
+
+\begin{proposition}[Cellular Cut Conservation]
+\label{prop:cellular-cut-conservation}
+\lean{cellular_cut_conservation}
+Let $\Gamma_0,\Gamma_1$ be finite $1$-cycles in $K$ such that
+\[
+\Gamma_1-\Gamma_0=\partial C
+\]
+for some finite $2$-chain $C$. If $J$ is a cellular conservative current on
+$C$, then
+\[
+\langle J,\Gamma_1\rangle = \langle J,\Gamma_0\rangle.
+\]
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+Proposition~\ref{prop:cellular-cut-conservation} is the discrete companion of
+Theorem~\ref{thm:cut-conservation}: in both regularity classes, conservative
+transport reduces finite observation to boundary data on cuts.
+
+\subsection{Horizon Realization of the Calculus}
+
+Characteristic transport supplies the boundary law. To recover the operator
+calculus of Part~I, the full state space must also carry a closed differential
+together with a finite horizon decomposition.
+
+\begin{definition}[Characteristic Horizon Realization]
+\label{def:characteristic-horizon-realization}
+\lean{CharacteristicHorizonRealization}
+A \emph{characteristic horizon realization} consists of the following data.
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item A Hilbert complex $(\cH^\bullet,d)$ with $d^2=0$.
+\item A nested family of orthogonal projections
+      $\{\CCPi{h}\}_{h \in \bbN}$ on each degree of $\cH^\bullet$.
+\item A strongly continuous unitary transport family $\{U_t\}_{t \in J}$ on
+      $\cH^\bullet$ such that
+      \[
+      U_t d = d U_t,
+      \qquad
+      U_t \CCPi{h} = \CCPi{h} U_t
+      \quad \text{for all } h \in \bbN.
+      \]
+\end{enumerate}
+The realized observed operator, leakage operator, and defect operator are
+defined exactly as in Part~I:
+\[
+\CCObs{d}{h} = \CCPi{h} d \CCPi{h},
+\qquad
+\CCLeak{d}{h} = \CCPibar{h} d \CCPi{h},
+\qquad
+\CCDefect{d}{h} = \CCPi{h} d \CCPibar{h} d \CCPi{h}.
+\]
+\end{definition}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=2.8cm, scale=1.05, every node/.style={scale=1.05}]
+  \node[ccbox, align=center, minimum width=2.6cm] (bulk) at (0,2.8) {\textbf{Full Horizon Complex}\\$d^2 = 0$};
+  \node[ccbox, align=center, minimum width=2.6cm] (obs) at (-3,0) {\textbf{Observable Sector}\\$\CCObs{d}{h}=\CCPi{h} d \CCPi{h}$};
+  \node[ccbox, align=center, minimum width=2.6cm] (sh) at (3,0) {\textbf{Shadow Sector}\\$\CCPibar{h}\cH$};
+  \node[ccbox, align=center, minimum width=3.0cm] (def) at (0,-2.6) {\textbf{Observed Defect}\\$\CCObs{d}{h}^2 = -\CCDefect{d}{h}$};
+
+  \draw[ccarrow] (bulk) -- node[left, cclabel] {$\CCPi{h}$} (obs);
+  \draw[ccarrow] (bulk) -- node[right, cclabel] {$\CCPibar{h}$} (sh);
+  \draw[ccarrow] (obs) -- node[above, cclabel] {$\CCLeak{d}{h}$} (sh);
+  \draw[ccarrow] (sh) -- node[below, cclabel] {$\CCPi{h} d$} (obs);
+  \draw[ccarrow] (obs) -- node[right, cclabel] {round trip} (def);
+\end{tikzpicture}
+\caption{Full closure holds on the horizon complex. Finite observation inserts a horizon cut, and the observed failure of closure is exactly the round trip through shadow.}
+\label{fig:bulk-to-defect}
+\end{figure}
+
+\begin{lemma}[Through-Horizon Decomposition]
+\label{lem:through-horizon-decomposition}
+\lean{through_horizon_decomposition}
+For every observed state $u \in \CCPi{h}\cH^\bullet$,
+\[
+du = \CCObs{d}{h}u + \CCLeak{d}{h}u.
+\]
+Applying $d$ once more and projecting back to the observed sector gives
+\[
+\CCPi{h}d\,\CCObs{d}{h}u = -\,\CCPi{h}d\,\CCLeak{d}{h}u = -\,\CCDefect{d}{h}u.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Characteristic Realization of HFT]
+\label{thm:characteristic-realization}
+\lean{characteristic_realization}
+Let $(\cH^\bullet,d,\{\CCPi{h}\},\{U_t\})$ be a characteristic horizon
+realization. Then, for every horizon $h$,
+\[
+\CCObs{d}{h}^2 = - \CCDefect{d}{h}.
+\]
+Moreover,
+\[
+U_t \CCObs{d}{h} = \CCObs{d}{h} U_t,
+\qquad
+U_t \CCDefect{d}{h} = \CCDefect{d}{h} U_t,
+\]
+so the realized observed differential and its defect are transported
+equivariantly by the conservative evolution.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Characteristic horizon realizations transport the horizon complex]
+\label{thm:characteristic-horizon-realizations-transport-the-horizon-complex}\lean{CharacteristicHorizonRealization.horizonComplex}\lean{CharacteristicHorizonRealization.horizonComplexSurface}
+Every characteristic horizon realization carries the Part~I horizon-complex
+laws unchanged. Concretely, on the same realized carrier:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the full boundary still satisfies \(d^2=0\);
+\item on every cut, the observed boundary still satisfies
+      \(\CCObs{d}{h}^2=-\,\CCDefect{d}{h}\);
+\item the conservative transport intertwines both the observed boundary and the
+      defect:
+      \[
+      U_t\CCObs{d}{h}=\CCObs{d}{h}U_t,
+      \qquad
+      U_t\CCDefect{d}{h}=\CCDefect{d}{h}U_t.
+      \]
+\end{enumerate}
+So a characteristic horizon realization is best understood as a transport
+realization of a horizon complex, not merely as an external flow laid on top of
+the Part~I state space.
+\end{theorem}
+
+\begin{proof}
+The associated horizon complex uses the same tower and the same full boundary
+\(d\). The closure and cut-defect clauses are exactly the transported Part~I
+laws, and the transport identities are the content of
+Theorem~\ref{thm:characteristic-realization}.
+\end{proof}
+
+\begin{corollary}[Transfer to the Part~I Calculus]
+\label{cor:transfer-part-one}
+\lean{transfer_part_one}
+Every statement of Part~I whose hypotheses involve only the closed operator
+$d$, the horizon tower $\{\CCPi{h}\}$, and the algebra they generate applies to
+every characteristic horizon realization.
+\end{corollary}
+
+\begin{proof}
+By Definition~\ref{def:characteristic-horizon-realization}, the realized data
+has exactly the same formal type as the operator interface of Part~I. By
+Theorem~\ref{thm:characteristic-realization}, the realized observed operator
+satisfies the Horizon Fundamental Theorem with the same proof as in the abstract
+setting. Any further theorem in Part~I that depends only on that interface
+therefore transports unchanged to the realized class.
+\end{proof}
+
+\subsection{Variational Realization and the Dynamics-Side Triad}
+
+The observer-side triad concerns the transport of conserved quantities along a
+given characteristic field. A different question concerns the origin of that
+field when the dynamics are generated by an action principle. The corresponding
+classical triad is Lagrangian, Hamiltonian, and characteristic. Here the
+Hamiltonian formulation is the phase-space evolution law, whereas the
+characteristic formulation refers to the characteristic curves of the
+Hamilton--Jacobi equation. The distinguished trajectories are the stationary
+action curves seen simultaneously in both languages
+\cite{Arnold1989}.
+
+\begin{definition}[Regular Variational System]
+\label{def:regular-variational-system}
+\lean{RegularVariationalSystem}
+Let $Q$ be a smooth configuration manifold and let
+$L \in C^2(TQ \times J)$ be a Lagrangian whose fiber Hessian in the velocity
+variables is everywhere invertible. The Legendre transform
+\[
+\mathbb F L : TQ \to T^*Q,
+\qquad
+(q,\dot q) \mapsto \Bigl(q,\frac{\partial L}{\partial \dot q}\Bigr)
+\]
+then defines a local diffeomorphism and determines the Hamiltonian
+$H \in C^2(T^*Q \times J)$ by
+\[
+H(q,p,t) = p\cdot \dot q - L(q,\dot q,t),
+\]
+with $\dot q$ understood as the inverse Legendre image of $(q,p)$.
+\end{definition}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=3.4cm, scale=1.05, every node/.style={scale=1.05}]
+  \node[ccbox, align=center, minimum width=2.9cm] (C) at (0,2.9) {\textbf{Characteristic}\\Hamilton--Jacobi flow};
+  \node[ccbox, align=center, minimum width=2.9cm] (L) at (-3.4,0) {\textbf{Lagrangian}\\Euler--Lagrange equations};
+  \node[ccbox, align=center, minimum width=2.9cm] (H) at (3.4,0) {\textbf{Hamiltonian}\\Hamilton equations};
+
+  \draw[ccarrow] (L) -- node[below, cclabel] {Legendre transform} (H);
+  \draw[ccarrow] (H) -- node[above, cclabel] {inverse transform} (L);
+  \draw[ccarrow] (L) -- node[left, cclabel] {extremal action} (C);
+  \draw[ccarrow] (H) -- node[right, cclabel] {Hamilton--Jacobi} (C);
+\end{tikzpicture}
+\caption{Dynamics-side compatibility of the Lagrangian, Hamiltonian, and characteristic presentations for a regular variational system.}
+\label{fig:dynamics-triad}
+\end{figure}
+
+\begin{theorem}[Dynamics-Side Triad Equivalence]
+\label{thm:dynamics-triad}
+\lean{dynamics_triad}
+Let $L$ be a regular variational system in the sense of
+Definition~\ref{def:regular-variational-system}, let $H$ be its Hamiltonian,
+and let $S \in C^2(Q \times J)$ satisfy the Hamilton--Jacobi equation
+\[
+\partial_t S(q,t) + H\bigl(q,\partial_q S(q,t),t\bigr)=0
+\]
+on a simply connected domain. Then the following descriptions determine the same
+local trajectories:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item stationary curves of the action $\int L(q,\dot q,t)\,dt$;
+\item solutions of Hamilton's equations for $H$;
+\item characteristic curves of the Hamilton--Jacobi equation, given by
+      \[
+      p=\partial_q S,
+      \qquad
+      \dot q = \partial_p H(q,p,t).
+      \]
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{proposition}[Characteristic Projection of Hamilton--Jacobi Dynamics]
+\label{prop:hj-projection}
+\lean{hj_projection}
+Let $S$ satisfy the hypotheses of
+Theorem~\ref{thm:dynamics-triad}, and define the time-dependent vector field
+\[
+V_t(q) := \partial_p H\bigl(q,\partial_q S(q,t),t\bigr)
+\]
+on $Q$. Then the integral curves of $V_t$ are exactly the configuration-space
+projections of the Hamiltonian trajectories lying in the Lagrangian graph
+\[
+\Gamma_t := \{(q,\partial_q S(q,t)) : q \in Q\} \subset T^*Q.
+\]
+Consequently, the observer-side characteristic curves generated by
+$\mathcal D_\chi = \partial_t + \mathcal L_{V_t}$ are precisely the projected
+dynamics-side characteristics of the Hamilton--Jacobi equation.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{proposition}[Selection Principle for Realized Classes]
+\label{prop:selection-problem}
+\lean{selection_problem}
+Let $\mathfrak R$ be any class of characteristic horizon realizations that also
+arises from regular variational systems satisfying
+Theorem~\ref{thm:dynamics-triad}. Then the existence of the Part~I calculus is
+uniform on $\mathfrak R$. Any theorem asserting a unique admissible horizon, a
+distinguished completion, or a canonical dimensionless invariant on
+$\mathfrak R$ must therefore enter through additional \emph{selection
+hypotheses} on the realized class rather than through realization alone.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\subsection{From Realization to Forcing}
+
+Proposition~\ref{prop:selection-problem} identifies the point at which
+uniqueness may enter. The next definitions isolate the corresponding selection
+data and admissible realized classes. The resulting theorem is constructive:
+once a realized class has been specified, the remaining forcing problem is an
+explicit admissibility problem on reduced operator data.
+
+\begin{definition}[Selection datum at a fixed horizon]
+\label{def:selection-datum}
+\lean{SelectionDatum}
+Fix a horizon $h$ and let
+\[
+R=(\cH^\bullet,d,\{\CCPi{k}\}_{k\in\bbN},\{U_t\}_{t\in J})
+\]
+be a characteristic horizon realization. A \emph{selection datum} for $R$ at
+horizon $h$ consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the observed sector $\CCHobs{h}(R):=\CCPi{h}\cH^\bullet$ together with the
+      realized observed differential $\CCObs{d}{h}$ and defect
+      $\CCDefect{d}{h}$;
+\item a self-adjoint lower-bound operator $D_h$ on $\CCHobs{h}(R)$ derived from
+      defect propagation and, when present, elimination/residual terms on the
+      observed sector;
+\item a finite-dimensional family $\mathcal Q_h(R)$ of candidate self-adjoint
+      reduced laws or completion data on $\CCHobs{h}(R)$;
+\item a unitary action of a finite group $G_h$ on $\CCHobs{h}(R)$ preserving
+      $D_h$ and $\mathcal Q_h(R)$;
+\item a family $\mathcal N_h$ of normalization, compatibility, or scale-fixing
+      conditions imposed on $\mathcal Q_h(R)$.
+\end{enumerate}
+Such a datum will be denoted by $\mathsf S_h(R)$.
+Locality and horizon compatibility are encoded in the choice of the
+finite-dimensional candidate family $\mathcal Q_h(R)$ inside the realized
+class.
+\end{definition}
+
+\begin{definition}[Horizon-preserving equivalence]
+\label{def:horizon-preserving-equivalence}
+\lean{HorizonPreservingEquivalence}
+Two selection data
+\[
+\mathsf S_h(R)
+\qquad\text{and}\qquad
+\mathsf S_h(R')
+\]
+at the same horizon are \emph{horizon-preserving equivalent} if there exists a
+unitary isomorphism
+\[
+W:\CCHobs{h}(R)\to \CCHobs{h}(R')
+\]
+such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $W\,\CCObs{d}{h} = \CCObs{d'}{h}\,W$ and
+      $W\,\CCDefect{d}{h} = \CCDefect{d'}{h}\,W$;
+\item $W D_h = D_h' W$;
+\item $W\,\mathcal Q_h(R)\,W^{-1} = \mathcal Q_h(R')$;
+\item $W$ intertwines the $G_h$-actions and preserves the normalization data
+      $\mathcal N_h$.
+\end{enumerate}
+Equivalent selection data represent the same reduced observed law in different
+coordinates.
+\end{definition}
+
+\begin{definition}[Admissible realized class]
+\label{def:admissible-realized-class}
+\lean{AdmissibleRealizedClass}
+Fix a horizon $h$. An \emph{admissible realized class} at horizon $h$ is a
+subclass $\mathfrak R_{\mathrm{adm}}(h)\subseteq \mathfrak R$ consisting of
+those characteristic horizon realizations that are equipped with a selection
+datum satisfying the following requirements:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the candidate family $\mathcal Q_h(R)$ is finite-dimensional;
+\item the admissibility constraint of
+      Definition~\ref{def:admissibility} is well posed for the derived
+      lower-bound operator $D_h$ on $\CCHobs{h}(R)$;
+\item $D_h$ and $\mathcal Q_h(R)$ are $G_h$-equivariant;
+\item the normalization data $\mathcal N_h$ are invariant under
+      horizon-preserving equivalence.
+\end{enumerate}
+If the horizon itself is part of the selection problem, one may further attach
+a design objective on an appropriate Grassmannian as in
+Definition~\ref{def:design-objective}.
+\end{definition}
+
+\begin{theorem}[Constructive Selection Interface for Realized Classes]
+\label{thm:selection-interface}
+\lean{selection_interface}
+Fix a horizon $h$ and an admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$. Then for every
+$R\in\mathfrak R_{\mathrm{adm}}(h)$ the forcing problem on the realized class
+reduces to a finite and checkable selection problem:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the structural calculus of Part~I applies to $R$ on
+      $\CCHobs{h}(R)$;
+\item after symmetry reduction, the admissible reduced operator data are
+      parameterized by finitely many block variables on the multiplicity spaces
+      of the $G_h$-isotypic decomposition;
+\item the completion-and-selection algebra of Chapter~5 returns exactly one of the following outputs:
+      a unique admissible reduced datum, a minimal residual face
+      certifying non-uniqueness, or an inconsistency certificate;
+\item if horizon selection is included through a Grassmannian design objective,
+      then optimal horizons exist in finite dimensions and satisfy the
+      stationary commutator equation
+      \[
+      [\nabla \CCDesign{P^\star},P^\star]=0.
+      \]
+\end{enumerate}
+In particular, realization plus admissibility converts the forcing question
+into an explicit reduced problem on finite-dimensional operator data.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Selected observed law]
+\label{def:selected-observed-law}
+\lean{selected_observed_law}
+Let $R\in\mathfrak R_{\mathrm{adm}}(h)$. If the admissibility output in
+Theorem~\ref{thm:selection-interface}(iii) is unique, and if any horizon
+optimization included in the datum also yields a unique horizon up to
+horizon-preserving equivalence, then the resulting reduced operator datum is
+called the \emph{selected observed law} of $R$ at horizon $h$.
+\end{definition}
+
+\begin{corollary}[Selection-to-Forcing Principle]
+\label{cor:selection-to-forcing}
+\lean{selection_to_forcing}
+Fix a horizon $h$ and an admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$. Suppose the admissible reduced selection data
+modulo horizon-preserving equivalence consist of a single equivalence class.
+Then the selected observed law is forced on
+$\mathfrak R_{\mathrm{adm}}(h)$: every realization in
+$\mathfrak R_{\mathrm{adm}}(h)$ yields the same selected observed law up to
+horizon-preserving equivalence.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:selection-interface}, each realization in
+$\mathfrak R_{\mathrm{adm}}(h)$ reduces to a finite admissibility problem on
+its reduced operator data. By hypothesis, the admissible reduced data modulo
+horizon-preserving equivalence form a singleton. Therefore the unique
+selection output of Definition~\ref{def:selected-observed-law} is the same for
+every realization up to that equivalence. Hence the observed law is forced on
+the class, modulo change of coordinates preserving horizons, symmetry, and
+normalization.
+\end{proof}
+
+\begin{definition}[Intrinsically equivariant realized class]\lean{IntrinsicallyEquivariantRealizedClass}
+\label{def:intrinsically-equivariant-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{intrinsically equivariant on the
+canonical carrier} if each realization
+$R\in\mathfrak R_{\mathrm{adm}}(h)$ is equipped with a unitary identification
+\[
+W_R:\CCHobs{h}(R)\to V_{\mathrm{slot}}
+\]
+onto the canonical six-slot carrier of
+Definition~\ref{def:local-slot-carrier} such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the transported symmetry group $G_h$ is the intrinsic relabeling action
+      of $S_4$ on $V_{\mathrm{slot}}$ from
+      Definition~\ref{def:intrinsic-relabeling-action};
+\item the transported lower-bound operator and candidate family are
+      $S_4$-equivariant on $V_{\mathrm{slot}}$;
+\item the normalization data are invariant under the same $S_4$ action.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Intrinsic-equivariant forcing on the canonical carrier]\lean{intrinsic_equivariant_forcing}
+\label{thm:intrinsic-equivariant-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an intrinsically
+equivariant realized class on the canonical carrier. Suppose the admissible
+reduced selection data modulo horizon-preserving equivalence consist of a
+single equivalence class. Then there exist unique scalars $a,b,c\in\bbR$ such
+that for every $R\in\mathfrak R_{\mathrm{adm}}(h)$, the selected observed law
+$L_R$ of $R$ satisfies
+\[
+W_R L_R W_R^{-1} e_\alpha
+=
+a\,e_\alpha
++
+b\sum_{\beta\sim\alpha}e_\beta
++
+c\sum_{\beta\perp\alpha}e_\beta
+\qquad(\alpha\in\mathcal S_4).
+\]
+Equivalently, after transport to the canonical carrier, the selected observed
+law is the same intrinsic-equivariant three-parameter operator for every
+realization in the class. Its channel eigenvalues on the forced $1+2+3$
+decomposition are
+\[
+\lambda_1=a+4b+c,\qquad
+\lambda_2=a-2b+c,\qquad
+\lambda_3=a-c.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Subgroup-broken realized class]\lean{SubgroupBrokenRealizedClass}
+\label{def:subgroup-broken-realized-class}
+Let $H\le S_4$ be a subgroup. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{$H$-equivariant on the canonical
+carrier} if each realization admits a unitary identification
+\[
+W_R:\CCHobs{h}(R)\to V_{\mathrm{slot}}
+\]
+for which the transported symmetry, lower-bound operator, candidate family, and
+normalization data are all invariant under the restricted action of $H$ on
+$V_{\mathrm{slot}}$.
+\end{definition}
+
+\begin{proposition}[Finite subgroup-broken selection]\lean{finite_subgroup_broken_selection}
+\label{prop:finite-subgroup-broken-selection}
+Let $H\le S_4$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an
+$H$-equivariant realized class on the canonical carrier. Then any selected
+observed law on $\mathfrak R_{\mathrm{adm}}(h)$ decomposes blockwise on the
+$H$-isotypic decomposition of $V_{\mathrm{slot}}$. In particular:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the corresponding reduced channel problem is still finite-dimensional;
+\item the number of irreducible local channels is at most $6$;
+\item the full intrinsic-equivariant case $H=S_4$ recovers the forced
+      three-parameter $1+2+3$ law of
+      Theorem~\ref{thm:intrinsic-equivariant-forcing}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+After transport by $W_R$, the selected law is $H$-equivariant on the
+six-dimensional carrier $V_{\mathrm{slot}}$. Theorem~\ref{thm:normal-form} and
+Corollary~\ref{cor:isotypic-block} therefore reduce the law to block variables
+on the multiplicity spaces of the $H$-isotypic decomposition. Because
+$V_{\mathrm{slot}}$ has dimension $6$, there can be at most six nonzero
+irreducible channels. This proves (i) and (ii). Statement (iii) is exactly the
+special case $H=S_4$, where
+Theorem~\ref{thm:intrinsic-equivariant-forcing} applies.
+\end{proof}
+
+\begin{definition}[Complex-type realized class]\lean{ComplexTypeRealizedClass}
+\label{def:complex-type-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{complex-type with scalar multiplicity
+commutant} if, for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the observed sector $\CCHobs{h}(R)$ carries a finite unitary symmetry
+      action and an isotypic decomposition on the relevant selected-law sector;
+\item the transported selected observed law and admissible selection data are
+      equivariant for that action;
+\item the selected-law sector carries a complex-type multiplicity package in
+      the sense of Definition~\ref{def:complex-type-multiplicity-package};
+\item on each isotypic channel, the induced multiplicity-space action of the
+      selected-law family has scalar multiplicity commutant in the sense of
+      Definition~\ref{def:scalar-multiplicity-commutant}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized phase-carrier class forcing]\lean{realized_phase_class_forcing}
+\label{cor:realized-phase-class-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a complex-type
+realized class with scalar multiplicity commutant. Suppose the admissible
+reduced selection data modulo horizon-preserving equivalence consist of a
+single equivalence class. Then the selected law on
+$\mathfrak R_{\mathrm{adm}}(h)$ carries a forced phase-carrier class modulo
+phase-equivalence.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Observable-irreducible realized class]\lean{ObservableIrreducibleRealizedClass}
+\label{def:observable-irreducible-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{observable-irreducible on the selected
+channels} if, for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$ and
+for every isotypic channel appearing in the selected-law sector:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected-law family acts on the corresponding multiplicity space
+      through a family $\mathcal A_{\rho}(R)$ as in
+      Definition~\ref{def:observable-irreducibility};
+\item the family $\mathcal A_{\rho}(R)$ is observable-irreducible;
+\item every selected self-adjoint closure or quadratic transport operator on
+      that channel commutes with $\mathcal A_{\rho}(R)$.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized self-adjoint scalarization on observable-irreducible channels]\lean{realized_self_adjoint_scalarization}
+\label{cor:realized-self-adjoint-scalarization}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an
+observable-irreducible realized class. Then every selected self-adjoint
+closure or quadratic transport operator on a selected channel is scalar on the
+corresponding multiplicity space.
+\end{corollary}
+
+\begin{proof}
+By Definition~\ref{def:observable-irreducible-realized-class}, the selected
+self-adjoint operator on each channel commutes with an observable-irreducible
+family on the corresponding multiplicity space. Corollary~\ref{cor:self-adjoint-commutant-scalarization}
+then forces that operator to be a real scalar multiple of the identity on that
+multiplicity space.
+\end{proof}
+
+\begin{corollary}[Realized isotropic symmetric-response scalarization]\lean{realized_isotropic_symmetric_response_scalarization}
+\label{cor:realized-isotropic-symmetric-response-scalarization}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class. Assume that on a selected channel fiber the observable carrier
+is the symmetric-tensor carrier $\mathrm{Sym}^2(F_h)$ of a real
+$d$-dimensional inner-product space $F_h$ with $d\ge 2$, and that the selected
+leading response operator
+\[
+\mathcal L_h:\mathrm{Sym}^2(F_h)\to \mathrm{Sym}^2(F_h)
+\]
+is equivariant for the induced orthogonal conjugation action of $O(F_h)$.
+Then there are unique scalars $\alpha_h,\beta_h\in\bbR$ such that
+\[
+\mathcal L_h(S)
+=
+\alpha_h\Bigl(S-\frac{\operatorname{tr}(S)}{d}I\Bigr)
++
+\beta_h\,\frac{\operatorname{tr}(S)}{d}I
+\qquad\text{for every }S\in \mathrm{Sym}^2(F_h).
+\]
+In particular, the trace line $\bbR I$ and the traceless carrier
+$\mathrm{Sym}^2_0(F_h)$ are the intrinsic scalar channels of the selected
+response.
+\end{corollary}
+
+\begin{proof}
+Choose an orthonormal identification $F_h\cong \bbR^d$. Under that
+identification, the induced orthogonal conjugation action on
+$\mathrm{Sym}^2(F_h)$ becomes the standard $O(d)$-action on
+$\mathrm{Sym}^2(\bbR^d)$, and $\mathcal L_h$ satisfies the hypotheses of
+Theorem~\ref{thm:orthogonal-symmetric-tensor-scalarization}. The resulting
+scalars are independent of the chosen orthonormal identification because the
+formula in that theorem is itself orthogonally invariant.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from real-type observable irreducibility]\lean{realized_phase_from_real_type}
+\label{cor:realized-phase-from-real-type}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-irreducible and of real type in the sense of
+      Definitions~\ref{def:observable-irreducibility} and
+      \ref{def:real-type-observable-channel};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the real-type observable irreducibility
+hypothesis lets
+Corollary~\ref{cor:real-type-irreducibility-collapses-phase-gauge} collapse
+the residual phase gauge to a unique class modulo phase-equivalence. These
+channelwise phase classes therefore agree across the realized class up to the
+same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from adjoint-closed real type]\lean{realized_phase_from_adjoint_closed_real_type}
+\label{cor:realized-phase-from-adjoint-closed-real-type}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-irreducible, of real type, and adjoint-closed in generation
+      in the sense of Definitions~\ref{def:observable-irreducibility},
+      \ref{def:real-type-observable-channel}, and
+      \ref{def:adjoint-closed-generated-observable-algebra};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the adjoint-closed real-type hypothesis lets
+Corollary~\ref{cor:adjoint-closed-real-type-phase} collapse the residual phase
+gauge to a unique class modulo phase-equivalence. These channelwise phase
+classes therefore agree across the realized class up to the same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from a rank-one observable seed]\lean{realized_phase_from_rank_one_seed}
+\label{cor:realized-phase-from-rank-one-seed}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-irreducible, adjoint-closed in generation, and carries a
+      rank-one observable seed in the sense of
+      Definitions~\ref{def:observable-irreducibility},
+      \ref{def:adjoint-closed-generated-observable-algebra}, and
+      \ref{def:rank-one-observable-seed};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the rank-one seed hypothesis lets
+Corollary~\ref{cor:rank-one-seed-phase} collapse the residual phase gauge to a
+unique class modulo phase-equivalence. These channelwise phase classes
+therefore agree across the realized class up to the same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from simple spectrum]\lean{realized_phase_from_simple_spectrum}
+\label{cor:realized-phase-from-simple-spectrum}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-irreducible, adjoint-closed in generation, and the generated
+      algebra contains a self-adjoint simple-spectrum observable in the sense
+      of Definition~\ref{def:simple-spectrum-observable};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the simple-spectrum hypothesis lets
+Corollary~\ref{cor:simple-spectrum-phase} collapse the residual phase gauge to
+a unique class modulo phase-equivalence. These channelwise phase classes
+therefore agree across the realized class up to the same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from observable completeness]\lean{realized_phase_from_observable_completeness}
+\label{cor:realized-phase-from-observable-completeness}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-complete in the sense of
+      Definition~\ref{def:observable-completeness};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the observable-completeness hypothesis lets
+Corollary~\ref{cor:observable-completeness-collapses-phase-gauge} collapse the
+phase gauge to a unique class modulo phase-equivalence. These channelwise phase
+classes therefore agree across the realized class up to the same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase forcing from a matrix-unit scaffold]\lean{realized_phase_from_matrix_units}
+\label{cor:realized-phase-from-matrix-units}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family contains a
+      matrix-unit observable scaffold in the sense of
+      Definition~\ref{def:matrix-unit-observable-scaffold};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$ carries a forced
+phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel, the matrix-unit scaffold hypothesis lets
+Corollary~\ref{cor:matrix-unit-scaffold-phase} collapse the phase gauge to a
+unique class modulo phase-equivalence. These channelwise phase classes
+therefore agree across the realized class up to the same equivalence.
+\end{proof}
+
+\begin{corollary}[Realized finite observable rigidity and phase forcing]\lean{realized_finite_observable_rigidity}
+\label{cor:realized-finite-observable-rigidity}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family has
+      generated algebra that is adjoint-closed and observable-irreducible;
+\item on each relevant multiplicity space, at least one of the equivalent
+      conditions of Theorem~\ref{thm:finite-observable-rigidity} holds;
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then on every relevant selected-law channel all four conditions of
+Theorem~\ref{thm:finite-observable-rigidity} hold, and the selected law on
+$\mathfrak R_{\mathrm{adm}}(h)$ carries a forced phase-carrier class modulo
+phase-equivalence.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Phase-generated realized class]\lean{PhaseGeneratedRealizedClass}
+\label{def:phase-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{phase-generated on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      phase-generating in the sense of
+      Definition~\ref{def:phase-generating-observable-family};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized phase generation forcing]\lean{realized_phase_generation_forcing}
+\label{cor:realized-phase-generation-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a phase-generated
+realized class. Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$
+carries a forced phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each relevant channel,
+Theorem~\ref{thm:phase-generation-forces-phase-class} collapses the residual
+phase gauge to a unique class modulo phase-equivalence. These channelwise
+phase classes therefore agree across the realized class up to the same
+equivalence.
+\end{proof}
+
+\begin{corollary}[Realized phase generation implies phase rigidity]\lean{realized_phase_generation_implies_rigidity}
+\label{cor:realized-phase-generation-implies-rigidity}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a phase-generated
+realized class. Then $\mathfrak R_{\mathrm{adm}}(h)$ is phase-rigid on the
+selected channels in the sense of
+Definition~\ref{def:phase-rigid-realized-class}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Phase-rigid realized class]\lean{PhaseRigidRealizedClass}
+\label{def:phase-rigid-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{phase-rigid on the selected channels}
+if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      phase-rigid in the sense of
+      Definition~\ref{def:phase-rigid-observable-family};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized phase rigidity forcing]\lean{realized_phase_rigidity_forcing}
+\label{cor:realized-phase-rigidity-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a phase-rigid
+realized class. Then the selected law on $\mathfrak R_{\mathrm{adm}}(h)$
+carries a forced phase-carrier class modulo phase-equivalence.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:selection-to-forcing}, the selected observed law is
+forced on $\mathfrak R_{\mathrm{adm}}(h)$ up to horizon-preserving
+equivalence. On each channel,
+Corollary~\ref{cor:phase-rigidity-collapses-phase-gauge} collapses the
+residual phase gauge to a unique class modulo phase-equivalence. These
+channelwise phase classes therefore agree across the realized class up to the
+same equivalence.
+\end{proof}
+
+\begin{definition}[Observable-rigid realized class]\lean{ObservableRigidRealizedClass}
+\label{def:observable-rigid-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{observable-rigid on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is phase-rigid on the selected channels
+      in the sense of Definition~\ref{def:phase-rigid-realized-class};
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is observable-irreducible on the
+      selected channels in the sense of
+      Definition~\ref{def:observable-irreducible-realized-class}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Observable-complete classes are observable-rigid]\lean{observable_complete_implies_observable_rigid}
+\label{cor:observable-complete-implies-observable-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-complete in the sense of
+      Definition~\ref{def:observable-completeness};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected
+channels in the sense of
+Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Finite-observable-rigidity classes are observable-rigid]\lean{finite_observable_rigidity_implies_observable_rigid}
+\label{cor:finite-observable-rigidity-implies-observable-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family has
+      generated algebra that is adjoint-closed and observable-irreducible;
+\item on each relevant multiplicity space, at least one of the equivalent
+      conditions of Theorem~\ref{thm:finite-observable-rigidity} holds;
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected
+channels in the sense of
+Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+On each relevant multiplicity space,
+Theorem~\ref{thm:finite-observable-rigidity} upgrades item (iii) to
+observable completeness. Therefore
+Corollary~\ref{cor:observable-complete-implies-observable-rigid} applies.
+\end{proof}
+
+\begin{definition}[Observable-orbit generated realized class]\lean{ObservableOrbitGeneratedRealizedClass}
+\label{def:observable-orbit-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{observable-orbit generated on the
+selected channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space $M_{\rho}$, there is an orthogonal
+      action
+      \[
+      V_{\rho}:K_{\rho}\to O(M_{\rho})
+      \]
+      that is transitive on the unit sphere of $M_{\rho}$;
+\item on each relevant multiplicity space $M_{\rho}$, there is a rank-one
+      orthogonal projection
+      \[
+      P_{0,\rho}:M_{\rho}\to M_{\rho}
+      \]
+      such that the selected-law family contains every conjugate
+      \[
+      V_{\rho}(g)P_{0,\rho}V_{\rho}(g)^*
+      \qquad(g\in K_{\rho});
+      \]
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Observable-orbit generated classes are observable-rigid]\lean{observable_orbit_generated_implies_observable_rigid}
+\label{cor:observable-orbit-generated-implies-observable-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an
+observable-orbit generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels in
+the sense of Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+For each relevant selected-law channel, items (ii)--(iii) place the
+selected-law family inside the scope of
+Corollary~\ref{cor:sphere-transitive-orbit-observable-completeness}, so that
+family is observable-complete on the corresponding multiplicity space.
+Together with items (i) and (iv), this is exactly the hypothesis package of
+Corollary~\ref{cor:observable-complete-implies-observable-rigid}. Therefore
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels.
+\end{proof}
+
+\begin{corollary}[Adjoint-closed real-type classes are observable-rigid]\lean{adjoint_closed_real_type_implies_observable_rigid}
+\label{cor:adjoint-closed-real-type-implies-observable-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item on each relevant selected-law channel, the observed sector carries the
+      data of a complex-type multiplicity package in the sense of
+      Definition~\ref{def:complex-type-multiplicity-package};
+\item on each relevant multiplicity space, the selected-law family is
+      observable-irreducible, of real type, and adjoint-closed in generation
+      in the sense of Definitions~\ref{def:observable-irreducibility},
+      \ref{def:real-type-observable-channel}, and
+      \ref{def:adjoint-closed-generated-observable-algebra};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected
+channels in the sense of
+Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+For each relevant selected-law channel, item (ii) already gives
+observable-irreducibility and phase rigidity in the sense of
+Definition~\ref{def:phase-rigid-observable-family}. Together with items (i)
+and (iii), this supplies the phase-rigid and observable-irreducible realized
+class conditions. Therefore both clauses of
+Definition~\ref{def:observable-rigid-realized-class} hold.
+\end{proof}
+
+\begin{corollary}[Scalar-commutant complex-type classes are observable-rigid]\lean{scalar_commutant_complex_type_implies_observable_rigid}
+\label{cor:scalar-commutant-complex-type-implies-observable-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is complex-type with scalar multiplicity
+      commutant in the sense of
+      Definition~\ref{def:complex-type-realized-class};
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is observable-irreducible on the
+      selected channels in the sense of
+      Definition~\ref{def:observable-irreducible-realized-class};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected
+channels in the sense of
+Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Generated observable classes are observable-rigid]\lean{generated_observable_implies_rigid}
+\label{cor:generated-observable-implies-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class that is phase-generated and observable-irreducible on the
+selected channels. Then $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on
+the selected channels in the sense of
+Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:realized-phase-generation-implies-rigidity},
+$\mathfrak R_{\mathrm{adm}}(h)$ is phase-rigid on the selected channels. The
+observable-irreducible hypothesis is already part of the assumptions.
+Therefore both clauses of
+Definition~\ref{def:observable-rigid-realized-class} hold.
+\end{proof}
+
+\begin{definition}[Transport-order disciplined realized class]\lean{TransportOrderDisciplinedRealizedClass}
+\label{def:transport-order-disciplined-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{transport-order disciplined} if, for
+every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$, the admissible selected
+transport bases at horizon $h$ form a transport-order filtered admissible
+family in the sense of Definition~\ref{def:transport-order-filtered-family},
+and the minimal-order admissible subclass is singleton modulo the chosen
+realized equivalence relation.
+\end{definition}
+
+\begin{corollary}[Realized transport-order forcing]\lean{realized_transport_order_forcing}
+\label{cor:realized-transport-order-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Then the selected law on
+$\mathfrak R_{\mathrm{adm}}(h)$ carries a forced transport-order class. If the
+selected transport bases admit exact Schur transport jets, those jets satisfy
+the canonical coefficient bounds of
+Corollary~\ref{cor:minimal-transport-order-controls-jet}.
+\end{corollary}
+
+\begin{proof}
+For each realization, Theorem~\ref{thm:minimal-admissible-transport-order}
+forces the distinguished transport-order class because the minimal-order
+admissible subclass is singleton modulo the chosen realized equivalence
+relation. The jet bound is then exactly
+Corollary~\ref{cor:minimal-transport-order-controls-jet}.
+\end{proof}
+
+\begin{definition}[Selected channel transport system]\lean{SelectedChannelTransportSystem}
+\label{def:selected-channel-transport-system}
+Fix a horizon $h$. A realization in an admissible realized class carries a
+\emph{selected channel transport system} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there is a finite observer graph $\Lambda_h=(\Lambda_h^0,\Lambda_h^1)$;
+\item to each site $x\in\Lambda_h^0$ is attached a selected channel fiber
+      $F_{h,x}$ inside the observed sector;
+\item to each edge $(x,y)\in\Lambda_h^1$ is attached a unitary transport map
+      \[
+      U_{xy}:F_{h,y}\to F_{h,x}
+      \]
+      compatible with the selected-law symmetry data.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized local gauge covariance on scalar-commutant channels]\lean{selected_channel_gauge_covariance}
+\label{cor:realized-local-gauge-covariance}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a complex-type
+realized class with scalar multiplicity commutant. Assume each realization
+$R\in\mathfrak R_{\mathrm{adm}}(h)$ carries a selected channel transport system
+in the sense of Definition~\ref{def:selected-channel-transport-system}. Then on
+every such selected channel transport system:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the transport energy is invariant under independent local unitary frame
+      changes on the selected channel fibers;
+\item if the selected channel fibers carry preserved unit volume forms, the
+      allowed local frame group reduces to the unimodular subgroup.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:realized-phase-class-forcing}, the selected-law channels
+carry forced phase-carrier classes modulo phase-equivalence, and by
+Definition~\ref{def:complex-type-realized-class} the local selected-law data
+have scalar multiplicity commutant on each channel. Therefore the selected
+channel fibers fit the hypotheses of
+Theorem~\ref{thm:local-unitary-covariance}, which proves (i). If preserved unit
+volume forms are also part of the realized data, then
+Corollary~\ref{cor:unimodular-channel-reduction} gives (ii).
+\end{proof}
+
+\begin{corollary}[Realized reversible recursion forcing on selected channels]\lean{selected_channel_recursive_forcing}
+\label{cor:realized-reversible-recursion-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose that on a selected channel fiber $F_h$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the admissible transport bases satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion};
+\item the forced one-step transport class is represented by a bounded transport
+      base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the distinguished admissible transport-order class on $F_h$ is $1$;
+\item every bi-infinite selected channel transport sequence
+      $x=(x_n)_{n\in\bbZ}$ satisfies the forced recursion constraint
+      \[
+      \mathcal R_{B_h}x=0,
+      \qquad\text{equivalently}\qquad
+      x_{n+1}=B_hx_n-x_{n-1};
+      \].
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Hypothesis (i) and Theorem~\ref{thm:order-one-forcing-criterion} give (a). Once
+the forced order-one class is represented by the bounded transport base $B_h$,
+Theorem~\ref{thm:reversible-transport-recursion} gives the recursion identity
+in (b).
+\end{proof}
+
+\begin{corollary}[Realized phase-compatible recursion forcing]\lean{selected_channel_recursive_forcing}
+\label{cor:realized-recursion-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose that on a selected channel fiber $F_h$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Corollary~\ref{cor:realized-reversible-recursion-forcing} hold;
+\item the selected channel also carries a forced phase-carrier class.
+\end{enumerate}
+Then every bi-infinite selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion constraint
+\[
+\mathcal R_{B_h}x=0,
+\qquad\text{equivalently}\qquad
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and this recursion constraint is phase-compatible.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-reversible-recursion-forcing} gives the recursion
+law. The forced phase-carrier class together with
+Proposition~\ref{prop:transport-recursion-compatibility} yields the stated
+phase compatibility.
+\end{proof}
+
+\begin{definition}[Isotropic selected channel system]\lean{IsotropicSelectedChannelSystem}
+\label{def:isotropic-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is \emph{isotropic} on a
+channel fiber $F_h$ if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there is an orthogonal action
+      \[
+      U_h:K_h\to O(F_h)
+      \]
+      of a symmetry group $K_h$;
+\item the representation of $K_h$ on $F_h$ is irreducible as a real module;
+\item the selected one-step transport base
+      \[
+      B_h:F_h\to F_h
+      \]
+      commutes with the action of $K_h$.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized isotropic quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-isotropic-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries an
+isotropic selected channel system with forced order-one transport base $B_h$.
+Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+Equivalently, the selected quadratic transport energy on that channel is
+\[
+E_{B_h}(v)=\kappa_h\,\|v\|^2
+\qquad(v\in F_h).
+\]
+\end{corollary}
+
+\begin{proof}
+The selected channel satisfies the hypotheses of
+Theorem~\ref{thm:isotropic-quadratic-transport}. Applying that theorem to the
+forced transport base $B_h$ gives the stated scalarization.
+\end{proof}
+
+\begin{definition}[Sphere-transitive selected channel system]\lean{SphereTransitiveSelectedChannelSystem}
+\label{def:sphere-transitive-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{sphere-transitive} on a channel fiber $F_h$ if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there is an orthogonal action
+      \[
+      U_h:K_h\to O(F_h)
+      \]
+      of a symmetry group $K_h$;
+\item for any unit vectors $u,v\in F_h$ there exists $g\in K_h$ such that
+      \[
+      U_h(g)u=v;
+      \]
+\item the selected one-step transport base
+      \[
+      B_h:F_h\to F_h
+      \]
+      commutes with the action of $K_h$.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized sphere-transitive quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-sphere-transitive-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+sphere-transitive selected channel system with forced order-one transport base
+$B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The selected channel satisfies the hypotheses of
+Definition~\ref{def:sphere-transitive-transport-channel}. Therefore
+Corollary~\ref{cor:sphere-transitive-quadratic-transport} applies directly to
+the forced transport base $B_h$.
+\end{proof}
+
+\begin{definition}[Full orthogonal selected channel system]\lean{FullOrthogonalSelectedChannelSystem}
+\label{def:full-orthogonal-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{fully orthogonal} on a channel fiber $F_h$ if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the symmetry action on $F_h$ is the tautological action of the full
+      orthogonal group
+      \[
+      O(F_h)\to O(F_h);
+      \]
+\item the selected one-step transport base
+      \[
+      B_h:F_h\to F_h
+      \]
+      commutes with every orthogonal transformation of $F_h$.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized full orthogonal quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-full-orthogonal-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+full orthogonal selected channel system with forced order-one transport base
+$B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The selected channel satisfies the hypotheses of
+Definition~\ref{def:full-orthogonal-transport-channel}. Therefore
+Corollary~\ref{cor:full-orthogonal-quadratic-transport} applies directly to
+the forced transport base $B_h$.
+\end{proof}
+
+\begin{definition}[Metric-isotropic selected channel system]\lean{MetricIsotropicSelectedChannelSystem}
+\label{def:metric-isotropic-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{metric-isotropic} on a channel fiber $F_h$ if the selected one-step
+transport base
+\[
+B_h:F_h\to F_h
+\]
+satisfies
+\[
+\|B_hu\|^2=\|B_hv\|^2
+\]
+for every pair of unit vectors $u,v\in F_h$.
+\end{definition}
+
+\begin{corollary}[Realized metric-isotropic quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-metric-isotropic-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+metric-isotropic selected channel system with forced order-one transport base
+$B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The metric-isotropy hypothesis places $B_h$ inside the scope of
+Corollary~\ref{cor:metric-isotropic-transport}, which gives the stated
+scalarization.
+\end{proof}
+
+\begin{definition}[Direction-frame selected channel system]\lean{DirectionFrameSelectedChannelSystem}
+\label{def:direction-frame-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{direction-frame isotropic} on a channel fiber $F_h$ if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the fiber $F_h$ carries a tight isotropic direction frame in the sense of
+      Definition~\ref{def:tight-isotropic-direction-frame};
+\item the quadratic transport operator of the selected one-step transport base
+      is direction-adapted to that frame in the sense of
+      Definition~\ref{def:direction-adapted-quadratic-transport};
+\item the selected quadratic transport operator is equivariant for the same
+      orthogonal action.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized direction-frame quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-direction-frame-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+direction-frame selected channel system with forced order-one transport base
+$B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The hypotheses place $B_h^*B_h$ inside the scope of
+Corollary~\ref{cor:direction-frame-quadratic-coefficient}, which yields the
+stated scalarization.
+\end{proof}
+
+\begin{corollary}[Realized orbit-generated isotropic direction frame]\lean{selected_channel_orbit_direction_frame}
+\label{cor:realized-orbit-direction-frame}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there is an orthogonal action
+      \[
+      U_h:K_h\to O(F_h)
+      \]
+      making $F_h$ irreducible as a real $K_h$-module;
+\item there is a rank-one orthogonal projection
+      \[
+      \Pi_{0,h}:F_h\to F_h;
+      \]
+\item the selected direction family is the orbit of $\Pi_{0,h}$ under
+      conjugation by $K_h$.
+\end{enumerate}
+Then the selected direction family is a tight isotropic direction frame on
+$F_h$.
+\end{corollary}
+
+\begin{proof}
+This is exactly Theorem~\ref{thm:orbit-generated-direction-frame} applied to
+the selected channel data.
+\end{proof}
+
+\begin{definition}[No-preferred-direction selected channel system]\lean{NoPreferredDirectionSelectedChannelSystem}
+\label{def:no-preferred-direction-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is \emph{without
+preferred direction at quadratic order} on a channel fiber $F_h$ if the
+selected one-step transport base carries a quadratic transport rigidity package
+in the sense of Definition~\ref{def:quadratic-transport-rigidity-package}.
+\end{definition}
+
+\begin{corollary}[Realized no-preferred-direction quadratic transport]\lean{selected_channel_scalarization}
+\label{cor:realized-no-preferred-direction-quadratic-transport}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+no-preferred-direction selected channel system with forced order-one transport
+base $B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The stated data place $B_h$ inside the scope of
+Corollary~\ref{cor:no-preferred-direction-quadratic-transport}, which gives
+the claimed scalarization.
+\end{proof}
+
+\begin{definition}[Quadratically rigid selected channel system]\lean{QuadraticallyRigidSelectedChannelSystem}
+\label{def:quadratically-rigid-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{quadratically rigid} on a channel fiber $F_h$ if its selected one-step
+transport base carries any one of the rigidity packages listed in
+Definition~\ref{def:quadratic-transport-rigidity-package}; concretely, this
+means one of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item isotropic selected channel data;
+\item sphere-transitive selected channel data;
+\item full orthogonal selected channel data;
+\item metric-isotropic selected channel data;
+\item direction-frame selected channel data.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized quadratic transport rigidity]\lean{selected_channel_scalarization}
+\label{cor:realized-quadratic-transport-rigidity}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+quadratically rigid selected channel system with forced order-one transport
+base $B_h$. Then there exists a unique scalar
+\[
+\kappa_h\ge 0
+\]
+such that
+\[
+B_h^*B_h=\kappa_h\,I_{F_h}.
+\]
+\end{corollary}
+
+\begin{proof}
+The stated data place $B_h$ inside the scope of
+Theorem~\ref{thm:quadratic-transport-rigidity}, which gives the claimed
+scalarization.
+\end{proof}
+
+\begin{corollary}[Realized isotropic recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-isotropic-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-isotropic-quadratic-transport}. Then every bi-infinite
+selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-isotropic-quadratic-transport} gives the scalar
+description of the quadratic transport operator. Combining them yields the
+claimed isotropic recursion channel.
+\end{proof}
+
+\begin{corollary}[Realized sphere-transitive recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-sphere-transitive-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-sphere-transitive-quadratic-transport}. Then every
+bi-infinite selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-sphere-transitive-quadratic-transport} gives the
+scalar description of the quadratic transport operator. Combining them yields
+the claimed sphere-transitive recursion channel.
+\end{proof}
+
+\begin{corollary}[Realized full orthogonal recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-full-orthogonal-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-full-orthogonal-quadratic-transport}. Then every bi-infinite
+selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-full-orthogonal-quadratic-transport} gives the
+scalar description of the quadratic transport operator. Combining them yields
+the claimed full orthogonal recursion channel.
+\end{proof}
+
+\begin{corollary}[Realized metric-isotropic recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-metric-isotropic-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-metric-isotropic-quadratic-transport}. Then every bi-infinite
+selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-metric-isotropic-quadratic-transport} gives the
+scalar description of the quadratic transport operator. Combining them yields
+the claimed metric-isotropic recursion channel.
+\end{proof}
+
+\begin{corollary}[Realized direction-frame recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-direction-frame-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-direction-frame-quadratic-transport}. Then every bi-infinite
+selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-direction-frame-quadratic-transport} gives the
+scalar description of the quadratic transport operator. Combining them yields
+the claimed direction-frame recursion channel.
+\end{proof}
+
+\begin{corollary}[Realized quadratically rigid recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-quadratically-rigid-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-quadratic-transport-rigidity}. Then every bi-infinite
+selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-quadratic-transport-rigidity} gives the scalar
+description of the quadratic transport operator. Combining them yields the
+claimed quadratically rigid recursion channel.
+\end{proof}
+
+\begin{corollary}[Quadratically rigid order-one channels are scalar-recursive]\lean{selected_channel_scalar_recursive}
+\label{cor:quadratically-rigid-yields-scalar-recursive}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of
+Corollary~\ref{cor:realized-quadratically-rigid-recursion-channel}. Then that
+selected channel system is scalar-recursive in the sense of
+Definition~\ref{def:scalar-recursive-selected-channel-system}.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-quadratically-rigid-recursion-channel} gives both
+the recursion law and the unique scalar quadratic transport coefficient.
+Therefore the selected channel system satisfies
+Definition~\ref{def:scalar-recursive-selected-channel-system}.
+\end{proof}
+
+\begin{corollary}[Realized no-preferred-direction recursion channel]\lean{selected_channel_scalar_recursive}
+\label{cor:realized-no-preferred-direction-recursion-channel}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ satisfies
+the hypotheses of Corollaries~\ref{cor:realized-recursion-forcing} and
+\ref{cor:realized-no-preferred-direction-quadratic-transport}. Then every
+bi-infinite selected channel transport sequence
+\[
+x=(x_n)_{n\in\bbZ}
+\]
+satisfies the forced recursion law
+\[
+x_{n+1}=B_hx_n-x_{n-1},
+\]
+and the associated second-order quadratic transport data are determined by the
+single scalar $\kappa_h$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:realized-recursion-forcing} gives the recursion law, while
+Corollary~\ref{cor:realized-no-preferred-direction-quadratic-transport} gives
+the scalar description of the quadratic transport operator. Combining them
+yields the claimed no-preferred-direction recursion channel.
+\end{proof}
+
+\begin{definition}[Transport-generated selected channel system]\lean{TransportGeneratedSelectedChannelSystem}
+\label{def:transport-generated-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system is
+\emph{transport-generated} on a channel fiber $F_h$ if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the admissible transport bases on $F_h$ satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion};
+\item the unique minimal-order admissible equivalence class is represented by a
+      bounded transport base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\item the selected channel transport system is without preferred direction at
+      quadratic order in the sense of
+      Definition~\ref{def:no-preferred-direction-selected-channel-system}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Realized transport generation forcing]\lean{selected_channel_transport_generation}
+\label{cor:realized-transport-generation-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+transport-generated selected channel system with distinguished transport base
+$B_h$. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exists a unique scalar
+      \[
+      \kappa_h\ge 0
+      \]
+      such that
+      \[
+      B_h^*B_h=\kappa_h\,I_{F_h};
+      \]
+\item every bi-infinite selected channel transport sequence
+      \[
+      x=(x_n)_{n\in\bbZ}
+      \]
+      satisfies the forced recursion law
+      \[
+      \mathcal R_{B_h}x=0,
+      \qquad\text{equivalently}\qquad
+      x_{n+1}=B_hx_n-x_{n-1}.
+      \]
+\end{enumerate}
+In particular, the selected channel carries a forced scalar quadratic
+recursion datum.
+\end{corollary}
+
+\begin{proof}
+The stated data place the selected transport channel inside the scope of
+Theorem~\ref{thm:transport-generation-forces-scalar-recursion}. Applying that
+theorem to the distinguished transport base $B_h$ gives both the unique scalar
+coefficient and the forced recursion law.
+\end{proof}
+
+\begin{definition}[Scalar-recursive selected channel system]\lean{ScalarRecursiveSelectedChannelSystem}
+\label{def:scalar-recursive-selected-channel-system}
+Fix a horizon $h$. A selected channel transport system on a channel fiber
+$F_h$ with distinguished transport base
+\[
+B_h:F_h\to F_h
+\]
+is \emph{scalar-recursive} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exists a unique scalar
+      \[
+      \kappa_h\ge 0
+      \]
+      such that
+      \[
+      B_h^*B_h=\kappa_h\,I_{F_h};
+      \]
+\item every bi-infinite selected channel transport sequence
+      \[
+      x=(x_n)_{n\in\bbZ}
+      \]
+      satisfies the recursion law
+      \[
+      x_{n+1}=B_hx_n-x_{n-1}.
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Transport-rigid realized class]\lean{TransportRigidRealizedClass}
+\label{def:transport-rigid-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{transport-rigid on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-order disciplined in the
+      sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, the admissible transport
+      bases satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced one-step
+      transport class is represented by a bounded transport base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\item every such selected channel system is quadratically rigid in the sense
+      of
+      Definition~\ref{def:quadratically-rigid-selected-channel-system}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Quadratically rigid order-one classes are transport-rigid]\lean{quadratically_rigid_implies_transport_rigid}
+\label{cor:quadratically-rigid-implies-transport-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-order disciplined in the
+      sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, the admissible transport
+      bases satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced one-step
+      transport class is represented by a bounded transport base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\item every relevant selected channel system is quadratically rigid in the
+      sense of
+      Definition~\ref{def:quadratically-rigid-selected-channel-system}.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected
+channels in the sense of
+Definition~\ref{def:transport-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Items (i) and (ii) are exactly clauses (i) and (ii) of
+Definition~\ref{def:transport-rigid-realized-class}, and item (iii) is clause
+(iii). Therefore the class is transport-rigid.
+\end{proof}
+
+\begin{corollary}[No-preferred-direction order-one classes are transport-rigid]\lean{no_preferred_direction_implies_transport_rigid}
+\label{cor:no-preferred-direction-implies-transport-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-order disciplined in the
+      sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, the admissible transport
+      bases satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced one-step
+      transport class is represented by a bounded transport base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\item every relevant selected channel system is without preferred direction at
+      quadratic order in the sense of
+      Definition~\ref{def:no-preferred-direction-selected-channel-system}.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected
+channels in the sense of
+Definition~\ref{def:transport-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Items (i) and (ii) together with item (iii) place every relevant selected
+channel inside the scope of
+Definition~\ref{def:quadratically-rigid-selected-channel-system}. Therefore
+Corollary~\ref{cor:quadratically-rigid-implies-transport-rigid} applies.
+\end{proof}
+
+\begin{corollary}[Intrinsic symmetry/order hypotheses imply governing-datum rigidity]\lean{intrinsic_package_implies_governing_datum_rigid}
+\label{cor:intrinsic-package-implies-governing-datum-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is complex-type with scalar multiplicity
+      commutant in the sense of
+      Definition~\ref{def:complex-type-realized-class};
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is observable-irreducible on the
+      selected channels in the sense of
+      Definition~\ref{def:observable-irreducible-realized-class};
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence consist of a single equivalence class;
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-order disciplined in the
+      sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, the admissible transport
+      bases satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced one-step
+      transport class is represented by a bounded transport base
+      \[
+      B_h:F_h\to F_h;
+      \]
+\item every relevant selected channel system is without preferred direction at
+      quadratic order in the sense of
+      Definition~\ref{def:no-preferred-direction-selected-channel-system}.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is governing-datum rigid on the selected
+channels in the sense of
+Definition~\ref{def:governing-datum-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+By items (i)--(iii) and
+Corollary~\ref{cor:scalar-commutant-complex-type-implies-observable-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels.
+By items (iv)--(vi) and
+Corollary~\ref{cor:no-preferred-direction-implies-transport-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected channels.
+Therefore both clauses of
+Definition~\ref{def:governing-datum-rigid-realized-class} hold.
+\end{proof}
+
+\begin{corollary}[Transport-rigid classes are scalar-recursive]\lean{transport_rigid_implies_scalar_recursive}
+\label{cor:transport-rigid-implies-scalar-recursive}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-rigid
+realized class on the selected channels. Then every relevant selected channel
+fiber is scalar-recursive in the sense of
+Definition~\ref{def:scalar-recursive-selected-channel-system}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Transport generation yields a scalar-recursive channel]\lean{transport_generation_yields_scalar_recursive}
+\label{cor:transport-generation-yields-scalar-recursive}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose a selected channel fiber $F_h$ carries a
+transport-generated selected channel system with distinguished transport base
+$B_h$. Then that selected channel system is scalar-recursive in the sense of
+Definition~\ref{def:scalar-recursive-selected-channel-system}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Transport-generated classes are transport-rigid]\lean{transport_generated_implies_transport_rigid}
+\label{cor:transport-generated-implies-transport-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a transport-order
+disciplined realized class. Suppose every relevant selected channel fiber
+carries a transport-generated selected channel system in the sense of
+Definition~\ref{def:transport-generated-selected-channel-system}. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected channels in
+the sense of Definition~\ref{def:transport-rigid-realized-class}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Observable-rigidity generated realized class]\lean{ObservableRigidityGeneratedRealizedClass}
+\label{def:observable-rigidity-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{observable-rigidity generated on the
+selected channels} if, on every relevant selected-law channel, at least one of
+the following realized witness packages holds:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a phase-generated realized-class package in the sense of
+      Definition~\ref{def:phase-generated-realized-class}, together with
+      observable irreducibility on the selected channels;
+\item an observable-complete realized-class package in the sense of
+      Corollary~\ref{cor:observable-complete-implies-observable-rigid};
+\item a finite-observable-rigidity realized-class package in the sense of
+      Corollary~\ref{cor:finite-observable-rigidity-implies-observable-rigid};
+\item an adjoint-closed real-type realized-class package in the sense of
+      Corollary~\ref{cor:adjoint-closed-real-type-implies-observable-rigid}.
+\item an observable-orbit generated realized-class package in the sense of
+      Definition~\ref{def:observable-orbit-generated-realized-class}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Observable-rigidity generated classes are observable-rigid]\lean{observable_rigidity_generated_implies_rigid}
+\label{cor:observable-rigidity-generated-implies-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an
+observable-rigidity generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels in
+the sense of Definition~\ref{def:observable-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Apply, channel by channel, the corresponding route from
+Corollary~\ref{cor:generated-observable-implies-rigid},
+Corollary~\ref{cor:observable-complete-implies-observable-rigid},
+Corollary~\ref{cor:finite-observable-rigidity-implies-observable-rigid}, or
+Corollary~\ref{cor:adjoint-closed-real-type-implies-observable-rigid}, or
+Corollary~\ref{cor:observable-orbit-generated-implies-observable-rigid},
+according to which witness package is available.
+\end{proof}
+
+\begin{definition}[Transport-rigidity generated realized class]\lean{TransportRigidityGeneratedRealizedClass}
+\label{def:transport-rigidity-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{transport-rigidity generated on the
+selected channels} if, on every relevant selected channel fiber, at least one
+of the following realized witness packages holds:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a transport-generated selected channel system in the sense of
+      Definition~\ref{def:transport-generated-selected-channel-system};
+\item a no-preferred-direction order-one package in the sense of
+      Corollary~\ref{cor:no-preferred-direction-implies-transport-rigid};
+\item a quadratically rigid order-one package in the sense of
+      Corollary~\ref{cor:quadratically-rigid-implies-transport-rigid}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Transport-rigidity generated classes are transport-rigid]\lean{transport_rigidity_generated_implies_rigid}
+\label{cor:transport-rigidity-generated-implies-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a
+transport-rigidity generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected channels in
+the sense of Definition~\ref{def:transport-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Apply, channel by channel, the corresponding route from
+Corollary~\ref{cor:transport-generated-implies-transport-rigid},
+Corollary~\ref{cor:no-preferred-direction-implies-transport-rigid}, or
+Corollary~\ref{cor:quadratically-rigid-implies-transport-rigid}, according to
+which witness package is available.
+\end{proof}
+
+\begin{definition}[Rigidity-generated realized class]\lean{RigidityGeneratedRealizedClass}
+\label{def:rigidity-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{rigidity-generated on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item it is observable-rigidity generated on the selected channels in the
+      sense of
+      Definition~\ref{def:observable-rigidity-generated-realized-class};
+\item it is transport-rigidity generated on the selected channels in the sense
+      of
+      Definition~\ref{def:transport-rigidity-generated-realized-class}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Rigidity-generated classes are governing-datum rigid]\lean{rigidity_generated_implies_governing_datum_rigid}
+\label{cor:rigidity-generated-implies-governing-datum-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a
+rigidity-generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is governing-datum rigid on the selected
+channels in the sense of
+Definition~\ref{def:governing-datum-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:observable-rigidity-generated-implies-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels.
+By Corollary~\ref{cor:transport-rigidity-generated-implies-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected channels.
+Therefore both clauses of
+Definition~\ref{def:governing-datum-rigid-realized-class} hold.
+\end{proof}
+
+\begin{definition}[Governing-datum rigid realized class]\lean{GoverningDatumRigidRealizedClass}
+\label{def:governing-datum-rigid-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{governing-datum rigid on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected
+      channels in the sense of
+      Definition~\ref{def:observable-rigid-realized-class};
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected
+      channels in the sense of
+      Definition~\ref{def:transport-rigid-realized-class}.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Closure-rigid realized class]\lean{ClosureRigidRealizedClass}
+\label{def:closure-rigid-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{closure-rigid on the selected
+symmetry channels} if, for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the observed sector $\CCHobs{h}(R)$ carries a finite unitary symmetry
+      action and an isotypic decomposition on the relevant selected-law sector;
+\item every selected self-adjoint closure operator on that sector is
+      equivariant for the chosen symmetry action;
+\item every such selected self-adjoint closure operator is symmetry-scalar on
+      every appearing isotypic channel in the sense of
+      Definition~\ref{def:symmetry-scalar-closure}.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Multiplicity-free equivariant closure classes are closure-rigid]\lean{multiplicity_free_equivariant_closure_implies_rigid}
+\label{cor:multiplicity-free-equivariant-closure-implies-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that, for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the observed sector $\CCHobs{h}(R)$ carries a finite unitary symmetry
+      action and an isotypic decomposition on the relevant selected-law sector;
+\item every selected self-adjoint closure operator on that sector is
+      equivariant for the chosen symmetry action;
+\item the symmetry representation on the relevant selected-law sector is
+      multiplicity-free.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is closure-rigid on the selected symmetry
+channels in the sense of
+Definition~\ref{def:closure-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Fix a realization $R\in\mathfrak R_{\mathrm{adm}}(h)$ and a selected
+self-adjoint closure operator $A$ on the relevant selected-law sector. By
+items (i)--(iii), the operator $A$ lies in the scope of
+Theorem~\ref{thm:multiplicity-free-closures-scalar}. Hence $A$ is
+symmetry-scalar on every appearing isotypic channel, which is exactly clause
+(iii) of Definition~\ref{def:closure-rigid-realized-class}. Clauses (i) and
+(ii) are part of the assumptions, so the definition holds for every
+realization.
+\end{proof}
+
+\begin{definition}[Symmetry-generated realized class]\lean{SymmetryGeneratedRealizedClass}
+\label{def:symmetry-generated-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{symmetry-generated on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item it is observable-rigidity generated on the selected channels in the
+      sense of
+      Definition~\ref{def:observable-rigidity-generated-realized-class};
+\item it is transport-order disciplined in the sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber, it carries a
+      transport-generated selected channel system in the sense of
+      Definition~\ref{def:transport-generated-selected-channel-system};
+\item for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$, the observed
+      sector $\CCHobs{h}(R)$ carries a finite unitary symmetry action and an
+      isotypic decomposition on the relevant selected-law sector;
+\item every selected self-adjoint closure operator on that sector is
+      equivariant for the chosen symmetry action;
+\item the symmetry representation on the relevant selected-law sector is
+      multiplicity-free.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Symmetry-generated classes are governing-datum rigid]\lean{symmetry_generated_implies_governing_datum_rigid}
+\label{cor:symmetry-generated-implies-governing-datum-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a
+symmetry-generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is governing-datum rigid on the selected
+channels in the sense of
+Definition~\ref{def:governing-datum-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:observable-rigidity-generated-implies-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is observable-rigid on the selected channels.
+By items (ii)--(iii) of
+Definition~\ref{def:symmetry-generated-realized-class} and
+Corollary~\ref{cor:transport-generated-implies-transport-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is transport-rigid on the selected channels.
+Therefore both clauses of
+Definition~\ref{def:governing-datum-rigid-realized-class} hold.
+\end{proof}
+
+\begin{corollary}[Symmetry-generated classes are closure-rigid]\lean{symmetry_generated_implies_closure_rigid}
+\label{cor:symmetry-generated-implies-closure-rigid}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a
+symmetry-generated realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is closure-rigid on the selected symmetry
+channels in the sense of
+Definition~\ref{def:closure-rigid-realized-class}.
+\end{corollary}
+
+\begin{proof}
+Items (iv)--(vi) of Definition~\ref{def:symmetry-generated-realized-class}
+are exactly the hypotheses of
+Corollary~\ref{cor:multiplicity-free-equivariant-closure-implies-rigid}.
+The conclusion follows directly.
+\end{proof}
+
+\begin{definition}[Locally homogeneous realized class]\lean{LocallyHomogeneousRealizedClass}
+\label{def:locally-homogeneous-realized-class}
+Fix a horizon $h$. An admissible realized class
+$\mathfrak R_{\mathrm{adm}}(h)$ is \emph{locally homogeneous on the selected
+channels} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item it is observable-orbit generated on the selected channels in the sense
+      of Definition~\ref{def:observable-orbit-generated-realized-class};
+\item it is transport-order disciplined in the sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, there is an orthogonal
+      action
+      \[
+      U_h:K_h\to O(F_h)
+      \]
+      making $F_h$ irreducible as a real $K_h$-module, together with a
+      rank-one orthogonal projection
+      \[
+      \Pi_{0,h}:F_h\to F_h
+      \]
+      whose orbit under conjugation by $K_h$ is the selected direction family;
+\item on every relevant selected channel fiber, the selected quadratic
+      transport operator is direction-adapted to that orbit frame and
+      equivariant for the same orthogonal action;
+\item on every relevant selected channel fiber, the admissible transport bases
+      satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced order-one
+      class is represented by a bounded transport base;
+\item for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$, the observed
+      sector $\CCHobs{h}(R)$ carries a finite unitary symmetry action and an
+      isotypic decomposition on the relevant selected-law sector;
+\item every selected self-adjoint closure operator on that sector is
+      equivariant for the chosen symmetry action;
+\item the symmetry representation on the relevant selected-law sector is
+      multiplicity-free.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Observable-orbit orbit-frame multiplicity-free classes are symmetry-generated]\lean{observable_orbit_frame_implies_symmetry_generated}
+\label{cor:observable-orbit-frame-implies-symmetry-generated}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is observable-orbit generated on the
+      selected channels in the sense of
+      Definition~\ref{def:observable-orbit-generated-realized-class};
+\item $\mathfrak R_{\mathrm{adm}}(h)$ is transport-order disciplined in the
+      sense of
+      Definition~\ref{def:transport-order-disciplined-realized-class};
+\item on every relevant selected channel fiber $F_h$, there is an orthogonal
+      action
+      \[
+      U_h:K_h\to O(F_h)
+      \]
+      making $F_h$ irreducible as a real $K_h$-module, together with a
+      rank-one orthogonal projection
+      \[
+      \Pi_{0,h}:F_h\to F_h
+      \]
+      whose orbit under conjugation by $K_h$ is the selected direction family;
+\item on every relevant selected channel fiber, the selected quadratic
+      transport operator is direction-adapted to that orbit frame and
+      equivariant for the same orthogonal action;
+\item on every relevant selected channel fiber, the admissible transport bases
+      satisfy the hypotheses of
+      Theorem~\ref{thm:order-one-forcing-criterion} and the forced order-one
+      class is represented by a bounded transport base;
+\item for every realization $R\in\mathfrak R_{\mathrm{adm}}(h)$, the observed
+      sector $\CCHobs{h}(R)$ carries a finite unitary symmetry action and an
+      isotypic decomposition on the relevant selected-law sector;
+\item every selected self-adjoint closure operator on that sector is
+      equivariant for the chosen symmetry action;
+\item the symmetry representation on the relevant selected-law sector is
+      multiplicity-free.
+\end{enumerate}
+Then $\mathfrak R_{\mathrm{adm}}(h)$ is symmetry-generated on the selected
+channels in the sense of
+Definition~\ref{def:symmetry-generated-realized-class}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Locally homogeneous classes are symmetry-generated]\lean{locally_homogeneous_implies_symmetry_generated}
+\label{cor:locally-homogeneous-implies-symmetry-generated}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a locally
+homogeneous realized class on the selected channels. Then
+$\mathfrak R_{\mathrm{adm}}(h)$ is symmetry-generated on the selected channels
+in the sense of Definition~\ref{def:symmetry-generated-realized-class}.
+\end{corollary}
+
+\begin{proof}
+The hypotheses of
+Definition~\ref{def:locally-homogeneous-realized-class} are exactly the
+hypotheses of
+Corollary~\ref{cor:observable-orbit-frame-implies-symmetry-generated}. The
+conclusion follows directly.
+\end{proof}
+
+\begin{definition}[Local internal datum on selected channels]\lean{LocalInternalDatumSelectedChannels}
+\label{def:local-internal-datum-selected-channels}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a governing-datum
+rigid realized class. For each relevant selected channel
+$\rho$ with fiber $F_{h,\rho}$ and distinguished transport base $B_{h,\rho}$,
+the \emph{local internal datum} at horizon $h$ is the channelwise package
+\[
+\mathfrak g_{h,\rho}:=\bigl([J_{h,\rho}],\,\kappa_{h,\rho},\,[C_{h,\rho}]\bigr),
+\]
+where:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $[J_{h,\rho}]$ is the forced phase-carrier class modulo
+      phase-equivalence;
+\item $\kappa_{h,\rho}\ge 0$ is the unique scalar for which
+      \[
+      B_{h,\rho}^*B_{h,\rho}=\kappa_{h,\rho}\,I_{F_{h,\rho}};
+      \]
+\item $[C_{h,\rho}]$ denotes the scalar closure class on the corresponding
+      multiplicity space for every selected self-adjoint closure operator on
+      that channel.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Intrinsic fixed-horizon governing datum forcing]\lean{realized_local_internal_datum_forcing}
+\label{cor:realized-local-internal-datum-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a governing-datum
+rigid realized class. Then on every relevant selected
+channel:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law carries a forced phase-carrier class modulo
+      phase-equivalence;
+\item there exists a unique scalar
+      \[
+      \kappa_{h,\rho}\ge 0
+      \]
+      such that the distinguished transport base satisfies
+      \[
+      B_{h,\rho}^*B_{h,\rho}=\kappa_{h,\rho}\,I_{F_{h,\rho}},
+      \]
+      and every bi-infinite selected channel transport sequence satisfies the
+      forced recursion law
+      \[
+      x_{n+1}=B_{h,\rho}x_n-x_{n-1};
+      \]
+\item every selected self-adjoint closure operator on that channel is scalar on
+      the corresponding multiplicity space.
+\end{enumerate}
+In particular, the selected law carries a unique local internal datum in the
+sense of Definition~\ref{def:local-internal-datum-selected-channels}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Gauge-compatible local internal datum]\lean{GaugeCompatibleLocalInternalDatum}
+\label{def:gauge-compatible-local-internal-datum}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a governing-datum
+rigid realized class. Assume the relevant selected channels carry selected
+channel transport systems in the sense of
+Definition~\ref{def:selected-channel-transport-system}. For each such selected
+channel $\rho$, the \emph{gauge-compatible local internal datum} is the
+quadruple
+\[
+\widehat{\mathfrak g}_{h,\rho}
+:=
+\bigl([J_{h,\rho}],\,\kappa_{h,\rho},\,[C_{h,\rho}],\,[\mathcal U_{h,\rho}]\bigr),
+\]
+where:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $\bigl([J_{h,\rho}],\,\kappa_{h,\rho},\,[C_{h,\rho}]\bigr)$ is the local
+      internal datum of Definition~\ref{def:local-internal-datum-selected-channels};
+\item $[\mathcal U_{h,\rho}]$ is the local unitary gauge-covariance class of
+      the selected channel transport system on $\rho$, modulo independent local
+      unitary frame changes on the selected channel fibers;
+\item if preserved unit volume forms are part of the realized data, then
+      $[\mathcal U_{h,\rho}]$ is understood in the reduced unimodular gauge
+      class.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Gauge-compatible fixed-horizon governing datum forcing]\lean{gauge_compatible_local_datum_forcing}
+\label{thm:gauge-compatible-local-datum-forcing}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be a governing-datum
+rigid realized class. Assume the relevant selected channels carry selected
+channel transport systems in the sense of
+Definition~\ref{def:selected-channel-transport-system}. Then on every relevant
+selected channel:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected law carries a unique local internal datum in the sense of
+      Definition~\ref{def:local-internal-datum-selected-channels};
+\item the selected channel transport system is locally unitary gauge-covariant;
+\item if preserved unit volume forms are part of the realized data, the local
+      gauge group reduces to the unimodular subgroup.
+\end{enumerate}
+In particular, the selected law carries a unique gauge-compatible local
+internal datum in the sense of
+Definition~\ref{def:gauge-compatible-local-internal-datum}.
+\end{theorem}
+
+\begin{proof}
+Item (i) is exactly
+Theorem~\ref{cor:realized-local-internal-datum-forcing}. Item (ii) is
+Corollary~\ref{cor:realized-local-gauge-covariance}(i), and item (iii) is
+Corollary~\ref{cor:realized-local-gauge-covariance}(ii). These are precisely
+the data listed in
+Definition~\ref{def:gauge-compatible-local-internal-datum}.
+\end{proof}
+
+\begin{corollary}[Intrinsic symmetry/order hypotheses yield gauge-compatible local datum]\lean{intrinsic_package_yields_gauge_compatible_local_datum}
+\label{cor:intrinsic-package-yields-gauge-compatible-local-datum}
+Fix a horizon $h$ and let $\mathfrak R_{\mathrm{adm}}(h)$ be an admissible
+realized class satisfying the hypotheses of
+Corollary~\ref{cor:intrinsic-package-implies-governing-datum-rigid}. Assume
+further that the relevant selected channels carry selected channel transport
+systems in the sense of
+Definition~\ref{def:selected-channel-transport-system}. Then the selected law
+carries a unique gauge-compatible local internal datum in the sense of
+Definition~\ref{def:gauge-compatible-local-internal-datum}.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:intrinsic-package-implies-governing-datum-rigid},
+$\mathfrak R_{\mathrm{adm}}(h)$ is governing-datum rigid on the selected
+channels. The conclusion is therefore exactly
+Theorem~\ref{thm:gauge-compatible-local-datum-forcing}.
+\end{proof}
+
+\paragraph{Boundary of Chapter~13.}
+\label{rem:part-two-boundary}
+This chapter stops at forcing on realized classes at fixed horizons. The next
+question concerns refinement: when selected laws are organized across
+successive horizons, how do they recover classical continuum operators, and
+under what additional hypotheses is the continuum law itself forced? That
+classical-limit bridge is taken up separately in Chapter~9.

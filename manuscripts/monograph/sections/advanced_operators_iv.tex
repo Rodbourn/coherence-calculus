@@ -1,0 +1,244 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:advanced-operators-iv}
+% ============================================================
+
+These operators formalize auxiliary computational and algebraic structures
+that build on the main spine's transport, recursion, and monodromy tools:
+orthogonality enforcement (polar projection), shadow commutators
+(non-commutation with observation), and interference kernels (averaged unitary
+constraints).
+
+% ------------------------------------------------------------
+\subsection{Orthogonality Projectors (Nearest Unitary/Orthogonal Map)}
+\label{subsec:orthogonality-projector}
+% ------------------------------------------------------------
+
+The orthogonality projector extracts the unitary (or orthogonal) factor from an operator via polar decomposition.
+
+\begin{definition}[Orthogonality projector]
+\label{def:orthogonality-projector}\lean{CoherenceCalculus.AppendixOperators.OrthogonalityProjector}
+Let $A: \cH \to \cH$ be a bounded linear operator on a finite-dimensional inner-product space with polar decomposition $A = U |A|$, where $|A| = (A^* A)^{1/2}$ and $U$ is a partial isometry.
+The \emph{orthogonality projector} is the map
+\[
+\mathcal{O}(A) := U.
+\]
+When $A$ is invertible, $\mathcal{O}(A)$ is unitary (or orthogonal over $\bbR$).
+\end{definition}
+
+\begin{proposition}[Procrustes optimality (Standard)]
+\label{prop:procrustes}\lean{CoherenceCalculus.AppendixOperators.procrustes_optimality_statement}
+For an invertible operator $A$ on a finite-dimensional real inner-product space, $\mathcal{O}(A)$ is the unique minimizer of
+\[
+\min_{Q \in O(n)} \|A - Q\|_F,
+\]
+where $O(n)$ denotes the orthogonal group and $\|\cdot\|_F$ is the Frobenius norm.
+\end{proposition}
+
+\begin{proof}[Proof (standard)]
+This is the classical orthogonal Procrustes theorem.
+Write $A = U |A|$ and use the fact that $\|A - Q\|_F^2 = \|A\|_F^2 + n - 2\langle Q, A \rangle_F$.
+Maximizing $\langle Q, A \rangle_F = \Tr(Q^\top A)$ over orthogonal $Q$ gives $Q = U$.
+\end{proof}
+
+\begin{corollary}[Fixed points]
+\label{cor:orthogonality-fixed}\lean{CoherenceCalculus.AppendixOperators.orthogonality_fixed_point}
+If $A$ is already unitary (or orthogonal), then $\mathcal{O}(A) = A$.
+In this case, $|A| = I$ and $A^{-1} = A^*$.
+\end{corollary}
+
+\begin{proof}
+For unitary $A$, we have $A^* A = I$, so $|A| = I$ and $A = A \cdot I = \mathcal{O}(A) \cdot I$.
+\end{proof}
+
+\begin{remark}[Connection to aliasing operator]
+\lean{CoherenceCalculus.AppendixOperators.PolarDecomp}
+The orthogonality projector $\mathcal{O}$ is the same polar-decomposition extraction used for the aliasing operator $U_h$ (Section~\ref{subsec:aliasing}).
+Both extract the ``direction'' (isometric part) from an operator, discarding the ``magnitude'' (positive part).
+\end{remark}
+
+\begin{example}[2$\times$2 orthogonality projection]
+\lean{CoherenceCalculus.AppendixOperators.orthogonality_2x2_example}
+\label{ex:orthogonality-2x2}
+Let $A = \begin{psmallmatrix} 2 & 0 \\ 0 & 3 \end{psmallmatrix}$.
+Then $|A| = A$ (since $A$ is positive) and $\mathcal{O}(A) = I$.
+For $A = \begin{psmallmatrix} 0 & 2 \\ 3 & 0 \end{psmallmatrix}$, the SVD gives $\mathcal{O}(A) = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix}$, the nearest orthogonal matrix.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The orthogonality projector ``enforces unitarity'' by replacing any operator with its closest unitary/orthogonal factor.
+This is a constraint-satisfaction operator: given an approximate unitary, extract the exact unitary it approximates.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Shadow Commutators (Noncommutation with Observation)}
+\label{subsec:shadow-commutator}
+% ------------------------------------------------------------
+
+The shadow commutator measures the failure of an operator to commute with the horizon projection.
+
+\begin{definition}[Shadow commutator]
+\label{def:shadow-commutator}\lean{CoherenceCalculus.AppendixOperators.shadowCommutator}
+For a bounded linear operator $A: \cH \to \cH$ and horizon projection $\CCPi{h}$, the \emph{shadow commutator} is
+\[
+\CCShadowComm{A}{h} := [A, \CCPi{h}] := A \CCPi{h} - \CCPi{h} A.
+\]
+\end{definition}
+
+\begin{lemma}[Vanishing criterion]
+\label{lem:shadow-vanish}\lean{CoherenceCalculus.AppendixOperators.shadowCommutator_vanish_iff}
+$\CCShadowComm{A}{h} = 0$ if and only if $A$ preserves the horizon decomposition: $A$ maps $\cH_{\mathrm{obs}} = \CCPi{h} \cH$ to itself and $\cH_{\mathrm{sh}} = \CCPibar{h} \cH$ to itself.
+\end{lemma}
+
+\begin{proof}
+$[A, \CCPi{h}] = 0$ means $A \CCPi{h} = \CCPi{h} A$.
+For $x \in \cH_{\mathrm{obs}}$, we have $\CCPi{h} x = x$, so $A x = A \CCPi{h} x = \CCPi{h} A x \in \cH_{\mathrm{obs}}$.
+For $y \in \cH_{\mathrm{sh}}$, we have $\CCPi{h} y = 0$, so $\CCPi{h} A y = A \CCPi{h} y = 0$, meaning $A y \in \cH_{\mathrm{sh}}$.
+The converse follows by reversing the argument.
+\end{proof}
+
+\begin{lemma}[Decomposition into leakage components]
+\label{lem:shadow-decomposition}\lean{CoherenceCalculus.AppendixOperators.shadowCommutator_decomposition_statement}
+The shadow commutator decomposes as
+\[
+\CCShadowComm{A}{h} = \CCPibar{h} A \CCPi{h} - \CCPi{h} A \CCPibar{h}.
+\]
+In terms of block notation (observable/shadow), this is $A_{so} - A_{os}$ where $A_{so} = \CCPibar{h} A \CCPi{h}$ and $A_{os} = \CCPi{h} A \CCPibar{h}$.
+\end{lemma}
+
+\begin{proof}
+Expand using $I = \CCPi{h} + \CCPibar{h}$:
+\begin{align*}
+A \CCPi{h} - \CCPi{h} A &= A \CCPi{h} - \CCPi{h} A (\CCPi{h} + \CCPibar{h}) \\
+&= A \CCPi{h} - \CCPi{h} A \CCPi{h} - \CCPi{h} A \CCPibar{h} \\
+&= (\CCPi{h} + \CCPibar{h}) A \CCPi{h} - \CCPi{h} A \CCPi{h} - \CCPi{h} A \CCPibar{h} \\
+&= \CCPibar{h} A \CCPi{h} - \CCPi{h} A \CCPibar{h}. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}[Connection to leakage operator]
+\lean{CoherenceCalculus.AppendixOperators.shadowCommutator_decomposition_statement}
+When $A = d$ is a nilpotent differential, the term $\CCPibar{h} d \CCPi{h} = \CCLeak{d}{h}$ is exactly the leakage operator (Definition~\ref{def:leakage-operator}).
+Thus $\CCShadowComm{d}{h} = \CCLeak{d}{h} - d_{os}$, where $d_{os} = \CCPi{h} d \CCPibar{h}$ is the ``return from shadow'' component.
+\end{remark}
+
+\begin{remark}[Connection to coherence defect]
+\lean{CoherenceCalculus.AppendixOperators.shadowCommutator}
+For a linear operator $A$, the coherence defect (Definition~\ref{def:coherence-defect}) satisfies
+\[
+\CCTau{h}{A}{x} = \CCPi{h} A x - A \CCPi{h} x = -\CCPi{h} [A, \CCPi{h}] x = -\CCPi{h} \CCShadowComm{A}{h} x.
+\]
+Thus the observable part of the shadow commutator directly encodes the coherence defect.
+\end{remark}
+
+\begin{example}[Off-diagonal operator]
+\lean{CoherenceCalculus.AppendixOperators.shadow_commutator_example}
+\label{ex:shadow-commutator}
+Let $\cH = \bbR^2$, $\CCPi{h} = e_1 e_1^*$ (projection onto first coordinate), and $A = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix}$.
+Then:
+\[
+\CCShadowComm{A}{h} = A \CCPi{h} - \CCPi{h} A = \begin{psmallmatrix} 0 & 0 \\ 1 & 0 \end{psmallmatrix} - \begin{psmallmatrix} 0 & 1 \\ 0 & 0 \end{psmallmatrix} = \begin{psmallmatrix} 0 & -1 \\ 1 & 0 \end{psmallmatrix}.
+\]
+The nonzero commutator shows $A$ does not preserve the horizon decomposition.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The shadow commutator $\CCShadowComm{A}{h} = [A, \CCPi{h}]$ measures ``horizon incompatibility.''
+Information loss under observation is not erasure; it is exactly the failure of operators to commute with the horizon projection.
+Operators with $\CCShadowComm{A}{h} = 0$ are ``horizon-compatible'' in the
+sense that they respect the observable/shadow split.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Interference Kernels (Averaged Unitary Constraints)}
+\label{subsec:interference-kernel}
+% ------------------------------------------------------------
+
+An interference kernel averages a collection of unitary operators, with fixed points characterizing invariant states.
+
+\begin{definition}[Interference kernel]
+\label{def:interference-kernel}\lean{CoherenceCalculus.AppendixOperators.interferenceKernel4}
+Let $\{U_1, U_2, \ldots, U_m\}$ be a finite collection of unitary operators on $\cH$.
+The \emph{interference kernel} is the average
+\[
+\mathcal{K} := \frac{1}{m} \sum_{j=1}^{m} U_j.
+\]
+\end{definition}
+
+\begin{definition}[Common fixed-point subspace]
+\label{def:fixed-point-subspace}\lean{CoherenceCalculus.AppendixOperators.isCommonFixedPoint4}
+The \emph{common fixed-point subspace} is
+\[
+\mathrm{Fix}(\{U_j\}) := \{ x \in \cH : U_j x = x \text{ for all } j = 1, \ldots, m \}.
+\]
+\end{definition}
+
+\begin{lemma}[Fixed points are eigenvectors]
+\label{lem:fixed-eigenvector}\lean{CoherenceCalculus.AppendixOperators.fixed_implies_kernel_eigenvector4}
+If $x \in \mathrm{Fix}(\{U_j\})$, then $\mathcal{K} x = x$.
+That is, $\mathrm{Fix}(\{U_j\}) \subseteq \Ker(\mathcal{K} - I)$.
+\end{lemma}
+
+\begin{proof}
+If $U_j x = x$ for all $j$, then
+\[
+\mathcal{K} x = \frac{1}{m} \sum_{j=1}^{m} U_j x = \frac{1}{m} \sum_{j=1}^{m} x = x. \qedhere
+\]
+\end{proof}
+
+\begin{lemma}[Spectral bound]
+\label{lem:kernel-spectral}\lean{CoherenceCalculus.AppendixOperators.kernel_spectral_bound_statement}
+The interference kernel satisfies $\|\mathcal{K}\| \le 1$.
+Furthermore, $\mathcal{K} x = x$ with $\|x\| = 1$ implies $U_j x = x$ for all $j$ (when $\cH$ is finite-dimensional).
+\end{lemma}
+
+\begin{proof}
+Since each $U_j$ is unitary, $\|U_j\| = 1$, so $\|\mathcal{K}\| \le \frac{1}{m} \sum_j \|U_j\| = 1$.
+
+For the second statement: if $\mathcal{K} x = x$ with $\|x\| = 1$, then
+\[
+1 = \|x\|^2 = \langle x, \mathcal{K} x \rangle = \frac{1}{m} \sum_{j=1}^{m} \langle x, U_j x \rangle.
+\]
+Since $|\langle x, U_j x \rangle| \le \|x\| \|U_j x\| = 1$ for each $j$, and the average equals 1, each term must equal 1.
+For unit vectors, $\langle x, U_j x \rangle = 1$ implies $U_j x = x$.
+\end{proof}
+
+\begin{corollary}[Eigenspace characterization]
+\label{cor:kernel-eigenspace}\lean{CoherenceCalculus.AppendixOperators.kernel_eigenspace_forward4}
+In finite dimensions, $\Ker(\mathcal{K} - I) = \mathrm{Fix}(\{U_j\})$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:fixed-eigenvector} gives one inclusion.
+Lemma~\ref{lem:kernel-spectral} gives the reverse.
+\end{proof}
+
+\begin{remark}[Connection to representation projectors]
+\lean{CoherenceCalculus.AppendixOperators.IsotypicProperties}
+When $\{U_j\} = \{U(g) : g \in G\}$ for a finite group $G$, the interference kernel becomes
+\[
+\mathcal{K} = \frac{1}{|G|} \sum_{g \in G} U(g) = P_{\mathrm{triv}},
+\]
+the projector onto the trivial isotypic component (Section~\ref{subsec:representation-projector}).
+The fixed-point subspace $\mathrm{Fix}(\{U(g)\})$ is precisely the $G$-invariant subspace.
+\end{remark}
+
+\begin{example}[Two reflections in $\bbR^2$]
+\lean{CoherenceCalculus.AppendixOperators.interference_reflections_example}
+\label{ex:interference-reflections}
+Let $U_1 = I$ and $U_2 = \begin{psmallmatrix} 1 & 0 \\ 0 & -1 \end{psmallmatrix}$ (reflection across the $x$-axis).
+Then:
+\[
+\mathcal{K} = \frac{1}{2}(U_1 + U_2) = \frac{1}{2}\begin{psmallmatrix} 2 & 0 \\ 0 & 0 \end{psmallmatrix} = \begin{psmallmatrix} 1 & 0 \\ 0 & 0 \end{psmallmatrix}.
+\]
+This is projection onto the $x$-axis, which is $\mathrm{Fix}(\{U_1, U_2\}) = \Span\{e_1\}$.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The interference kernel $\mathcal{K}$ averages unitary constraints.
+Its eigenvalue-1 eigenspace is exactly the subspace satisfying all constraints simultaneously.
+This provides a spectral characterization of ``satisfies all unitary constraints'' without iterative solving.
+\end{quote}

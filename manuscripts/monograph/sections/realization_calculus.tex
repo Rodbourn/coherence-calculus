@@ -1,0 +1,667 @@
+% ============================================================
+\section{Variational-Discrete Realization and Crime Ledgers}
+\label{sec:realization-calculus}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this adds.}
+The preceding sections determine exact visible laws, returned residuals,
+workload-relative transfers, and coded closure data on the operator side. A
+numerical host still has to realize those laws through weak forms, discrete
+spaces, geometry maps, quadrature, stage splits, solver choices, and interface
+transfers. This section makes that realization chain native.
+
+\smallskip\noindent
+\textbf{Boundary.}
+This is a realization grammar, not a new foundation. It does not derive a
+specific CFD, spectral-element, or CBS code from bedrock. It provides the
+exact typed ledger in which any declared realization must record its departures
+from exactness. Characteristic-based split schemes and high-order spectral
+element hosts motivate this layer, but they enter only as external
+realizations of the grammar developed here
+\cite{NithiarasuCodinaZienkiewicz2006,Nek5000Theory2026,Nek5000CaseFiles2026,Nek5000Filters2026,NekNekTutorial2026}.
+\end{quote}
+
+\subsection{Variational laws and realization chains}
+
+\begin{definition}[Variational law]
+\label{def:variational-law}\lean{VariationalLaw}
+A \emph{variational law} is a sextuple
+\[
+\mathcal V=(X,Y,a,\ell,\mathcal J,\mathcal I),
+\]
+where \(X\) and \(Y\) are finite-dimensional Hilbert spaces,
+\[
+a:X\times Y\to \bbR
+\]
+is a bilinear form,
+\[
+\ell:Y\to \bbR
+\]
+is a linear load functional,
+\(\mathcal J\) is a declared family of linear observables on \(X\), and
+\(\mathcal I\) is a declared family of linear invariants or constraints on
+\(X\).
+\end{definition}
+
+\begin{definition}[Realization chain]
+\label{def:realization-chain}\lean{RealizationChain}
+Let \(\mathcal V=(X,Y,a,\ell,\mathcal J,\mathcal I)\) be a variational law. A
+\emph{realization chain} at level \(h\) is a package
+\[
+\mathfrak R_h
+=
+(\mathcal V,X_h,Y_h,\Pi_h^X,\Pi_h^Y,\Phi_h,Q_h,\mathcal T_h,\mathcal S_h,\mathcal I_h)
+\]
+together with residual representatives
+\[
+R_h^{\mathrm{cont}},
+\ R_h^{\mathrm{proj}},
+\ R_h^{\mathrm{geom}},
+\ R_h^{\mathrm{quad}},
+\ R_h^{\mathrm{alias}},
+\ R_h^{\mathrm{split}},
+\ R_h^{\mathrm{lin}},
+\ R_h^{\mathrm{alg}},
+\ R_h^{\mathrm{bc}},
+\ R_h^{\mathrm{iface}}
+:X_h\times Y_h\to \bbR
+\]
+such that
+\[
+R_h^{\mathrm{cont}}(u_h,v_h)
+:=
+\ell(\Pi_h^Y v_h)-a(\Pi_h^X u_h,\Pi_h^Y v_h).
+\]
+The declared data have the following roles:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(X_h,Y_h\) are the realized trial and test spaces.
+\item \(\Pi_h^X,\Pi_h^Y\) map realized states and tests into the continuum
+      law.
+\item \(\Phi_h\) records geometry pullback/pushforward data.
+\item \(Q_h\) records quadrature data.
+\item \(\mathcal T_h\) records stage or time-splitting data.
+\item \(\mathcal S_h\) records algebraic solver/preconditioner data.
+\item \(\mathcal I_h\) records boundary and interface transfer data.
+\end{enumerate}
+The terminal residual
+\[
+R_h^{\mathrm{real}}:=R_h^{\mathrm{iface}}
+\]
+is the fully realized residual delivered by the declared host.
+\end{definition}
+
+\begin{definition}[Typed crime ledger]
+\label{def:typed-crime-ledger}\lean{TypedCrimeLedger}\lean{typedCrimeLedger}
+In the setting of Definition~\ref{def:realization-chain}, define the
+\emph{typed realization crimes} by
+\begin{align*}
+\mathfrak C_h^{\mathrm{proj}} &:= R_h^{\mathrm{proj}}-R_h^{\mathrm{cont}},\\
+\mathfrak C_h^{\mathrm{geom}} &:= R_h^{\mathrm{geom}}-R_h^{\mathrm{proj}},\\
+\mathfrak C_h^{\mathrm{quad}} &:= R_h^{\mathrm{quad}}-R_h^{\mathrm{geom}},\\
+\mathfrak C_h^{\mathrm{alias}} &:= R_h^{\mathrm{alias}}-R_h^{\mathrm{quad}},\\
+\mathfrak C_h^{\mathrm{split}} &:= R_h^{\mathrm{split}}-R_h^{\mathrm{alias}},\\
+\mathfrak C_h^{\mathrm{lin}} &:= R_h^{\mathrm{lin}}-R_h^{\mathrm{split}},\\
+\mathfrak C_h^{\mathrm{alg}} &:= R_h^{\mathrm{alg}}-R_h^{\mathrm{lin}},\\
+\mathfrak C_h^{\mathrm{bc}} &:= R_h^{\mathrm{bc}}-R_h^{\mathrm{alg}},\\
+\mathfrak C_h^{\mathrm{iface}} &:= R_h^{\mathrm{iface}}-R_h^{\mathrm{bc}}.
+\end{align*}
+The tuple
+\[
+\mathfrak C_h
+=
+\bigl(
+\mathfrak C_h^{\mathrm{proj}},
+\mathfrak C_h^{\mathrm{geom}},
+\mathfrak C_h^{\mathrm{quad}},
+\mathfrak C_h^{\mathrm{alias}},
+\mathfrak C_h^{\mathrm{split}},
+\mathfrak C_h^{\mathrm{lin}},
+\mathfrak C_h^{\mathrm{alg}},
+\mathfrak C_h^{\mathrm{bc}},
+\mathfrak C_h^{\mathrm{iface}}
+\bigr)
+\]
+is the \emph{crime ledger} of the realization.
+\end{definition}
+
+\begin{theorem}[Exact residual ledger]
+\label{thm:exact-residual-ledger}\lean{exact_residual_ledger}
+For every realization chain,
+\[
+R_h^{\mathrm{real}}-R_h^{\mathrm{cont}}
+=
+\mathfrak C_h^{\mathrm{proj}}
++
+\mathfrak C_h^{\mathrm{geom}}
++
+\mathfrak C_h^{\mathrm{quad}}
++
+\mathfrak C_h^{\mathrm{alias}}
++
+\mathfrak C_h^{\mathrm{split}}
++
+\mathfrak C_h^{\mathrm{lin}}
++
+\mathfrak C_h^{\mathrm{alg}}
++
+\mathfrak C_h^{\mathrm{bc}}
++
+\mathfrak C_h^{\mathrm{iface}}
+\]
+pointwise on \(X_h\times Y_h\).
+\end{theorem}
+
+\begin{proof}
+Substitute the definitions from Definition~\ref{def:typed-crime-ledger} and
+sum. All intermediate residual representatives cancel telescopically:
+\begin{align*}
+\sum_{\alpha}\mathfrak C_h^{\alpha}
+&=
+\bigl(R_h^{\mathrm{proj}}-R_h^{\mathrm{cont}}\bigr)
++
+\bigl(R_h^{\mathrm{geom}}-R_h^{\mathrm{proj}}\bigr)
++
+\cdots
++
+\bigl(R_h^{\mathrm{iface}}-R_h^{\mathrm{bc}}\bigr)\\
+&=
+R_h^{\mathrm{iface}}-R_h^{\mathrm{cont}}
+=
+R_h^{\mathrm{real}}-R_h^{\mathrm{cont}}.
+\end{align*}
+\end{proof}
+
+\begin{corollary}[No hidden crime]
+\label{cor:no-hidden-crime}\lean{no_hidden_crime}
+If every typed crime in \(\mathfrak C_h\) vanishes, then
+\[
+R_h^{\mathrm{real}}=R_h^{\mathrm{cont}}.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:exact-residual-ledger}.
+\end{proof}
+
+\begin{definition}[Realization exactness]
+\label{def:realization-exactness}\lean{realizationExact}
+A realization chain is \emph{realization-exact} if every entry of its crime
+ledger vanishes identically.
+\end{definition}
+
+\subsection{Compatible mixed realization}
+
+\begin{definition}[Fortin-compatible mixed realization]
+\label{def:fortin-compatible-realization}\lean{FortinCompatibleRealization}
+Let \(U\), \(U_h\), and \(M_h\) be finite-dimensional Hilbert spaces, and let
+\[
+b:U\times M_h\to \bbR,
+\qquad
+b_h:U_h\times M_h\to \bbR
+\]
+be continuous bilinear forms. A \emph{Fortin-compatible mixed realization}
+consists of a linear lift
+\[
+F_h:U\to U_h
+\]
+and a constant \(C_F\ge 1\) such that
+\[
+b_h(F_hu,q_h)=b(u,q_h)
+\qquad
+(\forall u\in U,\ q_h\in M_h),
+\]
+and
+\[
+\|F_hu\|\le C_F\|u\|
+\qquad
+(\forall u\in U).
+\]
+\end{definition}
+
+\begin{theorem}[Discrete inf-sup inherited from a Fortin lift]
+\label{thm:discrete-infsup-from-fortin}\lean{discrete_infsup_from_fortin}
+Assume the setting of Definition~\ref{def:fortin-compatible-realization}, and
+suppose there is a constant \(\beta>0\) such that
+\[
+\sup_{u\in U\setminus\{0\}}
+\frac{|b(u,q_h)|}{\|u\|}
+\ge
+\beta\|q_h\|
+\qquad
+(\forall q_h\in M_h).
+\]
+Then
+\[
+\sup_{u_h\in U_h\setminus\{0\}}
+\frac{|b_h(u_h,q_h)|}{\|u_h\|}
+\ge
+\frac{\beta}{C_F}\|q_h\|
+\qquad
+(\forall q_h\in M_h).
+\]
+\end{theorem}
+
+\begin{proof}
+Fix \(q_h\in M_h\). By hypothesis, for every \(\varepsilon>0\) there exists
+\(u\in U\setminus\{0\}\) such that
+\[
+|b(u,q_h)|
+\ge
+(\beta-\varepsilon)\|u\|\|q_h\|.
+\]
+Set \(u_h:=F_hu\). Then
+\[
+|b_h(u_h,q_h)|
+=
+|b(u,q_h)|
+\ge
+(\beta-\varepsilon)\|u\|\|q_h\|
+\ge
+\frac{\beta-\varepsilon}{C_F}\|u_h\|\|q_h\|.
+\]
+Taking the supremum over \(u_h\) and then letting \(\varepsilon\downarrow 0\)
+gives the result.
+\end{proof}
+
+\begin{proposition}[Commuting constraint crime vanishes]
+\label{prop:commuting-constraint-crime-vanishes}\lean{commuting_constraint_crime_vanishes}
+Let \(B:U\to Z\), \(B_h:U_h\to Z_h\), and \(\Pi_h^Z:Z\to Z_h\) be linear maps.
+If
+\[
+B_hF_h=\Pi_h^Z B,
+\]
+then the lifted constraint defect
+\[
+\mathfrak C_h^{\mathrm{compat}}(u):=B_hF_hu-\Pi_h^ZBu
+\]
+vanishes for every \(u\in U\).
+\end{proposition}
+
+\begin{proof}
+This is exactly the stated commuting identity.
+\end{proof}
+
+\subsection{Geometry, quadrature, and aliasing}
+
+\begin{definition}[Geometry-realized element form]
+\label{def:geometry-realized-element-form}\lean{GeometryRealizedForm}
+Let \(X_h\) and \(Y_h\) be realized spaces over an element family
+\(\mathcal K_h\). For each \(K\in\mathcal K_h\), let
+\[
+\Phi_K:\widehat K\to K
+\]
+be a declared reference-to-physical map, and let
+\[
+\widehat g_{K,u_h,v_h}:\widehat K\to \bbR
+\]
+be the pulled-back integrand representing the local realized form. The
+\emph{geometry-realized form} is
+\[
+a_h^{\mathrm{geom}}(u_h,v_h)
+:=
+\sum_{K\in\mathcal K_h}
+\int_{\widehat K}\widehat g_{K,u_h,v_h}(\widehat x)\,d\widehat x.
+\]
+\end{definition}
+
+\begin{definition}[Quadrature-realized form and crimes]
+\label{def:quadrature-realized-form}\lean{QuadratureRealizedForm}
+In the setting of Definition~\ref{def:geometry-realized-element-form}, let
+\(Q_h=\{Q_K\}_{K\in\mathcal K_h}\) be elementwise quadrature rules and define
+\[
+a_h^Q(u_h,v_h)
+:=
+\sum_{K\in\mathcal K_h}Q_K[\widehat g_{K,u_h,v_h}].
+\]
+If \(a_h^{\mathrm{proj}}\) is a declared projected exact form on
+\(X_h\times Y_h\), define the geometry and quadrature crimes by
+\[
+\mathfrak C_h^{\mathrm{geom}}(u_h,v_h)
+:=
+a_h^{\mathrm{geom}}(u_h,v_h)-a_h^{\mathrm{proj}}(u_h,v_h),
+\]
+\[
+\mathfrak C_h^{\mathrm{quad}}(u_h,v_h)
+:=
+a_h^Q(u_h,v_h)-a_h^{\mathrm{geom}}(u_h,v_h).
+\]
+\end{definition}
+
+\begin{theorem}[Geometry exactness kills geometry crime]
+\label{thm:geometry-exactness-kills-geometry-crime}\lean{geometry_exactness_kills_geometry_crime}
+If
+\[
+a_h^{\mathrm{geom}}(u_h,v_h)=a_h^{\mathrm{proj}}(u_h,v_h)
+\qquad
+(\forall u_h\in X_h,\ v_h\in Y_h),
+\]
+then \(\mathfrak C_h^{\mathrm{geom}}=0\).
+\end{theorem}
+
+\begin{proof}
+This is the definition of \(\mathfrak C_h^{\mathrm{geom}}\).
+\end{proof}
+
+\begin{theorem}[Quadrature exactness kills quadrature crime]
+\label{thm:quadrature-exactness-kills-quadrature-crime}\lean{quadrature_exactness_kills_quadrature_crime}
+Assume that each element \(K\in\mathcal K_h\) carries a function class
+\(\widehat{\mathfrak P}_K\) such that
+\[
+\widehat g_{K,u_h,v_h}\in \widehat{\mathfrak P}_K
+\qquad
+(\forall u_h\in X_h,\ v_h\in Y_h),
+\]
+and that
+\[
+Q_K[\varphi]=\int_{\widehat K}\varphi(\widehat x)\,d\widehat x
+\qquad
+(\forall \varphi\in \widehat{\mathfrak P}_K).
+\]
+Then \(\mathfrak C_h^{\mathrm{quad}}=0\).
+\end{theorem}
+
+\begin{proof}
+For every \(u_h\in X_h\) and \(v_h\in Y_h\), the hypothesis gives
+\[
+Q_K[\widehat g_{K,u_h,v_h}]
+=
+\int_{\widehat K}\widehat g_{K,u_h,v_h}(\widehat x)\,d\widehat x
+\qquad
+(\forall K\in\mathcal K_h).
+\]
+Summing over elements yields \(a_h^Q(u_h,v_h)=a_h^{\mathrm{geom}}(u_h,v_h)\),
+hence \(\mathfrak C_h^{\mathrm{quad}}(u_h,v_h)=0\).
+\end{proof}
+
+\begin{definition}[Paired aliasing package]
+\label{def:paired-aliasing-package}\lean{PairedAliasingPackage}
+Let \(S_h\subseteq X_h\) and \(T_h\subseteq Y_h\). The \emph{paired aliasing
+package} associated with quadrature is
+\[
+\Omega_h^{\mathrm{alias}}=(S_h,T_h,B_h^{\mathrm{alias}}),
+\]
+where
+\[
+B_h^{\mathrm{alias}}(v_h,u_h):=\mathfrak C_h^{\mathrm{quad}}(u_h,v_h).
+\]
+\end{definition}
+
+\begin{corollary}[Quadrature exactness kills workload-visible aliasing]
+\label{cor:quadrature-exactness-kills-aliasing}\lean{quadrature_exactness_kills_aliasing}
+If \(\mathfrak C_h^{\mathrm{quad}}=0\) on \(S_h\times T_h\), then the paired
+aliasing package \(\Omega_h^{\mathrm{alias}}\) is zero on that workload, and
+every one-sided observable transfer obtained from it by
+Definition~\ref{def:paired-observable-package} also vanishes.
+\end{corollary}
+
+\begin{proof}
+The first claim is exactly the definition of
+\(B_h^{\mathrm{alias}}\). The induced one-sided observable transfers are
+obtained by currying the same bilinear map, so they vanish as well.
+\end{proof}
+
+\begin{proposition}[Certified dealiasing on a selected workload]
+\label{prop:certified-dealiasing-selected-workload}\lean{certified_dealiasing_selected_workload}
+Let \(F_h:X_h\to X_h\) be linear. If
+\[
+\mathfrak C_h^{\mathrm{quad}}(F_hu_h,v_h)=0
+\qquad
+(\forall u_h\in S_h,\ v_h\in T_h),
+\]
+then the filtered workload \(F_hS_h\) is alias-free on the paired package
+\(\Omega_h^{\mathrm{alias}}\).
+\end{proposition}
+
+\begin{proof}
+This is the previous corollary applied to the filtered source family
+\(F_hS_h\).
+\end{proof}
+
+\subsection{Stages, solvers, interfaces, and goals}
+
+\begin{definition}[Stage bundle and split crime]
+\label{def:stage-bundle-split-crime}\lean{StageBundle}\lean{stageBundleSplitCrime}
+Let \(X_h\) be a realized state space. A \emph{stage bundle} at step
+\(\Delta t\) is a composition
+\[
+\mathcal T_{\Delta t}
+:=
+\Psi^{(s)}_{\Delta t}\circ\cdots\circ\Psi^{(1)}_{\Delta t}
+:X_h\to X_h.
+\]
+If \(\mathcal E_{\Delta t}:X_h\to X_h\) is a declared reference full-step
+evolution, the \emph{split crime} is
+\[
+\mathfrak C_{\Delta t}^{\mathrm{split}}
+:=
+\mathcal T_{\Delta t}-\mathcal E_{\Delta t}.
+\]
+\end{definition}
+
+\begin{proposition}[Stagewise invariants survive composition]
+\label{prop:stagewise-invariants-survive-composition}\lean{stagewise_invariants_survive_composition}
+Let \(I:X_h\to Z\) be any map. If
+\[
+I\circ \Psi^{(j)}_{\Delta t}=I
+\qquad
+(j=1,\dots,s),
+\]
+then
+\[
+I\circ\mathcal T_{\Delta t}=I.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply the stage identities successively:
+\[
+I\circ\mathcal T_{\Delta t}
+=
+I\circ \Psi^{(s)}_{\Delta t}\circ\cdots\circ\Psi^{(1)}_{\Delta t}
+=
+I\circ \Psi^{(s-1)}_{\Delta t}\circ\cdots\circ\Psi^{(1)}_{\Delta t}
+=
+\cdots
+=
+I.
+\]
+\end{proof}
+
+\begin{definition}[Solver package and algebraic crime]
+\label{def:solver-package-algebraic-crime}\lean{SolverPackage}\lean{solverPackageAlgebraicCrime}
+Let \(A_h:X_h\to X_h\) be a realized linear operator, let \(f_h\in X_h\), and
+let \(\widetilde u_h\in X_h\) be a computed state. A \emph{solver package} is a
+tuple
+\[
+\mathcal S_h=(A_h,M_h,\mathcal D_h,\mathcal P_h,\widetilde u_h),
+\]
+where \(M_h\) is a declared preconditioner, \(\mathcal D_h\) a declared
+decomposition, and \(\mathcal P_h\) declared restriction/prolongation data. The
+\emph{algebraic crime} is the residual
+\[
+r_h^{\mathrm{alg}}:=f_h-A_h\widetilde u_h.
+\]
+\end{definition}
+
+\begin{theorem}[Exact solve iff algebraic crime vanishes]
+\label{thm:exact-solve-iff-algebraic-crime-vanishes}\lean{exact_solve_iff_algebraic_crime_vanishes}
+Assume \(A_h\) is invertible. Then
+\[
+r_h^{\mathrm{alg}}=0
+\qquad\Longleftrightarrow\qquad
+\widetilde u_h=A_h^{-1}f_h.
+\]
+\end{theorem}
+
+\begin{proof}
+If \(r_h^{\mathrm{alg}}=0\), then \(A_h\widetilde u_h=f_h\), so invertibility
+forces \(\widetilde u_h=A_h^{-1}f_h\). The converse is immediate.
+\end{proof}
+
+\begin{proposition}[Spectral-equivalence solver certificate]
+\label{prop:spectral-equivalence-solver-certificate}\lean{spectral_equivalence_solver_certificate}
+Assume \(A_h\) and \(M_h\) are self-adjoint positive definite and that there
+exist constants \(0<m\le M\) such that
+\[
+m\,\langle A_hx,x\rangle
+\le
+\langle M_hx,x\rangle
+\le
+M\,\langle A_hx,x\rangle
+\qquad
+(\forall x\in X_h).
+\]
+Then every eigenvalue \(\lambda\) of \(M_h^{-1}A_h\) lies in
+\([
+1/M,\,
+1/m
+]\),
+so
+\[
+\kappa(M_h^{-1}A_h)\le M/m.
+\]
+\end{proposition}
+
+\begin{proof}
+Let \(A_hx=\lambda M_hx\) with \(x\ne 0\). Then
+\[
+\lambda
+=
+\frac{\langle A_hx,x\rangle}{\langle M_hx,x\rangle}.
+\]
+The spectral-equivalence bounds imply
+\[
+\frac{1}{M}
+\le
+\frac{\langle A_hx,x\rangle}{\langle M_hx,x\rangle}
+\le
+\frac{1}{m}.
+\]
+Thus \(\lambda\in[1/M,1/m]\), and the condition-number bound follows.
+\end{proof}
+
+\begin{definition}[Interface package and interface crime]
+\label{def:interface-package-crime}\lean{InterfacePackage}\lean{interfaceCrime}
+Let \(X_h\) and \(X_h^{\mathrm{ext}}\) be realized state spaces with trace maps
+\[
+\gamma_h:X_h\to \Lambda_h,
+\qquad
+\gamma_h^{\mathrm{ext}}:X_h^{\mathrm{ext}}\to \Lambda_h^{\mathrm{ext}}.
+\]
+An \emph{interface package} consists of a transfer map
+\[
+I_h:\Lambda_h^{\mathrm{ext}}\to \Lambda_h,
+\]
+a lift
+\[
+L_h:\Lambda_h\to X_h,
+\]
+and a declared host-transfer map
+\[
+T_h:X_h^{\mathrm{ext}}\to X_h.
+\]
+The \emph{interface crime} is
+\[
+\mathfrak C_h^{\mathrm{iface}}(u_h^{\mathrm{ext}})
+:=
+\gamma_hT_hu_h^{\mathrm{ext}}
+-I_h\gamma_h^{\mathrm{ext}}u_h^{\mathrm{ext}}.
+\]
+\end{definition}
+
+\begin{theorem}[Commuting interface diagrams kill interface crime]
+\label{thm:commuting-interface-diagrams-kill-interface-crime}\lean{commuting_interface_diagrams_kill_interface_crime}
+If
+\[
+\gamma_hT_h=I_h\gamma_h^{\mathrm{ext}},
+\]
+then \(\mathfrak C_h^{\mathrm{iface}}=0\). If moreover
+\[
+\gamma_hL_h=\operatorname{id}_{\Lambda_h},
+\]
+then the lifted interface correction \(L_h\mathfrak C_h^{\mathrm{iface}}\)
+also vanishes.
+\end{theorem}
+
+\begin{proof}
+The commuting identity is exactly the statement
+\(\mathfrak C_h^{\mathrm{iface}}=0\). The second claim follows by applying
+\(L_h\) to zero.
+\end{proof}
+
+\begin{definition}[Adjoint goal certificate]
+\label{def:adjoint-goal-certificate}\lean{AdjointGoalCertificate}
+Let \(A_h:X_h\to X_h\) be invertible and let \(\psi_h\in X_h\). The scalar goal
+observable associated with \(\psi_h\) is
+\[
+J_{\psi_h}(v_h):=\langle \psi_h,v_h\rangle.
+\]
+The corresponding \emph{adjoint goal weight} is
+\[
+z_h:=(A_h^\ast)^{-1}\psi_h.
+\]
+\end{definition}
+
+\begin{theorem}[Exact goal-error ledger identity]
+\label{thm:exact-goal-error-ledger-identity}\lean{exact_goal_error_ledger_identity}
+Let \(A_h:X_h\to X_h\) be invertible, let \(f_h\in X_h\), let
+\(\widetilde u_h\in X_h\), and let
+\[
+u_h^\star:=A_h^{-1}f_h,
+\qquad
+e_h:=u_h^\star-\widetilde u_h,
+\qquad
+r_h:=f_h-A_h\widetilde u_h,
+\]
+and let \(z_h\) be the adjoint goal weight from
+Definition~\ref{def:adjoint-goal-certificate}. If
+\[
+r_h=\sum_{\alpha} r_h^{\alpha},
+\]
+then
+\[
+J_{\psi_h}(e_h)
+=
+\langle z_h,r_h\rangle
+=
+\sum_{\alpha}\langle z_h,r_h^{\alpha}\rangle.
+\]
+\end{theorem}
+
+\begin{proof}
+Since \(A_hu_h^\star=f_h\),
+\[
+A_he_h
+=
+A_hu_h^\star-A_h\widetilde u_h
+=
+f_h-A_h\widetilde u_h
+=
+r_h.
+\]
+Therefore
+\[
+J_{\psi_h}(e_h)
+=
+\langle \psi_h,e_h\rangle
+=
+\langle A_h^\ast z_h,e_h\rangle
+=
+\langle z_h,A_he_h\rangle
+=
+\langle z_h,r_h\rangle.
+\]
+The final identity is linearity of the inner product.
+\end{proof}
+
+\begin{remark}[Realization certificates as tools]
+\label{rem:realization-certificates-as-tools}\lean{exact_residual_ledger,discrete_infsup_from_fortin,geometry_exactness_kills_geometry_crime,quadrature_exactness_kills_quadrature_crime,stagewise_invariants_survive_composition,spectral_equivalence_solver_certificate,commuting_interface_diagrams_kill_interface_crime,exact_goal_error_ledger_identity}
+The operator-side calculus already certifies visible/shadow splitting and
+returned residuals. The present layer packages the complementary engineering
+question: how a declared host realizes that law, and exactly where it does not.
+The residual ledger, Fortin-compatible inheritance theorem, quadrature
+exactness certificate, stagewise invariant theorem, spectral-equivalence
+solver certificate, commuting-interface certificate, and dual-weighted
+goal-error identity are the core theoremic outputs of this realization layer.
+\end{remark}

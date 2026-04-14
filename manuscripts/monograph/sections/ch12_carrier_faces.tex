@@ -1,0 +1,2350 @@
+\section{Endpoint Completion, Carrier Realizations, and Classification}
+\label{sec:carrier-faces-and-completion}
+
+Part~I proves the structural calculus and continuum bridge. Part~II assumes
+the explicit three-law physical hypothesis and proves its carrier-level
+consequences. On the selected cut, the common visible law and the
+endpoint-complete microscopic structure have already been fixed by that
+explicit Part~II hypothesis. The remaining questions are carrier-level: which
+intrinsically generated sectors collapse to unique endpoint representatives,
+which admit only canonical normal forms, and how the selected bundle closes
+its present classification. This chapter answers those questions.
+
+Its first task is endpoint rigidity, the last-step principle by which local
+law candidates on an intrinsically generated carrier collapse to a unique
+representative or to a canonical parameterized normal form. Its second task is
+selected-cut completion and classification: on the present scope, the
+selected bundle closes with three primitive direct laws, one unique geometric
+lift, and effective closures above them. In particular, this chapter isolates
+the complete fundamental set on the present scope and separates it from the
+hydrodynamic and thermodynamic effective closures read on the same bundle.
+It also identifies the predictive correction structure on the present scope:
+returned remainders and induced scales on that same selected datum.
+
+The chapter therefore assumes the Chapter~10 three-law hypothesis and the common
+selected-cut structure of Chapter~11, and proves the carrier
+identifications together with the scoped complete-fundamental-set theorem
+directly from that explicit Part~II hypothesis.
+
+\begin{tcolorbox}[colback=white, colframe=black!75, boxrule=0.9pt, title={Chapter 12 at a glance}]
+\begin{description}[leftmargin=1.7em, itemsep=0.25em]
+\item[Assumes.] The Chapter~10 three-law hypothesis and the Chapter~11
+      selected-cut structure.
+\item[Proves.] Endpoint-rigidity interfaces, the canonical carrier
+      identifications, the scoped complete-fundamental-set theorem, the
+      predictive correction structure carried by returned remainders and
+      induced scales, and the separation between fundamental and effective
+      laws on the present scope.
+\item[Open.] The Chapter~10 endpoint-completion derivability question remains
+      the only upstream law-side open problem carried into this chapter.
+\end{description}
+\end{tcolorbox}
+
+\subsection{Endpoint Rigidity}
+
+\begin{definition}[Endpoint rigidity principle]
+\label{def:endpoint-rigidity-principle}\lean{EndpointRigidity.Principle}
+Fix an intrinsically generated visible carrier on the selected cut. An
+\emph{endpoint rigidity principle} for that carrier consists of the following
+schema:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item locality on the carrier is reduced to a finite closure class, in the
+      spirit of finite-order jet reduction;
+\item the generated carrier symmetries act on that finite closure class;
+\item the carrier's compatibility identities cut the admissible operator space
+      further;
+\item an explicit endpoint-equivalence relation is fixed on that class;
+\item minimal truncation / order / weight reduces the admissible quotient to a
+      finite-dimensional space.
+\end{enumerate}
+If the resulting admissible quotient is singleton modulo endpoint
+equivalence, the endpoint law is rigid and has a unique canonical
+representative. If it is not singleton, the correct output is a
+canonical normal form with explicit parameter data rather than false
+uniqueness.
+\end{definition}
+
+\begin{remark}[Scope of endpoint rigidity]
+\label{rem:endpoint-rigidity-schema}\lean{EndpointRigidity.Principle, EndpointRigidity.Principle.surface}
+Definition~\ref{def:endpoint-rigidity-principle} is the common
+``last-step'' shape suggested by the literature: local law candidates are
+first reduced to a finite closure class, then symmetry and compatibility
+collapse that space, and finally minimal truncation decides whether the
+endpoint is rigid or merely canonical up to parameters. This is a common
+method, not a single universal theorem that simultaneously yields
+Schr\"odinger, wave/Klein--Gordon, Maxwell, Einstein, Navier--Stokes, and
+thermodynamic semigroup forms. The actual collapse theorems remain
+sector-specific.
+\end{remark}
+
+\begin{definition}[Realized-cut energy orthogonality]
+\label{def:realized-cut-energy-orthogonality}\lean{SelectedCutOrthogonality.Principle}
+Fix an intrinsically generated reversible visible carrier on the selected cut.
+A \emph{realized-cut energy orthogonality datum} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected cut is \emph{energy-orthogonal}: the visible/shadow split
+      satisfies an exact Pythagorean energy identity with no extra
+      observer-induced remainder;
+\item trial and test data are both read on that same selected visible carrier;
+\item the selected-cut energy split induces a canonical pairing on that
+      carrier;
+\item the generated carrier symmetries and admissible endpoint operators
+      preserve that endogenous pairing;
+\item the weak law on that pairing determines a unique pairing-compatible
+      strong representative.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Canonical selected Schur bridge forces the exact selected-cut energy split]
+\label{thm:canonical-selected-schur-bridge-forces-exact-selected-cut-energy-split}\lean{SelectedCutOrthogonality.exactSplit}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum, and let \(\mathcal Y\) be an
+intrinsically generated reversible visible carrier on the selected cut. Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the visible/shadow split on \(\mathcal Y\) satisfies an exact
+      Pythagorean energy identity with no extra observer-induced remainder;
+\item the weak visible law on \(\mathcal Y\) is read with trial and test data
+      on that same carrier;
+\item the selected-cut energy split induces a canonical pairing on
+      \(\mathcal Y\).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Because a canonical selected Schur bridge contains the exact Schur tower and
+the HFT-2 energy tower on one and the same realized horizon tower,
+Theorem~\ref{thm:HFT2-general} applies on that selected datum. Hence the
+visible/shadow split on every generated reversible visible carrier of that
+datum satisfies the exact Pythagorean identity, proving \emph{(a)}. By
+Theorem~\ref{thm:canonical-selected-schur-realization}(c)--(e), the selected
+visible law is exactly visible and read on that same selected cut by the one
+selected visible effective law, so its weak visible law on
+\(\mathcal Y\) has both trial and test data on \(\mathcal Y\). This proves
+\emph{(b)}. Restricting the exact selected-cut energy split to
+\(\mathcal Y\) therefore yields the canonical carrier-side pairing, proving
+\emph{(c)}.
+\end{proof}
+
+\begin{definition}[Residual selected-cut duality rigidity]
+\label{def:residual-selected-cut-duality-rigidity}\lean{CanonicalDuality.ResidualRigidity}
+Fix an intrinsically generated reversible visible carrier on the selected cut.
+A \emph{residual selected-cut duality rigidity datum} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the generated carrier symmetries preserve the exact selected-cut pairing
+      on that carrier;
+\item admissible endpoint operators are pairing-symmetric on the forced
+      endpoint closure class;
+\item the weak law on that pairing determines a unique pairing-compatible
+      strong representative.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Canonical selected Schur bridge plus residual duality rigidity forces realized-cut energy orthogonality]
+\label{cor:canonical-selected-schur-bridge-plus-canonical-duality-forces-realized-cut-energy-orthogonality}\lean{SelectedCutOrthogonality.derived}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum, and let \(\mathcal Y\) be an
+intrinsically generated reversible visible carrier on the selected cut. Assume
+in addition that \(\mathcal Y\) satisfies the residual selected-cut duality
+rigidity datum of
+Definition~\ref{def:residual-selected-cut-duality-rigidity}. Then \(\mathcal Y\)
+satisfies the realized-cut energy orthogonality datum of
+Definition~\ref{def:realized-cut-energy-orthogonality}.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:canonical-selected-schur-bridge-forces-exact-selected-cut-energy-split}
+gives items \emph{(i)}--\emph{(iii)} of
+Definition~\ref{def:realized-cut-energy-orthogonality}. Definition~
+\ref{def:residual-selected-cut-duality-rigidity} supplies the remaining
+carrier-side duality clauses: its items \emph{(i)}--\emph{(ii)} give
+preservation of the selected-cut pairing by the generated symmetries and
+admissible endpoint operators, and its item \emph{(iii)} is exactly the
+pairing-compatible strong representative clause. Thus all clauses of
+Definition~\ref{def:realized-cut-energy-orthogonality} hold on
+\(\mathcal Y\).
+\end{proof}
+
+\begin{theorem}[Canonical selected Schur bridge plus endpoint rigidity force endpoint substitution]
+\label{thm:energy-orthogonal-cut-forces-canonical-duality}\lean{SelectedCutOrthogonality.forcesEndpointSubstitution}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum, and let \(\mathcal Y\) be an
+intrinsically generated reversible visible carrier on the selected cut. Assume
+the endpoint closure class on \(\mathcal Y\) is already unique modulo
+continuum equivalence. Then the final carrier-level representative is fixed
+internally: the exact selected-cut energy split supplies the canonical
+pairing, and the pairing-compatible strong representative is forced by the
+weak law. In particular, the last representative substitution is no longer a
+discretionary recognition step.
+\end{theorem}
+
+\begin{proof}
+By
+Theorem~\ref{thm:canonical-selected-schur-bridge-forces-exact-selected-cut-energy-split},
+the exact selected-cut Pythagorean identity holds on \(\mathcal Y\), trial and
+test data are both read on that same generated carrier, and the selected-cut
+energy split induces the canonical pairing on \(\mathcal Y\). Once
+endpoint-rigidity has already reduced the admissible closure class on
+\(\mathcal Y\) to a unique continuum-equivalence class, any strong
+representative compatible with that weak law and that canonical pairing must
+lie in that one class. Hence the weak law has only one pairing-compatible
+strong representative left, so the endpoint substitution is forced internally
+by the exact selected-cut energy split.
+\end{proof}
+
+\begin{remark}[Canonical duality as derived interface]
+\label{rem:canonical-duality-derived}\lean{SelectedCutOrthogonality.Principle, SelectedCutOrthogonality.Principle.surface}
+Definition~\ref{def:realized-cut-energy-orthogonality} is the more structural
+statement. The earlier ``canonical duality'' language is still useful, but it
+is a \emph{derived interface} extracted from exact selected-cut energy
+bookkeeping rather than a separate primitive hypothesis.
+\end{remark}
+
+\begin{definition}[Canonical duality sector rigidity]
+\label{def:canonical-duality-sector-rigidity}\lean{CanonicalDuality.SectorRigidity}
+Fix an intrinsically generated reversible visible carrier on the selected cut.
+A \emph{canonical duality sector rigidity datum} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item trial and test data generated by that same visible carrier;
+\item a canonical pairing identifying those trial and test data;
+\item preservation of that pairing by the generated carrier symmetries;
+\item admissible endpoint operators that are pairing-symmetric on the forced
+      endpoint closure class;
+\item a weak formulation whose canonical pairing determines a unique strong
+      representative.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Canonical duality forces endpoint substitution]
+\label{thm:canonical-duality-forces-endpoint-substitution}\lean{CanonicalDuality.SectorRigidity.forcesEndpointSubstitution}
+Assume a generated reversible visible carrier satisfies
+Definition~\ref{def:canonical-duality-sector-rigidity}, and that its endpoint
+closure class is already unique modulo continuum equivalence. Then the final
+carrier-level substitution is not a free choice by the practitioner: the weak
+law on that carrier determines a unique strong canonical representative. This
+is the derived duality-interface form of
+Theorem~\ref{thm:energy-orthogonal-cut-forces-canonical-duality}.
+\end{theorem}
+
+\begin{proof}
+Definition~\ref{def:canonical-duality-sector-rigidity} identifies trial and
+test data on one and the same generated visible carrier, equips them with a
+canonical pairing, and restricts admissible endpoint operators to the
+pairing-symmetric representatives of the already forced endpoint closure
+class. Once uniqueness modulo continuum equivalence is already available from
+the endpoint-rigidity reduction, the weak formulation has only one compatible
+strong representative left. Hence the final representative substitution is
+forced internally.
+\end{proof}
+
+\begin{remark}[Where this applies]
+\label{rem:canonical-duality-sector-rigidity}\lean{CanonicalDuality.SectorRigidity, CanonicalDuality.SectorRigidity.surface}
+Theorem~\ref{thm:canonical-duality-forces-endpoint-substitution} is the common
+intrinsic-sector mechanism behind the final representative identification on
+the phase, wave, gauge, and geometric carriers. It is \emph{not} the right
+last-step mechanism for the hydrodynamic or thermodynamic realizations, where
+one expects canonical normal forms with transport or entropy-production data
+rather than the same self-dual rigidity.
+\end{remark}
+
+\begin{remark}[The exact remaining intrinsic-sector obligations]
+\label{rem:remaining-intrinsic-endpoint-obligations}\lean{NaturalOperatorCompletion, NaturalOperatorCompletion.guidedByEndpointRigidity}
+Theorem~\ref{thm:energy-orthogonal-cut-forces-canonical-duality} removes the
+discretionary final substitution step once the endpoint class on a reversible
+carrier is already rigid modulo continuum equivalence. Moreover, the
+singleton/uniqueness side of the endpoint quotient is already isolated by the
+common endpoint-rigidity reduction. Accordingly, the intrinsic endpoint
+question reduces to carrier-specific collapse of the already forced singleton
+endpoint class to the familiar named representative. All four intrinsic
+representative collapses are discharged on the phase, wave, gauge, and
+geometric laws by Theorems~\ref{thm:phase-local-endpoint-collapse} and
+\ref{thm:wave-local-endpoint-collapse}, together with
+Theorem~\ref{thm:gauge-local-endpoint-collapse} and
+Theorem~\ref{thm:geometric-local-endpoint-collapse}. The optional exact
+constant-mass Klein--Gordon refinement is likewise proved on homogeneous
+selected-wave sectors by
+Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass}.
+\end{remark}
+
+\begin{remark}[Sharper carrier-level frontiers]
+\label{rem:active-intrinsic-frontier}\lean{FlagshipLawCompletion, flagship_law_completion}
+The common reductions now push each intrinsic carrier to a sharp closed
+structural frontier.
+On the phase carrier, the complex generator is fixed internally and the local
+Laplace/potential collapse is isolated by
+Theorem~\ref{thm:phase-local-endpoint-collapse}. On the wave carrier, the local
+Laplace/scalar-profile collapse is isolated by
+Theorem~\ref{thm:wave-local-endpoint-collapse}, and the exact constant-mass
+Klein--Gordon refinement is proved on homogeneous selected-wave sectors by
+Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass}. On the
+gauge carrier, the intrinsic curvature-adjoint collapse is proved by
+Theorem~\ref{thm:gauge-local-endpoint-collapse}, and the recognizable Maxwell
+form is Corollary~\ref{cor:recognizable-maxwell-identity}. On the geometric
+carrier, the intrinsic trace-adjusted curvature collapse is proved by
+Theorem~\ref{thm:geometric-local-endpoint-collapse}, and the recognizable
+Einstein form is Corollary~\ref{cor:recognizable-einstein-identity}. Thus
+the remaining
+carrier-specific burden is now narrower still: it is not basic equation
+recognition on the intrinsic laws, but downstream bridge and effective-closure
+questions outside those already closed structural frontiers.
+\end{remark}
+
+\begin{definition}[Exchange-balanced coupled family]
+\label{def:exchange-balanced-coupled-family}\lean{ExchangeBalancedCoupledFamily}
+Fix a finite family of associated visible carriers
+\(\{\mathcal X_h^\alpha\}_{\alpha\in A}\) on one selected observed bundle. A
+family of visible source terms \(\{S_\alpha\}_{\alpha\in A}\) on these carriers
+is an \emph{exchange-balanced coupled family} if there exist pairwise exchange
+currents or tensors \(J_{\alpha\beta}\) such that, for all distinct
+\(\alpha,\beta\in A\),
+\[
+J_{\alpha\beta}=-J_{\beta\alpha},
+\qquad
+S_\alpha=\sum_{\beta\in A\setminus\{\alpha\}} \partial J_{\alpha\beta},
+\]
+where \(\partial\) denotes the carrier-side boundary, divergence, or
+codifferential map appropriate to the visible carrier.
+\end{definition}
+
+\begin{theorem}[Coupled exchange balance]
+\label{thm:coupled-exchange-balance}\lean{coupled_exchange_balance}
+Let \(\{S_\alpha\}_{\alpha\in A}\) be an exchange-balanced coupled family on a
+finite collection of selected visible carriers. Then
+\[
+\sum_{\alpha\in A} S_\alpha = 0.
+\]
+Equivalently, a closed coupled selected system has zero net internal creation.
+In the two-carrier case \(A=\{X,Y\}\), one has
+\[
+S_X=-S_Y,
+\]
+so localized equal-and-opposite interaction is the two-endpoint specialization
+of the general exchange law.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{remark}[Consequences for coupled carriers]\lean{coupled_exchange_balance}
+\label{rem:what-coupled-exchange-collapses}
+Theorem~\ref{thm:coupled-exchange-balance} is the common physical source law
+beneath the carrier-specific laws. On the kinetic carrier it identifies
+production as exchange with unresolved higher moments; on the gauge carrier it
+identifies the visible one-form \(J\) as an exchange current; on the geometric
+carrier it identifies the visible tensor \(T\) as an exchange tensor. In the
+localized two-endpoint limit it reduces to equal-and-opposite interaction.
+\end{remark}
+
+\subsection{Selected-Cut Completion}
+
+Definitions~\ref{def:grounded-physical-bridge} and
+\ref{def:localized-residual-return} are retained as auxiliary bridge readouts:
+they unpack the least-motion grounding clause and the return-field /
+irreversibility clause separately. The actual completion chain used in
+Theorem~\ref{thm:part-iv-law-completion} starts with the canonical selected
+Schur bridge of Definition~\ref{def:canonical-selected-schur-bridge}.
+
+\begin{definition}[Grounded physical bridge]
+\label{def:grounded-physical-bridge}\lean{SelectedCut.GroundedBridge}
+A realized family satisfies the \emph{grounded physical bridge} condition if
+the temporal realization principle is not left as a bare interpretive
+identification, but is forced by a concrete observer-motion criterion on
+admissible cuts: there is a defined observer-motion functional, the physically
+realized cut is its unique least-motion faithful minimizer, and the selected
+visible effective law on that minimizing cut is exactly the observable law.
+\end{definition}
+
+\begin{definition}[Localized residual return]
+\label{def:localized-residual-return}\lean{SelectedCut.LocalizedReturn}
+A grounded bridge satisfies \emph{localized residual return} if the residual
+return calculus of the earlier structural chapters together with the continuum
+bridge is promoted to an explicit residual return
+field on the selected cut, that field is the one whose elimination gives the
+selected visible effective law, it localizes on the unique residual interface
+\(D=3\) in the canonical nontrivial realization, and there is a quantitative
+unrecovered-residual functional whose monotone part measures observable
+irreversibility.
+\end{definition}
+
+\begin{definition}[Intrinsic selected-bundle existence]
+\label{def:intrinsic-selected-bundle-existence}\lean{IntrinsicSelectedBundleExistence}
+A canonical selected Schur bridge satisfies
+\emph{intrinsic selected-bundle existence} if the phase, wave, gauge, and
+geometric carriers arise directly as associated visible carriers of one
+physically realized selected observed bundle on the least-motion cut, without
+separate carrier-wise visibility hypotheses.
+\end{definition}
+
+\begin{definition}[Schur-induced mode candidate class]
+\label{def:schur-induced-mode-candidate-class}\lean{SchurInducedModeCandidateClass}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class
+\(\mathfrak R_{\mathrm{sel}}(h)\). Fix one persistence mode \(\mathfrak m\) of
+Definition~\ref{def:five-persistence-modes}. The \emph{Schur-induced mode
+candidate class} for \(\mathfrak m\) is the subclass
+\[
+\mathfrak R^{\mathrm{Schur}}_{\mathfrak m}(h)\subseteq
+\mathfrak R_{\mathrm{sel}}(h)
+\]
+consisting of those realizations \(R\) for which, after transporting the
+selected datum of \(R\) to \(\mathcal X_h\) by the horizon-preserving
+equivalence supplied by the canonical selected Schur bridge, there is a visible
+subcarrier \(\mathcal Y_R\subseteq \mathcal X_h\) such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathcal Y_R\) is faithful, reconstruction-compatible,
+      closure-admissible, and stable under admissible promotion;
+\item the restriction of the selected visible effective law to
+      \(\mathcal Y_R\) preserves the compatibility signature and admissible
+      source profile of the mode \(\mathfrak m\);
+\item no proper visible subcarrier of \(\mathcal Y_R\) still satisfies
+      \emph{(i)}--\emph{(ii)} for the same mode \(\mathfrak m\).
+\end{enumerate}
+Equivalently, \(\mathfrak R^{\mathrm{Schur}}_{\mathfrak m}(h)\) is the
+intrinsic mode-selection problem cut out by the canonical selected Schur bridge
+inside its own admissible realized class.
+\end{definition}
+
+\begin{theorem}[Nonempty Schur-induced mode classes have singleton reduced selection]
+\label{thm:nonempty-schur-induced-mode-classes-have-singleton-reduced-selection}\lean{SchurInducedModeCandidateClass.singletonReducedSelection}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\(\mathcal X_h=P_h\cH^\bullet\), and fix one persistence mode
+\(\mathfrak m\). Assume the Schur-induced mode candidate class
+\(\mathfrak R^{\mathrm{Schur}}_{\mathfrak m}(h)\) of
+Definition~\ref{def:schur-induced-mode-candidate-class} is nonempty. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathfrak R^{\mathrm{Schur}}_{\mathfrak m}(h)\) determines a
+      mode-compatible candidate class on the selected cut in the sense of
+      Definition~\ref{def:mode-compatible-candidate-class};
+\item the admissible reduced selection data on
+      \(\mathfrak R^{\mathrm{Schur}}_{\mathfrak m}(h)\), modulo
+      horizon-preserving equivalence, consist of a single equivalence class;
+\item the persistence mode \(\mathfrak m\) therefore has a unique least-motion
+      visible realization on the selected cut.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Intrinsic selected-channel data force nonemptiness of the local-state, propagative, and comparative Schur-induced mode classes]
+\label{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes}\lean{IntrinsicSectorGeneration.threeSchurModeClasses}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\).
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathfrak R_{\mathrm{sel}}(h)\) satisfies the hypotheses of
+      Corollary~\ref{cor:intrinsic-package-implies-governing-datum-rigid};
+\item the relevant selected channels carry selected channel transport systems
+      in the sense of Definition~\ref{def:selected-channel-transport-system}.
+\end{enumerate}
+Then the Schur-induced mode candidate classes for:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item local-state persistence,
+\item propagative persistence,
+\item comparative persistence
+\end{enumerate}
+are all nonempty.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Orthogonal Schur-lifted symmetric-response datum]
+\label{def:orthogonal-schur-lifted-symmetric-response-package}\lean{GeometricWitness.OrthogonalPackage}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\). An
+\emph{orthogonal Schur-lifted symmetric-response datum} on the selected cut
+consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a realization \(R_\ast\in\mathfrak R_{\mathrm{sel}}(h)\) and a relevant
+      selected channel fiber \(F_h\) of \(R_\ast\) with \(\dim F_h\ge 2\);
+\item a visible subcarrier
+      \[
+      \mathcal X_h^{\mathrm{sym}}\subseteq \mathcal X_h
+      \]
+      which, after transporting the selected datum of \(R_\ast\) to the common
+      selected bundle by the horizon-preserving equivalence of the canonical
+      selected Schur bridge, is identified with the symmetric-square carrier
+      \(\mathrm{Sym}^2(F_h)\);
+\item faithfulness, reconstruction compatibility, closure admissibility, and
+      admissible-promotion stability of
+      \(\mathcal X_h^{\mathrm{sym}}\) on the selected cut;
+\item a divergence-compatible second-order response operator on
+      \(\mathcal X_h^{\mathrm{sym}}\) induced by the selected visible effective
+      law together with the canonical Schur return field;
+\item equivariance of that induced response for the orthogonal conjugation
+      action of \(O(F_h)\) on \(\mathrm{Sym}^2(F_h)\);
+\item visible source on \(\mathcal X_h^{\mathrm{sym}}\) belonging to an
+      exchange-balanced coupled family and represented by a symmetric exchange
+      tensor furnished by preceding selected carriers on the same selected
+      bundle;
+\item no proper visible subcarrier of \(\mathcal X_h^{\mathrm{sym}}\) still
+      supports the same divergence-compatible second-order response signature
+      with the same exchange-source profile at the observed scale.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Schur-lifted symmetric-square response datum]
+\label{def:schur-lifted-symmetric-square-response-package}\lean{GeometricWitness.SquarePackage}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\). A
+\emph{Schur-lifted symmetric-square response datum} on the selected cut
+consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a realization \(R_\ast\in\mathfrak R_{\mathrm{sel}}(h)\) and a relevant
+      selected channel fiber \(F_h\) of \(R_\ast\) with \(\dim F_h\ge 2\);
+\item a visible subcarrier
+      \[
+      \mathcal X_h^{\mathrm{sym}}\subseteq \mathcal X_h
+      \]
+      which, after transporting the selected datum of \(R_\ast\) to the common
+      selected bundle by the horizon-preserving equivalence of the canonical
+      selected Schur bridge, is identified with the symmetric-square carrier
+      \(\mathrm{Sym}^2(F_h)\);
+\item faithfulness, reconstruction compatibility, closure admissibility, and
+      admissible-promotion stability of
+      \(\mathcal X_h^{\mathrm{sym}}\) on the selected cut;
+\item a divergence-compatible second-order response operator on
+      \(\mathcal X_h^{\mathrm{sym}}\) induced by the selected visible effective
+      law together with the canonical Schur return field;
+\item visible source on \(\mathcal X_h^{\mathrm{sym}}\) belonging to an
+      exchange-balanced coupled family and represented by a symmetric exchange
+      tensor furnished by preceding selected carriers on the same selected
+      bundle;
+\item no proper visible subcarrier of \(\mathcal X_h^{\mathrm{sym}}\) still
+      supports the same divergence-compatible second-order response signature
+      with the same exchange-source profile at the observed scale.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Schur-lifted symmetric-square response forces the geometric witness]
+\label{thm:schur-lifted-symmetric-square-response-forces-geometric-witness}\lean{GeometricWitness.square_geometricWitness}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume the selected cut carries a Schur-lifted symmetric-square response
+datum in the sense of
+Definition~\ref{def:schur-lifted-symmetric-square-response-package}. Then the
+selected bundle satisfies the hypotheses of
+Theorem~\ref{thm:macroscopic-witness-packages-force-two-schur-mode-classes}.
+Consequently the causal-structural Schur-induced mode candidate class on the
+selected bundle is nonempty.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Orthogonal Schur-lifted symmetric response is a special case]
+\label{cor:orthogonal-schur-lifted-symmetric-response-is-special-case}\lean{GeometricWitness.orthogonal_toSquare}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume the selected cut carries an orthogonal Schur-lifted
+symmetric-response datum in the sense of
+Definition~\ref{def:orthogonal-schur-lifted-symmetric-response-package}. Then
+the selected cut carries a Schur-lifted symmetric-square response datum in
+the sense of
+Definition~\ref{def:schur-lifted-symmetric-square-response-package}.
+\end{corollary}
+
+\begin{proof}
+Every clause of
+Definition~\ref{def:schur-lifted-symmetric-square-response-package} is already
+contained in
+Definition~\ref{def:orthogonal-schur-lifted-symmetric-response-package}; the
+orthogonal-equivariance clause there is an additional refinement rather than an
+extra burden for the weaker datum.
+\end{proof}
+
+\begin{theorem}[Orthogonal Schur-lifted symmetric response forces the geometric witness]
+\label{thm:orthogonal-schur-lifted-symmetric-response-forces-geometric-witness}\lean{GeometricWitness.orthogonal_geometricWitness}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume the selected cut carries an orthogonal Schur-lifted
+symmetric-response datum in the sense of
+Definition~\ref{def:orthogonal-schur-lifted-symmetric-response-package}. Then
+the selected bundle satisfies the hypotheses of
+Theorem~\ref{thm:macroscopic-witness-packages-force-two-schur-mode-classes}.
+Consequently the causal-structural Schur-induced mode candidate class on the
+selected bundle is nonempty.
+\end{theorem}
+
+\begin{proof}
+By
+Corollary~\ref{cor:orthogonal-schur-lifted-symmetric-response-is-special-case},
+the stated orthogonal datum already yields a Schur-lifted symmetric-square
+response datum. The conclusion is therefore exactly
+Theorem~\ref{thm:schur-lifted-symmetric-square-response-forces-geometric-witness}.
+\end{proof}
+
+\begin{corollary}[Schur-lifted symmetric-square response closes the intrinsic mode-existence gap]
+\label{cor:orthogonal-schur-lifted-symmetric-response-closes-mode-gap}\lean{GeometricWitness.orthogonal_closesModeGap}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes};
+\item the selected cut carries a Schur-lifted symmetric-square response
+      datum in the sense of
+      Definition~\ref{def:schur-lifted-symmetric-square-response-package}.
+\end{enumerate}
+Then intrinsic selected-bundle existence holds on the selected cut. If, in
+addition, the remaining hypotheses of
+Theorem~\ref{thm:single-witness-intrinsic-flagship-forcing} are also assumed,
+then the four intrinsic law classes are forced on that bundle.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Phase, wave, and gauge law classes are already forced on the selected bundle]
+\label{thm:first-three-intrinsic-law-classes-already-forced}\lean{NaturalOperatorCompletion.firstThreeClasses}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes};
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the phase, wave, and gauge carriers arise on the selected bundle as the
+      canonical minimal compatible realizations of local-state,
+      propagative, and comparative persistence;
+\item on each of these three carriers, the selected endpoint closure class is
+      unique modulo continuum equivalence and is determined entirely by scalar
+      data on the intrinsic symmetry channels of that carrier;
+\item the remaining intrinsic burden on these three carriers is only the
+      carrier-level representative collapse:
+      phase/Laplace/potential, wave/Klein--Gordon, and
+      the intrinsic gauge curvature-adjoint representative.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[The three primitive channels are already forced]
+\label{thm:three-primitive-channels-already-forced}\lean{IntrinsicSectorGeneration.primitiveChannels}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced}. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item local-state, propagative, and comparative persistence are already forced
+      on the selected bundle as the three primitive direct channels of the
+      intrinsic \(1+2+3\) channel algebra;
+\item their unique canonical direct visible realizations are exactly the
+      phase, wave, and gauge carriers on that bundle;
+\item within the current intrinsic family there is no fourth primitive
+      channel.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Geometry is the only remaining intrinsic lift/existence law]
+\label{cor:geometry-only-remaining-intrinsic-existence-lane}\lean{IntrinsicSectorGeneration.remainingGeometricLane}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:three-primitive-channels-already-forced}. Then the
+intrinsic work separates as follows:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the phase, wave, and gauge laws are already reduced to their
+      carrier-level representative collapses;
+\item the geometric law, now understood as the unique intrinsic lift of the
+      primitive \(3\)-channel, still requires one intrinsic existence theorem,
+      namely a Schur-lifted symmetric-square response datum on the selected
+      cut, or more primitively a faithful six-dimensional symmetric bilinear
+      visible self-coupling of the primitive \(3\)-channel that factors
+      through that symmetric-square lift, after which its remaining burden is
+      only the
+      trace-adjusted-Ricci / Einstein representative collapse.
+\end{enumerate}
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Carrier-by-carrier intrinsic closure frontier]
+\label{thm:lane-by-lane-intrinsic-closure-frontier}\lean{FlagshipLawCompletion.laneByLaneClosureFrontier}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced}. Then the
+four intrinsic laws separate exactly as follows:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \textbf{Phase.} The phase law class is already forced on the selected
+      bundle. The complex phase generator is fixed by
+      Theorem~\ref{thm:phase-generation-and-energy-orthogonality-force-complex-generator},
+      and the local Laplace/potential collapse is proved by
+      Theorem~\ref{thm:phase-local-endpoint-collapse}. Thus the recognizable
+      Schr\"odinger identity is already closed at this level.
+\item \textbf{Wave.} The wave law class is already forced on the selected
+      bundle. Its local Laplace/scalar-profile collapse is proved by
+      Theorem~\ref{thm:wave-local-endpoint-collapse}. The recognizable
+      wave/Klein--Gordon notation of
+      Corollary~\ref{cor:recognizable-wave-kg-identity} is then a further
+      refinement when the forced real scalar profile is written with a
+      distinguished constant mass datum, and the exact constant-mass
+      Klein--Gordon refinement is proved on homogeneous selected-wave sectors
+      by
+      Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass}
+      and Corollary~\ref{cor:exact-recognizable-klein-gordon-identity}.
+\item \textbf{Gauge.} The gauge law class is already forced on the selected
+      bundle. Its intrinsic curvature-adjoint collapse is proved by
+      Theorem~\ref{thm:gauge-local-endpoint-collapse}, and its recognizable
+      Maxwell form is Corollary~\ref{cor:recognizable-maxwell-identity}.
+\item \textbf{Geometry.} The geometric law class is already forced on the
+      selected bundle as the unique intrinsic lift of the primitive
+      \(3\)-channel. Its intrinsic trace-adjusted curvature collapse is proved
+      by Theorem~\ref{thm:geometric-local-endpoint-collapse}, and its
+      recognizable Einstein form is
+      Corollary~\ref{cor:recognizable-einstein-identity}.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Symmetric-response witness data force nonemptiness of the causal-structural Schur-induced mode class]
+\label{thm:macroscopic-witness-packages-force-two-schur-mode-classes}\lean{GeometricWitness.square_closesModeGap}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume \(\mathcal X_h\) carries a faithful, reconstruction-compatible,
+closure-admissible, admissible-promotion-stable visible symmetric-response
+subcarrier \(\mathcal X_h^{\mathrm{geom}}\) on which divergence-compatible
+second-order response is visible and no proper visible subcarrier still
+supports that same response signature at the observed scale. Then the
+Schur-induced mode candidate class for causal-structural persistence is
+nonempty.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Intrinsic selected-channel data plus symmetric-response witness force nonemptiness of all four Schur-induced mode classes]
+\label{cor:intrinsic-package-plus-macroscopic-witnesses-force-five-schur-nonempty}\lean{FlagshipLawCompletion.fiveSchurNonempty}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes}
+and
+Theorem~\ref{thm:macroscopic-witness-packages-force-two-schur-mode-classes}.
+Then all four Schur-induced mode candidate classes on the selected bundle are
+nonempty.
+\end{corollary}
+
+\begin{proof}
+The first theorem gives nonemptiness of the local-state, propagative, and
+comparative Schur-induced mode classes. The second gives nonemptiness of the
+causal-structural Schur-induced mode class. These are exactly the three
+primitive persistence channels together with the geometric lift of
+Definition~\ref{def:five-persistence-modes}.
+\end{proof}
+
+\begin{theorem}[Four nonempty Schur-induced mode classes force canonical realization of persistence modes]
+\label{thm:four-nonempty-schur-induced-mode-classes-force-canonical-realization}\lean{SelectedBundle.CanonicalGeneration.fourSchurNonempty}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume that, for each of the three primitive persistence channels together
+with the geometric lift of Definition~\ref{def:five-persistence-modes}, the
+corresponding Schur-induced mode candidate class on \(\mathcal X_h\) is
+nonempty. Then the selected bundle satisfies canonical realization of
+persistence modes in the sense of
+Definition~\ref{def:canonical-sector-generation}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Four nonempty Schur-induced mode classes force intrinsic selected-bundle existence]
+\label{cor:five-nonempty-schur-induced-mode-classes-force-intrinsic-selected-bundle-existence}\lean{IntrinsicSelectedBundleExistence.surface}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the local balanced channel algebra on the selected observed bundle
+      carries the intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item for each of the three primitive persistence channels together with the
+      geometric lift of Definition~\ref{def:five-persistence-modes}, the
+      corresponding Schur-induced mode candidate class is nonempty;
+\end{enumerate}
+Then intrinsic selected-bundle existence holds on the selected cut.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:four-nonempty-schur-induced-mode-classes-force-canonical-realization},
+the selected bundle canonically realizes the persistence modes. Each nonempty
+Schur-induced mode class then yields a faithful visible realization of the
+corresponding primitive channel or geometric lift. Hence the selected cut
+satisfies intrinsic-mode-complete realization, and
+Theorem~\ref{thm:mode-complete-realization-forces-intrinsic-selected-bundle}
+gives intrinsic selected-bundle existence.
+\end{proof}
+
+\begin{theorem}[Geometric witness is the last intrinsic input]
+\label{thm:geometric-witness-is-exact-remaining-intrinsic-obstruction}\lean{flagship_law_completion, GeometricLane.recognizableIdentity}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes}.
+Then the following are equivalent:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected bundle satisfies the hypotheses of
+      Theorem~\ref{thm:macroscopic-witness-packages-force-two-schur-mode-classes};
+\item the causal-structural Schur-induced mode candidate class on the selected
+      bundle is nonempty.
+\end{enumerate}
+These equivalent conditions force canonical realization of persistence modes,
+hence also intrinsic selected-bundle existence.
+If the hypotheses of
+Theorem~\ref{thm:single-witness-intrinsic-flagship-forcing} are also assumed,
+then the four intrinsic law classes are forced on that bundle.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Primitive \(3\)-channel lift datum]
+\label{def:primitive-three-symmetric-bilinear-lift-package}\lean{GeometricWitness.PrimitiveThreePackage}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\). A
+\emph{primitive \(3\)-channel lift datum} on the selected
+cut consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a realization \(R_\ast\in\mathfrak R_{\mathrm{sel}}(h)\) and a relevant
+      selected channel fiber \(F_h\) of \(R_\ast\) with \(\dim F_h=3\);
+\item a visible subcarrier
+      \[
+      \mathcal X_h^{\mathrm{bil}}\subseteq \mathcal X_h
+      \]
+      whose transported selected datum on the common selected bundle carries a
+      symmetric bilinear visible coupling
+      \[
+      \beta_h:F_h\times F_h\to \mathcal X_h^{\mathrm{bil}}
+      \]
+      whose image generates \(\mathcal X_h^{\mathrm{bil}}\);
+\item faithfulness, reconstruction compatibility, closure admissibility, and
+      admissible-promotion stability of
+      \(\mathcal X_h^{\mathrm{bil}}\) on the selected cut;
+\item \(\dim \mathcal X_h^{\mathrm{bil}}=6\);
+\item the restriction of the selected visible effective law to
+      \(\mathcal X_h^{\mathrm{bil}}\) carries a
+      divergence-compatible second-order response signature on the selected
+      cut;
+\item no proper visible subcarrier of \(\mathcal X_h^{\mathrm{bil}}\) still
+      supports that same divergence-compatible second-order response signature
+      at the observed scale.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Canonical selected Schur bridge forces the primitive \(3\)-channel bilinear lift datum]
+\label{thm:canonical-selected-schur-bridge-forces-primitive-three-bilinear-lift-package}\lean{GeometricWitness.primitiveThree_nonempty}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\).
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced};
+\item the local balanced channel algebra on \(\mathcal X_h\) carries the
+      intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123}.
+\end{enumerate}
+Then the selected cut carries a primitive \(3\)-channel lift
+datum in the sense of
+Definition~\ref{def:primitive-three-symmetric-bilinear-lift-package}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Primitive \(3\)-channel lift forces the Schur tensor lift]
+\label{thm:primitive-three-symmetric-bilinear-lift-forces-schur-tensor-lift}\lean{GeometricWitness.primitiveThree_toSquare}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\).
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced};
+\item the local balanced channel algebra on \(\mathcal X_h\) carries the
+      intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item the selected cut carries a primitive \(3\)-channel lift
+      datum in the sense of
+      Definition~\ref{def:primitive-three-symmetric-bilinear-lift-package}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the visible bilinear carrier \(\mathcal X_h^{\mathrm{bil}}\) is
+      canonically identified with the symmetric-square lift
+      \(\mathrm{Sym}^2(F_h)\) of the selected \(3\)-channel fiber;
+\item the hypotheses of
+      Theorem~\ref{thm:three-channel-schur-tensor-lift-forces-geometric-lane}
+      are satisfied;
+\item the geometric law is forced on the selected bundle and reduced only to
+      the trace-adjusted-Ricci / Einstein representative collapse;
+\item the four intrinsic law classes are forced on that one selected
+      bundle.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Universal factorization of admissible geometric lifts through the symmetric square]
+\label{thm:geometric-symmetric-square-factorization}\lean{GeometricWitness.universalSquareFactorization}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\(\mathcal X_h=P_h\cH^\bullet\). Assume the hypotheses of
+Theorem~\ref{thm:primitive-three-symmetric-bilinear-lift-forces-schur-tensor-lift},
+and let \(F_h\) be the selected primitive \(3\)-channel fiber furnished there.
+Let \(\mathcal Y_h\subseteq\mathcal X_h\) be any faithful,
+reconstruction-compatible, closure-admissible,
+admissible-promotion-stable visible subcarrier carrying a
+divergence-compatible second-order response signature with the same
+exchange-source profile as the geometric law. Assume \(\mathcal Y_h\) is
+generated by a symmetric bilinear visible coupling
+\[
+\gamma_h:F_h\times F_h\to \mathcal Y_h,
+\]
+and that no proper visible subcarrier of \(\mathcal Y_h\) still supports that
+same response signature with that same source profile. Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item there exists a unique linear factor map
+      \[
+      \overline{\gamma}_h:\mathrm{Sym}^2(F_h)\to \mathcal Y_h
+      \]
+      satisfying \(\overline{\gamma}_h(u\odot v)=\gamma_h(u,v)\);
+\item \(\mathcal Y_h\) is horizon-preserving equivalent to the canonical
+      geometric lift on the selected cut;
+\item every admissible geometric lift generated from the primitive
+      \(3\)-channel therefore factors uniquely through the symmetric square.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Three-channel Schur tensor lift forces the geometric law]
+\label{thm:three-channel-schur-tensor-lift-forces-geometric-lane}\lean{GeometricWitness.primitiveThree_geometricLane}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet
+\]
+and canonical admissible realized class \(\mathfrak R_{\mathrm{sel}}(h)\).
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced};
+\item the local balanced channel algebra on \(\mathcal X_h\) carries the
+      intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item there exist \(R_\ast\in\mathfrak R_{\mathrm{sel}}(h)\) and a relevant
+      selected channel fiber \(F_h\) of \(R_\ast\) with \(\dim F_h=3\);
+\item after transporting the selected datum of \(R_\ast\) to the common
+      selected bundle by the horizon-preserving equivalence of the canonical
+      selected Schur bridge, the symmetric-square lift \(\mathrm{Sym}^2(F_h)\)
+      is realized by a faithful, reconstruction-compatible,
+      closure-admissible, admissible-promotion-stable visible subcarrier
+      \[
+      \mathcal X_h^{\mathrm{sym}}\subseteq\mathcal X_h;
+      \]
+\item the restriction of the selected visible effective law to
+      \(\mathcal X_h^{\mathrm{sym}}\) carries a
+      divergence-compatible second-order response signature on the selected
+      cut;
+\item no proper visible subcarrier of \(\mathcal X_h^{\mathrm{sym}}\) still
+      supports that same divergence-compatible second-order response signature
+      at the observed scale.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected cut carries a Schur-lifted symmetric-square response
+      datum;
+\item the geometric law is forced on the selected bundle and is reduced only
+      to the trace-adjusted-Ricci / Einstein representative collapse;
+\item the four intrinsic law classes are forced on that one selected
+      bundle.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Geometry is the unique intrinsic lift of the primitive \(3\)-channel]
+\label{thm:geometry-unique-lift-of-primitive-three-channel}\lean{IntrinsicSectorGeneration.geometricLane}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:three-channel-schur-tensor-lift-forces-geometric-lane}. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the geometric law class is forced on the selected bundle;
+\item that law class is realized there as the canonical symmetric-response lift
+      of the primitive \(3\)-channel rather than as a fourth primitive
+      channel;
+\item within the present intrinsic family there is no second intrinsic
+      lift beside this geometric one;
+\item the remaining burden on the geometric law is only the
+      trace-adjusted-Ricci / Einstein representative collapse.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Three forcing bridges from bedrock to primitive physics]
+\label{thm:three-forcing-bridges-from-bedrock-to-primitive-physics}\lean{FlagshipLawCompletion.threeForcingBridges}
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:temporal-interface-from-d3} on a
+      refinement-compatible discrete realized law family;
+\item the hypotheses of
+      Corollary~\ref{cor:derived-selected-schur-realization-forces-three-primitive-channels}
+      on the resulting selected cut;
+\item on that same selected cut, the additional intrinsic \(1+2+3\)
+      decomposition hypothesis of
+      Theorem~\ref{thm:derived-selected-schur-realization-forces-primitive-three-bilinear-lift-package}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the first forcing bridge is complete: bedrock and scalar-recursive
+      continuum forcing determine a unique temporal interface
+      \((D=3,[\Theta])\);
+\item the second forcing bridge is complete: temporal realization on the
+      selected cut forces the three primitive visible channels and their
+      canonical direct realizations as the phase, wave, and gauge carriers,
+      read as the successive direct bands of the intrinsic \(1+2+3\) carrier
+      tower on the selected bundle;
+\item the third forcing bridge is complete: the primitive \(3\)-channel forces
+      the geometric law class as its unique intrinsic symmetric-response lift;
+\item accordingly, within the present intrinsic scope the primitive
+      laws of physics are forced up to carrier-level canonical representative
+      collapse on the phase, wave, gauge, and geometric laws, so the local
+      endpoint theorems in the corresponding chapters serve only to identify the
+      canonical representative on an already forced carrier class.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Current forcing frontier for primitive physics]
+\label{cor:current-forcing-frontier-for-primitive-physics}\lean{FlagshipLawCompletion.currentForcingFrontier}
+Within the present manuscript scope, all three forcing bridges of
+Theorem~\ref{thm:three-forcing-bridges-from-bedrock-to-primitive-physics} are
+already complete. Accordingly, the primitive law classes are already forced on
+the selected cut. The phase and wave laws are already closed by
+Theorems~\ref{thm:phase-local-endpoint-collapse} and
+\ref{thm:wave-local-endpoint-collapse}, and the gauge law is already closed
+by Theorem~\ref{thm:gauge-local-endpoint-collapse}, while the geometric law
+is already closed by
+Theorem~\ref{thm:geometric-local-endpoint-collapse}. The exact constant-mass
+wave refinement is additionally closed on homogeneous selected-wave sectors by
+Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass}. Thus no
+intrinsic carrier-level collapse or refinement remains open on the present
+scope.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Mode-compatible candidate class on the selected cut]
+\label{def:mode-compatible-candidate-class}\lean{ModeCompatibleCandidateClass}
+Fix a realized family satisfying the temporal realization principle on a
+least-motion characteristic observer datum with selected observed bundle
+\(\mathcal X_h=P_h\cH^\bullet\), and fix one persistence mode
+\(\mathfrak m\) from Definition~\ref{def:five-persistence-modes}. A
+\emph{mode-compatible candidate class} for \(\mathfrak m\) on the selected cut
+is a nonempty admissible realized class
+\[
+\mathfrak R_{\mathfrak m}(h)
+\]
+whose elements are characteristic observer data generated by visible
+subcarriers of \(\mathcal X_h\), such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item every datum in \(\mathfrak R_{\mathfrak m}(h)\) is faithful,
+      reconstruction-compatible, closure-admissible, and stable under
+      admissible promotion;
+\item every datum in \(\mathfrak R_{\mathfrak m}(h)\) preserves the visible
+      compatibility signature and admissible source profile of the mode
+      \(\mathfrak m\);
+\item the class is \emph{irreducible}: no proper visible subcarrier of a datum
+      in \(\mathfrak R_{\mathfrak m}(h)\) still belongs to
+      \(\mathfrak R_{\mathfrak m}(h)\);
+\item the reduced selection problem on \(\mathfrak R_{\mathfrak m}(h)\) is
+      finite-dimensional and carries the observer-motion design objective whose
+      minimizers define least motion on that class.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Mode-compatible selection forces a unique least-motion realization]
+\label{thm:mode-compatible-selection-forces-least-motion-realization}\lean{ModeCompatibleCandidateClass.leastMotionRealization}
+Fix a realized family satisfying the temporal realization principle on a
+selected observed bundle \(\mathcal X_h=P_h\cH^\bullet\), and fix one
+persistence mode \(\mathfrak m\). Let
+\(\mathfrak R_{\mathfrak m}(h)\) be a mode-compatible candidate class on the
+selected cut in the sense of
+Definition~\ref{def:mode-compatible-candidate-class}. Assume that the
+admissible reduced selection data on
+\(\mathfrak R_{\mathfrak m}(h)\), modulo horizon-preserving equivalence,
+consist of a single equivalence class. Then there exists a unique least-motion
+characteristic observer datum on the selected cut realizing the persistence
+mode \(\mathfrak m\).
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Equivalence-compatible mode classes force a unique least-motion realization]
+\label{cor:equivalence-compatible-mode-selection-forces-least-motion-realization}
+\lean{ModeCompatibleCandidateClass.classwiseEquivalence_leastMotion}
+Fix the setting of
+Theorem~\ref{thm:mode-compatible-selection-forces-least-motion-realization}.
+Assume instead that every two data in \(\mathfrak R_{\mathfrak m}(h)\) are
+related by a horizon-preserving equivalence intertwining the admissible
+reduced operator data and the normalization data. Then there exists a
+unique least-motion characteristic observer datum on the selected cut
+realizing the persistence mode \(\mathfrak m\).
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:classwise-horizon-equivalence-collapses-reduced-selection},
+the admissible reduced selection data on \(\mathfrak R_{\mathfrak m}(h)\),
+modulo horizon-preserving equivalence, consist of a single equivalence class.
+The conclusion is therefore exactly
+Theorem~\ref{thm:mode-compatible-selection-forces-least-motion-realization}.
+\end{proof}
+
+\begin{corollary}[Mode-wise candidate forcing yields the inherited compatibility conditions]
+\label{cor:mode-wise-candidate-forcing-yields-compatibility-surface}\lean{ModeCompatibleCandidateClass.compatibilitySurface}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the local balanced channel algebra on \(\mathcal X_h\) carries the
+      intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item local-state persistence admits a mode-compatible candidate class on
+      \(\mathcal X_h\) whose members are scalar visible subcarriers carrying
+      phase-compatible reversible transport together with scalar recursive
+      closure, and whose admissible reduced selection data modulo
+      horizon-preserving equivalence form a singleton;
+\item propagative persistence admits a mode-compatible candidate class on
+      \(\mathcal X_h\) whose members are scalar visible subcarriers carrying
+      reversible second-order transport together with scalar endpoint closure,
+      and whose admissible reduced selection data modulo
+      horizon-preserving equivalence form a singleton;
+\item comparative persistence admits a mode-compatible candidate class on
+      \(\mathcal X_h\) whose members are one-form comparison subcarriers
+      carrying exactness and local gauge covariance, and whose admissible
+      reduced selection data modulo horizon-preserving equivalence form a
+      singleton;
+\item the geometric lift of the primitive \(3\)-channel admits a
+      mode-compatible candidate class on \(\mathcal X_h\) whose members are
+      symmetric response subcarriers carrying divergence-compatible
+      second-order response, and whose admissible reduced selection data
+      modulo horizon-preserving equivalence form a singleton.
+\end{enumerate}
+Then the inherited compatibility conditions of
+Theorem~\ref{thm:inherited-compatibility-surface-forces-mode-complete-realization}
+holds on the selected cut.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Mode-complete realization on the selected cut]
+\label{def:mode-complete-visible-realization}\lean{NaturalOperatorCompletion}
+Fix a realized family satisfying the temporal realization principle on a
+least-motion characteristic observer datum with selected observed bundle
+\(\mathcal X_h=P_h\cH^\bullet\). The selected cut satisfies
+\emph{mode-complete realization} if each primitive persistence
+channel of Definition~\ref{def:five-persistence-modes}, together with the
+geometric symmetric-response lift of the primitive \(3\)-channel, admits a
+faithful, reconstruction-compatible, admissible-promotion-stable visible
+realization on \(\mathcal X_h\).
+\end{definition}
+
+\begin{theorem}[Inherited compatibility conditions force mode-complete realization]
+\label{thm:inherited-compatibility-surface-forces-mode-complete-realization}\lean{natural_operator_completion, NaturalOperatorCompletion.guidedByEndpointRigidity}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the local balanced channel algebra on \(\mathcal X_h\) carries the
+      intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item the selected visible effective law on \(\mathcal X_h\) admits faithful,
+      closure-admissible, admissible-promotion-stable minimal subcarriers
+      carrying, respectively:
+      \begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.1em]
+      \item phase-compatible reversible transport together with scalar
+            recursive closure;
+      \item reversible second-order transport together with scalar endpoint
+            closure;
+      \item exactness and local gauge covariance on a one-form comparison
+            subcarrier;
+      \item divergence-compatible second-order response on a symmetric-response
+            subcarrier.
+      \end{enumerate}
+\item in each of the four mode-specific classes just listed, any characteristic
+      observer datum satisfying
+      the corresponding compatibility, minimality, and stability conditions is
+      horizon-preserving equivalent to the datum generated by that subcarrier.
+\end{enumerate}
+Then the selected cut satisfies mode-complete realization in
+the sense of Definition~\ref{def:mode-complete-visible-realization}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Mode-wise candidate forcing yields mode-complete realization]
+\label{cor:mode-wise-candidate-forcing-yields-mode-complete-realization}\lean{ModeCompatibleCandidateClass.modeCompleteRealization}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Corollary~\ref{cor:mode-wise-candidate-forcing-yields-compatibility-surface}.
+Then the selected cut satisfies mode-complete realization in
+the sense of Definition~\ref{def:mode-complete-visible-realization}.
+\end{corollary}
+
+\begin{proof}
+By
+Corollary~\ref{cor:mode-wise-candidate-forcing-yields-compatibility-surface},
+the inherited compatibility conditions of
+Theorem~\ref{thm:inherited-compatibility-surface-forces-mode-complete-realization}
+hold on the selected cut. The theorem then yields mode-complete
+realization.
+\end{proof}
+
+\begin{theorem}[Mode-complete realization forces intrinsic selected-bundle existence]
+\label{thm:mode-complete-realization-forces-intrinsic-selected-bundle}\lean{IntrinsicSelectedBundleExistence, intrinsic_selected_bundle_existence}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected cut satisfies mode-complete realization in
+      the sense of Definition~\ref{def:mode-complete-visible-realization};
+\item the local balanced channel algebra on the selected observed bundle
+      carries the intrinsic \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item canonical realization of persistence modes holds on that selected bundle
+      in the sense of Definition~\ref{def:canonical-sector-generation}.
+\end{enumerate}
+Then intrinsic selected-bundle existence holds. Equivalently, the phase, wave,
+gauge, and geometric carriers arise directly as associated visible carriers of
+one physically realized selected observed bundle on the least-motion cut,
+without separate carrier-wise visibility hypotheses.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Inherited compatibility conditions force intrinsic selected-bundle existence]
+\label{cor:compatibility-surface-forces-intrinsic-selected-bundle}\lean{IntrinsicSelectedBundleExistence, intrinsic_selected_bundle_existence}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume the hypotheses of
+Theorem~\ref{thm:inherited-compatibility-surface-forces-mode-complete-realization}
+and canonical realization of persistence modes in the sense of
+Definition~\ref{def:canonical-sector-generation}. Then the phase, wave, gauge,
+and geometric carriers arise directly as associated visible carriers of one
+physically realized selected observed bundle on the least-motion cut, without
+separate carrier-wise visibility hypotheses.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:inherited-compatibility-surface-forces-mode-complete-realization},
+the selected cut satisfies mode-complete realization.
+Therefore
+Theorem~\ref{thm:mode-complete-realization-forces-intrinsic-selected-bundle}
+applies and yields intrinsic selected-bundle existence.
+\end{proof}
+
+\begin{definition}[Intrinsic sector generation]
+\label{def:intrinsic-sector-generation}\lean{IntrinsicSectorGeneration}
+An intrinsic selected bundle satisfies \emph{intrinsic sector generation} if
+the visible carrier sectors are generated from the intrinsic \(1+2+3\) channel
+algebra as the canonical minimal compatible realizations of that algebra under
+their respective compatibility identities, rather than by a primitive
+dictionary from channel dimensions to named physical laws. The finite promotion
+carrier used in this step is not extra auxiliary data: it is the canonical
+closure-typed promotion carrier already furnished by the continuum
+bridge.
+\end{definition}
+
+\begin{theorem}[Scoped intrinsic sector generation on the selected bundle]
+\label{thm:scoped-intrinsic-sector-generation}\lean{IntrinsicSectorGeneration, intrinsic_sector_generation}
+Fix a realized family satisfying the temporal realization principle on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the phase, wave, gauge, and geometric carriers are faithfully visible on
+      one selected observed bundle in the sense of
+      Theorem~\ref{thm:common-selected-bundle-assembly};
+\item the local balanced channel algebra on that bundle carries the intrinsic
+      \(1+2+3\) decomposition of
+      Corollary~\ref{cor:intrinsic-symmetry-forces-123};
+\item the selected observed bundle satisfies canonical realization of
+      persistence modes in the sense of
+      Definition~\ref{def:canonical-sector-generation}.
+\end{enumerate}
+Then the selected observed bundle satisfies
+Definition~\ref{def:intrinsic-sector-generation}. More precisely, within the
+present intrinsic family the visible sectors are generated intrinsically from
+the common selected visible law and the intrinsic \(1+2+3\) channel algebra as
+the unique minimal compatible realizations of the three primitive persistence
+channels together with the canonical geometric lift of the primitive
+\(3\)-channel, rather than by a primitive external dictionary.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Scoped bundle-first coherence decomposition on the selected bundle]
+\label{thm:scoped-bundle-first-coherence-decomposition}\lean{SelectedBundle.Reduction.bundleFirstDecomposition}
+Assume the hypotheses of
+Theorem~\ref{thm:canonical-sector-generation-reduction}. Then, on the common
+selected observed bundle:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected visible effective law generates intrinsically the phase,
+      wave, gauge, and geometric sectors as the canonical direct realizations
+      of the three primitive persistence channels together with the canonical
+      geometric lift of the primitive \(3\)-channel;
+\item each intrinsic visible law on that bundle belongs to exactly
+      one of those four roles;
+\item there is no additional primitive direct channel and no additional
+      intrinsic lift on the present scope;
+\item any visible hydrodynamic law on that same bundle, when it appears
+      through a resolution-integrated balance hierarchy, is only a
+      resolution-integrated effective closure and not a further primitive
+      coherence type.
+\end{enumerate}
+Accordingly, on the present scope, the selected visible bundle is
+decomposed bundle-first rather than carrier-first: primitive visible coherence
+appears only as the three direct channels and the canonical geometric lift,
+while any further macroscopic law belongs to effective closure above them.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[General-bundle exact-visible exhaustion hypothesis]
+\label{def:general-bundle-exact-visible-exhaustion-hypothesis}\lean{GeneralBundle.ExhaustionHypothesis}
+Fix a realized family on a common selected observed bundle \(\mathcal X_h\).
+The bundle satisfies the \emph{general-bundle exact-visible exhaustion
+hypothesis} if every irreducible faithful visible law class
+\(\mathcal Y\subseteq \mathcal X_h\) such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the restriction of the selected visible effective law to \(\mathcal Y\)
+      is exact-visible and self-sufficient;
+\item \(\mathcal Y\) is reconstruction-compatible, closure-admissible, and
+      stable under admissible promotion;
+\item \(\mathcal Y\) is minimal for its compatibility signature and admissible
+      source profile;
+\end{enumerate}
+either:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item belongs to a nonempty Schur-induced mode candidate class for one of the
+      four intrinsic roles of Definition~\ref{def:five-persistence-modes}; or
+\item appears only through a resolution-integrated effective balance closure in
+      the sense of
+      Definition~\ref{def:resolution-integrated-effective-balance-closure}.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[General-bundle intrinsic-role dichotomy]
+\label{def:general-bundle-intrinsic-role-dichotomy}\lean{GeneralBundle.RoleDichotomy}
+Fix a realized family satisfying a canonical selected Schur bridge on a common
+selected observed bundle \(\mathcal X_h\). The bundle satisfies the
+\emph{general-bundle intrinsic-role dichotomy} if every irreducible faithful
+visible law class \(\mathcal Y\subseteq \mathcal X_h\) such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the restriction of the selected visible effective law to \(\mathcal Y\)
+      is exact-visible and self-sufficient;
+\item \(\mathcal Y\) is reconstruction-compatible, closure-admissible, and
+      stable under admissible promotion;
+\item \(\mathcal Y\) is minimal for its compatibility signature and admissible
+      source profile;
+\end{enumerate}
+either:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item preserves the compatibility signature and admissible source profile of
+      one of the four intrinsic roles of
+      Definition~\ref{def:five-persistence-modes}; or
+\item appears only through a resolution-integrated effective balance closure in
+      the sense of
+      Definition~\ref{def:resolution-integrated-effective-balance-closure}.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[General-bundle direct/lift/closure trichotomy]
+\label{def:general-bundle-direct-lift-closure-trichotomy}\lean{GeneralBundle.LiftClosureTrichotomy}
+Fix a realized family satisfying a canonical selected Schur bridge on a common
+selected observed bundle \(\mathcal X_h\) whose local balanced channel algebra
+carries the intrinsic \(1+2+3\) decomposition of
+Corollary~\ref{cor:intrinsic-symmetry-forces-123}. The bundle satisfies the
+\emph{general-bundle direct/lift/closure trichotomy} if every irreducible
+faithful visible law class \(\mathcal Y\subseteq \mathcal X_h\) such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the restriction of the selected visible effective law to \(\mathcal Y\)
+      is exact-visible and self-sufficient;
+\item \(\mathcal Y\) is reconstruction-compatible, closure-admissible, and
+      stable under admissible promotion;
+\item \(\mathcal Y\) is minimal for its compatibility signature and admissible
+      source profile;
+\end{enumerate}
+satisfies exactly one of the following:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathcal Y\) is carried by one of the three primitive direct channels
+      of the intrinsic \(1+2+3\) channel algebra on the selected bundle;
+\item \(\mathcal Y\) is carried by the canonical divergence-compatible
+      symmetric-response lift of the primitive \(3\)-channel on that same
+      selected bundle;
+\item \(\mathcal Y\) appears only through a resolution-integrated effective
+      balance closure in the sense of
+      Definition~\ref{def:resolution-integrated-effective-balance-closure}.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[No-auxiliary exact-visible restriction forces the general-bundle direct/lift/closure trichotomy]
+\label{thm:no-auxiliary-exact-visible-restriction-forces-general-bundle-trichotomy}\lean{GeneralBundle.trichotomy}
+Assume the hypotheses of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Assume further
+that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the realized family satisfies a canonical selected Schur bridge on the
+      common selected observed bundle \(\mathcal X_h\);
+\item the selected cut satisfies the no-auxiliary internal shadow elimination
+      conditions of
+      Definition~\ref{def:no-auxiliary-internal-shadow-elimination-package}.
+\end{enumerate}
+Then the selected bundle satisfies the general-bundle direct/lift/closure
+trichotomy of
+Definition~\ref{def:general-bundle-direct-lift-closure-trichotomy}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[No-auxiliary exact-visible restriction closes general-bundle exhaustion]
+\label{cor:no-auxiliary-exact-visible-restriction-closes-general-bundle-exhaustion}\lean{GeneralBundle.closed_byNoAuxiliaryRestriction}
+Assume the hypotheses of
+Theorem~\ref{thm:no-auxiliary-exact-visible-restriction-forces-general-bundle-trichotomy}.
+Then the conclusion of
+Theorem~\ref{thm:general-bundle-exact-visible-exhaustion} holds on the selected
+bundle.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:no-auxiliary-exact-visible-restriction-forces-general-bundle-trichotomy},
+the selected bundle satisfies the general-bundle direct/lift/closure
+trichotomy. Therefore
+Corollary~\ref{cor:direct-lift-closure-trichotomy-closes-general-bundle-exhaustion}
+applies.
+\end{proof}
+
+\begin{theorem}[Direct/lift/closure trichotomy forces intrinsic-role dichotomy]
+\label{thm:direct-lift-closure-trichotomy-forces-intrinsic-role-dichotomy}\lean{GeneralBundle.roleDichotomy}
+Assume the hypotheses of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Assume further
+that the realized family satisfies a canonical selected Schur bridge and that
+the selected bundle satisfies the general-bundle direct/lift/closure
+trichotomy of
+Definition~\ref{def:general-bundle-direct-lift-closure-trichotomy}. Then the
+selected bundle also satisfies the general-bundle intrinsic-role dichotomy of
+Definition~\ref{def:general-bundle-intrinsic-role-dichotomy}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Direct/lift/closure trichotomy closes general-bundle exhaustion]
+\label{cor:direct-lift-closure-trichotomy-closes-general-bundle-exhaustion}\lean{GeneralBundle.closed_byTrichotomy}
+Assume the hypotheses of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Assume further
+that the realized family satisfies a canonical selected Schur bridge and that
+the selected bundle satisfies the general-bundle direct/lift/closure
+trichotomy of
+Definition~\ref{def:general-bundle-direct-lift-closure-trichotomy}. Then the
+conclusion of
+Theorem~\ref{thm:general-bundle-exact-visible-exhaustion} holds on the selected
+bundle.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:direct-lift-closure-trichotomy-forces-intrinsic-role-dichotomy},
+the selected bundle satisfies the general-bundle intrinsic-role dichotomy.
+Therefore
+Corollary~\ref{cor:intrinsic-role-dichotomy-closes-general-bundle-exhaustion}
+applies.
+\end{proof}
+
+\begin{theorem}[Intrinsic-role-compatible exact-visible law classes are automatically Schur-induced]
+\label{thm:intrinsic-role-compatible-exact-visible-law-classes-are-schur-induced}\lean{GeneralBundle.intrinsic_role_compatible_exact_visible_law_classes_are_schur_induced}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum with common selected observed bundle
+\(\mathcal X_h=P_h\cH^\bullet\). Let \(\mathcal Y\subseteq \mathcal X_h\) be an
+irreducible faithful visible law class such that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the restriction of the selected visible effective law to \(\mathcal Y\)
+      is exact-visible and self-sufficient;
+\item \(\mathcal Y\) is reconstruction-compatible, closure-admissible, and
+      stable under admissible promotion;
+\item \(\mathcal Y\) is minimal for its compatibility signature and admissible
+      source profile;
+\item \(\mathcal Y\) preserves the compatibility signature and admissible
+      source profile of one fixed intrinsic role \(\mathfrak m\) of
+      Definition~\ref{def:five-persistence-modes}.
+\end{enumerate}
+Then the Schur-induced mode candidate class for \(\mathfrak m\) is nonempty.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Intrinsic-role dichotomy forces the general-bundle exact-visible exhaustion hypothesis]
+\label{cor:intrinsic-role-dichotomy-forces-general-bundle-exact-visible-exhaustion-hypothesis}\lean{GeneralBundle.exhaustionHypothesis}
+Fix a realized family satisfying a canonical selected Schur bridge on a common
+selected observed bundle \(\mathcal X_h\). If the bundle satisfies the
+general-bundle intrinsic-role dichotomy of
+Definition~\ref{def:general-bundle-intrinsic-role-dichotomy}, then it also
+satisfies the general-bundle exact-visible exhaustion hypothesis of
+Definition~\ref{def:general-bundle-exact-visible-exhaustion-hypothesis}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[General-bundle exact-visible exhaustion on the selected bundle]
+\label{thm:general-bundle-exact-visible-exhaustion}\lean{GeneralBundle.exhaustion}
+Assume the hypotheses of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Assume also that
+the selected bundle satisfies the general-bundle exact-visible exhaustion
+hypothesis of
+Definition~\ref{def:general-bundle-exact-visible-exhaustion-hypothesis}. Then
+every irreducible faithful visible law class on the selected bundle whose
+restricted law is exact-visible and self-sufficient is exactly one of the
+following, up to the horizon-preserving/continuum equivalence already used on
+the selected bundle:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the canonical local-state realization, namely the phase carrier;
+\item the canonical propagative realization, namely the wave carrier;
+\item the canonical comparative realization, namely the gauge carrier;
+\item the canonical causal-structural realization, namely the geometric lift
+      of the primitive \(3\)-channel; or
+\item a resolution-integrated effective balance closure.
+\end{enumerate}
+In particular, on this scope there is no fifth primitive direct channel and no
+additional intrinsic lift on the selected bundle.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Intrinsic-role dichotomy closes general-bundle exhaustion on the selected bundle]
+\label{cor:intrinsic-role-dichotomy-closes-general-bundle-exhaustion}\lean{GeneralBundle.closed_byRoleDichotomy}
+Assume the hypotheses of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Assume further
+that the realized family satisfies a canonical selected Schur bridge and that
+the selected bundle satisfies the general-bundle intrinsic-role dichotomy of
+Definition~\ref{def:general-bundle-intrinsic-role-dichotomy}. Then the
+conclusion of
+Theorem~\ref{thm:general-bundle-exact-visible-exhaustion} holds on the selected
+bundle.
+\end{corollary}
+
+\begin{proof}
+By
+Corollary~\ref{cor:intrinsic-role-dichotomy-forces-general-bundle-exact-visible-exhaustion-hypothesis},
+the selected bundle satisfies the general-bundle exact-visible exhaustion
+hypothesis. Therefore
+Theorem~\ref{thm:general-bundle-exact-visible-exhaustion} applies directly.
+\end{proof}
+
+\begin{theorem}[Single-witness forcing of the intrinsic law classes]
+\label{thm:single-witness-intrinsic-flagship-forcing}\lean{FlagshipLawCompletion, flagship_law_completion}
+Fix a realized family satisfying a canonical selected Schur bridge on a
+least-motion characteristic observer datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of
+      Theorem~\ref{thm:intrinsic-selected-channel-package-forces-three-schur-mode-classes};
+\item the hypotheses of
+      Theorem~\ref{thm:macroscopic-witness-packages-force-two-schur-mode-classes};
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item intrinsic selected-bundle existence holds on the selected cut;
+\item intrinsic sector generation holds on that bundle;
+\item on each of the phase, wave, gauge, and geometric carriers, the selected
+      endpoint closure class is unique modulo continuum equivalence and is
+      determined entirely by scalar data on the intrinsic symmetry channels of
+      that carrier;
+\item accordingly, the only remaining intrinsic carrier-level task is the
+      identification of the natural representative of each already forced
+      intrinsic closure class.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Natural-operator completion]
+\label{def:natural-operator-completion}\lean{NaturalOperatorCompletion}
+Intrinsic sector generation satisfies \emph{natural-operator completion} if the
+endpoint-rigidity schema of
+Definition~\ref{def:endpoint-rigidity-principle} is resolved on each generated
+visible carrier. In rigid sectors this means identifying the unique canonical
+representative of the distinguished minimal compatible closure class; in
+non-rigid sectors it means identifying the canonical normal form together with
+its explicit parameter data.
+\end{definition}
+
+\begin{theorem}[Four-step law completion on the selected cut]
+\label{thm:part-iv-law-completion}\lean{partIV_law_completion}
+Assume a realized family satisfies:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item canonical selected Schur bridge in the sense of
+      Definition~\ref{def:canonical-selected-schur-bridge};
+\item intrinsic selected-bundle existence in the sense of
+      Definition~\ref{def:intrinsic-selected-bundle-existence};
+\item intrinsic sector generation in the sense of
+      Definition~\ref{def:intrinsic-sector-generation};
+\item natural-operator completion in the sense of
+      Definition~\ref{def:natural-operator-completion}.
+\end{enumerate}
+Then the temporal law yields a completed physical-law description on the selected
+cut:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected projector is both the finite least-motion minimizer and the
+      realized selected horizon cut, and the selected observed law is forced
+      across the admissible class by horizon-preserving equivalence;
+\item all observable forcing factors through the canonical residual return
+      field on that cut, returned residual is exactly the Schur correction,
+      observable irreversibility is measured by unrecovered residual, and the
+      counting-side residual barrier is already forced at \(D=3\);
+\item the four intrinsic carriers arise intrinsically as canonical
+      visible sectors of one selected observed bundle, inherit the same
+      selected visible effective law there, and differ only at the final
+      carrier-level identification step, while the hydrodynamic closure is read
+      on that same bundle as a resolution-integrated effective balance
+      closure;
+\item those intrinsic sectors are generated intrinsically from the intrinsic
+      \(1+2+3\) channel algebra, whose profile is already forced from closure
+      balance and intrinsic relabeling symmetry;
+\item the endpoint law class on each intrinsic generated carrier is
+      forced up to continuum equivalence and completed by a unique canonical
+      representative, while the effective balance hierarchy is completed by its
+      canonical hydrodynamic closure normal form.
+\end{enumerate}
+Accordingly, the remaining downstream work is concrete coupled-carrier
+realization and remainder analysis on the realized carriers.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Returned remainders form the predictive correction structure]
+\label{thm:returned-remainders-form-predictive-correction-surface}\lean{CanonicalSelectedSchurBridge.predictiveCorrectionSurface}
+Assume the completed physical-law description of
+Theorem~\ref{thm:part-iv-law-completion}. Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item on the selected bundle, each carrier realization is of the form
+      \[
+      \text{recognizable leading law}
+      =
+      \text{selected visible dynamics}
+      +
+      \text{exact returned remainder};
+      \]
+\item the phase, wave, gauge, geometric, and resolution-integrated
+      hydrodynamic realizations therefore carry exact returned remainders
+      \(\mathsf R_{\mathrm{ph}}\),
+      \(\mathsf R_{\mathrm{wav}}\),
+      \(\mathsf R_{\mathrm g}\),
+      \(\mathsf N_{\mathrm{grav}}\), and
+      \(\mathsf R_{\mathrm{hyd}}\) on that same selected datum, together with
+      the induced coefficient scales
+      \(\kappa_{\chi}\),
+      \(c_{\chi}\),
+      \(\Lambda_{\mathrm{ind}}\),
+      \(\kappa_{\mathrm{ind}}\),
+      \(\mu_{\mathrm{ind}}\), and
+      \(\zeta_{\mathrm{ind}}\);
+\item in the lossless leading-order regime, these returned remainders vanish
+      and the recognizable textbook representatives are recovered;
+\item any observable departure from those leading representatives on the
+      present scope must therefore appear either through nonzero returned
+      remainders or through the induced scales of the selected realization,
+      never through ad hoc primitive source terms external to the same
+      coherent bundle.
+\end{enumerate}
+Thus the predictive content of the realized theory is the explicit computation
+of returned remainders and induced scales on concrete selected cuts.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\subsubsection{Canonical Schur Realization}
+
+\begin{definition}[Canonical selected Schur bridge]
+\label{def:canonical-selected-schur-bridge}\lean{CanonicalSelectedSchurBridge}
+A realized family satisfies the \emph{canonical selected Schur bridge}
+condition if one least-motion characteristic observer datum is fixed together
+with:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an admissible realized class whose selected datum is that observer datum;
+\item horizon-preserving equivalence across the whole admissible class;
+\item equality between the finite least-motion selected projector and the
+      realized horizon cut;
+\item a grounded physical bridge on the same selected datum, so the
+      self-sufficient realization law is already available there;
+\item an exact Schur tower for the selected observed law on that realized
+      horizon tower;
+\item the HFT-2 energy tower on the same realized horizon tower.
+\end{enumerate}
+Equivalently, the bridge has a forced selected-cut layer, a grounded
+self-sufficient realization law on that same cut, and the exact Schur tower
+used to read the canonical return field there. The forced selected-cut layer
+already yields the least-motion minimizer, the realized horizon cut,
+classwise forcing, and the HFT-2 residual accounting on one selected datum.
+The grounded physical bridge then supplies the law-side core of
+Definition~\ref{def:self-sufficient-realization-principle}: the selected
+observed law is already \emph{exactly visible} on the selected cut, is read as
+intrinsically closed there, admits no exogenous constitutive completion, and
+interprets any constitutive appearance as returned residual from eliminated
+sectors of the same coherent bundle. The local residue conditions of
+observable support and cut commutation are therefore derived consequences of
+that exact-visible clause rather than primitive bridge data. The observable
+law and the residual return field are both read from the same selected Schur
+reduction.
+\end{definition}
+
+\begin{definition}[Grounded selected Schur conditions]
+\label{def:grounded-selected-schur-package}\lean{SelectedSchur.Package}
+A realized family satisfies the \emph{grounded selected Schur conditions} if one
+least-motion characteristic observer datum is fixed together with:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an admissible realized class whose selected datum is that observer datum;
+\item horizon-preserving equivalence across the whole admissible class;
+\item equality between the finite least-motion selected projector and the
+      realized horizon cut;
+\item the self-sufficient realization principle on that same selected cut;
+\item an exact Schur tower for the selected observed law on that realized
+      horizon tower;
+\item the HFT-2 energy tower on the same realized horizon tower.
+\end{enumerate}
+Thus the selected-cut forcing layer, the grounded law-side self-sufficient
+realization layer, and the exact Schur/HFT-2 residual-return layer are all
+carried by one and the same least-motion selected datum.
+\end{definition}
+
+\begin{definition}[Selected-cut forcing conditions]
+\label{def:selected-cut-forcing-package}\lean{SelectedCut.Package}
+A realized family satisfies the \emph{selected-cut forcing conditions} if one
+least-motion characteristic observer datum is fixed together with:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an admissible realized class whose selected datum is that observer datum;
+\item horizon-preserving equivalence across the whole admissible class;
+\item equality between the finite least-motion selected projector and the
+      realized horizon cut.
+\end{enumerate}
+This is the forcing layer that identifies one selected datum simultaneously as
+least-motion minimizer, realized horizon cut, and classwise selected law datum.
+\end{definition}
+
+\begin{definition}[Selected Schur/HFT-2 return conditions]
+\label{def:selected-schur-hft2-return-package}\lean{SelectedSchur.ReturnPackage}
+A realized family satisfies the \emph{selected Schur/HFT-2 return conditions} if,
+on one least-motion characteristic observer datum, it carries:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an exact Schur tower for the selected observed law on the realized
+      horizon tower;
+\item the HFT-2 energy tower on that same realized horizon tower.
+\end{enumerate}
+This is the exact return/irreversibility layer read on the same selected datum.
+\end{definition}
+
+\begin{theorem}[The horizon-preserving equivalence class of a least-motion observer datum is an admissible selected class]
+\label{thm:least-motion-observer-equivalence-class-is-admissible-selected-class}\lean{SelectedCut.equivalenceClass_isAdmissible}
+Fix a horizon \(h\) and a least-motion characteristic observer datum
+\(\mathcal O_h\) in the sense of
+Definition~\ref{def:least-motion-characteristic-observer}. Let
+\(\mathfrak R_{\mathrm{sel}}(h)\) be the class of characteristic observer data
+at horizon \(h\) that are horizon-preserving equivalent to \(\mathcal O_h\).
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathfrak R_{\mathrm{sel}}(h)\) is an admissible realized class at
+      horizon \(h\);
+\item every datum in \(\mathfrak R_{\mathrm{sel}}(h)\) is faithful,
+      closure-admissible, and stable under admissible promotion on the same
+      selected bundle, after transport by the defining horizon-preserving
+      equivalence;
+\item the reduced selection problem on \(\mathfrak R_{\mathrm{sel}}(h)\)
+      carries the observer-motion design objective of
+      Definition~\ref{def:design-objective};
+\item the admissible reduced selection data on
+      \(\mathfrak R_{\mathrm{sel}}(h)\), modulo horizon-preserving
+      equivalence, consist of a single equivalence class.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Classwise horizon-preserving equivalence collapses reduced selection]
+\label{thm:classwise-horizon-equivalence-collapses-reduced-selection}
+\lean{SelectedCut.classwiseEquivalence_singletonSelection}
+Fix a horizon \(h\) and an admissible realized class
+\(\mathfrak R_{\mathrm{adm}}(h)\). Assume that every two realizations in
+\(\mathfrak R_{\mathrm{adm}}(h)\) are related by a horizon-preserving
+equivalence intertwining the admissible reduced operator data and the
+normalization data. Then the admissible reduced selection data on
+\(\mathfrak R_{\mathrm{adm}}(h)\), modulo horizon-preserving equivalence,
+consist of a single equivalence class.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[A least-motion observer datum with realized horizon cut forces the selected-cut forcing conditions]
+\label{thm:temporal-realization-forces-selected-cut-forcing-package}\lean{SelectedCut.forcingSurface}
+Fix a realized family and a least-motion characteristic observer datum
+\[
+\mathcal O_h=(P_h,\mathcal X_h,\dots)
+\]
+in the sense of
+Definition~\ref{def:least-motion-characteristic-observer}. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the finite least-motion selected projector of \(\mathcal O_h\) is the
+      realized horizon cut;
+\end{enumerate}
+Then the realized family satisfies the selected-cut forcing conditions of
+Definition~\ref{def:selected-cut-forcing-package}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[The realized horizon tower from the continuum bridge forces exact Schur return on the selected cut]
+\label{thm:part-iii-realized-horizon-tower-forces-selected-schur-hft2-return-package}\lean{SelectedSchur.return_fromExactVisible}
+Fix a realized family satisfying the selected-cut forcing conditions on a
+least-motion characteristic observer datum with coherent operator
+\(A_{\mathrm{coh}}\). Let the chosen horizon family be the directed horizon
+family carried by Definition~\ref{def:characteristic-observer-datum}(iii), and
+let \((\CCPi{n})_{n\in\bbN}\) be the faithful transitive horizon tower on its
+Hilbert completion supplied by Theorem~\ref{thm:hilbert-completion}. Read the
+persisting selected visible law at stage \(n\) by the exact effective operator
+\[
+\mathcal L_{\mathrm{vis},n}(z):=
+\CCPi{n}A_{\mathrm{coh}}\CCPi{n}
+ z\,\CCSigmaP{\CCPi{n}}{z}[A_{\mathrm{coh}}].
+\]
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected datum carries the exact Schur tower and the HFT-2
+      unrecovered-stock / returned-flux accounting on that same realized
+      horizon tower;
+\item every admissible visible forcing term on that datum is read as balanced
+      visible exchange or as the returned visible trace of hidden/interface
+      residual propagated through that exact Schur tower;
+\item observable irreversibility on that datum is exactly the unrecovered
+      HFT-2 residual budget;
+\item in particular, the same datum satisfies the selected Schur/HFT-2 return
+      conditions of Definition~\ref{def:selected-schur-hft2-return-package}.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Selected-cut forcing on the continuum-bridge realized horizon tower forces the grounded selected Schur conditions]
+\label{cor:temporal-realization-on-part-iii-horizon-tower-forces-grounded-selected-schur-package}\lean{SelectedSchur.grounded_nonempty}
+Fix a realized family satisfying the selected-cut forcing conditions on a
+least-motion characteristic observer datum with coherent operator
+\(A_{\mathrm{coh}}\). Let the chosen horizon family be the directed horizon
+family of Definition~\ref{def:characteristic-observer-datum}(iii), realized by
+the Hilbert-completion tower of Theorem~\ref{thm:hilbert-completion}, and read
+the persisting selected visible law stagewise by
+\[
+\mathcal L_{\mathrm{vis},n}(z):=
+\CCPi{n}A_{\mathrm{coh}}\CCPi{n}
+ z\,\CCSigmaP{\CCPi{n}}{z}[A_{\mathrm{coh}}].
+\]
+Then the same datum satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}, hence also the canonical
+selected Schur bridge of Definition~\ref{def:canonical-selected-schur-bridge}.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[A least-motion observer datum with the continuum-bridge realized horizon tower forces the canonical selected Schur bridge]
+\label{thm:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-bridge}\lean{SelectedSchur.derivedBridge}
+Assume the hypotheses of
+Theorem~\ref{thm:temporal-realization-forces-selected-cut-forcing-package}, and
+let \((P_h,A_{\mathrm{coh}})\) be the least-motion characteristic observer
+datum furnished there. Assume moreover that the chosen horizon family of that
+datum is the directed horizon family of
+Definition~\ref{def:characteristic-observer-datum}(iii), realized by the
+faithful transitive Hilbert-completion tower of
+Theorem~\ref{thm:hilbert-completion}, and that the persisting selected visible
+law is read stagewise by
+\[
+\mathcal L_{\mathrm{vis},n}(z):=
+\CCPi{n}A_{\mathrm{coh}}\CCPi{n}
+ z\,\CCSigmaP{\CCPi{n}}{z}[A_{\mathrm{coh}}].
+\]
+Then the same datum satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}, hence also the canonical
+selected Schur bridge of Definition~\ref{def:canonical-selected-schur-bridge}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Derived temporal interface and the continuum-bridge realized horizon tower force canonical selected Schur realization]
+\label{cor:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-realization}\lean{SelectedSchur.derivedRealization}
+Assume the setting of
+Theorem~\ref{thm:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-bridge}.
+Then the same datum satisfies the canonical selected Schur realization of
+Theorem~\ref{thm:canonical-selected-schur-realization}, equivalently the
+temporal realization principle of
+Corollary~\ref{cor:canonical-selected-schur-realization-yields-temporal-realization}.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-bridge},
+the datum satisfies the canonical selected Schur bridge. Therefore
+Theorem~\ref{thm:canonical-selected-schur-realization} and
+Corollary~\ref{cor:canonical-selected-schur-realization-yields-temporal-realization}
+apply directly.
+\end{proof}
+
+\begin{theorem}[Derived selected Schur realization forces the first three intrinsic law classes]
+\label{thm:derived-selected-schur-realization-forces-first-three-intrinsic-law-classes}\lean{SelectedSchur.derivedFirstThreeClasses}
+Assume the setting of
+Corollary~\ref{cor:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-realization},
+and assume moreover the remaining hypotheses of
+Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced}
+besides the canonical selected Schur bridge. Then the conclusions of
+Theorem~\ref{thm:first-three-intrinsic-law-classes-already-forced}
+hold on the same selected bundle.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Derived selected Schur realization forces the three primitive channels]
+\label{cor:derived-selected-schur-realization-forces-three-primitive-channels}\lean{SelectedSchur.derivedPrimitiveChannels}
+Assume the setting of
+Theorem~\ref{thm:derived-selected-schur-realization-forces-first-three-intrinsic-law-classes}.
+Then the conclusions of
+Theorem~\ref{thm:three-primitive-channels-already-forced}
+hold on the same selected bundle.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Derived selected Schur realization forces the primitive \(3\)-channel bilinear lift datum]
+\label{thm:derived-selected-schur-realization-forces-primitive-three-bilinear-lift-package}\lean{SelectedSchur.derivedPrimitiveThreePackage}
+Assume the setting of
+Theorem~\ref{thm:derived-selected-schur-realization-forces-first-three-intrinsic-law-classes},
+with selected observed bundle
+\[
+\mathcal X_h=P_h\cH^\bullet.
+\]
+Assume moreover that the local balanced channel algebra on \(\mathcal X_h\)
+carries the intrinsic \(1+2+3\) decomposition of
+Corollary~\ref{cor:intrinsic-symmetry-forces-123}. Then the conclusions of
+Theorem~\ref{thm:canonical-selected-schur-bridge-forces-primitive-three-bilinear-lift-package}
+hold on that selected cut.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Derived selected Schur realization forces the geometric lift and the four intrinsic law classes]
+\label{cor:derived-selected-schur-realization-forces-geometric-lift-and-four-intrinsic-laws}\lean{SelectedSchur.derivedGeometricLift}
+Assume the setting of
+Theorem~\ref{thm:derived-selected-schur-realization-forces-primitive-three-bilinear-lift-package}.
+Then the conclusions of
+Theorems~\ref{thm:primitive-three-symmetric-bilinear-lift-forces-schur-tensor-lift}
+and~\ref{thm:geometry-unique-lift-of-primitive-three-channel}
+hold on the same selected bundle.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Grounded selected Schur conditions split into selected-cut, law-side, and Schur-return layers]
+\label{thm:grounded-selected-schur-package-splits-into-three-layers}\lean{SelectedSchur.grounded_layers}
+A realized family satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package} if and only if, on one and
+the same least-motion characteristic observer datum:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected-cut forcing conditions of
+      Definition~\ref{def:selected-cut-forcing-package} holds;
+\item the self-sufficient realization principle of
+      Definition~\ref{def:self-sufficient-realization-principle} holds on that
+      selected cut;
+\item the selected Schur/HFT-2 return conditions of
+      Definition~\ref{def:selected-schur-hft2-return-package} holds on that
+      same datum.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Unpack Definition~\ref{def:grounded-selected-schur-package}. Clauses
+\emph{(i)}--\emph{(iii)} are exactly the selected-cut forcing conditions of
+Definition~\ref{def:selected-cut-forcing-package}. Clause \emph{(iv)} is
+exactly the self-sufficient realization principle on that selected cut. And
+clauses \emph{(v)}--\emph{(vi)} are exactly the selected Schur/HFT-2 return
+conditions of
+Definition~\ref{def:selected-schur-hft2-return-package}. The converse is the
+same unpacking in reverse.
+\end{proof}
+
+\begin{corollary}[Selected-cut forcing, exact-visible selected-cut conditions, and Schur/HFT-2 return force the grounded selected Schur conditions]
+\label{cor:selected-cut-plus-exact-visible-plus-schur-return-forces-grounded-package}\lean{SelectedSchur.grounded_fromExactVisible}
+If, on one and the same least-motion characteristic observer datum, a realized
+family satisfies:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected-cut forcing conditions of
+      Definition~\ref{def:selected-cut-forcing-package};
+\item the exact-visible selected-cut conditions of
+      Definition~\ref{def:exact-visible-selected-cut-package};
+\item the selected Schur/HFT-2 return conditions of
+      Definition~\ref{def:selected-schur-hft2-return-package};
+\end{enumerate}
+then it satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:exact-visible-selected-cut-package-forces-self-sufficient-realization},
+item \emph{(b)} supplies the self-sufficient realization principle on the
+selected cut. Together with items \emph{(a)} and \emph{(c)}, the three clauses
+required by
+Theorem~\ref{thm:grounded-selected-schur-package-splits-into-three-layers} are
+present on one and the same datum. Therefore the grounded selected Schur
+conditions hold.
+\end{proof}
+
+\begin{corollary}[Selected-cut forcing, coherent-law exact elimination, and Schur/HFT-2 return force the grounded selected Schur conditions]
+\label{cor:selected-cut-plus-coherent-law-exact-elimination-plus-schur-return-forces-grounded-package}\lean{SelectedSchur.grounded_fromCoherentElimination}
+If, on one and the same least-motion characteristic observer datum, a realized
+family satisfies:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected-cut forcing conditions of
+      Definition~\ref{def:selected-cut-forcing-package};
+\item the coherent-law exact elimination conditions of
+      Definition~\ref{def:coherent-law-exact-elimination-package};
+\item the selected Schur/HFT-2 return conditions of
+      Definition~\ref{def:selected-schur-hft2-return-package};
+\end{enumerate}
+then it satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:coherent-law-exact-elimination-forces-exact-visible-selected-cut-package},
+item \emph{(b)} implies the exact-visible selected-cut conditions on the same
+datum. Then
+Corollary~\ref{cor:selected-cut-plus-exact-visible-plus-schur-return-forces-grounded-package}
+applies directly and yields the grounded selected Schur conditions.
+\end{proof}
+
+\begin{theorem}[Canonical selected Schur bridge is exactly the grounded selected Schur conditions]
+\label{thm:canonical-selected-schur-bridge-iff-grounded-package}\lean{SelectedSchur.bridge_iff_grounded}
+A realized family satisfies the canonical selected Schur bridge of
+Definition~\ref{def:canonical-selected-schur-bridge} if and only if it
+satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Unified selected Schur realization]
+\label{thm:canonical-selected-schur-realization}\lean{canonical_selected_schur_realization}
+A canonical selected Schur bridge simultaneously yields:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected projector is both the finite least-motion minimizer and the
+      realized selected horizon cut;
+\item the selected observed law is forced across the admissible class by
+      horizon-preserving equivalence;
+\item the selected law is exactly visible and read as intrinsically closed on
+      that cut, with no exogenous constitutive completion and any constitutive
+      appearance interpreted as returned residual;
+\item the canonical residual-return field on the selected cut is the return
+      field induced directly by the selected law and the selected-horizon
+      shadow propagator, and its returned residual is exactly the Schur
+      correction;
+\item the selected observed law is exactly visible closure plus returned
+      residual on that cut;
+\item observable irreversibility is measured there by the HFT-2
+      unrecovered-stock / returned-flux accounting;
+\item the counting-side residual barrier remains the unique \(D=3\) barrier,
+      and the intrinsic channel algebra remains the forced \(1+2+3\) profile.
+\end{enumerate}
+Accordingly, physical realization and residual return are read from one
+Schur-realization problem.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Canonical selected Schur realization yields the temporal realization principle]
+\label{cor:canonical-selected-schur-realization-yields-temporal-realization}\lean{physical_realization_principle}
+Assume a canonical selected Schur bridge. Then the same selected datum
+satisfies the temporal realization principle of
+Definition~\ref{def:physical-realization-principle}.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:canonical-selected-schur-realization}(a)--(b), the
+realization-selection clause holds on the selected cut: the finite least-motion
+minimizer and the realized horizon cut coincide, and the selected observed law
+is forced across the admissible class by horizon-preserving equivalence. By
+item~(c), the self-sufficient realization clause holds there: the selected law
+is exactly visible and intrinsically closed, admits no exogenous constitutive
+completion, and interprets any constitutive appearance as returned residual.
+By items~(d)--(f), the exchange-return clause also holds: the canonical return
+field is the Schur correction, visible forcing is returned residual on that
+same cut, and observable irreversibility is measured by unrecovered HFT-2
+residual. These are exactly the three clauses of
+Definition~\ref{def:physical-realization-principle}.
+\end{proof}
+
+\begin{theorem}[Canonical selected Schur realization forces coherent-law exact elimination]
+\label{thm:canonical-selected-schur-realization-forces-coherent-law-exact-elimination}\lean{CanonicalSelectedSchurBridge.coherentElimination}
+Assume a canonical selected Schur bridge. Then the same selected datum
+satisfies the coherent-law exact elimination conditions of
+Definition~\ref{def:coherent-law-exact-elimination-package}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Grounded selected Schur conditions force coherent-law exact elimination]
+\label{cor:grounded-selected-schur-package-forces-coherent-law-exact-elimination}\lean{SelectedSchur.grounded_coherentElimination}
+Assume grounded selected Schur conditions. Then the same selected datum
+satisfies the coherent-law exact elimination conditions of
+Definition~\ref{def:coherent-law-exact-elimination-package}.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:canonical-selected-schur-bridge-iff-grounded-package}, the
+grounded selected Schur conditions are equivalent to a canonical selected Schur
+bridge.
+Therefore
+Theorem~\ref{thm:canonical-selected-schur-realization-forces-coherent-law-exact-elimination}
+applies.
+\end{proof}
+
+\begin{corollary}[Grounded selected Schur conditions are exactly selected-cut forcing plus coherent-law exact elimination plus Schur/HFT-2 return]
+\label{cor:grounded-selected-schur-package-iff-selected-cut-plus-coherent-law-plus-schur-return}\lean{SelectedSchur.grounded_iff_layers}
+A realized family satisfies the grounded selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package} if and only if, on one and
+the same least-motion characteristic observer datum:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected-cut forcing conditions of
+      Definition~\ref{def:selected-cut-forcing-package} holds;
+\item the coherent-law exact elimination conditions of
+      Definition~\ref{def:coherent-law-exact-elimination-package} holds;
+\item the selected Schur/HFT-2 return conditions of
+      Definition~\ref{def:selected-schur-hft2-return-package} holds.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The forward direction follows from
+Theorem~\ref{thm:grounded-selected-schur-package-splits-into-three-layers},
+which gives items \emph{(a)} and \emph{(c)}, together with
+Corollary~\ref{cor:grounded-selected-schur-package-forces-coherent-law-exact-elimination}
+for item \emph{(b)}. The reverse direction is exactly
+Corollary~\ref{cor:selected-cut-plus-coherent-law-exact-elimination-plus-schur-return-forces-grounded-package}.
+\end{proof}
+
+\begin{corollary}[Grounded selected Schur conditions close the intrinsic law classification]
+\label{cor:grounded-selected-schur-package-closes-intrinsic-surface}\lean{SelectedSchur.grounded_closesIntrinsicSurface}
+Within the present scope, if a realized family satisfies the grounded
+selected Schur conditions of
+Definition~\ref{def:grounded-selected-schur-package}, then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the three forcing bridges from bedrock to primitive physics are
+      complete;
+\item the phase, wave, gauge, and geometric law classes are all forced on one
+      selected bundle;
+\item the recognizable Schr\"odinger, wave, Maxwell, and Einstein identities
+      are closed on their intrinsic carriers;
+\item the exact constant-mass Klein--Gordon form is additionally closed
+      on homogeneous selected-wave sectors;
+\item no intrinsic representative-collapse or intrinsic channel/lift
+      classification problem remains open on the present scope.
+\end{enumerate}
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[A least-motion observer datum with the continuum-bridge realized horizon tower closes the intrinsic law classification]
+\label{cor:derived-selected-schur-bridge-closes-intrinsic-surface}\lean{FlagshipLawCompletion.derivedClosesIntrinsicSurface}
+Assume the hypotheses of
+Theorem~\ref{thm:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-bridge}.
+Then the conclusion of
+Corollary~\ref{cor:grounded-selected-schur-package-closes-intrinsic-surface}
+holds on that same least-motion characteristic observer datum.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:derived-temporal-interface-and-part-iii-horizon-tower-force-canonical-selected-schur-bridge},
+the same datum satisfies the grounded selected Schur conditions. Apply
+Corollary~\ref{cor:grounded-selected-schur-package-closes-intrinsic-surface}.
+\end{proof}
+
+\begin{corollary}[Layered selected-Schur realization closes the intrinsic law classification]
+\label{cor:layered-selected-schur-realization-closes-intrinsic-surface}\lean{FlagshipLawCompletion.layeredClosesIntrinsicSurface}
+Within the present scope, if a realized family satisfies, on one and
+the same least-motion characteristic observer datum:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item the selected-cut forcing conditions of
+      Definition~\ref{def:selected-cut-forcing-package};
+\item the self-sufficient realization principle of
+      Definition~\ref{def:self-sufficient-realization-principle};
+\item the selected Schur/HFT-2 return conditions of
+      Definition~\ref{def:selected-schur-hft2-return-package};
+\end{enumerate}
+then the intrinsic law classification closes exactly as in
+Corollary~\ref{cor:grounded-selected-schur-package-closes-intrinsic-surface}.
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\ref{thm:grounded-selected-schur-package-splits-into-three-layers},
+these three layers are exactly the grounded selected Schur conditions. The result
+therefore follows from
+Corollary~\ref{cor:grounded-selected-schur-package-closes-intrinsic-surface}.
+\end{proof}
+
+\begin{theorem}[Layered selected-Schur realization closes the present-scope direct/lift/closure trichotomy]
+\label{thm:layered-selected-schur-realization-closes-present-scope-trichotomy}\lean{FlagshipLawCompletion.layeredClosesPresentScopeTrichotomy}
+Assume the hypotheses of
+Corollary~\ref{cor:layered-selected-schur-realization-closes-intrinsic-surface}
+and of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Then every
+irreducible faithful visible law class on the selected bundle whose restricted
+law is exact-visible and self-sufficient, and which lies in the visible family
+generated on that bundle by the common selected visible effective law,
+satisfies exactly one of the following:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item it is carried by one of the three primitive direct channels of the
+      intrinsic \(1+2+3\) channel algebra;
+\item it is carried by the canonical divergence-compatible symmetric-response
+      lift of the primitive \(3\)-channel;
+\item it appears only through a resolution-integrated effective balance
+      closure.
+\end{enumerate}
+Accordingly, on the present generated scope, the direct/lift/closure
+trichotomy is closed on the selected bundle.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[A least-motion observer datum with the continuum-bridge realized horizon tower closes the present-scope direct/lift/closure trichotomy]
+\label{cor:derived-selected-schur-bridge-closes-present-scope-trichotomy}\lean{FlagshipLawCompletion.derivedClosesPresentScopeTrichotomy}
+Assume the hypotheses of
+Corollary~\ref{cor:derived-selected-schur-bridge-closes-intrinsic-surface}
+and of
+Theorem~\ref{thm:scoped-bundle-first-coherence-decomposition}. Then every
+irreducible faithful visible law class on the selected bundle whose restricted
+law is exact-visible and self-sufficient, and which lies in the visible family
+generated on that bundle by the common selected visible effective law,
+satisfies exactly one of the three clauses listed in
+Theorem~\ref{thm:layered-selected-schur-realization-closes-present-scope-trichotomy}.
+\end{corollary}
+
+\begin{proof}
+By
+Corollary~\ref{cor:derived-selected-schur-bridge-closes-intrinsic-surface},
+the hypotheses of
+Corollary~\ref{cor:layered-selected-schur-realization-closes-intrinsic-surface}
+hold on that same least-motion characteristic observer datum. Therefore
+Theorem~\ref{thm:layered-selected-schur-realization-closes-present-scope-trichotomy}
+applies directly.
+\end{proof}
+
+\begin{theorem}[Present-scope complete fundamental set]
+\label{thm:present-scope-complete-fundamental-set}\lean{FlagshipLawCompletion.completeFundamentalSet, SelectedCut.effectiveThermodynamicClosure}
+Assume the hypotheses of
+Corollary~\ref{cor:derived-selected-schur-bridge-closes-present-scope-trichotomy}.
+Then, within the visible family generated on the selected bundle by the common
+selected visible effective law:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the complete fundamental set consists exactly of the three primitive
+      direct law classes together with the unique geometric lift law;
+\item equivalently, the intrinsic normal forms are exactly the recognizable
+      Schr\"odinger, wave/Klein--Gordon, Maxwell, and Einstein identities;
+\item any hydrodynamic or thermodynamic law on that selected cut is an
+      effective closure read from unresolved return, not an additional
+      fundamental law.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Corollary~\ref{cor:derived-selected-schur-bridge-closes-present-scope-trichotomy}
+closes the direct/lift/closure trichotomy on the present generated
+scope. The primitive direct channels are identified by
+Theorem~\ref{thm:three-primitive-channels-already-forced}, and
+Theorem~\ref{thm:geometry-unique-lift-of-primitive-three-channel} identifies
+the geometric law as the unique intrinsic lift of the primitive
+\(3\)-channel. On the same least-motion datum,
+Corollary~\ref{cor:derived-selected-schur-bridge-closes-intrinsic-surface}
+already closes the recognizable Schr\"odinger, wave/Klein--Gordon, Maxwell,
+and Einstein forms on those four intrinsic carriers. Hence no further
+fundamental law remains on the present scope.
+
+At the macroscopic level,
+Corollary~\ref{cor:hydrodynamic-closure-law} and
+Corollary~\ref{cor:recognizable-navier-stokes-form} show that the
+hydrodynamic realization is read only through a resolution-integrated closure law,
+while Theorem~\ref{thm:effective-thermodynamic-closure} gives the
+thermodynamic closure as the selected-cut residual-return closure. Therefore
+hydrodynamic and thermodynamic laws are effective closures, not additional
+fundamental laws.
+\end{proof}
+
+\subsubsection{Inherited theorem interfaces}
+
+\begin{remark}[Inherited theorem interfaces on the selected cut]
+\label{rem:part-iv-uses}\lean{PartIVUsesEarlierInterfaces}
+Once a least-motion characteristic observer has been fixed, the later
+derivations invoke only theorem interfaces already established:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the fixed-horizon selection interface of
+      Theorem~\ref{thm:selection-interface};
+\item the realized forcing and symmetry theorems of Chapter~7, including
+      Corollary~\ref{cor:realized-transport-order-forcing},
+      Corollary~\ref{cor:realized-local-gauge-covariance},
+      Corollary~\ref{cor:realized-self-adjoint-scalarization}, and
+      Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization};
+\item the promotion and constructive endpoint-verification interfaces of
+      Chapter~9, especially Corollary~\ref{cor:admissible-promotion},
+      Theorem~\ref{thm:refinement-coherent-core-realization},
+      Theorem~\ref{thm:exact-core-graph-completion},
+      Theorem~\ref{thm:exact-stencil-forcing-principle}, and
+      Theorem~\ref{thm:stencil-forcing-principle} as the approximate fallback
+      whenever only summable refinement control is exhibited.
+\end{enumerate}
+The carrier and closure statements in the later carrier sections are direct
+applications of the mechanics already established in the earlier structural
+chapters together with the continuum bridge.
+\end{remark}

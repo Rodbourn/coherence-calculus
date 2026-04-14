@@ -1,0 +1,1774 @@
+% ============================================================
+\section{Continuum Identification of Selected Laws}
+\label{sec:continuum-identification}
+% ============================================================
+
+The previous chapter supplied the ambient faithful-limit stage. This
+chapter uses that stage to transport the selection output of Part~II into a
+continuum operator problem. The logical order is exact:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item first force the discrete observed law on a realized class;
+\item then package the selected laws into a refinement-compatible family;
+\item then specify sampling, reconstruction, and asymptotic consistency;
+\item finally prove constructive existence and uniqueness of the continuum law
+      from explicit reconstruction and consistency hypotheses.
+\end{enumerate}
+This is still structural mathematics rather than an application layer. No
+specific PDE is assumed here. The forcing theorems below show that once the
+selected discrete law, comparison data, and reconstruction/coherence
+hypotheses are fixed, the continuum operator is forced by the refining
+selected family rather than introduced as an additional postulate.
+
+\subsection{Refinement-compatible selected families}
+
+The forcing interface of Chapter~10 is stated at a fixed realized horizon. The
+first step toward a continuum law is therefore to organize the selected laws
+across refinement.
+
+\begin{definition}[Discrete realized law family]
+\label{def:discrete-realized-law-family}
+\lean{DiscreteRealizedLawFamily}
+A \emph{discrete realized law family} is a sequence
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+with the following data at each level $n$:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $R_n\in \mathfrak R_{\mathrm{adm}}(h_n)$ is an admissible characteristic
+      horizon realization at horizon $h_n$;
+\item
+      \[
+      \cH_n:=\CCHobs{h_n}(R_n)
+      \]
+      is its observed sector;
+\item $L_n$ is the selected observed law of $R_n$ at horizon $h_n$ in the
+      sense of Definition~\ref{def:selected-observed-law}.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Refinement-compatible family]
+\label{def:refinement-compatible-family}
+\lean{RefinementCompatibleFamily}
+A discrete realized law family $\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}$ is
+\emph{refinement-compatible} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the horizons are nondecreasing: $h_n \le h_{n+1}$ for all $n$;
+\item for every $n\le m$ there exists an isometric comparison map
+      \[
+      J_{n,m}:\cH_n \to \cH_m
+      \]
+      such that $J_{n,n}=\id$ and
+      \[
+      J_{m,\ell}J_{n,m}=J_{n,\ell}
+      \qquad (n\le m\le \ell);
+      \]
+\item the selected laws intertwine under refinement:
+      \[
+      J_{n,m}L_n=L_mJ_{n,m}
+      \qquad (n\le m);
+      \]
+\item the transported symmetry, admissibility, and normalization data agree
+      under the same maps $J_{n,m}$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Forced discrete realized families]
+\label{thm:forced-discrete-families}
+\lean{forced_discrete_realized_families}
+Let $\{h_n\}_{n\in\bbN}$ be a nondecreasing sequence of horizons, and for each
+$n$ let $\mathfrak R_n\subseteq \mathfrak R_{\mathrm{adm}}(h_n)$ be a subclass
+whose admissible reduced selection data modulo horizon-preserving equivalence
+form a singleton. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item each $\mathfrak R_n$ carries a selected observed law $L_n$ uniquely
+      determined up to horizon-preserving equivalence;
+\item any refinement-compatible sequence of realizations
+      \[
+      R_n\in \mathfrak R_n
+      \qquad (n\in\bbN)
+      \]
+      determines a discrete realized law family unique up to levelwise
+      horizon-preserving equivalence.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For each fixed $n$, the singleton hypothesis and
+Corollary~\ref{cor:selection-to-forcing} imply that the selected observed law
+on $\mathfrak R_n$ is forced up to horizon-preserving equivalence. This proves
+(i). Statement (ii) is immediate once the comparison maps of
+Definition~\ref{def:refinement-compatible-family} have been fixed, because the
+selected law at each level is already unique up to the same equivalence.
+\end{proof}
+
+\subsection{Reconstruction data and continuum uniqueness}
+
+Discrete forcing still does not identify a continuum operator. That requires an
+explicit reconstruction interface.
+
+\begin{definition}[Continuum reconstruction datum]
+\label{def:continuum-reconstruction-datum}
+\lean{ContinuumReconstructionDatum}
+Let $\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}$ be a refinement-compatible
+discrete realized law family. A \emph{continuum reconstruction datum} for
+$\mathcal F$ consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a Banach space $\cX$;
+\item a dense linear subspace $\cX_0\subseteq \cX$ on which the continuum law
+      will be tested;
+\item bounded sampling maps
+      \[
+      P_n:\cX_0\to \cH_n;
+      \]
+\item bounded reconstruction maps
+      \[
+      E_n:\cH_n\to \cX
+      \]
+      satisfying
+      \[
+      E_nP_nu\to u
+      \qquad\text{for every }u\in\cX_0.
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Refinement-coherent reconstruction datum]
+\label{def:refinement-coherent-reconstruction}
+\lean{RefinementCoherentReconstructionDatum}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a
+refinement-compatible discrete realized law family with comparison maps
+\(J_{n,m}\). A continuum reconstruction datum
+\[
+(\cX,\cX_0,\{P_n\},\{E_n\})
+\]
+for \(\mathcal F\) is \emph{refinement-coherent} if for every \(n\le m\),
+\[
+P_m = J_{n,m}P_n
+\qquad\text{on }\cX_0,
+\]
+and
+\[
+E_n = E_m J_{n,m}
+\qquad\text{on }\cH_n.
+\]
+\end{definition}
+
+\begin{definition}[Asymptotic consistency]
+\label{def:asymptotic-consistency}
+\lean{AsymptoticConsistency}
+Let $\mathcal F$ be equipped with a continuum reconstruction datum
+$(\cX,\cX_0,\{P_n\},\{E_n\})$. A linear operator
+\[
+L:\cX_0\to \cX
+\]
+is \emph{asymptotically consistent} with $\mathcal F$ if for every
+$u\in\cX_0$,
+\[
+E_nL_nP_nu\to Lu
+\qquad\text{in }\cX.
+\]
+\end{definition}
+
+\begin{definition}[Stable discrete family]
+\label{def:stable-discrete-family}
+\lean{StableDiscreteFamily}
+Let $\mathcal F$ be equipped with a continuum reconstruction datum
+$(\cX,\cX_0,\{P_n\},\{E_n\})$. The family is \emph{stable} if there exists
+$C\ge 0$ such that
+\[
+\|E_nL_nP_nu\|_{\cX}\le C\|u\|_{\cX}
+\]
+for every $u\in\cX_0$ and every $n\in\bbN$.
+\end{definition}
+
+\begin{definition}[Summable refinement consistency on the core]
+\label{def:summable-refinement-consistency}
+\lean{SummableRefinementConsistency}
+Let $\mathcal F$ be equipped with a continuum reconstruction datum
+$(\cX,\cX_0,\{P_n\},\{E_n\})$. The family is
+\emph{summably refinement-consistent on $\cX_0$} if there exists a sequence
+$(\varepsilon_n)_{n\in\bbN}$ of nonnegative reals with
+\[
+\sum_{n=0}^{\infty}\varepsilon_n<\infty
+\]
+such that
+\[
+\|E_{n+1}L_{n+1}P_{n+1}u-E_nL_nP_nu\|_{\cX}
+\le
+\varepsilon_n\|u\|_{\cX}
+\]
+for every $u\in\cX_0$ and every $n\in\bbN$.
+\end{definition}
+
+\begin{definition}[Continuum equivalence]
+\label{def:continuum-equivalence}
+\lean{ContinuumEquivalence}
+Let $L,L':\cX_0\to\cX$ be linear operators on the same dense test domain.
+They are \emph{continuum-equivalent} if there exists a bounded invertible map
+\[
+S:\cX\to \cX
+\]
+with $S(\cX_0)=\cX_0$ such that
+\[
+SLu=L'Su
+\qquad\text{for every }u\in\cX_0.
+\]
+\end{definition}
+
+\begin{theorem}[Continuum identification on a dense test domain]
+\label{thm:continuum-identification}
+\lean{continuum_identification_on_dense_test_domain}
+Let $\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}$ be a refinement-compatible
+discrete realized law family equipped with a continuum reconstruction datum
+$(\cX,\cX_0,\{P_n\},\{E_n\})$.
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item If $\mathcal F$ is asymptotically consistent with two operators
+      $L,L':\cX_0\to\cX$, then $L=L'$ on $\cX_0$.
+\item Suppose in addition that there exists a bounded invertible
+      $S:\cX\to\cX$ with $S(\cX_0)=\cX_0$ and operators
+      $S_n:\cH_n\to\cH_n$ such that for every $n$,
+      \[
+      P_nSu=S_nP_nu \quad (u\in\cX_0),
+      \qquad
+      E_nS_n=SE_n,
+      \qquad
+      S_nL_n=L_nS_n.
+      \]
+      Then every asymptotically consistent limit operator $L$ commutes with $S$
+      on $\cX_0$:
+      \[
+      SLu=LSu
+      \qquad (u\in\cX_0).
+      \]
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[Refinement-coherent reconstruction forces exact core realization]
+\label{thm:refinement-coherent-core-realization}
+\lean{refinement_coherent_core_realization}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a refinement-compatible
+discrete realized law family equipped with a refinement-coherent continuum
+reconstruction datum \((\cX,\cX_0,\{P_n\},\{E_n\})\). Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every \(u\in\cX_0\) and every \(n\le m\),
+      \[
+      E_mL_mP_mu = E_nL_nP_nu;
+      \]
+\item there exists a unique operator
+      \[
+      L_\sharp:\cX_0\to\cX
+      \]
+      asymptotically consistent with \(\mathcal F\), namely
+      \[
+      L_\sharp u := E_nL_nP_nu
+      \qquad (u\in\cX_0),
+      \]
+      which is independent of \(n\);
+\item if \(L_\sharp\) is bounded on \(\cX_0\), then \(\mathcal F\) is stable
+      and summably refinement-consistent on \(\cX_0\) with refinement-defect
+      sequence \(\varepsilon_n=0\), and \(L_\sharp\) extends uniquely to a
+      bounded operator \(L_\infty:\cX\to\cX\).
+\end{enumerate}
+Thus refinement coherence upgrades the continuum bridge from a limiting problem
+to an exact core-identification problem.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[One-stage bounded exact core forcing]
+\label{thm:one-stage-bounded-exact-core-forcing}
+\lean{one_stage_bounded_exact_core_forcing}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a refinement-compatible
+discrete realized law family equipped with a refinement-coherent continuum
+reconstruction datum \((\cX,\cX_0,\{P_n\},\{E_n\})\). Assume that there exist
+an index \(n_\ast\in\bbN\) and a constant \(C\ge 0\) such that
+\[
+\|E_{n_\ast}L_{n_\ast}P_{n_\ast}u\|_{\cX}
+\le
+C\|u\|_{\cX}
+\qquad (u\in\cX_0).
+\]
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the exact core law
+      \[
+      L_\sharp u:=E_nL_nP_nu
+      \qquad (u\in\cX_0)
+      \]
+      is well defined and bounded on \(\cX_0\);
+\item there exists a unique bounded operator
+      \[
+      L_\infty:\cX\to\cX
+      \]
+      such that
+      \[
+      E_nL_nP_nu=L_\infty u
+      \qquad (u\in\cX_0,\ n\in\bbN);
+      \]
+\item if \(L:\cX_0\to\cX\) is any operator asymptotically consistent with
+      \(\mathcal F\), then
+      \[
+      L=L_\infty|_{\cX_0}.
+      \]
+\end{enumerate}
+In particular, exact refinement coherence plus a single reconstructed core
+bound already forces a unique bounded continuum law.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[Exact core realization has a canonical graph completion]
+\label{thm:exact-core-graph-completion}
+\lean{exact_core_graph_completion}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a refinement-compatible
+discrete realized law family equipped with a refinement-coherent continuum
+reconstruction datum \((\cX,\cX_0,\{P_n\},\{E_n\})\), and let
+\[
+L_\sharp:\cX_0\to\cX
+\]
+be the exact core operator of
+Theorem~\ref{thm:refinement-coherent-core-realization}. Endow \(\cX_0\) with
+the graph norm
+\[
+\|u\|_{\mathrm{gr}}
+:=
+\|u\|_{\cX}+\|L_\sharp u\|_{\cX},
+\]
+let \(\cX_{\mathrm{gr}}\) be the Banach completion of
+\((\cX_0,\|\cdot\|_{\mathrm{gr}})\), and write
+\[
+\iota_{\mathrm{gr}}:\cX_0\to\cX_{\mathrm{gr}}
+\]
+for the canonical dense embedding. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exists a unique bounded map
+      \[
+      I_{\mathrm{gr}}:\cX_{\mathrm{gr}}\to\cX
+      \]
+      with \(\|I_{\mathrm{gr}}\|\le 1\) such that
+      \[
+      I_{\mathrm{gr}}\iota_{\mathrm{gr}}u=u
+      \qquad (u\in\cX_0);
+      \]
+\item there exists a unique bounded map
+      \[
+      \overline L:\cX_{\mathrm{gr}}\to\cX
+      \]
+      with \(\|\overline L\|\le 1\) such that
+      \[
+      \overline L\,\iota_{\mathrm{gr}}u=L_\sharp u=E_nL_nP_nu
+      \qquad (u\in\cX_0,\ n\in\bbN);
+      \]
+\item if \(Y\) is a Banach space, \(J:\cX_0\to Y\) is linear with dense
+      range, and there exists \(C\ge 0\) such that
+      \[
+      \|Ju\|_Y\le C\|u\|_{\mathrm{gr}}
+      \qquad (u\in\cX_0),
+      \]
+      while bounded maps \(I:Y\to\cX\) and \(G:Y\to\cX\) satisfy
+      \[
+      IJu=u
+      \qquad\text{and}\qquad
+      GJu=L_\sharp u
+      \qquad (u\in\cX_0),
+      \]
+      then there exists a unique bounded map
+      \[
+      U:\cX_{\mathrm{gr}}\to Y
+      \]
+      such that
+      \[
+      U\iota_{\mathrm{gr}}=J,
+      \qquad
+      I\,U=I_{\mathrm{gr}},
+      \qquad
+      G\,U=\overline L.
+      \]
+\end{enumerate}
+Thus exact refinement coherence always forces a unique continuum law on the
+core and a canonical bounded realization of that law on its graph completion,
+even before any original-space boundedness estimate is verified.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[A finite exact stage closes the continuum bridge on the original space]
+\label{cor:finite-exact-stage-closes-continuum-bridge}
+\lean{finite_exact_stage_closes_continuum_bridge}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a refinement-compatible
+discrete realized law family equipped with a refinement-coherent continuum
+reconstruction datum \((\cX,\cX_0,\{P_n\},\{E_n\})\). Assume that for some
+index \(n_\ast\in\bbN\), the observed sector \(\cH_{n_\ast}\) is
+finite-dimensional. Then the hypothesis of
+Theorem~\ref{thm:one-stage-bounded-exact-core-forcing} is automatic. Hence
+\(\mathcal F\) carries a unique bounded continuum law on the original Banach
+space \(\cX\).
+\end{corollary}
+
+\begin{proof}
+Because \(\cH_{n_\ast}\) is finite-dimensional, the linear map
+\[
+L_{n_\ast}:\cH_{n_\ast}\to\cH_{n_\ast}
+\]
+is bounded. Since the sampling and reconstruction maps \(P_{n_\ast}\) and
+\(E_{n_\ast}\) are bounded by
+Definition~\ref{def:continuum-reconstruction-datum}, the composition
+\[
+E_{n_\ast}L_{n_\ast}P_{n_\ast}:\cX_0\to\cX
+\]
+is bounded on \(\cX_0\). Therefore
+Theorem~\ref{thm:one-stage-bounded-exact-core-forcing} applies directly.
+\end{proof}
+
+\begin{corollary}[Exact continuum realization is canonical and ambiguity-free]
+\label{cor:exact-continuum-realization-no-ambiguity}
+\lean{exact_continuum_realization_no_ambiguity}
+Assume the setting of
+Theorem~\ref{thm:exact-core-graph-completion}. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item every bounded realization of the exact core law in the sense of
+      Theorem~\ref{thm:exact-core-graph-completion}(iii) factors uniquely
+      through the graph-completed realization
+      \[
+      (\cX_{\mathrm{gr}},I_{\mathrm{gr}},\overline L);
+      \]
+\item if the hypotheses of
+      Theorem~\ref{thm:one-stage-bounded-exact-core-forcing} hold and
+      \(L_\infty:\cX\to\cX\) is the resulting bounded continuum law on the
+      original Banach space, then
+      \[
+      L_\infty I_{\mathrm{gr}}=\overline L.
+      \]
+\end{enumerate}
+In particular, exact refinement coherence leaves no continuum-limit ambiguity:
+every bounded original-space realization is the unique descent of the canonical
+graph-completed law.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[Selected-family continuum realization on a dense core]
+\label{thm:selected-family-continuum-realization}
+\lean{selected_family_continuum_realization}
+Let $\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}$ be a refinement-compatible
+discrete realized law family equipped with a continuum reconstruction datum
+$(\cX,\cX_0,\{P_n\},\{E_n\})$. Assume that $\mathcal F$ is stable and
+summably refinement-consistent on $\cX_0$. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every $u\in\cX_0$, the sequence
+      \[
+      E_nL_nP_nu
+      \]
+      converges in $\cX$;
+\item the limit defines a unique bounded operator
+      \[
+      L_\infty:\cX\to\cX
+      \]
+      whose restriction to $\cX_0$ is asymptotically consistent with
+      $\mathcal F$;
+\item if $L:\cX_0\to\cX$ is any operator asymptotically consistent with
+      $\mathcal F$, then
+      \[
+      L=L_\infty|_{\cX_0}.
+      \]
+\end{enumerate}
+In particular, the continuum law carried by the selected family is
+constructively realized and unique.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{remark}[Relation to varying-space operator convergence]
+\label{rem:varying-space-operator-convergence}
+\lean{refinement_coherent_core_realization, selected_family_continuum_realization, exact_continuum_realization_no_ambiguity}
+The import-free exact branch currently certified in Lean begins with
+Theorem~\ref{thm:refinement-coherent-core-realization}: refinement coherence
+alone forces a unique exact core law on the dense test domain and removes all
+stage ambiguity in the reconstructed selected law. The active continuum-limit
+class surface then passes through
+Theorem~\ref{thm:selected-family-continuum-realization} and
+Corollary~\ref{cor:exact-continuum-realization-no-ambiguity}: once a selected
+continuum law is forced in its admissible class, no further continuum-limit
+ambiguity remains on that certified surface. This sits in the same general
+landscape as
+recent generalized Mosco / varying-Hilbert-space convergence frameworks with
+explicit connecting operators
+\cite{GigaLasicaRybka2025}, and the discrete de~Rham / discrete
+exterior-calculus examples that motivate many geometric continuum bridges
+belong to the same structure-preserving tradition
+\cite{ArnoldFalkWinther2006,ZhuChristiansenHuHirani2026}. We cite those
+frameworks for context only; the constructive proof surface used here remains
+internal to the manuscript and Lean chain.
+\end{remark}
+
+\begin{definition}[Continuum limit class]
+\label{def:continuum-limit-class}
+\lean{ContinuumLimitClass}
+Let $\mathfrak F$ be a class of refinement-compatible discrete realized law
+families into a common Banach space $\cX$ with common dense test domain
+$\cX_0$, and suppose each $\mathcal F\in\mathfrak F$ is equipped with its own
+continuum reconstruction datum
+\[
+(\cX,\cX_0,\{P_n^{\mathcal F}\},\{E_n^{\mathcal F}\}).
+\]
+The \emph{continuum limit class}
+\[
+\mathfrak L(\mathfrak F)
+\]
+is the set of continuum-equivalence classes $[L]$ such that some
+$\mathcal F\in\mathfrak F$ is stable and asymptotically consistent with a
+representative $L:\cX_0\to\cX$.
+\end{definition}
+
+\subsection{Continuum forcing}
+
+The preceding definitions isolate two distinct tasks: force the discrete law at
+each refinement level, and identify the continuum operator encoded by a
+refining family of those laws. The exact branch comes first; the summable
+telescoping branch remains available as a fallback when only approximate
+refinement control is known.
+
+\begin{definition}[Forced continuum law]
+\label{def:forced-continuum-law}
+\lean{ForcedContinuumLaw}
+Let $\mathfrak F$ be as in Definition~\ref{def:continuum-limit-class}. A
+continuum-equivalence class $[L_\ast]\in \mathfrak L(\mathfrak F)$ is
+\emph{forced} by $\mathfrak F$ if
+\[
+\mathfrak L(\mathfrak F)=\{[L_\ast]\}.
+\]
+\end{definition}
+
+\begin{theorem}[Exact discrete-to-continuum forcing principle]
+\label{thm:exact-stencil-forcing-principle}
+\lean{exact_discrete_to_continuum_forcing_principle}
+Let \(\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}\) be a refinement-compatible
+discrete realized law family into a Banach space \(\cX\) with dense test
+domain \(\cX_0\), equipped with a refinement-coherent continuum reconstruction
+datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected observed law is already forced at every refinement level of
+      \(\mathcal F\) in the sense of
+      Theorem~\ref{thm:forced-discrete-families};
+\item there exist an index \(n_\ast\in\bbN\) and a constant \(C\ge 0\) such
+      that
+      \[
+      \|E_{n_\ast}L_{n_\ast}P_{n_\ast}u\|_{\cX}
+      \le
+      C\|u\|_{\cX}
+      \qquad (u\in\cX_0).
+      \]
+\end{enumerate}
+Then there exists a unique bounded operator
+\[
+L_\infty:\cX\to\cX
+\]
+whose restriction to \(\cX_0\) is asymptotically consistent with
+\(\mathcal F\). Equivalently, exact refinement coherence already forces the
+continuum law encoded by the selected family: no second continuum operator can
+be asymptotically consistent with the same reconstructed selected laws on
+\(\cX_0\).
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[Approximate discrete-to-continuum forcing principle]
+\label{thm:stencil-forcing-principle}
+\lean{discrete_to_continuum_forcing_principle}
+Let $\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}$ be a refinement-compatible
+discrete realized law family into a Banach space $\cX$ with dense test domain
+$\cX_0$, equipped with a continuum reconstruction datum. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected observed law is already forced at every refinement level of
+      $\mathcal F$ in the sense of
+      Theorem~\ref{thm:forced-discrete-families};
+\item $\mathcal F$ is stable in the sense of
+      Definition~\ref{def:stable-discrete-family};
+\item $\mathcal F$ is summably refinement-consistent on $\cX_0$ in the sense
+      of Definition~\ref{def:summable-refinement-consistency}.
+\end{enumerate}
+Then there exists a unique bounded operator
+\[
+L_\infty:\cX\to\cX
+\]
+whose restriction to $\cX_0$ is asymptotically consistent with $\mathcal F$.
+Equivalently, the continuum law encoded by the selected family is forced: no
+second continuum operator can be asymptotically consistent with the same
+reconstructed selected laws on $\cX_0$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[Discrete-to-continuum forcing]
+\label{cor:discrete-to-continuum-forcing}
+\lean{discrete_to_continuum_forcing}
+Under the hypotheses of Theorem~\ref{thm:stencil-forcing-principle}, the
+continuum law is not an additional postulate. It is the unique continuum
+realization of the selected discrete realized class.
+\end{corollary}
+
+\begin{proof}
+This is exactly the content of
+Theorem~\ref{thm:stencil-forcing-principle} stated as a conclusion about the
+continuum law itself rather than about the class $\mathfrak F$.
+\end{proof}
+
+\begin{remark}[Local stencil and update families]
+\label{rem:local-stencil-families}
+\lean{LocalStencilFamilyInterpretation}
+The language above is broader than a fixed grid model. A local stencil or
+update family on successively finer meshes becomes a special case once each
+discrete level is packaged as an observed sector $\cH_n$, each update rule is
+taken as the selected observed law $L_n$, the mesh-refinement maps provide the
+comparison maps $J_{n,m}$, and the chosen sampling and reconstruction
+operators supply the continuum reconstruction datum. In that setting, the
+summable refinement-consistency hypothesis is exactly a checkable telescoping
+estimate on reconstructed stencil updates. Theorem
+~\ref{thm:stencil-forcing-principle} therefore applies to local stencil
+families without requiring mesh geometry in the abstract statement.
+\end{remark}
+
+\subsection{Certified local dyadic ray packets}
+
+The abstract local-stencil language above has a concrete certified instance
+inside the quotient-free dyadic scaffold. Finite binary words determine local
+five-point ray packets, and the entire collection may be treated as a single
+refinement family rather than as isolated examples.
+
+\begin{proposition}[Global word-local ray stencil package]
+\label{prop:word-local-ray-stencil}
+\lean{wordLocalDyadicEnvelopeRayLocalStencilInterpretation}
+The collection of all finite-word local five-point ray carriers forms a single
+certified local stencil family. Concretely:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item every horizon is still observed in the dyadic subdivision-boundary
+      sector;
+\item refinement comparison is supplied by the certified subdivision-ray
+      comparison maps;
+\item reconstruction lands in the quotient-free boundary-envelope layer;
+\item this reconstruction datum is refinement-coherent, and the reconstructed
+      observed law is the exact boundary-envelope law on every local packet.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+This is the global sigma-type packaging of the word-local ray carriers. The
+observed sector remains the certified subdivision-boundary sector at each
+horizon, the comparison maps are inherited from the active refinement law, and
+reconstruction is the exact boundary-envelope reconstruction attached to the
+same family.
+\end{proof}
+
+\begin{corollary}[Exact core realization of the global local ray carrier]
+\label{cor:word-local-ray-exact-core-realization}
+\lean{wordLocalDyadicEnvelopeRayExactCoreRealization}
+On the global word-local ray carrier, the reconstructed selected law is exact
+on the dense test core: there exists a unique operator
+\[
+L_{\mathrm{env}}:\cX_0\to\cX
+\]
+such that
+\[
+E_nL_nP_nu = L_{\mathrm{env}}u
+\qquad (u\in\cX_0,\ n\in\bbN).
+\]
+Equivalently, the family has zero refinement defect on the core, and its
+continuum law is already the reconstructed boundary-envelope law.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:word-local-ray-stencil} supplies a refinement-coherent
+reconstruction datum whose reconstructed law is exactly the
+boundary-envelope law on every local packet. Therefore
+Theorem~\ref{thm:refinement-coherent-core-realization} applies directly.
+\end{proof}
+
+\begin{proposition}[Forced continuum law for the global local ray carrier]
+\label{prop:word-local-ray-forcing}
+\lean{wordLocalDyadicEnvelopeRayLimitClass_pointwise_forcing}
+Any continuum law asymptotically consistent with the global word-local ray
+carrier agrees pointwise with the reconstructed boundary-envelope law.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:word-local-ray-exact-core-realization}, the reconstructed
+boundary-envelope law is the unique asymptotically consistent operator on the
+core. Therefore any continuum law asymptotically consistent with the global
+word-local ray carrier agrees with it on every word-local packet.
+\end{proof}
+
+\begin{corollary}[Canonical continuum-equivalence for the global local ray carrier]
+\label{cor:word-local-ray-equivalence}
+\lean{wordLocalDyadicEnvelopeRayContinuumEquivalence}
+Every admissible continuum law on the global word-local ray carrier is
+canonically continuum-equivalent to the reconstructed boundary-envelope law.
+\end{corollary}
+
+\begin{proof}
+This is the continuum-equivalence reformulation of
+Proposition~\ref{prop:word-local-ray-forcing}.
+\end{proof}
+
+\begin{proposition}[Word-local distinguished midpoint in the ray family]
+\label{prop:word-local-ray-midpoint}
+\lean{localDyadicEnvelopeRayMidpointRecovery_zero_distinguished}
+For every finite binary word $w$, the midpoint zero of the word-local
+subdivision-ray recovery package lies strictly between the transported quarter
+and three-quarter landmarks of that local ray packet.
+\end{proposition}
+
+\begin{proof}
+The local ray midpoint is the shared child boundary transported into the
+boundary-envelope layer. The quarter and three-quarter landmarks sit strictly
+on either side by the certified identified/strict comparison algebra on the
+active dyadic scaffold.
+\end{proof}
+
+\begin{proposition}[Fiberwise nonlinear defect on the global local ray carrier]
+\label{prop:word-local-ray-defect}
+\lean{wordLocalDyadicEnvelopeRayNonlinearDefect_eventually_boundary_midpoint}
+On the global word-local ray carrier, the certified fiberwise nonlinear defect
+collapses after finitely many refinement steps to the midpoint boundary of the
+same local fiber.
+\end{proposition}
+
+\begin{proof}
+The defect acts independently in each finite-word fiber by the native
+five-point midpoint-seeking drift. The corresponding reconstructed boundary
+law therefore collapses, after finitely many refinement steps, to the same
+fiber's midpoint boundary.
+\end{proof}
+
+\begin{corollary}[Fibered derivative subsampling on the global local ray carrier]
+\label{cor:word-local-ray-fibered-derivative}
+\lean{wordLocalDyadicEnvelopeRayFiberedClassicalDerivativeSubsamplingInterface}
+The global word-local ray carrier admits a certified fibered classical
+derivative-subsampling package. In each local fiber, the observed law already
+recovers the reconstructed boundary-envelope law, and the defect side
+converges to the distinguished midpoint boundary of that same fiber.
+\end{corollary}
+
+\begin{proof}
+This is the fibered late-shell reformulation of
+Propositions~\ref{prop:word-local-ray-forcing},
+\ref{prop:word-local-ray-midpoint}, and
+\ref{prop:word-local-ray-defect}. The observed law is already the reconstructed
+boundary-envelope law on each local packet, while the certified fiberwise
+defect collapses to the same packet's midpoint boundary.
+\end{proof}
+
+\subsection{Continuous horizon interpolation}
+
+The previous theorems are indexed by discrete refinement levels. In many
+settings the horizon may also be interpolated by a continuous parameter. This
+produces an exact continuum-scale flow of the effective operator. The flow
+parameter is a horizon parameter, not physical time.
+
+\begin{definition}[Continuous horizon interpolation]
+\label{def:continuous-horizon-interpolation}
+\lean{ContinuousHorizonInterpolation}
+Let $I\subseteq \bbR$ be an interval. A family of orthogonal projections
+$\{P_\ell\}_{\ell\in I}$ on a Hilbert space $\cH$ is a
+\emph{continuous horizon interpolation} if the map
+\[
+\ell\longmapsto P_\ell
+\]
+is $C^1$ in operator norm. Write
+\[
+Q_\ell:=I-P_\ell.
+\]
+\end{definition}
+
+\begin{lemma}[Differentiation of moving block operators]
+\label{lem:continuous-block-derivatives}
+\lean{continuous_block_derivatives}
+Let $\{P_\ell\}_{\ell\in I}$ be a continuous horizon interpolation and let
+$A:\cH\to\cH$ be bounded and independent of $\ell$. Define
+\begin{align*}
+A_{PP}(\ell)&:=P_\ell A P_\ell, &
+A_{PQ}(\ell)&:=P_\ell A Q_\ell, \\
+A_{QP}(\ell)&:=Q_\ell A P_\ell, &
+A_{QQ}(\ell)&:=Q_\ell A Q_\ell.
+\end{align*}
+Then these block operators are $C^1$ in operator norm and satisfy
+\begin{align*}
+\frac{d}{d\ell}A_{PP}(\ell)
+&=
+\dot P_\ell A P_\ell + P_\ell A \dot P_\ell, \\
+\frac{d}{d\ell}A_{PQ}(\ell)
+&=
+\dot P_\ell A Q_\ell - P_\ell A \dot P_\ell, \\
+\frac{d}{d\ell}A_{QP}(\ell)
+&=
+-\dot P_\ell A P_\ell + Q_\ell A \dot P_\ell, \\
+\frac{d}{d\ell}A_{QQ}(\ell)
+&=
+-\dot P_\ell A Q_\ell - Q_\ell A \dot P_\ell.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+The map $\ell\mapsto Q_\ell$ is $C^1$ with derivative
+$\dot Q_\ell=-\dot P_\ell$. The four formulas follow from the product rule in
+the Banach algebra of bounded operators.
+\end{proof}
+
+\begin{theorem}[Continuous flow of the effective operator]
+\label{thm:continuous-effective-flow}
+\lean{continuous_effective_flow}
+Let $A$ be a bounded operator on $\cH$, let $\{P_\ell\}_{\ell\in I}$ be a
+continuous horizon interpolation, and fix $z\in\mathbb{C}$. Assume that for
+every $\ell\in I$ the shadow resolvent
+\[
+R_{Q,\ell}(z):=(I-zA_{QQ}(\ell))^{-1}
+\]
+exists and that
+\[
+\sup_{\ell\in I}\|R_{Q,\ell}(z)\|<\infty.
+\]
+Define
+\[
+\Sigma_\ell(z):=A_{PQ}(\ell)R_{Q,\ell}(z)A_{QP}(\ell),
+\qquad
+A_{\mathrm{eff},\ell}(z):=A_{PP}(\ell)+z\Sigma_\ell(z).
+\]
+Then $\ell\mapsto A_{\mathrm{eff},\ell}(z)$ is $C^1$ in operator norm and
+satisfies
+\begin{align*}
+\frac{d}{d\ell}A_{\mathrm{eff},\ell}(z)
+&=
+\frac{d}{d\ell}A_{PP}(\ell) \\
+&\quad
++ z\Big[
+\frac{d}{d\ell}A_{PQ}(\ell)\,R_{Q,\ell}(z)\,A_{QP}(\ell)
++
+A_{PQ}(\ell)\,R_{Q,\ell}(z)\,\frac{d}{d\ell}A_{QP}(\ell)
+\Big] \\
+&\quad
++ z^2 A_{PQ}(\ell)\,R_{Q,\ell}(z)\,
+\frac{d}{d\ell}A_{QQ}(\ell)\,
+R_{Q,\ell}(z)\,A_{QP}(\ell).
+\end{align*}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{remark}[Relation to the tower derivative]
+\label{rem:continuous-flow-vs-tower-derivative}
+\lean{ContinuousFlowVsTowerDerivative}
+The derivative in Theorem~\ref{thm:continuous-effective-flow} is with respect
+to a continuously interpolated horizon parameter. It should not be confused
+with the tower derivative $\CCDer{\cdot}=[\CCIndexOp,\cdot]$ from Chapter~5,
+which is an intrinsic derivative on a discrete band decomposition. The two are
+related only after an explicit interpolation or scaling identification has been
+chosen.
+\end{remark}
+
+\subsection{Scale promotion and constitutive inheritance}
+
+Continuous horizon flow tracks how an effective operator varies as the cut
+moves. A different question concerns recursive modeling across scales: when a
+finer law is split by a horizon, which part is carried unchanged to the next
+scale, and which part must be re-encoded as closure? The characteristic bridge
+of Chapter~10 and the exact elimination theorems of Chapter~6 isolate the
+answer. Characteristic transport is carried by the distinguished flow. The
+hidden lower-scale sector reappears only through an exact promoted
+constitutive term. This question is familiar in coarse-graining, closure
+modeling, and effective-theory constructions
+\cite{Goldenfeld1992,Pope2000,Antoulas2005}.
+
+\begin{definition}[Promoted constitutive term]
+\label{def:promoted-constitutive-term}
+\lean{PromotedConstitutiveTerm}
+Let $U\subset X$ be a compact spacetime tube in a characteristic realization,
+let $P$ be an orthogonal projection on a Hilbert function space over $U$, and
+set $Q:=I-P$. Consider a nonlinear law
+\[
+F(u):=\mathcal D_\chi u + N(u)
+\]
+on a domain $\mathcal D$, where $\mathcal D_\chi$ is the characteristic
+transport operator of Definition~\ref{def:eulerian-presentation}. Suppose
+$\Psi$ satisfies the hypotheses of
+Theorem~\ref{thm:nonlinear-shadow-elimination}. For each observed state $p$ in
+the domain of $\Psi$, define
+\[
+u_p:=p+\Psi(p),
+\qquad
+K_P(p):=PN(u_p).
+\]
+The map $K_P$ is called the \emph{promoted constitutive term} at horizon $P$,
+and the associated \emph{promoted observed law} is
+\[
+F_{\mathrm{prom},P}(p):=P\mathcal D_\chi u_p + K_P(p).
+\]
+\end{definition}
+
+\begin{theorem}[Characteristic scale promotion]
+\label{thm:characteristic-scale-promotion}
+\lean{characteristic_scale_promotion}
+With the notation of Definition~\ref{def:promoted-constitutive-term}, assume
+that $u_p$ is smooth on $U$ for every observed state $p$ under consideration.
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item full solutions of
+      \[
+      F(u)=0
+      \]
+      in the graph of $\Psi$ are in bijection with observed solutions of
+      \[
+      F_{\mathrm{prom},P}(p)=0;
+      \]
+\item for every smooth test function $g$ lying in the observed sector
+      $\mathrm{Ran}(P)$,
+      \[
+      \int_U F_{\mathrm{prom},P}(p)\,g\,\nu
+      =
+      \int_{\partial U}u_p g\,\iota_{\widetilde V}\nu
+      -
+      \int_U u_p(\mathcal D_\chi g)\,\nu
+      +
+      \int_U K_P(p)\,g\,\nu;
+      \]
+\item if $g$ is transported, so that $\mathcal D_\chi g=0$, then
+      \[
+      \int_U F_{\mathrm{prom},P}(p)\,g\,\nu
+      =
+      \int_{\partial U}u_p g\,\iota_{\widetilde V}\nu
+      +
+      \int_U K_P(p)\,g\,\nu.
+      \]
+\end{enumerate}
+In particular, once the carried boundary flux is fixed, the entire interior
+effect of the finer scale on the observed law is exactly the promoted
+constitutive term $K_P$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{figure}[ht]
+\centering
+\resizebox{0.82\textwidth}{!}{%
+\begin{tikzpicture}[node distance=3.0cm]
+  \node[ccbox, align=center, minimum width=3.0cm] (fine) at (-5.0,1.6)
+    {$F=\mathcal D_\chi + N$\\finer-scale law};
+  \node[ccbox, align=center, minimum width=3.0cm] (solve) at (0.6,1.6)
+    {$q=\Psi(p)$\\exact shadow solve};
+  \node[ccbox, align=center, minimum width=3.3cm] (closure) at (0.6,-1.8)
+    {$K_P(p)=PN(p+\Psi(p))$\\promoted constitutive term};
+  \node[ccbox, align=center, minimum width=3.5cm] (coarse) at (6.1,-1.8)
+    {$P\mathcal D_\chi u_p + K_P(p)=0$\\next-scale observed law};
+
+  \draw[ccarrow] (fine) -- (solve);
+  \draw[ccarrow] (solve) -- (closure);
+  \draw[ccarrow] (closure) -- (coarse);
+\end{tikzpicture}%
+}
+\caption{Characteristic scale promotion: the transport skeleton is carried by
+the characteristic flow, while the hidden lower-scale sector reappears as the
+promoted constitutive term.}
+\label{fig:scale-promotion}
+\end{figure}
+
+\begin{corollary}[Admissible promotion and finite iteration]
+\label{cor:admissible-promotion}
+\lean{admissible_promotion}
+Let $\mathfrak C$ be a class of characteristic split laws that is closed under
+the promotion map
+\[
+F \longmapsto F_{\mathrm{prom},P}
+\]
+for every admissible horizon $P$. Assume that at each such horizon:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the promoted constitutive term $K_P$ belongs to a candidate constitutive
+      family on the observed sector;
+\item the admissibility problem of Definition~\ref{def:admissibility} is well
+      posed for that family;
+\item the admissible reduced selection data modulo horizon-preserving
+      equivalence form a singleton.
+\end{enumerate}
+Then each promotion step yields a uniquely selected observed law. Consequently,
+along any finite chain of admissible horizons, recursive promotion yields a
+uniquely selected law at every stage.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[Inherited minimal-order closure class]
+\label{cor:inherited-minimal-order-closure-class}\lean{CoherenceCalculus.inherited_minimal_order_closure_class}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family into a common Banach
+space \(\cX\) with common dense test domain \(\cX_0\). Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every \(n\), the realization \(R_n\) belongs to a transport-order
+      disciplined realized class at horizon \(h_n\);
+\item \(\mathcal F\) is stable;
+\item the restricted distinguished minimal-order selected family is summably
+      refinement-consistent on \(\cX_0\).
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item for every \(n\), the selected law \(L_n\) belongs to the distinguished
+      admissible minimal-order class at horizon \(h_n\);
+\item there exists a unique bounded operator
+      \[
+      L_\infty:\cX\to\cX
+      \]
+      whose restriction to \(\cX_0\) belongs to the inherited distinguished
+      minimal-order closure class generated by \(\mathcal F\);
+\item \(L_\infty|_{\cX_0}\) is the unique compatible representative of that
+      inherited distinguished class.
+\end{enumerate}
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{definition}[Primitive-support spectral defect family]
+\label{def:primitive-support-spectral-defect-family}\lean{CoherenceCalculus.PrimitiveSupportSpectralDefectFamily}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family into a common Banach
+space \(\cX\) with common dense test domain \(\cX_0\). It is a
+\emph{primitive-support spectral defect family} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item each realization \(R_n\) is carried by the unit-balanced \(D=2\) seed;
+\item each selected law \(L_n\) is self-adjoint and positive semidefinite on
+      the visible carrier of \(R_n\);
+\item the visible spectral data of \(L_n\) are generated by a finite family of
+      primitive seed supports in the sense of
+      Corollary~\ref{cor:d2-primitive-support-profile};
+\item repeated contributions enter only through powers of primitive-support
+      monodromy and introduce no new visible channel.
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Prime-index cyclic refinement on primitive supports]
+\label{cor:primitive-support-prime-refinement}\lean{CoherenceCalculus.primitive_support_prime_refinement}
+Fix a primitive-support spectral defect family and a finite stage \(n\). Let a
+periodic support of period \(k\) appear in the visible support data of
+\(L_n\). Then every maximal cyclic refinement of that periodic support has
+prime index at each step, and the multiset of those prime indices depends only
+on \(k\).
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:cyclic-refinement-prime-invariant} to the cyclic
+quotient \(C_k=\bbZ/k\bbZ\). The periodic support determines the cyclic
+refinement problem, and the theorem gives exactly the prime-index statement and
+its invariance.
+\end{proof}
+
+\begin{corollary}[Forced continuum spectral defect form for a primitive-support tower]
+\label{cor:primitive-support-continuum-spectral-defect}\lean{CoherenceCalculus.primitive_support_continuum_spectral_defect}
+Let \(\mathcal F_{\mathrm{prim}}\) be a primitive-support spectral defect
+family into a Banach space \(\cX\) with dense test domain \(\cX_0\). Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected observed law is forced at every refinement level of
+      \(\mathcal F_{\mathrm{prim}}\);
+\item \(\mathcal F_{\mathrm{prim}}\) is stable;
+\item \(\mathcal F_{\mathrm{prim}}\) is summably refinement-consistent on
+      \(\cX_0\);
+\item every reconstructed stage law is self-adjoint and positive semidefinite
+      on the selected visible carrier.
+\end{enumerate}
+Then there exists a unique continuum-equivalence class of self-adjoint
+positive semidefinite operators forced by
+\(\mathcal F_{\mathrm{prim}}\). Writing \(L_{\infty}^{\mathrm{prim}}\) for the
+unique representative produced by
+Theorem~\ref{thm:selected-family-continuum-realization}, its associated
+quadratic form
+\[
+\mathcal E_{\infty}^{\mathrm{prim}}(\Phi)
+:=
+\langle \Phi,L_{\infty}^{\mathrm{prim}}\Phi\rangle
+\qquad (\Phi\in\cX_0)
+\]
+is the \emph{continuum spectral defect form} of the primitive-support tower.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[Fibered characteristic promotion on the global local ray carrier]
+\label{cor:word-local-ray-fibered-promotion}
+\lean{wordLocalDyadicEnvelopeRayFiberedCharacteristicScalePromotion}
+On the global word-local ray carrier, characteristic scale promotion is
+fiberwise exact: for every finite-word local packet, the promoted observed law
+is exactly the midpoint boundary selected by that packet's certified recovery
+data.
+\end{corollary}
+
+\begin{proof}
+The fibered promotion context on the global word-local ray carrier keeps the
+transported boundary law exact and projects the constitutive side to the same
+distinguished midpoint boundary in each local fiber. The resulting promoted
+observed law therefore agrees pointwise with that midpoint boundary.
+\end{proof}
+
+\begin{corollary}[Canonical continuum-equivalence for fibered local-ray promotion]
+\label{cor:word-local-ray-fibered-equivalence}
+\lean{wordLocalDyadicEnvelopeRayFiberedPromotionContinuumEquivalence}
+Every admissible fibered promoted law on the global word-local ray carrier is
+canonically continuum-equivalent to the fiberwise midpoint-boundary promoted
+law.
+\end{corollary}
+
+\begin{proof}
+Any admissible fibered promoted law agrees pointwise with the same midpoint
+boundary on every local packet. The identity intertwiner therefore gives a
+canonical continuum-equivalence to the fibered promoted law singled out in
+Corollary~\ref{cor:word-local-ray-fibered-promotion}.
+\end{proof}
+
+\begin{corollary}[Fibered admissible and minimum-energy promotion on the global local ray carrier]
+\label{cor:word-local-ray-fibered-admissible}
+\lean{wordLocalDyadicEnvelopeRayFiberedMinimumEnergyPromotion_branch}
+Fix any finite promotion chain on the global word-local ray carrier. Then, at
+every stage and in every local fiber, admissibility singles out the promoted
+midpoint-boundary law uniquely; in the corresponding variational
+interpretation, this same branch is the minimum-energy promoted branch.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:word-local-ray-fibered-promotion}, the promoted law is
+already the midpoint-boundary law in each local fiber. Any other admissible
+fibered promoted law must therefore agree with it pointwise, so every stage of
+the finite promotion chain selects the same branch uniquely. The
+minimum-energy statement is the fibered minimum-energy reformulation of that
+same unique-step forcing.
+\end{proof}
+
+\begin{remark}[Carried transport versus inherited closure]
+\label{rem:carried-vs-closure}
+\lean{CarriedTransportVersusInheritedClosure}
+Theorem~\ref{thm:characteristic-scale-promotion} gives the precise sense in
+which the law below becomes the constitutive law above. The transport skeleton
+is not recomputed at the next scale; it is carried by the characteristic flow.
+Only the exact shadow feedback $K_P$ must be selected as new closure data on
+the observed scale.
+\end{remark}
+
+\begin{remark}[Typed promotion over a finite carrier]
+\label{rem:typed-promotion-finite-carrier}
+\lean{TypedPromotionFiniteCarrier}
+When the promoted class is anchored to the canonical closure-balance
+realization of Part~I, the promoted constitutive data do not range over an
+open-ended ontology of primitive types. By
+Corollary~\ref{cor:logical-types-finite}, the bedrock counting layer
+already reduces the local carrier to one primitive seed, one residual
+interface, and the finitely many local type profiles of the six-slot balanced
+carrier. If one further passes to the full intrinsic relabeling symmetry of the
+balanced four-incidence, Corollary~\ref{cor:intrinsic-symmetry-forces-123}
+collapses that finite list to the canonical signature $1+2+3$. Promotion then
+acts inside that forced finite carrier, while realization, symmetry, and
+admissibility determine which logical signature, or which symmetry breaking of
+the canonical $1+2+3$ split, is selected in a given model class. If the
+promoted law remains fully intrinsic-equivariant, Corollary
+~\ref{cor:intrinsic-equivariant-three-parameter} shows that the local promoted
+law is controlled by exactly three channel parameters.
+\end{remark}
+
+\begin{remark}[Minimum-energy interpretation]
+\label{rem:minimum-energy-promotion}
+\lean{MinimumEnergyPromotion}
+The statement above is purely operator-theoretic. In thermodynamic or
+variational realizations, the admissibility step is often implemented by a
+bounded-below energy or free-energy functional. In that case,
+Corollary~\ref{cor:admissible-promotion} says that the selected promoted
+constitutive term is the minimum-energy branch in the promoted candidate class.
+The admissibility language is retained because the same selection theorem
+applies outside thermodynamic settings as well \cite{Arnold1989,Goldenfeld1992}.
+\end{remark}
+
+\begin{remark}[Fibered commuting-filter bridge on the global local ray carrier]
+\label{rem:word-local-ray-fibered-filter}
+\lean{wordLocalDyadicEnvelopeRayFiberedCommutingFilterBridge_obstruction}
+For the global word-local ray carrier, the fibered commuting-filter bridge is
+completely explicit: the linear side is already exact, and the nonlinear
+obstruction is exactly the same fiberwise midpoint-collapse theorem that
+governs the promoted observed law.
+\end{remark}
+
+\begin{theorem}[Explicit continuum verification package]
+\label{thm:explicit-continuum-verification-package}
+\lean{explicit_continuum_verification_package}
+The continuum bridge already contains explicit certified continuum model
+families:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the dyadic continuation model of
+      Proposition~\ref{prop:dyadic-tower-properties};
+\item the global word-local ray carrier as a certified local-stencil family
+      with exact core reconstruction, forced continuum law, and canonical
+      continuum-equivalence, by
+      Proposition~\ref{prop:word-local-ray-stencil},
+      Corollary~\ref{cor:word-local-ray-exact-core-realization},
+      Proposition~\ref{prop:word-local-ray-forcing}, and
+      Corollary~\ref{cor:word-local-ray-equivalence};
+\item exact fibered characteristic promotion on that same carrier, with the
+      midpoint-boundary branch selected uniquely and as the minimum-energy
+      branch along every finite promotion chain, by
+      Corollary~\ref{cor:word-local-ray-fibered-promotion},
+      Corollary~\ref{cor:word-local-ray-fibered-equivalence}, and
+      Corollary~\ref{cor:word-local-ray-fibered-admissible};
+\item primitive-support spectral defect families whose continuum spectral
+      defect form is forced once stability and summable core consistency are
+      verified on the reconstructed primitive-support tower,
+      by Corollary~\ref{cor:primitive-support-continuum-spectral-defect}.
+\end{enumerate}
+Consequently, explicit continuum verification is already present on the live
+continuum-bridge surface. Additional model families extend the same bridge framework;
+they do not supply a missing structural ingredient.
+\end{theorem}
+
+\begin{proof}
+Item (i) is exactly Proposition~\ref{prop:dyadic-tower-properties}. Item (ii)
+collects the explicit local-stencil, forcing, and continuum-equivalence
+results proved for the global word-local ray carrier. Item (iii) collects the
+fibered promotion, canonical continuum-equivalence, and minimum-energy
+selection statements on that same carrier. Item (iv) is exactly the forced
+continuum spectral-defect corollary for primitive-support towers. No further
+input is required.
+\end{proof}
+
+\subsection{Temporal interface of the faithful continuum limit}
+
+Remark~\ref{rem:external-parameter-optional} showed that the continuum bridge
+does not import an external physical time parameter. Even so, the bridge now
+contains a canonically derived ordering datum that will later admit a physical
+reading. Three earlier results already fit together exactly:
+the counting bedrock localizes the unique residual mediation layer at
+\(D=3\), the characteristic realization forces selected transport channels to
+be scalar-recursive, and the faithful continuum bridge constructs a unique
+continuum generator from the selected recursive family. The next
+definition records precisely the structural datum exported by that
+combination.
+
+\begin{definition}[Temporal interface datum]
+\label{def:temporal-interface-datum}
+\lean{TemporalInterfaceDatum}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family. A
+\emph{temporal interface datum} for \(\mathcal F\) consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an anchoring of the family to the canonical closure-balance realization
+      of Part~I, so that the unique residual interface between the
+      unit-balanced seed and the balanced \(D=4\) carrier is the interface
+      \(D=3\);
+\item for each \(n\), a selected channel fiber
+      \[
+      F_n
+      \]
+      with distinguished transport base
+      \[
+      B_n:F_n\to F_n
+      \]
+      such that the selected channel system at level \(n\) is
+      scalar-recursive in the sense of
+      Definition~\ref{def:scalar-recursive-selected-channel-system};
+\item a common continuum reconstruction datum
+      \[
+      (\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+      \]
+      for the selected channel family, equivalently for the rescaled
+      recursion-generator family determined by its distinguished transport
+      bases, together with a continuum-equivalence class
+      \[
+      [\Theta]
+      \]
+      of operators
+      \[
+      \Theta:\mathcal T_0\to\mathcal T
+      \]
+      such that the selected channel family is asymptotically consistent with
+      a representative of \([\Theta]\).
+\end{enumerate}
+The pair
+\[
+(D=3,[\Theta])
+\]
+is called the \emph{temporal interface} carried by \(\mathcal F\). It records
+the unique continuum ordering datum exported by the residual interface and the
+selected scalar-recursive transport. It is not yet a physical time law.
+\end{definition}
+
+\begin{theorem}[Scalar recursion identifies the continuum generator]
+\label{thm:scalar-recursion-identifies-continuum-generator}
+\lean{scalar_recursion_identifies_continuum_generator}
+Let \(\{(F_n,B_n)\}_{n\in\bbN}\) be a selected channel family equipped with a
+common continuum reconstruction datum
+\[
+(\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+\]
+and a scale sequence \((\varepsilon_n)_{n\in\bbN}\) with
+\(\varepsilon_n>0\) and \(\varepsilon_n\to 0\). Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every \(n\), the selected channel system on \(F_n\) is
+      scalar-recursive with distinguished transport base \(B_n\);
+\item the rescaled recursion-generator family
+      \[
+      \Theta_n:=\varepsilon_n^{-2}(B_n-2I_{F_n})
+      \]
+      is stable after reconstruction:
+      \[
+      \|E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\|_{\mathcal T}
+      \le C\|u\|_{\mathcal T}
+      \qquad (u\in\mathcal T_0)
+      \]
+      for some \(C\ge 0\) and all \(n\);
+\item the same rescaled family is summably refinement-consistent on
+      \(\mathcal T_0\): there exists a summable sequence \((\eta_n)\) such
+      that
+      \[
+      \|E_{n+1}^{\mathcal T}\Theta_{n+1}P_{n+1}^{\mathcal T}u
+      -
+      E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\|_{\mathcal T}
+      \le
+      \eta_n\|u\|_{\mathcal T}
+      \]
+      for every \(u\in\mathcal T_0\) and every \(n\).
+\end{enumerate}
+Then there exists a unique bounded operator
+\[
+\Theta:\mathcal T\to\mathcal T
+\]
+such that
+\[
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u\to \Theta u
+\qquad (u\in\mathcal T_0).
+\]
+Moreover, if \(x^{(n)}=(x_m^{(n)})_{m\in\bbZ}\) is any selected transport
+sequence with \(x_0^{(n)}=P_n^{\mathcal T}u\) and
+\[
+x_{m+1}^{(n)}=B_nx_m^{(n)}-x_{m-1}^{(n)},
+\]
+then
+\[
+E_n^{\mathcal T}\frac{x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}}{\varepsilon_n^2}
+\to
+\Theta u
+\qquad (u\in\mathcal T_0).
+\]
+Thus the same reconstruction maps identify the discrete scalar recursion and
+its continuum generator.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[One-stage bounded exact scalar recursion forces the continuum generator]
+\label{thm:one-stage-bounded-exact-scalar-recursion-forces-generator}
+\lean{one_stage_bounded_exact_scalar_recursion_forces_generator}
+Let \(\{(F_n,B_n)\}_{n\in\bbN}\) be a selected channel family equipped with a
+common continuum reconstruction datum
+\[
+(\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+\]
+and a scale sequence \((\varepsilon_n)_{n\in\bbN}\) with
+\(\varepsilon_n>0\) and \(\varepsilon_n\to 0\). Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every \(n\), the selected channel system on \(F_n\) is
+      scalar-recursive with distinguished transport base \(B_n\);
+\item there exist comparison maps
+      \[
+      J^{\mathcal T}_{n,m}:F_n\to F_m
+      \qquad (n\le m),
+      \]
+      such that, writing
+      \[
+      \Theta_n:=\varepsilon_n^{-2}(B_n-2I_{F_n}),
+      \]
+      one has
+      \[
+      J^{\mathcal T}_{n,m}\Theta_n=\Theta_mJ^{\mathcal T}_{n,m},
+      \]
+      \[
+      P_m^{\mathcal T}u=J^{\mathcal T}_{n,m}P_n^{\mathcal T}u
+      \qquad\text{and}\qquad
+      E_n^{\mathcal T}=E_m^{\mathcal T}J^{\mathcal T}_{n,m}
+      \qquad (u\in\mathcal T_0,\ n\le m);
+      \]
+\item there exist an index \(n_\ast\in\bbN\) and a constant \(C\ge 0\) such
+      that
+      \[
+      \|E_{n_\ast}^{\mathcal T}\Theta_{n_\ast}P_{n_\ast}^{\mathcal T}u\|_{\mathcal T}
+      \le
+      C\|u\|_{\mathcal T}
+      \qquad (u\in\mathcal T_0).
+      \]
+\end{enumerate}
+Then there exists a unique bounded operator
+\[
+\Theta:\mathcal T\to\mathcal T
+\]
+such that
+\[
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u=\Theta u
+\qquad (u\in\mathcal T_0,\ n\in\bbN).
+\]
+If \(L:\mathcal T_0\to\mathcal T\) is any operator asymptotically consistent
+with the same exact recursive family, then
+\[
+L=\Theta|_{\mathcal T_0}.
+\]
+Moreover, if \(x^{(n)}=(x_m^{(n)})_{m\in\bbZ}\) is any selected transport
+sequence with \(x_0^{(n)}=P_n^{\mathcal T}u\) and
+\[
+x_{m+1}^{(n)}=B_nx_m^{(n)}-x_{m-1}^{(n)},
+\]
+then
+\[
+E_n^{\mathcal T}\frac{x_1^{(n)}-2x_0^{(n)}+x_{-1}^{(n)}}{\varepsilon_n^2}
+=
+\Theta u
+\qquad (u\in\mathcal T_0,\ n\in\bbN).
+\]
+Thus exact recursive coherence plus one reconstructed-stage bound determines
+the continuum generator exactly, not merely up to a limiting class.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{theorem}[Exact scalar recursion has a canonical graph realization]
+\label{thm:exact-scalar-recursion-graph-realization}
+\lean{exact_scalar_recursion_graph_realization}
+Let \(\{(F_n,B_n)\}_{n\in\bbN}\) be a selected channel family equipped with a
+common continuum reconstruction datum
+\[
+(\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+\]
+and a scale sequence \((\varepsilon_n)_{n\in\bbN}\) with
+\(\varepsilon_n>0\) and \(\varepsilon_n\to 0\). Assume only
+\emph{(i)}--\emph{(ii)} of
+Theorem~\ref{thm:one-stage-bounded-exact-scalar-recursion-forces-generator}.
+Define
+\[
+\Theta_\sharp u:=E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+\qquad (u\in\mathcal T_0),
+\]
+which is independent of \(n\), and endow \(\mathcal T_0\) with the graph norm
+\[
+\|u\|_{\Theta,\mathrm{gr}}
+:=
+\|u\|_{\mathcal T}+\|\Theta_\sharp u\|_{\mathcal T}.
+\]
+Let \(\mathcal T_{\Theta,\mathrm{gr}}\) be the Banach completion of
+\((\mathcal T_0,\|\cdot\|_{\Theta,\mathrm{gr}})\), and let
+\[
+\iota_\Theta:\mathcal T_0\to \mathcal T_{\Theta,\mathrm{gr}}
+\]
+be the canonical dense embedding. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exist unique bounded maps
+      \[
+      I_\Theta,\overline\Theta:\mathcal T_{\Theta,\mathrm{gr}}\to\mathcal T
+      \]
+      with
+      \[
+      \|I_\Theta\|\le 1
+      \qquad\text{and}\qquad
+      \|\overline\Theta\|\le 1
+      \]
+      such that
+      \[
+      I_\Theta\iota_\Theta u=u
+      \qquad\text{and}\qquad
+      \overline\Theta\,\iota_\Theta u
+      =
+      E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u
+      \qquad (u\in\mathcal T_0,\ n\in\bbN);
+      \]
+\item if \(L:\mathcal T_0\to\mathcal T\) is any operator asymptotically
+      consistent with the same exact recursive family, then
+      \[
+      L=\Theta_\sharp;
+      \]
+\item among all graph-norm continuous Banach realizations of the same exact
+      recursive family, \((\mathcal T_{\Theta,\mathrm{gr}},I_\Theta,
+      \overline\Theta)\) is canonical in the universal-property sense of
+      Theorem~\ref{thm:exact-core-graph-completion}.
+\end{enumerate}
+Thus exact recursive coherence already forces a unique continuum generator on
+the dense core and a canonical bounded realization of that generator on its
+graph completion, before any original-space boundedness theorem is invoked.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[A finite exact channel stage forces the bounded continuum generator]
+\label{cor:finite-exact-channel-stage-forces-bounded-generator}
+\lean{finite_exact_channel_stage_forces_bounded_generator}
+Under the hypotheses of
+Theorem~\ref{thm:exact-scalar-recursion-graph-realization}, assume in addition
+that for some \(n_\ast\in\bbN\), the selected channel fiber \(F_{n_\ast}\) is
+finite-dimensional. Then the hypothesis \emph{(iii)} of
+Theorem~\ref{thm:one-stage-bounded-exact-scalar-recursion-forces-generator} is
+automatic. Hence there exists a unique bounded operator
+\[
+\Theta:\mathcal T\to\mathcal T
+\]
+such that
+\[
+E_n^{\mathcal T}\Theta_nP_n^{\mathcal T}u=\Theta u
+\qquad (u\in\mathcal T_0,\ n\in\bbN).
+\]
+\end{corollary}
+
+\begin{proof}
+Because \(F_{n_\ast}\) is finite-dimensional, the linear map
+\[
+\Theta_{n_\ast}:F_{n_\ast}\to F_{n_\ast}
+\]
+is bounded. Since \(P_{n_\ast}^{\mathcal T}\) and \(E_{n_\ast}^{\mathcal T}\)
+are bounded, the composition
+\[
+E_{n_\ast}^{\mathcal T}\Theta_{n_\ast}P_{n_\ast}^{\mathcal T}:\mathcal T_0\to\mathcal T
+\]
+is bounded on \(\mathcal T_0\). Thus
+Theorem~\ref{thm:one-stage-bounded-exact-scalar-recursion-forces-generator}
+applies.
+\end{proof}
+
+\begin{theorem}[Exact recursive transport coherence yields a unique temporal interface]
+\label{thm:exact-recursive-transport-yields-temporal-interface}
+\lean{exact_recursive_transport_yields_temporal_interface}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathcal F\) is anchored to the canonical closure-balance realization
+      of Part~I;
+\item for each \(n\), the relevant selected channel system is
+      transport-generated on a selected channel fiber \(F_n\) with
+      distinguished transport base \(B_n\);
+\item there exists a scale sequence \((\varepsilon_n)_{n\in\bbN}\) with
+      \(\varepsilon_n>0\) and \(\varepsilon_n\to0\), comparison maps
+      \[
+      J^{\mathcal T}_{n,m}:F_n\to F_m
+      \qquad (n\le m),
+      \]
+      and a continuum reconstruction datum
+      \[
+      (\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+      \]
+      such that, writing
+      \[
+      \Theta_n:=\varepsilon_n^{-2}(B_n-2I_{F_n}),
+      \]
+      the rescaled recursion-generator family is exact across refinement:
+      \[
+      J^{\mathcal T}_{n,m}\Theta_n=\Theta_mJ^{\mathcal T}_{n,m},
+      \]
+      \[
+      P_m^{\mathcal T}u=J^{\mathcal T}_{n,m}P_n^{\mathcal T}u
+      \qquad\text{and}\qquad
+      E_n^{\mathcal T}=E_m^{\mathcal T}J^{\mathcal T}_{n,m}
+      \qquad (u\in\mathcal T_0,\ n\le m).
+      \]
+\end{enumerate}
+Then \(\mathcal F\) carries a unique temporal interface datum.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[Exact recursive transport forces the temporal generator surface]
+\label{cor:exact-recursive-transport-forces-graph-temporal-generator}
+\lean{exact_recursive_transport_forces_graph_temporal_generator}
+Under the hypotheses of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}, the
+generator component of the unique temporal interface datum is the same forced
+continuum law carried by that datum.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}
+packages the exact recursive transport data into a temporal interface datum.
+Theorem~\ref{thm:scalar-recursion-identifies-continuum-generator} then records
+that the generator component of that datum is already tied to a forced
+continuum law on the same certified surface.
+\end{proof}
+
+\begin{corollary}[A finite exact channel stage yields a bounded temporal generator]
+\label{cor:finite-exact-channel-stage-yields-bounded-temporal-generator}
+\lean{finite_exact_channel_stage_yields_bounded_temporal_generator}
+Under the hypotheses of
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator},
+assume in addition that for some \(n_\ast\in\bbN\), the selected channel fiber
+\(F_{n_\ast}\) is finite-dimensional. Then the generator component of the
+unique temporal interface datum descends to the unique bounded operator on
+\(\mathcal T\) supplied by
+Corollary~\ref{cor:finite-exact-channel-stage-forces-bounded-generator}.
+\end{corollary}
+
+\begin{proof}
+The hypotheses of
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}
+include the hypotheses of
+Theorem~\ref{thm:exact-scalar-recursion-graph-realization}. Therefore
+Corollary~\ref{cor:finite-exact-channel-stage-forces-bounded-generator}
+applies directly.
+\end{proof}
+
+\begin{remark}[Original-space bounded temporal generator after one-stage verification]
+\label{rem:exact-temporal-generator-after-one-stage-verification}
+\lean{exact_recursive_transport_yields_temporal_interface, exact_recursive_transport_forces_graph_temporal_generator}
+On the current import-free certified lane,
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}
+is used through the unique temporal-interface datum and its forced
+continuum-generator surface. Any further descent of that generator to a
+bounded operator on the original Banach space requires additional analytic
+input beyond the active Lean root; when such input is available, the
+one-stage boundedness discussion should be read as a separate strengthening,
+not as hidden foundation.
+\end{remark}
+
+\begin{corollary}[Certified local-ray recursion closes the temporal bridge]
+\label{cor:certified-local-ray-recursion-closes-temporal-bridge}
+\lean{wordLocalDyadicEnvelopeRayLocalStencilInterpretation_surface, wordLocalDyadicEnvelopeRayExactCoreRealization, exact_recursive_transport_yields_temporal_interface, exact_recursive_transport_forces_graph_temporal_generator}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family satisfying the first
+two hypotheses of
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}. Suppose
+in addition that for some scale sequence \((\varepsilon_n)\), the rescaled
+recursion-generator family
+\[
+\Theta_n:=\varepsilon_n^{-2}(B_n-2I_{F_n})
+\]
+is exactly the selected observed law of the certified global word-local ray
+carrier under the refinement-coherent reconstruction datum of
+Proposition~\ref{prop:word-local-ray-stencil}. Then \(\mathcal F\) carries a
+unique temporal interface datum, and its generator component lies on the
+same forced continuum-law surface recorded in
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:word-local-ray-stencil} supplies the comparison maps and
+refinement-coherent reconstruction datum required by
+Theorem~\ref{thm:exact-recursive-transport-yields-temporal-interface}. The same
+data therefore also satisfy
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}.
+\end{proof}
+
+\begin{theorem}[Residual exact scalar recursion yields a unique temporal interface]
+\label{thm:temporal-interface-from-d3}
+\lean{temporal_interface_from_d3}
+Let
+\[
+\mathcal F=\{(R_n,h_n,L_n)\}_{n\in\bbN}
+\]
+be a refinement-compatible discrete realized law family. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathcal F\) is anchored to the canonical closure-balance realization
+      of Part~I;
+\item for each \(n\), the relevant selected channel system is
+      transport-generated on a selected channel fiber \(F_n\) with
+      distinguished transport base \(B_n\);
+\item there exists a scale sequence \((\varepsilon_n)_{n\in\bbN}\) with
+      \(\varepsilon_n>0\) and \(\varepsilon_n\to0\), comparison maps
+      \[
+      J^{\mathcal T}_{n,m}:F_n\to F_m
+      \qquad (n\le m),
+      \]
+      and a continuum reconstruction datum
+      \[
+      (\mathcal T,\mathcal T_0,\{P_n^{\mathcal T}\},\{E_n^{\mathcal T}\})
+      \]
+      such that, writing
+      \[
+      \Theta_n:=\varepsilon_n^{-2}(B_n-2I_{F_n}),
+      \]
+      the rescaled recursion-generator family is exact across refinement:
+      \[
+      J^{\mathcal T}_{n,m}\Theta_n=\Theta_mJ^{\mathcal T}_{n,m},
+      \]
+      \[
+      P_m^{\mathcal T}u=J^{\mathcal T}_{n,m}P_n^{\mathcal T}u
+      \qquad\text{and}\qquad
+      E_n^{\mathcal T}=E_m^{\mathcal T}J^{\mathcal T}_{n,m}
+      \qquad (u\in\mathcal T_0,\ n\le m).
+      \]
+\end{enumerate}
+Then \(\mathcal F\) carries a unique temporal interface datum, and the
+generator component of that datum admits the canonical graph-completed
+continuum realization of
+Corollary~\ref{cor:exact-recursive-transport-forces-graph-temporal-generator}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-continuum}.)
+
+\begin{corollary}[Persistent exactification on the minimal nonterminal carrier yields the temporal interface]
+\label{cor:persistent-exactification-yields-temporal-interface}\lean{partIV_persistent_exactification_yields_temporal_interface}
+Under the hypotheses of
+Theorem~\ref{thm:temporal-interface-from-d3}, the unique temporal interface
+datum is the ordered realization of persistent exactification on the minimal
+nonterminal counting carrier \(D=3\).
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:minimal-nonterminal-counting-carrier} identifies \(D=3\) as
+the unique minimal carrier on which the counting realization of the closure
+defect remains nonzero. Theorem~\ref{thm:temporal-interface-from-d3} then shows
+that when the selected transport on that same residual carrier is organized by
+an exact scalar recursion coherent across refinement, it determines a unique
+ordered continuum interface datum. Thus the temporal interface is not an
+additional primitive laid on top of the \(D=3\) layer; it is the ordered
+realization of persistent exactification on that unique nonterminal carrier.
+\end{proof}
+
+\begin{corollary}[Temporal interface precedes physical time]
+\label{cor:temporal-interface-precedes-physical-time}
+\lean{temporal_interface_precedes_physical_time}
+Under the hypotheses of
+Theorem~\ref{thm:temporal-interface-from-d3}, the earlier structural chapters
+together with the continuum bridge force a unique
+temporal interface but not yet a physical time law. More precisely, they force
+the pair \((D=3,[\Theta])\) of
+Definition~\ref{def:temporal-interface-datum}, while the identification of
+that interface with causal before/after on a faithful visible cut belongs to
+the law-side dynamics developed later in Part~II.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:temporal-interface-from-d3} gives the unique structural datum
+\((D=3,[\Theta])\). Remark~\ref{rem:external-parameter-optional} already
+showed that the continuum bridge does not import an external physical time
+parameter. Hence the result above is an internal continuum order carrier,
+exported by residual localization, persistent exactification on the unique
+nonterminal carrier, and scalar-recursive transport, not yet the physical law
+selecting a causally realized visible time. The law-side dynamics developed
+later in Part~II add exactly that further
+identification.
+\end{proof}
+
+\begin{remark}[Why the \(D=3\) residual already carries order]
+\label{rem:d3-residual-carries-order}
+\lean{temporal_interface_from_d3, temporal_interface_precedes_physical_time}
+The counting bedrock leaves no residual at the balanced seed \(D=2\) and no
+residual at the balanced carrier \(D=4\). The unique nonvanishing mediation
+layer is therefore the \(D=3\) interface. On that interface, one unit of
+unbalanced transport remains to be mediated between the seed and the carrier.
+The scalar-recursive forcing theorem then says that this mediation is not a
+free multidirectional drift: it is compressed to a single recurrent update
+parameter \(m\) through
+\[
+x_{m+1}=B_nx_m-x_{m-1}.
+\]
+That is why the earlier structural chapters together with the continuum bridge
+already export an ordering datum. The \(+1\) residual
+does not yet supply physical time by itself, but it does supply the unique
+place where before/after can be organized. The later law-side dynamics of
+Part~II then identify the faithful visible cut on which that ordered
+persistence coheres as causal time.
+\end{remark}

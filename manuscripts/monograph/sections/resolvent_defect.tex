@@ -1,0 +1,843 @@
+% ============================================================
+\section{Split Transform, Schur Complement, and Nonlinear Elimination}
+\label{sec:resolvent-defect}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this automates.}
+When inverting or resolving an operator under an orthogonal projection $P$, the ``shadow'' degrees of freedom (in $\CCComp\cH$, where $\CCComp = I - P$) contribute a correction term to the observed resolvent.
+This section provides the exact Feshbach--Schur identity that computes this
+correction, namely the \emph{Schur correction} (or \emph{self-energy}),
+without approximation or series expansion.
+It then upgrades the same split algebra to nonlinear equations by exact shadow
+elimination on a graph.
+
+\smallskip\noindent
+\textbf{Generality.}
+The constructions apply to \emph{any} orthogonal projection $P$, not just horizon projections $\CCPi{h}$.
+The horizon case is recovered by setting $P = \CCPi{h}$.
+Field-induced horizons (Section~\ref{subsec:field-induced-horizons}) give $P = \CCSpProj{\CCField}{S}$.
+\end{quote}
+
+\subsection{Block decomposition of operators}
+
+\begin{definition}[P/Q splitting]
+\label{def:pq-split}\lean{PQSplitting}
+Let $P$ be an orthogonal projection on $\cH$ with complement $\CCComp := I - P$.
+Define the subspaces:
+\[
+\cH_P := P \cH, \qquad \cH_{\CCComp} := \CCComp \cH.
+\]
+Then $\cH = \cH_P \oplus \cH_{\CCComp}$ as an orthogonal direct sum.
+\end{definition}
+
+\begin{definition}[Block components of an operator]
+\label{def:block-components}\lean{blockPP}\lean{blockPQ}\lean{blockQP}\lean{blockQQ}
+For a linear operator $A:\cH \to \cH$, define the block components:
+\begin{align*}
+\CCBlockPP{A} &:= P A P &&\text{($P \to P$ block)}, \\
+\CCBlockPQ{A} &:= P A \CCComp &&\text{($\CCComp \to P$ block)}, \\
+\CCBlockQP{A} &:= \CCComp A P &&\text{($P \to \CCComp$ block)}, \\
+\CCBlockQQ{A} &:= \CCComp A \CCComp &&\text{($\CCComp \to \CCComp$ block)}.
+\end{align*}
+In block form relative to $\cH = \cH_P \oplus \cH_{\CCComp}$:
+\[
+A = \begin{pmatrix} \CCBlockPP{A} & \CCBlockPQ{A} \\ \CCBlockQP{A} & \CCBlockQQ{A} \end{pmatrix}.
+\]
+\end{definition}
+
+\paragraph{Connection to horizon notation.}
+When $P = \CCPi{h}$ is a horizon projection, the block notation corresponds to:
+\begin{align*}
+\CCBlockPP{A} &= A_{oo} = \CCRestr{A}{h}, &
+\CCBlockPQ{A} &= A_{os} = \CCPi{h} A \CCPibar{h}, \\
+\CCBlockQP{A} &= A_{so} = \CCPibar{h} A \CCPi{h} = \CCLeak{A}{h}, &
+\CCBlockQQ{A} &= A_{ss} = \CCPibar{h} A \CCPibar{h}.
+\end{align*}
+
+\subsection{The split transform (forward direction)}
+
+\begin{definition}[Resolvent]
+\label{def:resolvent}\lean{HasResolvent}
+For a linear operator $A$ on $\cH$ and $z \in \mathbb{C}$ such that $(I - zA)$ is invertible, define the \emph{resolvent}
+\[
+R_A(z) := (I - zA)^{-1}.
+\]
+\end{definition}
+
+\begin{definition}[Schur correction / self-energy]
+\label{def:schur-correction}\lean{schurComplement}
+For an orthogonal projection $P$ with $\CCComp = I - P$, define the \emph{Schur correction} (or \emph{self-energy}) as
+\[
+\CCSigmaP{P}{z} := \CCBlockPQ{A} (I - z \CCBlockQQ{A})^{-1} \CCBlockQP{A},
+\]
+defined whenever $(I - z \CCBlockQQ{A})$ is invertible on $\cH_{\CCComp}$.
+\end{definition}
+
+\begin{definition}[Effective operator]
+\label{def:effective-operator}\lean{effectiveOp}
+The \emph{effective operator} (or \emph{observed effective operator}) is
+\[
+\CCAeff{A}{P}(z) := \CCBlockPP{A} + z \CCSigmaP{P}{z}.
+\]
+\end{definition}
+
+\begin{definition}[Split transform]
+\label{def:split-transform}\lean{splitTransform}
+The \emph{split transform} is the map
+\[
+\CCSplit{P}{A}{z} := \bigl( \CCAeff{A}{P}(z),\, \CCSigmaP{P}{z} \bigr)
+\]
+that takes $(A, P, z)$ and returns the effective operator and Schur correction.
+\end{definition}
+
+\begin{theorem}[Forward split / Feshbach--Schur identity]
+\label{thm:feshbach-schur}\lean{schur_factorization}
+Let $A:\cH \to \cH$ be a bounded linear operator, $P$ an orthogonal projection, and $z \in \mathbb{C}$ such that both $(I - zA)$ on $\cH$ and $(I - z \CCBlockQQ{A})$ on $\cH_{\CCComp}$ are invertible.
+Then the observed resolvent satisfies
+\[
+P (I - zA)^{-1} P
+\;=\;
+\bigl( I - z \CCAeff{A}{P}(z) \bigr)^{-1}
+\;=\;
+\bigl( I - z \CCBlockPP{A} - z^2 \CCSigmaP{P}{z} \bigr)^{-1}
+\]
+as operators on $\cH_P$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+This is the classical Schur-complement / Feshbach elimination pattern
+\cite{Haynsworth1968,Zhang2005,Feshbach1958,Feshbach1962}, fixed here in the
+notation used throughout the horizon calculus.
+
+% --- Schur Complement Diagram ---
+\begin{figure}[ht]
+\centering
+\resizebox{0.78\textwidth}{!}{%
+\begin{tikzpicture}[node distance=3.0cm]
+  \node[ccbox, minimum width=2.4cm] (p) at (-2.8,0.8) {$\cH_P$};
+  \node[ccbox, minimum width=2.6cm] (q) at (2.8,0.8) {$\cH_{\CCComp}$};
+  \node[ccbox, align=center, minimum width=5.8cm] (sigma) at (0,-2.0)
+    {$\CCSigmaP{P}{z}=\CCBlockPQ{A}(I-z\CCBlockQQ{A})^{-1}\CCBlockQP{A}$};
+
+  \draw[ccarrow, bend left=18] (p.north east)
+    to node[above, font=\scriptsize, pos=0.52] {$\CCBlockQP{A}$} (q.north west);
+  \draw[ccarrow, bend left=18] (q.south west)
+    to node[below, font=\scriptsize, pos=0.52] {$\CCBlockPQ{A}$} (p.south east);
+  \draw[ccdarrow] (q) to[loop right, looseness=4]
+    node[right, font=\scriptsize] {$(I-z\CCBlockQQ{A})^{-1}$} (q);
+  \draw[ccarrow] ($(p)!0.5!(q)$) -- node[right, font=\scriptsize]
+    {round trip through $\CCComp$} (sigma);
+\end{tikzpicture}%
+}
+\caption{Schur complement / split transform: round-trip through $\CCComp$-block produces the Schur correction $\CCSigmaP{P}{z}$.}
+\label{fig:schur-complement}
+\end{figure}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The Schur correction $\CCSigmaP{P}{z}$ encodes how the $\CCComp$-degrees of freedom modify the effective resolvent.
+$P$-states leak into $\CCComp$ ($\CCBlockQP{A}$), propagate there ($(I - z \CCBlockQQ{A})^{-1}$), and return ($\CCBlockPQ{A}$).
+This round-trip contribution corrects the observed resolvent beyond the naive projection.
+\end{quote}
+
+\paragraph{Exact resummation.}
+The identity is exact; no truncation or perturbative expansion is required.
+The Schur correction $\CCSigmaP{P}{z}$ resums all paths through $\cH_{\CCComp}$ into a single correction term.
+This is the Coherence Calculus mechanism for ``integrating out'' degrees of freedom.
+The exact coherence and recovery theorems below show that, on a faithful tower,
+this eliminated contribution remains part of the same underlying operator rather
+than an added constitutive source.
+
+\subsection{Residual signature (transport characterization)}
+
+\begin{definition}[Transport blocks and residual signature]
+\label{def:residual-signature}\lean{ResidualSignature}
+For an operator $A$ and projection $P$, define:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Transport out:} $\CCTransOut{P} := \CCBlockQP{A}$ (the $P \to \CCComp$ block).
+\item \textbf{Transport in:} $\CCTransIn{P} := \CCBlockPQ{A}$ (the $\CCComp \to P$ block).
+\item \textbf{Internal block:} $\CCBlockQQ{A}$ (the $\CCComp \to \CCComp$ block).
+\end{itemize}
+The \emph{residual signature} of $A$ with respect to $P$ is the triple $(\CCTransIn{P}, \CCBlockQQ{A}, \CCTransOut{P})$.
+\end{definition}
+
+\paragraph{Residual determines correction.}
+The Schur correction is completely determined by the residual signature:
+\[
+\CCSigmaP{P}{z} = \CCTransIn{P} (I - z \CCBlockQQ{A})^{-1} \CCTransOut{P}.
+\]
+The round-trip factorization: transport out, propagate internally, transport back in.
+
+\begin{definition}[Residual return field on a cut]
+\label{def:residual-return-field}\lean{ResidualReturnField}
+Fix an operator \(A\), a projection \(P\), and a shadow propagator
+\[
+R_Q=(I-z\CCBlockQQ{A})^{-1}
+\]
+whenever this inverse exists. The \emph{residual return field} generated by a
+visible state \(u\in P\cH\) is the shadow datum
+\[
+\chi_{P,A,z}(u):=R_Q\,\CCTransOut{P}u.
+\]
+Its \emph{returned residual forcing} on the visible sector is
+\[
+\mathcal F^{\mathrm{return}}_{P,A,z}(u)
+:=
+\CCTransIn{P}\chi_{P,A,z}(u).
+\]
+\end{definition}
+
+\begin{proposition}[Returned residual is exactly the Schur correction]
+\label{prop:return-residual-is-schur}\lean{returnedResidual_eq_schur}
+In the setting of Definition~\ref{def:residual-return-field},
+\[
+\mathcal F^{\mathrm{return}}_{P,A,z}(u)=\CCSigmaP{P}{z}u
+\qquad (u\in P\cH).
+\]
+Thus the Schur correction is not an extra constitutive term. It is exactly the
+visible trace of a residual field propagated in the eliminated sector and then
+returned to observation.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Self-adjoint structure]
+\label{cor:self-adjoint-sigma}\lean{selfadjoint_block_relation}\lean{schur_selfadjoint_leading}
+If $A$ is self-adjoint and $z \in \bbR$ with $(I - z\CCBlockQQ{A})^{-1}$ self-adjoint (holds when $z$ is not in the spectrum of $\CCBlockQQ{A}$ scaled appropriately), then:
+\begin{enumerate}[label=(\roman*)]
+\item $\CCTransIn{P} = (\CCTransOut{P})^*$, i.e., $\CCBlockPQ{A} = (\CCBlockQP{A})^*$.
+\item $\CCSigmaP{P}{z}$ is self-adjoint on $\cH_P$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(i) For self-adjoint $A$: $(PAQ)^* = Q^* A^* P^* = QAP$, so $\CCBlockPQ{A}^* = \CCBlockQP{A}$.
+(ii) $\CCSigmaP{P}{z}^* = (\CCBlockPQ{A} R_Q \CCBlockQP{A})^* = \CCBlockQP{A}^* R_Q^* \CCBlockPQ{A}^* = \CCBlockPQ{A} R_Q \CCBlockQP{A} = \CCSigmaP{P}{z}$.
+\end{proof}
+
+\subsection{Geometric series expansion}
+
+\paragraph{Geometric series expansion.}
+\label{rem:geometric-expansion}
+If $\|z \CCBlockQQ{A}\| < 1$, then $(I - z \CCBlockQQ{A})^{-1} = \sum_{k=0}^\infty z^k (\CCBlockQQ{A})^k$ converges, giving
+\[
+\CCSigmaP{P}{z} = \sum_{k=0}^\infty z^k \CCBlockPQ{A} (\CCBlockQQ{A})^k \CCBlockQP{A}.
+\]
+This expands the Schur correction as a sum over ``$\CCComp$-excursions'' of increasing length.
+The exact identity (Theorem~\ref{thm:feshbach-schur}) holds without this convergence assumption.
+
+\paragraph{Connection to defect energy.}
+When $P = \CCPi{h}$ and $A = d$ is a nilpotent differential, the leading term $\CCBlockPQ{A} \CCBlockQP{A} = \CCPi{h} d \CCPibar{h} \cdot \CCPibar{h} d \CCPi{h}$ is the defect operator $\CCDefect{d}{h}$ from the Horizon Fundamental Theorem (Section~\ref{sec:hft}).
+The Schur correction generalizes this to all orders in $z$.
+
+\subsection{Schur transport jets}
+\label{subsec:schur-transport-jet}
+
+\begin{definition}[Schur transport jet]
+\label{def:schur-transport-jet}\lean{schur_transport_jet}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower, let
+$A:\cH\to\cH$ be bounded, and fix a horizon $h$. Assume
+\[
+\|z\,\CCPibar{h}A\CCPibar{h}\|<1.
+\]
+The \emph{Schur transport jet} at horizon $h$ is the family of operators
+\[
+K_{h,0}(A):=\CCPi{h}A\CCPi{h},
+\qquad
+K_{h,n}(A):=\CCPi{h}A(\CCPibar{h}A\CCPibar{h})^{n-1}\CCPibar{h}A\CCPi{h}
+\quad(n\ge1),
+\]
+so that the effective operator admits the exact expansion
+\[
+\CCAeff{A}{\CCPi{h}}(z)=K_{h,0}(A)+\sum_{n\ge1} z^n K_{h,n}(A).
+\]
+\end{definition}
+
+\begin{theorem}[Constructive order profile of the Schur transport jet]
+\label{thm:schur-transport-jet-order}\lean{schur_transport_jet_order}
+Assume the setting of Definition~\ref{def:schur-transport-jet}, and suppose the
+underlying operator $A$ has tower transport order at most $r$ in the sense of
+Definition~\ref{def:tower-transport-order}. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $K_{h,0}(A)$ has order at most $r$;
+\item for every $n\ge1$, the coefficient $K_{h,n}(A)$ has order at most
+      $(n+1)r$;
+\item the exact effective operator $\CCAeff{A}{\CCPi{h}}(z)$ therefore carries a
+      constructive finite-order jet at every horizon, with order bounds
+      determined solely by the tower order of $A$.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\subsection{Stability bounds}
+
+\begin{proposition}[Schur correction bound]
+\label{prop:sigma-bound}\lean{schur_factorization_bound}
+Assume $(I - z\CCBlockQQ{A})^{-1}$ exists with $\|(I - z\CCBlockQQ{A})^{-1}\| \le M$.
+Then
+\[
+\|\CCSigmaP{P}{z}\| \;\le\; \|\CCBlockPQ{A}\| \cdot M \cdot \|\CCBlockQP{A}\|.
+\]
+\end{proposition}
+
+\begin{proof}
+$\|\CCSigmaP{P}{z}\| = \|\CCBlockPQ{A} (I - z\CCBlockQQ{A})^{-1} \CCBlockQP{A}\| \le \|\CCBlockPQ{A}\| \cdot \|(I - z\CCBlockQQ{A})^{-1}\| \cdot \|\CCBlockQP{A}\|$.
+\end{proof}
+
+\begin{proposition}[Perturbation stability]
+\label{prop:perturbation-stability}\lean{PerturbationData}\lean{schurPerturbationDiff}
+Let $A, \tilde{A}$ be operators with $E := \tilde{A} - A$.
+Assume:
+\begin{itemize}[itemsep=0.2em]
+\item $(I - z\CCBlockQQ{A})^{-1}$ exists with $\|(I - z\CCBlockQQ{A})^{-1}\| \le M$.
+\item $\|z \CCBlockQQ{E}\| \cdot M < 1$.
+\end{itemize}
+Then $(I - z\CCBlockQQ{\tilde{A}})^{-1}$ exists and
+\[
+\|\CCSigmaP{P}{z}[\tilde{A}] - \CCSigmaP{P}{z}[A]\|
+\;\le\;
+C(M, \|A\|, |z|) \cdot \|E\|,
+\]
+where
+\[
+C(M, \|A\|, |z|) = M^2 \bigl( 2 + |z| M (\|\CCBlockQQ{A}\| + \|E\|) \bigr) + M.
+\]
+\end{proposition}
+
+\begin{proof}
+Use the resolvent identity $(I - z\CCBlockQQ{\tilde{A}})^{-1} - (I - z\CCBlockQQ{A})^{-1} = z(I - z\CCBlockQQ{\tilde{A}})^{-1} \CCBlockQQ{E} (I - z\CCBlockQQ{A})^{-1}$.
+The Neumann series gives $\|(I - z\CCBlockQQ{\tilde{A}})^{-1}\| \le M/(1 - |z| M \|\CCBlockQQ{E}\|)$.
+Expand the difference $\CCSigmaP{P}{z}[\tilde{A}] - \CCSigmaP{P}{z}[A]$ using the product rule and collect terms.
+\end{proof}
+
+\subsection{Nested splits (band-by-band elimination)}
+
+\begin{lemma}[Associativity of Schur complement]
+\label{lem:nested-schur}\lean{NestedProjections}\lean{nestedSchurAssociativity}
+Let $P_1, P_2$ be orthogonal projections with $P_1 \le P_2$ (i.e., $P_1 P_2 = P_1$).
+Define $\CCComp_1 = I - P_1$ and $\CCComp_2 = I - P_2$, so $\CCComp_2 \le \CCComp_1$.
+Under appropriate invertibility conditions, eliminating $\CCComp_1$ in two stages (first eliminate $\CCComp_2 \setminus P_2$, then eliminate $(P_2 \setminus P_1)$) equals direct elimination of $\CCComp_1$:
+\[
+\CCSigmaP{P_1}{z}[A] = \CCSigmaP{P_1}{z}[\CCAeff{A}{P_2}(z)].
+\]
+\end{lemma}
+
+\begin{proof}
+This follows from the associativity of Schur complements in block matrix theory: if $M$ is a $3 \times 3$ block matrix, the Schur complement onto the first block can be computed by first eliminating the third block, then the second.
+The invertibility conditions transfer through the chain.
+\end{proof}
+
+\paragraph{Horizon-to-horizon elimination.}
+When $P_1 = \CCPi{h}$ and $P_2 = \CCPi{h'}$ with $h < h'$, Lemma~\ref{lem:nested-schur} says we can eliminate from $h'$ to $h$ in one step, or go via intermediate levels.
+This justifies recursive/hierarchical elimination schemes.
+
+\subsection{Exact Schur towers and faithful recovery}
+\label{subsec:exact-schur-towers}
+
+\begin{definition}[Exact Schur tower at fixed parameter]
+\label{def:exact-schur-tower-general}\lean{exact_schur_tower_general}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower on a Hilbert space
+$\cH$, let $A:\cH\to\cH$ be bounded, and fix
+$z\in\mathbb{C}$ such that, for every $h$, the shadow resolvent
+\[
+(I-z\CCPibar{h}A\CCPibar{h})^{-1}
+\]
+exists. The associated \emph{exact Schur tower} is the family of effective
+operators
+\[
+A_{\mathrm{eff},h}(z)
+:=
+\CCPi{h}A\CCPi{h}
++
+z\,\CCPi{h}A\CCPibar{h}(I-z\CCPibar{h}A\CCPibar{h})^{-1}\CCPibar{h}A\CCPi{h}
+=
+\CCAeff{A}{\CCPi{h}}(z).
+\]
+\end{definition}
+
+\begin{definition}[Schur coherence across nested horizons]
+\label{def:schur-coherent-family-general}\lean{schur_coherent_family_general}
+Let $\{A_{\mathrm{eff},h}(z)\}_{h\in\bbN}$ be the exact Schur tower of
+Definition~\ref{def:exact-schur-tower-general}. For $h\le k$, let
+\[
+P_{h\mid k}:=\CCPi{h}\big|_{\CCPi{k}\cH}
+\]
+denote the induced orthogonal projection from the $k$th observed sector onto
+the $h$th one. The family is \emph{Schur-coherent} if
+\[
+A_{\mathrm{eff},h}(z)
+=
+\CCAeff{A_{\mathrm{eff},k}(z)}{P_{h\mid k}}(z)
+\qquad (h\le k).
+\]
+Thus cross-horizon compatibility is expressed by exact nested elimination,
+rather than by literal intertwining of operators between different observed
+sectors.
+\end{definition}
+
+\begin{theorem}[Exact Schur coherence of a bounded-operator tower]
+\label{thm:exact-schur-coherence-general}\lean{exact_schur_coherence_general}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower on $\cH$, let
+$A:\cH\to\cH$ be bounded, and fix
+$z\in\mathbb{C}$ such that every shadow resolvent
+\[
+(I-z\CCPibar{h}A\CCPibar{h})^{-1}
+\]
+exists. Then the exact Schur tower of
+Definition~\ref{def:exact-schur-tower-general} is Schur-coherent in the sense
+of Definition~\ref{def:schur-coherent-family-general}. Equivalently, for every
+$h\le k$,
+\[
+\CCAeff{A}{\CCPi{h}}(z)
+=
+\CCAeff{\CCAeff{A}{\CCPi{k}}(z)}{P_{h\mid k}}(z).
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{theorem}[Strong recovery of the underlying operator from the exact Schur tower]
+\label{thm:schur-tower-strong-recovery-general}\lean{schur_tower_strong_recovery_general}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower on a Hilbert space
+$\cH$, let $A:\cH\to\cH$ be bounded, and fix
+$z\in\mathbb{C}$ such that every shadow resolvent exists and satisfies the
+uniform bound
+\[
+\sup_{h\in\bbN}
+\left\|
+(I-z\CCPibar{h}A\CCPibar{h})^{-1}
+\right\|
+\le M
+\]
+for some $M\ge 0$. Then for every $x\in\cH$,
+\[
+A_{\mathrm{eff},h}(z)x \to Ax
+\qquad\text{as }h\to\infty,
+\]
+where $A_{\mathrm{eff},h}(z)$ is the exact Schur tower of
+Definition~\ref{def:exact-schur-tower-general}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{remark}[Faithful recovery of the residual return field]
+\label{rem:faithful-recovery-residual-return}
+\lean{exact_schur_coherence_general, schur_tower_strong_recovery_general, nonlinear_shadow_elimination}
+Together, Theorems~\ref{thm:exact-schur-coherence-general}
+and \ref{thm:schur-tower-strong-recovery-general} show that a faithful exact
+Schur tower recovers the underlying operator itself from the effective laws
+seen at finite horizons. The residual return field of
+Definition~\ref{def:residual-return-field} is therefore not a free source
+insertion. Combined with exact nonlinear shadow elimination
+(Theorem~\ref{thm:nonlinear-shadow-elimination}), this means that the residual
+return field is an eliminated hidden datum whose returned visible trace is
+exactly controlled by the same observed effective law; it is not an independent
+postulate layered on top of that law.
+\end{remark}
+
+\begin{theorem}[Vanishing-normalized selected Schur families recover the same continuum operator]
+\label{thm:selected-schur-recovery-general}\lean{selected_schur_recovery_general}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower on $\cH$, let
+$A:\cH\to\cH$ be bounded, and fix
+$z\in\mathbb{C}$ such that the hypotheses of
+Theorem~\ref{thm:schur-tower-strong-recovery-general} hold. For each horizon
+$h$, let
+\[
+C_h:\CCPi{h}\cH\to\CCPi{h}\cH
+\]
+be any selected correction. Define the selected effective family by
+\[
+\widetilde A_h(z):=A_{\mathrm{eff},h}(z)+C_h.
+\]
+If
+\[
+\|C_h\CCPi{h}x\|\to 0
+\qquad\text{for every }x\in\cH,
+\]
+then
+\[
+\widetilde A_h(z)x\to Ax
+\qquad\text{for every }x\in\cH.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\subsection{Corollary for horizon case}
+
+\begin{corollary}[Horizon specialization]
+\label{cor:horizon-specialization}\lean{HorizonSpecialization}\lean{horizon_schur_via_spec}
+Setting $P = \CCPi{h}$ and $\CCComp = \CCPibar{h}$, all results in this section apply with:
+\begin{align*}
+\CCBlockPP{A} &= \CCRestr{A}{h}, & \CCBlockPQ{A} &= \CCPi{h} A \CCPibar{h}, \\
+\CCBlockQP{A} &= \CCLeak{A}{h}, & \CCBlockQQ{A} &= \CCPibar{h} A \CCPibar{h}.
+\end{align*}
+The Schur correction becomes $\CCSigma{h}{z}$ as in the original notation.
+\end{corollary}
+
+\paragraph{Scale variation of resolvent.}
+The horizon flow $\CCFlow{\cdot}{h}$ (Section~\ref{sec:advanced-operators}) applied to the observed resolvent $\CCPi{h} (I-zA)^{-1} \CCPi{h}$ provides a canonical scale variation operator for studying how the effective resolvent changes across coherence levels.
+
+\subsection{Determinant factorization (finite-dimensional case)}
+
+\begin{theorem}[Determinant factorization]
+\label{thm:det-factorization}\lean{CoherenceCalculus.det_factorization}
+Let $A:\cH \to \cH$ be a linear operator on a finite-dimensional Hilbert space with orthogonal projection $P$ and $\CCComp = I - P$.
+For $z \in \mathbb{C}$ such that $(I - z\CCBlockQQ{A})$ is invertible, the characteristic determinant factors as:
+\[
+\det(I - zA) = \det(I - z\CCBlockQQ{A}) \cdot \det\bigl(I - z\CCAeff{A}{P}(z)\bigr),
+\]
+where $\CCAeff{A}{P}(z) = \CCBlockPP{A} + z\CCSigmaP{P}{z}$ is the effective operator (Definition~\ref{def:effective-operator}).
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Determinant ratio identity]
+\label{cor:det-ratio}\lean{CoherenceCalculus.det_ratio}
+Under the hypotheses of Theorem~\ref{thm:det-factorization}:
+\[
+\frac{\det(I - zA)}{\det(I - z\CCBlockQQ{A})} = \det\bigl(I - z\CCAeff{A}{P}(z)\bigr).
+\]
+This expresses the ``observable determinant ratio'' purely in terms of the effective operator.
+\end{corollary}
+
+\paragraph{Spectral interpretation.}
+The identity separates the characteristic polynomial of $A$ into contributions from the $\CCComp$-block and the $P$-effective operator.
+The roots of the left-hand side (eigenvalues of $A$ scaled by $1/z$) decompose into those ``coming from'' the shadow block and those ``coming from'' the effective observed dynamics.
+
+\subsection{Functoriality under unitary conjugation}
+
+\begin{theorem}[Conjugacy invariance of split transform]
+\label{thm:split-functoriality}\lean{CoherenceCalculus.split_functoriality}
+Let $U:\cH \to \cH$ be unitary, and define $P' := UPU^*$ and $A' := UAU^*$.
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\CCSigmaP{P'}{z}[A'] = U \CCSigmaP{P}{z}[A] U^*$.
+\item $\CCAeff{A'}{P'}(z) = U \CCAeff{A}{P}(z) U^*$.
+\end{enumerate}
+In other words, the split transform commutes with unitary conjugation.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\paragraph{Symmetry inheritance.}
+Theorem~\ref{thm:split-functoriality} implies that if a symmetry group $G$ acts unitarily on $\cH$ and preserves both $A$ and $P$ (i.e., $UAU^* = A$ and $UPU^* = P$ for all $U \in G$), then $G$ also preserves the Schur correction $\CCSigmaP{P}{z}$ and effective operator $\CCAeff{A}{P}(z)$.
+This is the mechanism by which symmetry constraints propagate through the split transform.
+
+\subsection{Exact nonlinear shadow elimination}
+
+The linear Schur identity eliminates the shadow sector at the level of
+resolvents. For nonlinear equations the correct analog is different in form but
+identical in purpose: solve the shadow equation exactly as a graph over the
+observed variables, then substitute that graph back into the observed equation.
+The result is an exact reduced law on the observed sector, not an ansatz.
+
+\begin{definition}[Nonlinear $P/Q$ split]
+\label{def:nonlinear-pq-split}\lean{nonlinear_pq_split}
+Let $P$ be an orthogonal projection on $\cH$, set $Q:=I-P$, and let
+$\mathcal D\subseteq \cH$ be the domain of a map
+$F:\mathcal D\to \cH$. For $(p,q)\in \cH_P\times\cH_Q$ with
+$p+q\in\mathcal D$, define
+\[
+F_P(p,q):=PF(p+q),
+\qquad
+F_Q(p,q):=QF(p+q).
+\]
+Thus the equation $F(u)=0$ with $u=p+q$ is equivalent to the coupled system
+\[
+F_P(p,q)=0,
+\qquad
+F_Q(p,q)=0.
+\]
+\end{definition}
+
+\begin{definition}[Exact nonlinear effective law]
+\label{def:nonlinear-effective-law}\lean{nonlinear_effective_law}
+Let $U_P\subseteq \cH_P$ and $U_Q\subseteq \cH_Q$. Suppose
+$\Psi:U_P\to U_Q$ is a map such that $p+\Psi(p)\in\mathcal D$ for every
+$p\in U_P$. The associated \emph{effective nonlinear law} on $U_P$ is
+\[
+F_{\mathrm{eff}}(p):=F_P\bigl(p,\Psi(p)\bigr)
+=
+P F\bigl(p+\Psi(p)\bigr).
+\]
+\end{definition}
+
+\begin{theorem}[Exact nonlinear shadow elimination]
+\label{thm:nonlinear-shadow-elimination}\lean{nonlinear_shadow_elimination}
+Let $F:\mathcal D\to\cH$ be a map and let $P$ be an orthogonal projection with
+$Q=I-P$. Let $U_P\subseteq \cH_P$ and $U_Q\subseteq \cH_Q$, and suppose that a
+map $\Psi:U_P\to U_Q$ satisfies:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every $p\in U_P$, one has $p+\Psi(p)\in\mathcal D$ and
+      $F_Q\bigl(p,\Psi(p)\bigr)=0$;
+\item whenever $p\in U_P$, $q\in U_Q$, $p+q\in\mathcal D$, and
+      $F_Q(p,q)=0$, then $q=\Psi(p)$.
+\end{enumerate}
+Then the map
+\[
+p \longmapsto p+\Psi(p)
+\]
+is a bijection between the reduced solution set
+\[
+\{\,p\in U_P : F_{\mathrm{eff}}(p)=0\,\}
+\]
+and the full solution set
+\[
+\{\,u=p+q\in\mathcal D : p\in U_P,\ q\in U_Q,\ F(u)=0\,\}.
+\]
+Equivalently, on $U_P\times U_Q$ the full nonlinear equation $F(u)=0$ is
+exactly equivalent to the reduced observed equation
+\[
+F_{\mathrm{eff}}(p)=0
+\]
+together with the reconstruction rule $q=\Psi(p)$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{figure}[ht]
+\centering
+\resizebox{0.8\textwidth}{!}{%
+\begin{tikzpicture}[node distance=2.6cm]
+  \node[ccbox, minimum width=1.9cm] (p) at (-4.3,1.2) {$p \in \cH_P$};
+  \node[ccbox, minimum width=2.2cm] (shadow) at (-0.9,1.2) {$F_Q(p,q)=0$};
+  \node[ccbox, minimum width=2.0cm] (psi) at (2.5,1.2) {$q=\Psi(p)$};
+  \node[ccbox, minimum width=2.5cm] (u) at (-0.9,-1.1) {$u=p+\Psi(p)$};
+  \node[ccbox, minimum width=2.5cm] (eff) at (3.2,-1.1) {$F_{\mathrm{eff}}(p)=0$};
+
+  \draw[ccarrow] (p) -- node[above, cclabel] {solve shadow} (shadow);
+  \draw[ccarrow] (shadow) -- node[above, cclabel] {unique graph} (psi);
+  \draw[ccdarrow] (p.south) -- ++(0,-0.55) -| (u.west);
+  \draw[ccdarrow] (psi.south) -- ++(0,-0.55) -| (u.east);
+  \draw[ccarrow] (u) -- node[above, cclabel] {substitute} (eff);
+\end{tikzpicture}%
+}
+\caption{Exact nonlinear elimination: solve the shadow equation for
+$q=\Psi(p)$, then substitute into the observed equation.}
+\label{fig:nonlinear-elimination}
+\end{figure}
+
+\begin{proposition}[Constructive semilinear shadow solve]
+\label{prop:semicolon-shadow-elimination}\lean{semilinear_shadow_elimination}
+Let
+\[
+F(u)=Lu+N(u)-f
+\]
+on a Hilbert space $\cH$, where $L:\cH\to\cH$ is bounded linear,
+$N:\mathcal D\to\cH$ is a nonlinear map, and $f\in\cH$. Fix an orthogonal
+projection $P$, set $Q:=I-P$, and let $B_P\subseteq \cH_P$ and
+$B_Q\subseteq \cH_Q$ be sets such that $p+q\in\mathcal D$ for every
+$p\in B_P$ and $q\in B_Q$, and with $B_Q$ complete in the ambient norm.
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $QLQ:\cH_Q\to\cH_Q$ is invertible;
+\item for every $p\in B_P$, the map
+      \[
+      T_p(q):=(QLQ)^{-1}\bigl(Qf-QLP\,p-QN(p+q)\bigr)
+      \]
+      maps $B_Q$ into itself;
+\item there exists $\kappa\in[0,1)$ such that for every $p\in B_P$ and all
+      $q_1,q_2\in B_Q$,
+      \[
+      \|T_p(q_1)-T_p(q_2)\|\le \kappa \|q_1-q_2\|.
+      \]
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for each $p\in B_P$ there exists a unique $\Psi(p)\in B_Q$ satisfying
+      \[
+      QF\bigl(p+\Psi(p)\bigr)=0;
+      \]
+\item the map $\Psi:B_P\to B_Q$ is given constructively by the fixed-point
+      iteration $\Psi(p)=\lim_{n\to\infty}T_p^{\,n}(q_0)$ for any $q_0\in B_Q$;
+\item the full semilinear equation $F(u)=0$ on
+      $\{p+q:\,p\in B_P,\ q\in B_Q\}$ is exactly equivalent to the reduced law
+      \[
+      F_{\mathrm{eff}}(p)
+      =
+      \CCBlockPP{L}p + \CCBlockPQ{L}\Psi(p) + P N\bigl(p+\Psi(p)\bigr) - Pf
+      =0.
+      \]
+\end{enumerate}
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Linear resolvent problem recovered]
+\label{cor:linear-shadow-specialization}\lean{linear_shadow_specialization}
+Let $F(u)=(I-zA)u-g$ with $A:\cH\to\cH$ linear, $g\in\cH$, and $P$ an
+orthogonal projection. Assume $(I-z\CCBlockQQ{A})$ is invertible on
+$\cH_{\CCComp}$. Then the unique shadow solve is
+\[
+\Psi(p)
+=
+(I-z\CCBlockQQ{A})^{-1}\bigl(Qg+z\CCBlockQP{A}p\bigr),
+\]
+and the reduced observed equation becomes
+\[
+\bigl(I-z\CCBlockPP{A}-z^2\CCSigmaP{P}{z}\bigr)p
+=
+Pg+z\CCBlockPQ{A}(I-z\CCBlockQQ{A})^{-1}Qg.
+\]
+In particular, if $Qg=0$, then the reduced law is
+\[
+\bigl(I-z\CCAeff{A}{P}(z)\bigr)p=Pg,
+\]
+so the linear Feshbach--Schur identity of
+Theorem~\ref{thm:feshbach-schur} is recovered exactly.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\subsection{Global elimination and singular regimes}
+
+The preceding proposition gives a constructive local theorem in a contraction
+regime. The next results remove that smallness hypothesis on a large global
+class and isolate the exact obstruction to further continuation.
+
+\begin{theorem}[Global shadow elimination by strong monotonicity]\lean{global_monotone_shadow}
+\label{thm:global-monotone-shadow}
+Let $U_P\subseteq \cH_P$ and assume the shadow equation is defined on
+$U_P\times \cH_Q$. For each $p\in U_P$, write
+\[
+G_p(q):=F_Q(p,q).
+\]
+Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item each $G_p:\cH_Q\to\cH_Q$ is hemicontinuous;
+\item there exists $m>0$ such that for every $p\in U_P$ and all
+      $q_1,q_2\in\cH_Q$,
+      \[
+      \operatorname{Re}\langle G_p(q_1)-G_p(q_2),\,q_1-q_2\rangle
+      \ge
+      m\|q_1-q_2\|^2;
+      \]
+\item each $G_p$ is coercive:
+      \[
+      \frac{\operatorname{Re}\langle G_p(q),q\rangle}{\|q\|}
+      \longrightarrow +\infty
+      \qquad\text{as }\|q\|\to\infty;
+      \]
+\item there exists $L\ge 0$ such that for every $p_1,p_2\in U_P$ and
+      $q\in\cH_Q$,
+      \[
+      \|G_{p_1}(q)-G_{p_2}(q)\|\le L\|p_1-p_2\|.
+      \]
+\end{enumerate}
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item for every $p\in U_P$ there exists a unique $\Psi(p)\in\cH_Q$ such that
+      $F_Q\bigl(p,\Psi(p)\bigr)=0$;
+\item the shadow graph $\Psi:U_P\to\cH_Q$ is globally Lipschitz with
+      \[
+      \|\Psi(p_1)-\Psi(p_2)\|\le \frac{L}{m}\|p_1-p_2\|;
+      \]
+\item the full equation $F(u)=0$ on
+      $\{\,p+q:\,p\in U_P,\ q\in\cH_Q\,\}$ is exactly equivalent to the
+      reduced observed law
+      \[
+      F_{\mathrm{eff}}(p)=P F\bigl(p+\Psi(p)\bigr)=0.
+      \]
+\end{enumerate}
+No Fredholm assumption is required.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{theorem}[Regular and singular shadow regimes]\lean{regular_singular_shadow}
+\label{thm:regular-singular-shadow}
+Let $\mathcal O\subseteq \cH_P\times\cH_Q$ be open and suppose
+$F_Q:\mathcal O\to\cH_Q$ is $C^1$. Define the regular and singular shadow sets
+by
+\[
+\mathcal R
+:=
+\{(p,q)\in\mathcal O:\,F_Q(p,q)=0,\ D_qF_Q(p,q)\text{ is invertible}\}
+\]
+and
+\[
+\Sigma
+:=
+\{(p,q)\in\mathcal O:\,F_Q(p,q)=0,\ D_qF_Q(p,q)\text{ is not invertible}\}.
+\]
+Then every $(p_0,q_0)\in\mathcal R$ admits neighborhoods
+$U\subseteq \cH_P$, $V\subseteq \cH_Q$ and a unique $C^1$ map
+$\Psi:U\to V$ such that
+\[
+\Psi(p_0)=q_0
+\qquad\text{and}\qquad
+F_Q\bigl(p,\Psi(p)\bigr)=0
+\quad \text{for all }p\in U.
+\]
+Moreover,
+\[
+D\Psi(p)
+=
+-\bigl[D_qF_Q\bigl(p,\Psi(p)\bigr)\bigr]^{-1}
+  D_pF_Q\bigl(p,\Psi(p)\bigr).
+\]
+Thus $\Sigma$ is exactly the obstruction to local smooth shadow elimination.
+\end{theorem}
+
+\begin{proof}
+This is the Banach-space implicit function theorem applied to the map
+$F_Q$ at a zero $(p_0,q_0)$ with invertible vertical derivative
+$D_qF_Q(p_0,q_0)$. The derivative formula follows by differentiating the
+identity $F_Q(p,\Psi(p))=0$ and solving for $D\Psi(p)$.
+\end{proof}
+
+\begin{proposition}[Gauge-sliced shadow elimination]\lean{gauge_sliced_shadow}
+\label{prop:gauge-sliced-shadow}
+Assume a group $\Gamma$ acts on $\cH_Q$ by isometries. Let
+$S\subseteq \cH_Q$ be a slice with the following properties:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the shadow equation is gauge-invariant in the sense that
+      \[
+      F_Q(p,\gamma\cdot q)=0
+      \quad\Longleftrightarrow\quad
+      F_Q(p,q)=0
+      \qquad
+      (\gamma\in\Gamma);
+      \]
+\item every $\Gamma$-orbit contained in the shadow zero set intersects $S$ in
+      exactly one point.
+\end{enumerate}
+Then solving $F_Q(p,q)=0$ modulo gauge is equivalent to solving the restricted
+equation
+\[
+F_Q(p,s)=0
+\qquad\text{with } s\in S.
+\]
+If the restricted equation on $U_P\times S$ satisfies the hypotheses of
+Theorem~\ref{thm:global-monotone-shadow} or
+Theorem~\ref{thm:regular-singular-shadow}, then the full equation admits a
+unique reduced observed law modulo gauge.
+\end{proposition}
+
+\begin{proof}
+By gauge invariance, the shadow zero set is a union of $\Gamma$-orbits.
+Assumption (ii) gives a bijection between those orbits and their unique slice
+representatives in $S$. Therefore solving the shadow equation modulo gauge is
+the same as solving it on the slice. The final statement is immediate from the
+two cited theorems applied to the restricted equation.
+\end{proof}
+
+\paragraph{What is now solved, and what remains.}
+The open problem of nonlinear elimination is resolved in the theoremic sense
+needed by this manuscript. Exact elimination is now available:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item locally by contraction in Proposition~\ref{prop:semicolon-shadow-elimination};
+\item globally on a non-Fredholm class by strong monotonicity in
+      Theorem~\ref{thm:global-monotone-shadow};
+\item near regular singularity-free points by the implicit-function regime of
+      Theorem~\ref{thm:regular-singular-shadow};
+\item modulo gauge once a slice is fixed, by
+      Proposition~\ref{prop:gauge-sliced-shadow}.
+\end{enumerate}
+What remains open is no longer elimination itself, but model-specific
+verification of these hypotheses and branch selection on the singular set
+$\Sigma$ when multiple continuations become admissible.

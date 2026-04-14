@@ -1,0 +1,431 @@
+% ============================================================
+\section{Canonical Closure-Balance Realization}
+\label{sec:closure-balance-realization}
+% ============================================================
+
+The counting layer of Chapter~6 determines a distinguished finite realization
+of the additive horizon-system interface. The purpose of the present section is
+to record that realized model explicitly: its signed-count arithmetic, its
+canonical four-grade state space, its canonical boundary, and its canonical
+horizon tower. These are not auxiliary choices. They are forced by the same
+counting classification that selects the unique nontrivial balanced dimension.
+
+\subsection{Canonical realized state space}
+
+\begin{definition}[Signed-count arithmetic]\label{def:scalar-field}\lean{SignedCount}
+The scalar-like quantity of the canonical realization is a \emph{signed count}:
+a normalized difference of two finite tallies. It records excess pair count
+over order count, or order count over pair count, without importing the usual
+integer apparatus as primitive foundation.
+\end{definition}
+
+\begin{definition}[Canonical closure state space]
+\label{def:closure-realized-state}
+\lean{ClosureState}\lean{ClosureState.add}\lean{ClosureState.zero}\lean{closureCoordinates}\lean{stateFromClosureCoordinates}\lean{State}
+The canonical closure-balance realization carries the four-grade additive state
+\[
+\cH_{\mathrm{cl}} := \{(x_0,x_1,x_2,x_3) : x_i \text{ is a signed count}\}.
+\]
+Addition, negation, and zero are defined coordinatewise. This is the
+distinguished nontrivial finite state space selected by the balanced dimension
+$D=4$.
+\end{definition}
+
+\begin{definition}[Canonical energy pairing]
+\label{def:closure-realized-pairing}
+\lean{State.pair}\lean{State.pair_self}
+The canonical energy pairing on $\cH_{\mathrm{cl}}$ is the coordinate sum
+\[
+\langle x,y\rangle_{\mathrm{cl}}
+:=
+\sum_{i=0}^3 \langle x_i,y_i\rangle_{\mathrm{count}},
+\]
+where each coordinate pairing is induced by the signed-count energy. Its
+diagonal recovers the canonical realized energy:
+\[
+\langle x,x\rangle_{\mathrm{cl}} = \|x\|_{\mathrm{cl}}^2.
+\]
+\end{definition}
+
+\begin{theorem}[Realized state layer is explicit closure transport]
+\label{thm:state-transport}
+\lean{closureStateTransport}\lean{state_layer_is_closure_transport}
+The theorem-bearing realized state layer introduces no additional ambient data.
+It is exactly the canonical four-grade closure state transported into the state
+language used throughout the manuscript. Equivalently, transporting a closure
+state into the reconstructed state layer and then reading off its closure
+coordinates returns the original closure state.
+\end{theorem}
+
+\begin{proof}
+The transport is defined coordinatewise, and its inverse simply reads back
+those same four coordinates. The round trip is therefore identity on closure
+states.
+\end{proof}
+
+\subsection{Canonical full boundary and coherence tower}
+
+\begin{definition}[True boundary]\label{def:true-boundary}\lean{trueBoundary}\lean{closureBoundary_realizes_trueBoundary}\lean{closureBoundaryState_unique}\lean{trueBoundary_unique}
+The clean coherence-calculus realization carries a canonical full boundary $d$
+on the four-grade state space. In closure-realized coordinates, it is exactly
+the grade-lowering map that sends odd layers to the next lower even layer and
+annihilates the even layers. It is defined before any horizon cut is applied.
+Once that grade-lowering law is fixed, no alternative realized full boundary
+remains.
+\end{definition}
+
+\begin{theorem}[Closure realization of the true boundary]\label{thm:true-boundary-realized}\lean{closureBoundary_realizes_trueBoundary}
+In closure-realized coordinates, the rebuilt true boundary is exactly the
+canonical grade-lowering closure boundary.
+\end{theorem}
+
+\begin{proof}
+Both maps have the same explicit coordinate action: odd grades drop to the next
+lower even grade, and even grades are annihilated. Hence they agree
+coordinatewise.
+\end{proof}
+
+\begin{theorem}[Full boundary closes]\label{thm:full-boundary-closes}\lean{closureBoundaryState_square_zero}\lean{fullBoundary_closes}
+The true boundary closes on the full coherence space:
+\[
+d^2=0.
+\]
+\end{theorem}
+
+\begin{proof}
+This is a direct calculation in the canonical four-grade boundary map: the
+image of $d$ already lies in grades annihilated by one further application.
+\end{proof}
+
+\begin{definition}[Canonical coherence tower]\label{def:coherence-tower}\lean{closureProjectionState}\lean{closureProjectionFromCounting}\lean{closureProjection_realizes_coherenceProjection}\lean{closureTower}\lean{closureProjectionState_unique}\lean{closureTower_projection_unique}
+The canonical coherence tower is induced by closure-grade cutoff. It reveals
+the state one coordinate layer at a time. At horizon $h$, exactly the grades
+strictly below $h$ are visible. Once the four-grade realization is fixed, this
+tower is fixed with it, and any realized tower obeying the same grade-cut law
+agrees with it pointwise.
+\end{definition}
+
+\begin{theorem}[Uniqueness of the realized tower and boundary]\label{thm:realized-uniqueness}\lean{closureProjectionState_unique}\lean{closureBoundaryState_unique}\lean{closureTower_projection_unique}\lean{trueBoundary_unique}
+At the closure-state level, any admissible projection family satisfying the
+forced grade-cut law agrees with the canonical closure projection, and any
+admissible boundary satisfying the forced grade-lowering law agrees with the
+canonical closure boundary. Consequently, at the rebuilt state level, any
+realized tower or full boundary transporting those same closure laws agrees
+pointwise with the canonical coherence tower and the true boundary.
+\end{theorem}
+
+\begin{proof}
+The forced grade laws determine every coordinate explicitly. There is therefore
+no residual choice: equality follows coordinatewise on closure states, and
+transport carries that uniqueness to the rebuilt state layer.
+\end{proof}
+
+\begin{lemma}[Finite faithfulness of the canonical tower]\label{lem:coherence-tower-faithful}\lean{closureProjection_after_stable_dimension}\lean{closureShadow_after_stable_dimension}\lean{closureFaithfulTower}
+For the four-grade coherence state space, the canonical tower becomes exact
+after finitely many steps:
+\[
+\CCPi{h+4}x=x,
+\qquad
+\CCPibar{h+4}x=0.
+\]
+\end{lemma}
+
+\begin{proof}
+After four refinement steps every coordinate is visible, so no shadow remains.
+\end{proof}
+
+\begin{theorem}[Closure-Balance Realization of the Structural Interface]
+\label{thm:closure-balance-realizes-interface}
+\lean{closure_balance_realizes_interface}
+The counting derivation of Section~\ref{sec:diophantine} determines a
+distinguished realized instance of the operator interface of Part~I. Its data
+are:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item the canonical four-grade additive state space of Definition~\ref{def:closure-realized-state},
+\item the canonical energy pairing of Definition~\ref{def:closure-realized-pairing},
+\item the nilpotent full boundary of Definition~\ref{def:true-boundary},
+\item the canonical horizon tower of Definition~\ref{def:coherence-tower},
+\item finite faithfulness of that tower.
+\end{enumerate}
+Consequently, the structural theorems of Part~I apply to this realized system
+without further choice.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\subsection{The Canonical Horizon Bundle and Horizon Complex}
+
+\begin{definition}[Horizon bundle]
+\label{def:horizon-bundle}\lean{HorizonBundle}\lean{HorizonBundle.projection}\lean{HorizonBundle.visible}\lean{HorizonBundle.shadow}\lean{HorizonBundle.pairing}\lean{HorizonBundle.pairing_self}
+A \emph{horizon bundle} on the rebuilt carrier is the local state space together
+with a nested family of horizon cuts. On the active four-grade realization, the
+pair
+\[
+(\cH_{\mathrm{cl}},\{\CCPi{h}\}_{h\in\bbN})
+\]
+is the canonical horizon bundle: the visible part at horizon \(h\) is
+\(\CCPi{h}x\), the shadow part is \(x-\CCPi{h}x\), and the bundle pairing is
+the canonical state pairing \(\langle x,y\rangle_{\mathrm{cl}}\).
+\end{definition}
+
+\begin{definition}[Horizon complex]
+\label{def:horizon-complex}\lean{HorizonComplex}\lean{HorizonComplex.observedBoundary}\lean{HorizonComplex.leakage}\lean{HorizonComplex.returnMap}\lean{HorizonComplex.defect}\lean{HorizonComplex.residualReturnField}
+A \emph{horizon complex} is a horizon bundle together with a nilpotent full
+boundary \(d\). The induced visible boundary, leakage, return, and defect on a
+cut \(h\) are
+\[
+\CCObs{d}{h}:=\CCPi{h}d\CCPi{h},
+\qquad
+\CCLeak{d}{h}:=\CCPibar{h}d\CCPi{h},
+\CCDefect{d}{h}:=\CCPi{h}d\CCPibar{h}d\CCPi{h}.
+\]
+The corresponding return map is \(\CCPi{h}d\CCPibar{h}\).
+Thus the horizon complex is the native Part~I object carrying the cut/defect
+calculus: full closure holds before the cut, and failure of closure appears
+only after observation.
+\end{definition}
+
+\begin{theorem}[Closure Balance already yields the canonical horizon complex]
+\label{thm:closure-balance-yields-the-canonical-horizon-complex}\lean{canonicalHorizonBundle}\lean{canonicalHorizonComplex}\lean{canonicalHorizonComplex_surface}\lean{canonical_visible_after_stable_dimension}\lean{canonical_shadow_after_stable_dimension}\lean{HorizonComplex.returnedResidual_eq_schur}
+Closure Balance determines, on the rebuilt four-grade carrier, a canonical
+horizon bundle and a canonical horizon complex. Concretely:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the full boundary on that complex squares to zero;
+\item on every horizon cut, the observed boundary satisfies
+      \[
+      \CCObs{d}{h}^2=-\,\CCDefect{d}{h};
+      \]
+\item after four further refinements the visible cut becomes exact and the
+      shadow vanishes;
+\item once a shadow propagator is chosen on a cut, the corresponding returned
+      residual field is exactly the Schur correction across that cut.
+\end{enumerate}
+So the rebuilt state carrier is not merely a four-coordinate list. It already
+carries one canonical horizon complex with its native boundary and
+residual-return grammar.
+\end{theorem}
+
+\begin{proof}
+Take the canonical horizon bundle to be the rebuilt state carrier with the
+canonical coherence tower, and take the canonical horizon complex to be that
+same bundle with the true boundary \(d\). Full closure is
+Theorem~\ref{thm:full-boundary-closes}, the cut-defect law is
+Corollary~\ref{cor:HFT1-boundary}, and finite exact visibility is
+Lemma~\ref{lem:coherence-tower-faithful}. The final clause is the Schur
+factorization of the residual-return field on that same cut.
+\end{proof}
+
+\subsection{Canonical HFT Consequences}
+
+\begin{corollary}[Closure-Balance HFT-1]
+\label{cor:HFT1-boundary}\lean{closureBoundaryState_square_zero}\lean{fullBoundary_closes}\lean{closureBoundary_closes}\lean{HFT1_closure_exact}\lean{closureObservedBoundaryState_square_eq_neg_defect}
+Let $\cH$ be the full coherence space, let $d$ denote its true boundary, and
+let $(\CCPi{h})_{h\in\bbN}$ be the canonical coherence tower. Then $d^2 = 0$ in
+the full space, observation is the cut $\CCObs{d}{h} := \CCPi{h} d \CCPi{h}$,
+and
+\[
+\CCObs{d}{h}^2 \;=\; -\,\CCDefectExpr{d}{h}.
+\]
+Thus closure holds in the full space and fails only after the horizon cut.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:HFT1-general} to the true boundary $d$ furnished by
+Theorem~\ref{thm:full-boundary-closes}.
+\end{proof}
+
+\begin{corollary}[Closure-Balance HFT-2]
+\label{thm:HFT2-canonical}\lean{closureEnergyTower}\lean{closureFaithfulTower}\lean{HFT2_closure_finite}\lean{HFT2_closure_stabilized}\lean{closureHFT2_state_finite}\lean{closureHFT2_state_stabilized}
+For the canonical coherence tower, adjacent horizons close internally and the
+refinement layers are exact coherence increments. Hence for nested coherence
+horizons $h_0 \le h_1 \le \cdots \le h_N$ and any $x\in\cH$,
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\sum_{j=0}^{N-1} \|(\CCPi{h_{j+1}} - \CCPi{h_j})x\|^2 + \|x - \CCPi{h_N} x\|^2.
+\]
+Since the canonical coherence tower is faithful, the tail vanishes after
+sufficient refinement. Hence there exists $N$ such that for every $k \ge 0$,
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\sum_{j=0}^{N+k-1} \|(\CCPi{h_0+j+1} - \CCPi{h_0+j})x\|^2.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:HFT2-general} to the canonical coherence tower supplied
+by Definition~\ref{def:coherence-tower} and
+Lemma~\ref{lem:coherence-tower-faithful}. In this realized system, the tower
+hypotheses are not postulated externally: they are forced by Closure Balance.
+\end{proof}
+
+
+% --- Hodge scalar and canonical invariants ---
+
+\subsection{The Hodge scalar identity on the balanced complex}
+\label{subsec:hodge-scalar-theorem}
+
+The six-slot carrier of the balanced four-incidence is simultaneously the edge
+carrier of the clique complex \(K_4\). At that level, the simplicial Hodge
+\(1\)-Laplacian is maximally symmetric.
+
+\paragraph{Hodge scalar identity on \(K_4\).}
+Let
+\[
+\Delta_1:=\partial_1^\top\partial_1+\partial_2\partial_2^\top
+\]
+denote the simplicial Hodge \(1\)-Laplacian on the edge space of \(K_4\).
+Then
+\[
+\Delta_1 = 4 I_6.
+\]
+The proof is the same exact cancellation mechanism used in the short-paper
+companion treatment:
+every diagonal entry contributes \(2\) from shared vertices and \(2\) from
+shared triangles, while every adjacent off-diagonal contribution is
+\(+1\) from the lower term and \(-1\) from the upper term, hence cancels.
+Disjoint edges contribute \(0\) to both pieces. Thus no edge direction is
+preferred on the balanced complex.
+
+\paragraph{Why this matters here.}
+At the discrete balanced level, nilpotent closure therefore distributes its
+content democratically across the six-slot carrier. The later channel
+distinction is not already visible in the raw Hodge operator on \(K_4\); it
+appears only after the intrinsic \(1+2+3\) decomposition is read through the
+continuum bridge. In that sense the balanced complex is maximally symmetric
+before the continuum carrier readouts differentiate the phase, wave, gauge,
+and geometric lanes.
+
+\subsection{Canonical horizon invariants}
+
+Two a priori different horizon-dependent data packages are now available.
+Chapter~5 attached a shadow-transport spectrum, its moments, and its
+determinant polynomial to the boundary leakage operator. The canonical tower
+also attaches a tail-energy profile to each state. In the closure-balance
+realization these behave very differently: the boundary package collapses
+identically, whereas the state-tail package yields a nontrivial finite profile.
+
+\begin{theorem}[Canonical collapse of boundary shadow transport]
+\label{thm:canonical-shadow-collapse}
+\lean{canonical_shadow_collapse}
+For the canonical true boundary $d$ and the canonical coherence tower
+$(\CCPi{h})_{h\in\bbN}$,
+\[
+\CCPibar{h} d \CCPi{h} = 0,
+\qquad
+\CCDefectExpr{d}{h}=0
+\]
+for every horizon $h$. Consequently, on the finite observed sector
+$\CCPi{h}\cH_{\mathrm{cl}}$, the shadow-transport invariant family of
+Definition~\ref{def:shadow-transport-invariants} is trivial:
+\[
+\Lambda_h(d)=\{0,\dots,0\},
+\qquad
+M_k(h)=0 \quad (k\ge 1),
+\qquad
+\Delta_h(t)=1.
+\]
+\end{theorem}
+
+\begin{proof}
+In closure-realized coordinates, $\CCPi{h}$ keeps exactly the grades strictly
+below $h$, while $d$ lowers each odd grade to the next lower even grade and
+annihilates the even grades. Hence if $x$ is observable at horizon $h$, every
+nonzero coordinate of $dx$ still lies in a grade strictly below $h$. Therefore
+$\CCPibar{h} d \CCPi{h}x=0$ for every $x$, proving $\CCPibar{h} d \CCPi{h}=0$.
+The defect operator $\CCPi{h} d \CCPibar{h} d \CCPi{h}$ therefore vanishes as
+well. The statements about $\Lambda_h(d)$, the moments, and the determinant
+polynomial then follow from Theorem~\ref{thm:shadow-transport-package}.
+\end{proof}
+
+\begin{definition}[Canonical tail and revelation profiles]
+\label{def:canonical-tail-profile}
+\lean{canonicalGradeEnergy}\lean{canonicalTailProfile}\lean{canonicalRevelationProfile}
+For a closure-realized state $x=(x_0,x_1,x_2,x_3)\in\cH_{\mathrm{cl}}$, define
+its \emph{grade energies}
+\[
+\varepsilon_i(x) := \|x_i\|_{\mathrm{count}}^2
+\qquad (0\le i\le 3).
+\]
+Define its \emph{tail profile} by
+\[
+E_h(x) := \|x-\CCPi{h}x\|_{\mathrm{cl}}^2,
+\]
+and its \emph{revelation profile} by the one-step increment energies
+\[
+\mu_h(x) := \|(\CCPi{h+1}-\CCPi{h})x\|_{\mathrm{cl}}^2
+\qquad (h\in\bbN).
+\]
+\end{definition}
+
+\begin{theorem}[Exact canonical tail and revelation laws]
+\label{thm:canonical-tail-laws}
+\lean{canonical_tail_laws}
+For every closure-realized state $x=(x_0,x_1,x_2,x_3)$,
+\begin{align*}
+E_0(x) &= \varepsilon_0(x)+\varepsilon_1(x)+\varepsilon_2(x)+\varepsilon_3(x),\\
+E_1(x) &= \varepsilon_1(x)+\varepsilon_2(x)+\varepsilon_3(x),\\
+E_2(x) &= \varepsilon_2(x)+\varepsilon_3(x),\\
+E_3(x) &= \varepsilon_3(x),\\
+E_h(x) &= 0 \qquad (h\ge 4),
+\end{align*}
+and
+\begin{align*}
+\mu_0(x) &= \varepsilon_0(x),\\
+\mu_1(x) &= \varepsilon_1(x),\\
+\mu_2(x) &= \varepsilon_2(x),\\
+\mu_3(x) &= \varepsilon_3(x),\\
+\mu_h(x) &= 0 \qquad (h\ge 4).
+\end{align*}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Finite cumulative law and exact reconstruction]
+\label{cor:canonical-tail-reconstruction}
+\lean{canonical_tail_reconstruction}
+For every closure-realized state $x$ and every horizon $0\le h\le 3$,
+\[
+E_h(x)=\sum_{j=h}^{3}\mu_j(x).
+\]
+Moreover $E_h(x)=0$ for every $h\ge 4$.
+Equivalently,
+\[
+E_0(x)=\mu_0(x)+E_1(x),\quad
+E_1(x)=\mu_1(x)+E_2(x),\quad
+E_2(x)=\mu_2(x)+E_3(x),\quad
+E_3(x)=\mu_3(x).
+\]
+Consequently,
+\[
+E_0(x)\ge E_1(x)\ge E_2(x)\ge E_3(x)\ge E_4(x)=0,
+\]
+and the grade energies are recovered exactly from the horizon profile:
+\[
+\varepsilon_i(x)=\mu_i(x)
+\qquad (0\le i\le 3).
+\]
+\end{corollary}
+
+\begin{proof}
+Substitute the formulas of Theorem~\ref{thm:canonical-tail-laws}. The
+cumulative identity is immediate, the monotonicity follows because each
+$\mu_i(x)$ is a nonnegative energy, and the final identity
+$\varepsilon_i(x)=\mu_i(x)$ is exactly the one-step revelation law.
+\end{proof}
+
+\paragraph{What varies canonically.}
+The closure-balance realization therefore separates two notions that might
+otherwise be conflated. The true boundary is internally exact across every
+horizon cut, so its shadow-transport spectrum is trivial. The nontrivial
+horizon dependence lies instead in the state-side tail and revelation
+profiles: the horizon reveals one grade at a time, and the successive energy
+drops record exactly how much of the state occupied each hidden grade. This is
+a purely internal exposure law of the canonical tower; no external scale
+parameter is assumed here.
+
+\paragraph{Distinguished realized model.}
+Chapter~6 does not enlarge the structural calculus. It identifies the canonical
+finite model singled out by the counting bedrock and shows that the structural
+operator identities of Part~I apply to that model without any further choice.

@@ -1,0 +1,90 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:boundary-defect}
+% ============================================================
+
+This section formalizes the ``kernel defect'' as a projection induced by
+constraint maps. It supplies the finite-dimensional projector calculus used in
+Section~\ref{sec:observable-relative-closure} to split a returned residual into
+its workload-effective and workload-null parts. Everything below is stated for
+finite-dimensional inner-product spaces, so the Moore--Penrose pseudoinverse
+and trace are unambiguous.
+
+\subsection{Constraint Maps}
+
+\begin{definition}[Constraint map]
+\label{def:constraint-map}\lean{CoherenceCalculus.AppendixOperators.ConstraintMap}
+Let $\cH_{\mathrm{source}}$ and $\cH_{\mathrm{target}}$ be
+finite-dimensional inner-product spaces. A \emph{constraint map} is a linear
+map
+\[
+C:\cH_{\mathrm{source}}\to\cH_{\mathrm{target}}
+\]
+encoding conditions that must be satisfied. The kernel $\Ker(C)$ consists of
+states that violate no constraints; the cokernel measures redundancy or defect.
+\end{definition}
+
+\subsection{Defect Projectors}
+
+\begin{definition}[Defect projector]
+\label{def:defect-projector}\lean{CoherenceCalculus.AppendixOperators.defectProjector}
+Define the \emph{defect projector}
+\[
+P_{\Ker} := I - C^+C,
+\]
+where $C^+$ is the Moore--Penrose pseudoinverse of $C$.
+\end{definition}
+
+\begin{lemma}[Trace equals kernel dimension]
+\label{lem:trace-ker}\lean{CoherenceCalculus.AppendixOperators.defect_projector_characterization}
+$P_{\Ker}$ is the orthogonal projector onto $\Ker(C)$ and
+\[
+\Tr(P_{\Ker}) = \dim\Ker(C).
+\]
+\end{lemma}
+
+\begin{proof}
+In finite-dimensional inner-product spaces, $C^+C$ is the orthogonal projector
+onto $\Img(C^\ast) = (\Ker C)^\perp$. Therefore
+\[
+P_{\Ker}=I-C^+C
+\]
+is the orthogonal projector onto $\Ker(C)$. The trace of an orthogonal
+projector equals the dimension of its range, so
+\[
+\Tr(P_{\Ker})=\dim\Ker(C).
+\]
+\end{proof}
+
+\subsection{Interpretation and Extensions}
+
+\begin{quote}\small
+\textbf{Intuition.} The defect projector $P_{\Ker}$ picks out exactly those
+states that have no image under the constraint map $C$. If $\dim\Ker(C) = 1$,
+there is a single unmatched degree of freedom, namely one mode that cannot be
+matched to any target.
+\end{quote}
+
+\begin{remark}[Interpretation: unmatched modes]
+\lean{CoherenceCalculus.AppendixOperators.boundary_homeless_modes}
+When $\dim\Ker(C) > 0$, there exist source configurations with no valid target representation.
+These unmatched modes constitute the defect. A rank-one kernel corresponds to
+a single unclosable degree of freedom.
+\end{remark}
+
+\begin{remark}[Infinite-dimensional extension]
+\lean{CoherenceCalculus.AppendixOperators.boundary_infinite_dimensional_extension}
+For closed-range operators between Hilbert spaces the same formulas hold with
+the Hilbert-space Moore--Penrose pseudoinverse. That functional-analytic
+extension is standard, but the current appendix only uses the exact
+finite-dimensional version above.
+\end{remark}
+
+\begin{remark}[Boundary defect functional]
+\lean{CoherenceCalculus.AppendixOperators.boundary_defect_functional}
+In graph or geometric settings where constraint maps are localized (e.g., at boundary events), one can sum the local kernel dimensions:
+\[
+\cB := \sum_{v \in S} \dim\Ker(C_v).
+\]
+This ``boundary defect functional'' counts total unclosable degrees of freedom.
+\end{remark}

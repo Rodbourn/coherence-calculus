@@ -1,0 +1,341 @@
+% ============================================================
+\section{The Horizon Fundamental Theorem}
+\label{sec:hft}
+% ============================================================
+
+This section records the structural projection laws behind the calculus.
+The order matters:
+
+\begin{enumerate}[label=(\roman*)]
+\item for any square-zero additive operator, projection produces an exact defect identity;
+\item for any compatible horizon tower, orthogonal refinement produces an exact telescoping law in energy;
+\item realized models of the calculus may then instantiate these structural laws with canonical concrete data.
+\end{enumerate}
+
+The canonical closure-balance realization of these laws is deferred to
+Part~I. This chapter develops only the structural theorem layer.
+
+\begin{theorem}[General HFT-1]
+\label{thm:HFT1-general}\lean{HFT1_general_nilpotent}
+Let $\cH$ be an additive state space with a transitive horizon tower $(\CCPi{h})_{h\in\bbN}$, let $A$ be an additive operator on $\cH$, and assume
+\[
+A^2 = 0.
+\]
+Define the observed operator $\CCObs{A}{h} := \CCPi{h} A \CCPi{h}$ and $\CCPibar{h} := I - \CCPi{h}$.
+Then
+\[
+\CCObs{A}{h}^2 \;=\; -\,\CCPi{h} A \CCPibar{h} A \CCPi{h}.
+\]
+Equivalently,
+\[
+\CCObs{A}{h}^2 \;=\; -\,\CCDefectExpr{A}{h}.
+\]
+\end{theorem}
+
+\begin{proof}
+Compute
+\[
+0 = \CCPi{h} A^2 \CCPi{h}
+= \CCPi{h} A(\CCPi{h} + \CCPibar{h})A\CCPi{h}
+= \underbrace{\CCPi{h} A\CCPi{h} A\CCPi{h}}_{\CCObs{A}{h}^2} + \CCPi{h} A \CCPibar{h} A \CCPi{h}.
+\]
+Rearranging gives the claim.
+\end{proof}
+
+The remaining part of the Horizon Fundamental Theorem is the refinement law.
+Its algebraic content is that adjacent refinement layers close internally and telescope.
+Its metric content is that, when those layers are orthogonal, the hidden remainder decomposes into an exact sum of layer energies.
+
+\begin{theorem}[General HFT-2]
+\label{thm:HFT2-general}\label{thm:HFT}\lean{HFT2_finite_energy}\lean{HFT2_faithful_stabilized}
+Let $(\CCPi{h})_{h\in\bbN}$ be a nested horizon tower on $\cH$ whose refinement layers split orthogonally, so that each horizon cut satisfies an exact Pythagorean decomposition.
+For nested horizons $h_0 \le h_1 \le \cdots \le h_N$ and any $x\in\cH$,
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\sum_{j=0}^{N-1} \|(\CCPi{h_{j+1}} - \CCPi{h_j})x\|^2 + \|x - \CCPi{h_N} x\|^2.
+\]
+If the tower is \emph{tail-faithful in the HFT-2 sense}, meaning that the tail
+energy eventually vanishes along consecutive refinement, then there exists $N$
+such that for every $k \ge 0$,
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\sum_{j=0}^{N+k-1} \|(\CCPi{h_0+j+1} - \CCPi{h_0+j})x\|^2.
+\]
+\end{theorem}
+
+\begin{proof}
+The finite statement is the orthogonal telescoping law for the refinement chain: adjacent internal interfaces cancel algebraically, and orthogonality converts that telescoping decomposition into an exact sum of energies.
+The tail-faithful statement is the exact discrete stabilization of those finite
+prefix sums once the tail energy vanishes.
+No analytic infinite-series machinery is used at this stage.
+\end{proof}
+
+\begin{remark}[HFT-2 as realized exactification ledger]
+\label{rem:hft2-realized-exactification-ledger}\lean{CoherenceCalculus.TerminationData, CoherenceCalculus.nonterminal_incidences_continue, CoherenceCalculus.pair_telescope_energy}
+At the bedrock level, the termination law identifies zero defect with
+terminality, while nonterminal incidence continues by strict extension and
+closure defect can vanish only on strict extension if terminality is
+eventually reached
+(Axioms~\ref{ax:termination} and~\ref{ax:nonretroactive-exactification}).
+HFT-2 is the first realized telescoping law for that continuation burden:
+adjacent refinement layers cancel internally, and the remaining quantity is an
+exact sum of realized layer energies. In this sense HFT-2 does not generate
+continuation; it measures the additive burden of exactification once a horizon
+tower has been chosen.
+\end{remark}
+
+\begin{remark}[Tail faithfulness versus continuum-bridge faithfulness]
+\label{rem:hft2-tail-faithfulness}
+\lean{HFT2_faithful_prefix_exact, HFT2_faithful_stabilized}
+The HFT-2 use of ``tail-faithful'' is a finite-stabilization condition: after
+some finite refinement stage, the hidden tail energy vanishes exactly.
+This is stronger than, and distinct from, the continuum-bridge notion of
+faithfulness as strong limit recovery along an infinite tower.
+\end{remark}
+
+\begin{lemma}[One-step shadow-energy split]
+\label{lem:hft2-one-step}\lean{pair_telescope_energy}
+Under the hypotheses of Theorem~\ref{thm:HFT2-general}, every nested pair of horizons $h_0 \le h_1$ satisfies
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\|(\CCPi{h_1} - \CCPi{h_0})x\|^2 + \|x - \CCPi{h_1} x\|^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Split the $h_0$-shadow into the part revealed at horizon $h_1$ and the remaining $h_1$-shadow.
+Orthogonality of the refinement split gives the exact Pythagorean identity.
+\end{proof}
+
+\begin{corollary}[Three-level HFT-2]
+\label{cor:hft2-three-level}\lean{HFT2_three_level_energy}
+Under the hypotheses of Theorem~\ref{thm:HFT2-general}, every triple $h_0 \le h_1 \le h_2$ satisfies
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\|(\CCPi{h_1} - \CCPi{h_0})x\|^2
++ \|(\CCPi{h_2} - \CCPi{h_1})x\|^2
++ \|x - \CCPi{h_2} x\|^2.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:hft2-one-step} first to $(h_0,h_1)$ and then to $(h_1,h_2)$.
+\end{proof}
+
+\begin{proposition}[Faithful exact-prefix capture]
+\label{prop:hft2-prefix-exact}\lean{HFT2_faithful_prefix_exact}
+If the tower is tail-faithful in the sense of
+Theorem~\ref{thm:HFT2-general}, then for every initial horizon $h_0$ there
+exists a finite stage $N$ such that
+\[
+\|x - \CCPi{h_0} x\|^2
+=
+\sum_{j=0}^{N-1} \|(\CCPi{h_0+j+1} - \CCPi{h_0+j})x\|^2.
+\]
+So the total hidden energy is already captured by a finite prefix of consecutive refinement increments.
+\end{proposition}
+
+\begin{proof}
+By tail faithfulness, the tail energy vanishes after sufficiently many
+consecutive refinements.
+At that stage the finite telescoping identity has zero remainder, so only the prefix sum remains.
+\end{proof}
+
+\begin{proposition}[Structured infinite choice along a refinement tower]
+\label{prop:structured-infinite-choice}\lean{RootedFiniteRefinementTower}\lean{structured_infinite_choice}
+Let $(X_n)_{n\in\bbN}$ be a rooted refinement tower with predecessor maps
+\[
+p_n : X_{n+1} \to X_n,
+\]
+such that:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item the initial stage $X_0$ is given by an explicit nonempty finite list of roots;
+\item for each $x \in X_n$, the refinement fiber above $x$ is given by an explicit nonempty finite list;
+\item every listed refinement projects back to its parent under $p_n$.
+\end{enumerate}
+Then there exists a coherent infinite thread $(x_n)_{n\in\bbN}$ with
+\[
+x_n \in X_n,
+\qquad
+p_n(x_{n+1}) = x_n
+\quad\text{for all }n.
+\]
+The construction is explicit: choose the first root, then choose the first listed refinement above it at every stage.
+\end{proposition}
+
+\begin{proof}
+Start from the first listed root in $X_0$. Given $x_n$, take the first listed refinement above it and call that $x_{n+1}$. By hypothesis each refinement fiber is nonempty, so the recursion never stops, and by hypothesis each chosen refinement projects back to its parent. This gives an infinite coherent thread.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Scope.} This is not the full Axiom of Choice. It is a constructive infinite-choice principle for explicitly finite refinement systems. Its role here is to show how the finite tower grammar already supports coherent infinite selection in the structured limit.
+\end{quote}
+
+\begin{corollary}[Countable structured choice from finite partial choices]
+\label{cor:countable-structured-choice}\lean{ExplicitFiniteFamily}\lean{countable_structured_choice}
+Let $(F_n)_{n\in\bbN}$ be a countable family of explicitly finite nonempty fibers. For each finite stage $n$, let a \emph{partial choice} mean a compatible choice on the first $n$ fibers. Then there exists:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item a global sequence $(c_n)_{n\in\bbN}$ with $c_n \in F_n$ for every $n$;
+\item a coherent chain of partial choices whose $(n+1)$st stage is obtained from its $n$th stage by adjoining $c_n$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The stage-$n$ partial choices form a rooted finite refinement tower: the predecessor map drops the last coordinate, and every stage extends by choosing one element from the next explicit finite fiber. Proposition~\ref{prop:structured-infinite-choice} therefore yields a coherent infinite thread of partial choices. Reading the new coordinate at each stage gives the global sequence $(c_n)$.
+\end{proof}
+
+\subsection{Dyadic refinement bridge}
+
+The constructive refinement principles above already support a first continuum-like layer without importing reals, quotients, or field structure.
+The bridge is explicit and dyadic: binary choices build a tower of adjacent endpoint data on finer and finer unit meshes.
+
+\begin{proposition}[Finite dyadic address injectivity]\label{prop:dyadic-address-injective}\lean{partialChoice_snoc_eq_iff}\lean{refineDyadicCell_eq_iff}
+Extending a finite dyadic address by one more binary digit is injective in both pieces of explicit data.
+Equivalently, if two one-step refinements agree, then their parent addresses agree and their final digits agree.
+\end{proposition}
+
+\begin{proof}
+At the finite level, a dyadic address is built by adjoining one last binary digit to a shorter address.
+So equality of two refined addresses forces equality of the shorter addresses and equality of the final digits separately.
+\end{proof}
+
+\begin{proposition}[Dyadic interval refinement]\label{prop:dyadic-refinement}\lean{dyadicCell_two_children}\lean{child_intervals_distinct}\lean{intervalsOfDigits_leftIndex_step}\lean{intervalsOfDigits_rightIndex_step}\lean{intervalsOfDigits_mesh}
+At depth $n$, binary refinement determines dyadic interval data with adjacent endpoint indices $(\ell_n,r_n)$ satisfying
+\[
+r_n = \ell_n + 1,
+\qquad
+r_n \le 2^n.
+\]
+Each stage has exactly two distinct children.
+If the next digit is left, then
+\[
+\ell_{n+1} = 2\ell_n,
+\qquad
+r_{n+1} = 2\ell_n + 1.
+\]
+If the next digit is right, then
+\[
+\ell_{n+1} = 2\ell_n + 1,
+\qquad
+r_{n+1} = 2r_n.
+\]
+\end{proposition}
+
+\begin{proof}
+This is the direct recursion of binary refinement.
+Left refinement takes the left half of the current dyadic cell, while right refinement takes the right half; the endpoint formulas are exactly the resulting doubled-index updates on the finer mesh.
+\end{proof}
+
+\begin{proposition}[Binary threads yield dyadic point-candidates]\label{prop:dyadic-point-candidates}\lean{binarySequence_exists}\lean{unitPointOfDigits}\lean{leftUnitPoint}\lean{intervalsOfDigits_nested_scaled}\lean{unitPoint_mesh_strict}
+Every infinite binary digit sequence determines a coherent dyadic interval thread on the unit mesh.
+At each step, the next interval is nested inside the previous one after passing to the common finer denominator, and the mesh strictly refines from $2^n$ to $2^{n+1}$.
+Hence the present structural layer already supports quotient-free dyadic
+unit-point candidates.
+\end{proposition}
+
+\begin{proof}
+Read each digit as a left/right child choice in the binary refinement tower.
+The resulting endpoint recursion gives a coherent nested interval thread, and the denominator doubles at every step.
+Taking the constant-left sequence gives a canonical example.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Scope.} This is still a pre-real layer.
+Ambiguous binary tails have not yet been identified, so no quotient of equivalent dyadic expansions is taken here.
+The present structural layer already forces a rigorous shrinking-thread
+scaffold above the discrete level.
+\end{quote}
+
+\begin{quote}\small
+\textbf{Intuition (HFT-1).} The full boundary closes: $d^2=0$ on the uncropped coherence space. But the \emph{observed} boundary $\CCObs{d}{h}$ is the cut $\CCPi{h} d \CCPi{h}$, and that cut need not close. The failure is exactly the ``round trip through the shadow'': apply $d$, some escapes to the shadow, apply $d$ again, some returns. That returned part is the defect.
+\end{quote}
+
+\begin{quote}\small
+\textbf{Intuition (HFT-2).} The total ``distance'' from $x$ to its coarsest projection decomposes into orthogonal increments at each refinement level. This is the Pythagorean theorem applied to a tower of nested subspaces, with integration expressed as a sum of layer-by-layer contributions.
+\end{quote}
+
+\begin{tcolorbox}[colback=yellow!5, colframe=black!70, title={Warning: Zero defect $\neq$ conservation}]
+\label{box:zero-defect-warning}\lean{returnOp}\lean{defect_factorization}
+\textbf{The three operators.} For horizon projection $\CCPi{h}$ with $\CCPibar{h} = I - \CCPi{h}$:
+\begin{align*}
+L_h &:= \CCPibar{h} d \CCPi{h} &&\text{(leakage: observable $\to$ shadow)}, \\
+R_h &:= \CCPi{h} d \CCPibar{h} &&\text{(return: shadow $\to$ observable)}, \\
+\CCDefect{d}{h} &:= R_h L_h = \CCPi{h} d \CCPibar{h} d \CCPi{h} &&\text{(defect: round-trip)}.
+\end{align*}
+
+\textbf{Key distinctions:}
+\begin{itemize}[itemsep=0.2em]
+\item $\CCDefect{d}{h} = 0$ is \emph{algebraic closure} (a compositional identity), \textbf{not} metric conservation.
+\item $L_h \neq 0$ with $\CCDefect{d}{h} = 0$ is possible when $R_h = 0$ (``silent leak'').
+\item Orthogonality of $\CCPi{h}$ is what makes the defect energy $\|L_h x\|^2$ well-defined.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{lemma}[Silent leak configuration]
+\label{lem:silent-leak}\lean{silent_leak_configuration}
+There exist $\cH$, a projection $\Pi$, and $d$ with $d^2 = 0$ such that:
+\begin{enumerate}[label=(\roman*),itemsep=0.1em]
+\item $d_\Pi := \Pi d \Pi$ satisfies $d_\Pi^2 = 0$ (algebraic closure),
+\item $L := (I - \Pi) d \Pi \neq 0$ (nonzero leakage),
+\item $\delta := \Pi d (I - \Pi) d \Pi = 0$ (zero defect, because $R = \Pi d (I-\Pi) = 0$).
+\end{enumerate}
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Illustration: The 4-vertex path}
+
+Returning to the running example (Example~\ref{ex:hello-world}): the
+4-vertex path with block-averaging horizon. HFT-1 applies because the graded
+differential $D$ satisfies $D_{k+1} \circ D_k = 0$
+(Definition~\ref{def:nilpotent-differential}). The defect term is exactly the
+within-block contribution that the coarse observer cannot represent. This
+subsection remains illustrative; the theorem-bearing statements are the general
+and coherence-realized HFT identities above.
+
+\subsection{Defect operator and defect energy}
+
+\begin{definition}[Defect operator]\label{def:defect-operator}\lean{defectOp}
+Define the \emph{defect operator}
+\[
+\CCDefect{d}{h} := \CCDefectExpr{d}{h}
+\quad\text{so that}\quad
+\CCObs{d}{h}^2 = -\CCDefect{d}{h}.
+\]
+\end{definition}
+
+\begin{definition}[Defect energy]\label{def:defect-energy-operator}\lean{defectEnergy}\lean{defectEnergy_operator_form}
+Define the \emph{defect energy} on $\cH$ by
+\[
+\CCDefEnergy{h}{x} := \|\CCLeak{d}{h} x\|^2 = \|\CCLeakExpr{d}{h}\, x\|^2.
+\]
+Whenever the leakage map admits an energy adjoint $\CCLeak{d}{h}^\ast$ for the coordinate pairing of the state space, this can be written in operator form as
+\[
+\CCDefEnergy{h}{x} = \langle x, \CCDefOp{d}{h} x\rangle,
+\qquad
+\CCDefOp{d}{h} := \CCLeak{d}{h}^\ast \CCLeak{d}{h}.
+\]
+\end{definition}
+
+\paragraph{Why this is a calculus.}
+The defect $\CCDefect{d}{h}$ is the derivative object: it measures failure of
+closure under observation. The telescoping identity (HFT-2) is the integration
+analog: total deviation decomposes into orthogonal layer increments. Defect
+energy $\CCDefEnergy{h}{x} = \|\CCLeak{d}{h} x\|^2$ quantifies the portion of
+$dx$ that lands in the shadow and is therefore invisible at horizon $h$.
+
+\paragraph{Interpretation note.}
+\label{rem:interpretation-note}
+The defect energy is an algebraic quantity measuring representational mismatch,
+not physical loss. Finer horizons do not make defect energy monotone for
+arbitrary states; that requires additional representability hypotheses, as made
+explicit later in Proposition~\ref{prop:log-defect}. In a faithful tower, the
+tail term in HFT-2 eventually vanishes after finite stabilization. No
+thermodynamic or information-theoretic interpretation is claimed here without
+additional structure.
+
+The next section records chain and product rules for coherence defects under composition, analogous to the Leibniz and chain rules of classical calculus.

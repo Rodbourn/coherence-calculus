@@ -1,0 +1,332 @@
+% ============================================================
+\section{Targets and Certifications}
+\label{sec:targets}
+% ============================================================
+
+\begin{quote}\small
+\textbf{Goal:} Catalog the structural and objective targets in Coherence Calculus.\\
+\textbf{Structural targets} are exact certification statements: properties that can be certified directly from the active interfaces, either on the whole visible state or on a selected workload.\\
+\textbf{Objective targets} are optimization problems: find a projection that minimizes/maximizes a functional.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Structural Targets (Iff Theorems)}
+\label{subsec:structural-targets}
+% ------------------------------------------------------------
+
+Structural targets are exact certifications on the active interface surface.
+Some are equivalences, while others are one-way sufficient criteria.
+No approximation or optimization is required; only verification.
+
+\paragraph{A) Perfect Coherence (Zero Residual)}
+
+\begin{definition}[Perfect coherence]
+\label{def:perfect-coherence}\lean{CoherenceCalculus.hasPerfectCoherence}
+An operator $A$ has \emph{perfect coherence} with respect to projection $P$ if the Schur correction vanishes:
+\[
+\CCSigmaP{P}{z} = 0 \quad \text{for all $z$ where defined}.
+\]
+Equivalently, $\CCAeff{A}{P}(z) = \CCBlockPP{A}$ for all $z$.
+\end{definition}
+
+\begin{theorem}[Cross-block vanishing implies perfect coherence]
+\label{thm:block-diagonal-sufficient}\lean{CoherenceCalculus.zeroPQ_implies_perfect, CoherenceCalculus.zeroQP_implies_perfect}
+Let $A$ be a bounded operator on $\cH$ and $P$ an orthogonal projection with $\CCComp = I - P$.
+If either cross-block vanishes, then the Schur correction vanishes identically:
+\[
+\CCBlockPQ{A} = 0 \text{ or } \CCBlockQP{A} = 0
+\quad \Longrightarrow \quad
+\CCSigmaP{P}{z} = 0 \text{ for all $z$ where defined}.
+\]
+\end{theorem}
+
+\begin{proof}
+If $\CCBlockPQ{A} = 0$ or $\CCBlockQP{A} = 0$, then
+\[
+\CCSigmaP{P}{z}
+=
+\CCBlockPQ{A} (I - z\CCBlockQQ{A})^{-1} \CCBlockQP{A}
+=
+0.
+\]
+\end{proof}
+
+\begin{remark}[Exact coefficient criterion for perfect coherence]
+\label{rem:perfect-coherence-coefficients}
+\lean{schur_transport_jet, schur_transport_jet_order}
+The converse of Theorem~\ref{thm:block-diagonal-sufficient} is false in general:
+perfect coherence does \emph{not} force one of the two cross-blocks to vanish.
+If \(\CCSigmaP{P}{z}=0\) for all \(z\) in a neighborhood of \(0\), then the
+resolvent expansion gives the coefficient-vanishing condition
+\[
+\CCBlockPQ{A} (\CCBlockQQ{A})^k \CCBlockQP{A}=0
+\qquad\text{for every }k\ge 0.
+\]
+Thus cross-block vanishing is a sufficient certificate for perfect coherence,
+but not a necessary one.
+\end{remark}
+
+\begin{corollary}[Commutant characterization]
+\label{cor:commutant-perfect}\lean{CoherenceCalculus.commutant_implies_perfect}
+If $[A, P] = 0$ (equivalently, $\CCBlockPQ{A} = \CCBlockQP{A} = 0$), then $A$ has perfect coherence with respect to $P$.
+\end{corollary}
+
+\begin{quote}\small
+\textbf{Certification:} A fast sufficient certificate for perfect coherence is
+to verify $\CCBlockPQ{A} = 0$ or $\CCBlockQP{A} = 0$.
+If one cross-block vanishes, no Schur correction is needed.
+The exact necessary-and-sufficient criterion is the coefficient vanishing
+condition of Remark~\ref{rem:perfect-coherence-coefficients}.
+\end{quote}
+
+\paragraph{B) Task-Perfect Coherence for a Selected Workload}
+
+Section~\ref{sec:observable-relative-closure} introduces the workload-relative
+return transfer
+\[
+\widetilde{\mathfrak R}_{\Omega}(P,A;z)
+\]
+for an observable package \(\Omega=(S,V,O)\). This fixed-source version keeps
+the workload domain equal to \(S\) while
+Proposition~\ref{prop:fixed-source-return-restricts} shows that it restricts
+to the pointwise visible-workload return on \(S\cap P\cH\). By
+Definition~\ref{def:task-perfect-coherence}, the pair \((A,P)\) is
+\emph{task-perfect} for \(\Omega\) exactly when this transfer vanishes.
+Corollary~\ref{cor:perfect-implies-task-perfect} shows that whole-state perfect
+coherence implies task-perfect coherence, but not conversely: the workload may
+ignore returned directions that remain present in the full state.
+Section~\ref{sec:observable-relative-closure} also packages the source-visible
+loss, direct observable transfer, and fixed-source Schur return into the
+task-visible defect package \(\mathcal E_{\Omega}(P,A;z)\), so one can
+distinguish source-faithful, one-step faithful, task-perfect, and task-exact
+cuts without conflating them.
+
+\begin{quote}\small
+\textbf{Certification:} Check that
+\(\widetilde{\mathfrak R}_{\Omega}(P,A;z)=0\) for all \(z\) where defined.
+Equivalently, after projecting the workload source into the visible cut, the
+selected workload sees no returned residual forcing.
+\end{quote}
+
+\paragraph{C) Solver Exactness}
+
+\begin{definition}[Solver exactness]
+\label{def:solver-exactness}\lean{CoherenceCalculus.isSolverExact}
+A Hilbert complex $(H^k, D_k)$ is \emph{solver-exact at degree $k$} if
+\[
+\CCCoh{k}(D) = 0 \quad \Longleftrightarrow \quad \Ker(D_k) = \Img(D_{k-1}).
+\]
+\end{definition}
+
+\begin{quote}\small
+\textbf{Certification:} Check $\CCCoh{k}(D) = 0$.
+If satisfied, the Green operator $\CCGreen{k} = \CCLap{k}^{-1}$ exists and provides canonical integration via $\CCHom{k} = D_{k-1}^* \CCGreen{k}$.
+See Section~\ref{subsec:solver-layer} for details.
+\end{quote}
+
+\paragraph{D) Realization Exactness and Goal Certificates}
+
+Section~\ref{sec:realization-calculus} adds the realization-side certificate
+surface. A realization chain carries the exact residual ledger
+\(\mathfrak C_h\) of
+Definition~\ref{def:typed-crime-ledger}. By
+Theorem~\ref{thm:exact-residual-ledger}, the difference between the fully
+realized residual and the pulled-back continuum residual is exactly the sum of
+those typed crimes. Definition~\ref{def:realization-exactness} then names the
+strict structural target: the realization is exact iff every declared crime
+vanishes. The same section also provides the dual-weighted
+goal-error certificate of Theorem~\ref{thm:exact-goal-error-ledger-identity},
+which decomposes output error against the same ledger.
+
+\begin{quote}\small
+\textbf{Certification:} Check that each declared crime in \(\mathfrak C_h\)
+vanishes. Then the host realizes the pulled-back continuum residual exactly.
+If only a selected output matters, solve the adjoint goal problem and evaluate
+the dual-weighted ledger to see which crimes remain visible to that output.
+\end{quote}
+
+\paragraph{E) Holographic Saturation}
+
+\begin{definition}[Holographic saturation (repeated)]
+\label{def:holographic-saturation-targets}\lean{CoherenceCalculus.isHolographicallySaturated}
+A complex with boundary map $R_k$ is \emph{holographically saturated at degree $k$} if
+\[
+\CCCohRel{k}{D,R} = 0 \quad \Longleftrightarrow \quad \Ker(R_k) = \Img(D_{k-1}).
+\]
+\end{definition}
+
+\begin{quote}\small
+\textbf{Certification:} Check that $\Ker(R_k) = \Img(D_{k-1})$.
+If satisfied, zero boundary data implies the bulk state is pure gauge (exact).
+See Definition~\ref{def:holographic-saturation}.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Objective Targets (Optimization Interface)}
+\label{subsec:objective-targets}
+% ------------------------------------------------------------
+
+Objective targets involve finding a projection $P$ that optimizes some functional.
+Layer-1 provides the existence theorems and stationarity conditions; Layer-2 (applications) chooses the specific objective.
+
+\paragraph{The Grassmannian of Projections}
+
+\begin{definition}[Grassmannian]
+\label{def:grassmannian}\lean{CoherenceCalculus.isInGrassmannian, CoherenceCalculus.GrassmannianElem}
+For a finite-dimensional Hilbert space $\cH$, the \emph{Grassmannian of rank-$r$ projections} is
+\[
+\CCGrass{r} := \{ P \in \cB(\cH) : P^2 = P = P^*, \; \rank(P) = r \}.
+\]
+This is a compact smooth manifold of dimension $r(n - r)$, where $n = \dim \cH$.
+\end{definition}
+
+\paragraph{Generic Objective Functional}
+
+\begin{definition}[Design objective]
+\label{def:design-objective}\lean{CoherenceCalculus.DesignObjective}
+A \emph{design objective} for the inverse split problem is a continuous functional
+\[
+\CCDesign{P} := \|\CCSigmaP{P}{z} - \Sigma^\star\|^2 + \lambda \, \mathrm{Reg}(P),
+\]
+where:
+\begin{itemize}[itemsep=0.2em]
+\item $\Sigma^\star$ is a target Schur correction (possibly zero for perfect coherence).
+\item The norm is Frobenius/Hilbert--Schmidt in finite dimensions.
+\item $\mathrm{Reg}(P)$ is a regularizer (e.g., $\|[A, P]\|^2$, $\Tr(P)$, or $0$).
+\item $\lambda \ge 0$ is a regularization weight.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Workload-relative design objective]
+\label{def:workload-design-objective}\lean{CoherenceCalculus.WorkloadDesignObjective}
+Let \(\Omega=(S,V,O)\) be a finite-dimensional observable package, let
+\(m\in\bbN\), and let \(\mu,\lambda\ge 0\). A \emph{workload-relative design
+objective} is
+\[
+J_{\Omega,m}(P)
+:=
+\|O(I-P)\big|_{S}\|^2
++
+\mu\, e_m\!\bigl(\widetilde{\mathfrak R}_{\Omega}(P,A;z)\bigr)^2
++
+\lambda\,\mathrm{Reg}(P),
+\]
+where \(e_m\) is the best \(m\)-dimensional correction error from
+Definition~\ref{def:best-m-correction-error}.
+\end{definition}
+
+\paragraph{Interpretation.}
+The first term measures what the cut loses directly on the selected workload.
+The second measures how much of the returned residual remains after allowing at
+most \(m\) correction coordinates. By
+Corollary~\ref{cor:optimal-returned-correction-for-workload}, in a
+finite-dimensional Hilbert package this second term is exactly the square of
+the \((m+1)\)th singular value of the fixed-source observable return transfer.
+Equivalently, by Theorem~\ref{thm:observable-closure-invariant-package}, it is
+the \((m+1)\)th eigenvalue of the observable closure Gramian
+\(G_{\Omega}(P,A;z)\). The third is any geometric or structural regularizer
+already present in the operator-design problem.
+
+\paragraph{Shadow-transport objectives.}
+\label{ex:shadow-transport-objectives}
+For a projection $P$, let
+\[
+B_P:=(I-P)\,d\,P,
+\qquad
+T_P:=B_P^*B_P.
+\]
+Natural objective functionals built from the shadow-transport invariant family
+include:
+\[
+\begin{aligned}
+J_{\mathrm{tot}}(P) &:= \Tr(T_P), \\
+J_k(P) &:= \Tr(T_P^k) \qquad (k\ge 2), \\
+J_{\det,t}(P) &:= \det(I+tT_P), \\
+J_{\max}(P) &:= \|T_P\|.
+\end{aligned}
+\]
+These measure, respectively, total leakage, higher spectral moments, the
+determinant polynomial at fixed parameter $t$, and maximal leakage.
+
+\paragraph{Existence of Minimizers}
+
+\begin{theorem}[Existence of minimizers]
+\label{thm:existence-minimizers}\lean{CoherenceCalculus.existence_of_minimizers}
+Let $\cH$ be finite-dimensional, $A$ a bounded operator, and $\CCDesign{P}$ a continuous design objective with invertibility margin maintained on $\CCGrass{r}$.
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\CCGrass{r}$ is compact.
+\item $\CCDesign{\cdot}$ is continuous on $\CCGrass{r}$.
+\item A minimizer $P^\star \in \CCGrass{r}$ exists.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) $\CCGrass{r}$ is a closed subset of the unit ball in $\cB(\cH)$ (since $\|P\| \le 1$ for projections), hence compact in finite dimensions.
+
+(ii) Continuity of $P \mapsto \CCSigmaP{P}{z}$ follows from continuity of the block extraction $P \mapsto PAP$, etc., and continuity of the inverse $(I - z\CCBlockQQ{A})^{-1}$ under the invertibility margin assumption.
+
+(iii) Continuous function on a compact set attains its minimum.
+\end{proof}
+
+\begin{corollary}[Certification without construction]
+\label{cor:certification-existence}\lean{CoherenceCalculus.certification_without_construction}
+Under the hypotheses of Theorem~\ref{thm:existence-minimizers}, an optimal projection $P^\star$ exists even if we cannot construct it explicitly.
+This provides a ``certification without construction'' guarantee.
+\end{corollary}
+
+\begin{corollary}[Workload-relative minimizers]
+\label{cor:workload-relative-minimizers}\lean{CoherenceCalculus.workload_relative_minimizers}
+Let \(\cH\) be finite-dimensional, let \(A\) be bounded, and let
+\(\Omega=(S,V,O)\) be a finite-dimensional observable package. Assume the
+invertibility margin for the Schur correction is maintained on \(\CCGrass{r}\).
+Then every workload-relative design objective \(J_{\Omega,m}\) from
+Definition~\ref{def:workload-design-objective} attains a minimum on
+\(\CCGrass{r}\).
+\end{corollary}
+
+\begin{proof}
+The map \(P\mapsto O(I-P)\big|_S\) is continuous. Under the maintained
+invertibility margin, Theorem~\ref{thm:existence-minimizers} gives continuity
+of \(P\mapsto \CCSigmaP{P}{z}\). Proposition~\ref{prop:fixed-source-return-continuity}
+therefore yields continuity of
+\(P\mapsto \widetilde{\mathfrak R}_{\Omega}(P,A;z)\). Proposition~\ref{prop:best-m-correction-distance}
+shows that \(e_m\) is Lipschitz, so
+\[
+P\longmapsto e_m\!\bigl(\widetilde{\mathfrak R}_{\Omega}(P,A;z)\bigr)
+\]
+is continuous as well. Therefore \(J_{\Omega,m}\) is continuous on the compact
+Grassmannian \(\CCGrass{r}\), and the minimum exists by
+Theorem~\ref{thm:existence-minimizers}.
+\end{proof}
+
+\paragraph{Stationarity Condition}
+
+The stationarity condition for minimizing $\CCDesign{P}$ on $\CCGrass{r}$ involves the tangent space of the Grassmannian.
+See Section~\ref{sec:projector-calculus} for the projector differential calculus and the derivation of:
+\[
+P^\star \text{ is stationary} \quad \Longleftrightarrow \quad [\nabla \CCDesign{P^\star}, P^\star] = 0,
+\]
+where $\nabla \CCDesign{P}$ is the Euclidean gradient of the objective.
+
+% ------------------------------------------------------------
+\subsection{Summary Table}
+\label{subsec:target-summary}
+% ------------------------------------------------------------
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\textbf{Target} & \textbf{Type} & \textbf{Certification} \\
+\hline
+Perfect coherence & Structural & $\CCBlockPQ{A} = 0$ or $\CCBlockQP{A} = 0$ \\
+Task-exact cut & Structural & source-faithful + one-step faithful + task-perfect \\
+Task-perfect coherence & Structural & $\widetilde{\mathfrak R}_{\Omega}(P,A;z)=0$ \\
+Solver exactness & Structural & $\CCCoh{k}(D) = 0$ \\
+Holographic saturation & Structural & $\Ker(R_k) = \Img(D_{k-1})$ \\
+\hline
+Optimal projection & Objective & $[\nabla J, P] = 0$ (stationarity) \\
+Optimal workload cut & Objective & minimize $J_{\Omega,m}(P)$ \\
+Existence guarantee & Objective & Compactness of $\CCGrass{r}$ \\
+\end{tabular}
+\end{center}

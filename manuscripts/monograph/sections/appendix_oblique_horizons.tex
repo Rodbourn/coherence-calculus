@@ -1,0 +1,153 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:oblique-horizons}
+% ============================================================
+
+\noindent\textbf{Layer-2 scope.}
+This appendix is not part of the Level-1 axioms. It extends the Level-1
+projection grammar to oblique (non-self-adjoint) projection horizons. All
+constructions reduce to the Level-1 setting when horizons are orthogonal.
+
+\subsection{Idempotent Horizons and the Observable/Shadow Split}
+\label{subsec:oblique-horizons-split}
+
+\begin{definition}[Oblique horizon]
+\label{def:oblique-horizon}\lean{CoherenceCalculus.AppendixHorizons.ObliqueHorizon}
+Let $\cH$ be a Hilbert space. An \emph{oblique horizon} is a bounded linear operator $P\in \mathcal{B}(\cH)$ such that $P^2 = P$ (idempotence), without assuming $P=P^\ast$.
+Define the complementary idempotent $Q := I - P$.
+We write $\cH_{\mathrm{obs}} := \operatorname{Ran}(P)$ and $\cH_{\mathrm{sh}} := \operatorname{Ran}(Q)$.
+\end{definition}
+
+\begin{lemma}[Basic algebra of an idempotent split]
+\label{lem:idempotent-split-algebra}\lean{CoherenceCalculus.AppendixHorizons.idempotent_split_algebra}
+Let $P^2=P$ and $Q=I-P$. Then:
+\begin{enumerate}[label=(\roman*)]
+\item $P+Q=I$,
+\item $PQ=QP=0$,
+\item every $x\in \cH$ decomposes uniquely as $x = Px + Qx$.
+\end{enumerate}
+Moreover, $\operatorname{Ran}(P)$ and $\operatorname{Ran}(Q)$ are closed subspaces and $\cH = \operatorname{Ran}(P)\oplus \operatorname{Ran}(Q)$ as a topological direct sum.
+\end{lemma}
+
+\begin{proof}
+(i) is by definition. For (ii),
+$PQ = P(I-P)=P-P^2=0$ and similarly $QP=0$.
+For (iii), $x = (P+Q)x = Px+Qx$.
+If $Px_1+Qx_1 = Px_2+Qx_2$, apply $P$ and use $PQ=0$ to get $Px_1=Px_2$, hence $Qx_1=Qx_2$.
+Closedness of ranges follows since $P,Q$ are bounded projections.
+\end{proof}
+
+\subsection{Observed Operators, Leakage, and the Oblique Defect Identity}
+\label{subsec:oblique-horizons-defect}
+
+\begin{definition}[Oblique block decomposition]
+\label{def:oblique-compression}\lean{CoherenceCalculus.AppendixHorizons.obliqueCompression}
+For a bounded operator $A\in \mathcal{B}(\cH)$ and an oblique horizon $P$ with $Q=I-P$, define the \emph{block components}:
+\[
+A_{PP} := PAP,\qquad
+A_{PQ} := PAQ,\qquad
+A_{QP} := QAP,\qquad
+A_{QQ} := QAQ.
+\]
+When $P$ is orthogonal, these coincide with the usual observable/shadow blocks of Section~\ref{sec:hft}; when $P$ is oblique they remain algebraically valid but the split is not orthogonal.
+The block $A_{QP}$ is the ``transport out'' ($P\to Q$) component; $A_{PQ}$ is the ``transport in'' ($Q\to P$) component.
+\end{definition}
+
+\begin{theorem}[Oblique nilpotent-defect identity (Oblique HFT-1)]
+\label{thm:oblique-hft1}\lean{CoherenceCalculus.AppendixHorizons.oblique_hft1}
+Let $d\in \mathcal{B}(\cH)$ satisfy $d^2=0$.
+Fix an oblique horizon $P$ with $Q=I-P$ and define the observed operator $d_P := PdP$.
+Then
+\[
+d_P^2 \;=\; -\,PdQdP.
+\]
+\end{theorem}
+
+\begin{proof}
+Using $d^2=0$ and $P+Q=I$,
+\[
+0 = Pd^2P = Pd(P+Q)dP = PdPdP + PdQdP = d_P^2 + PdQdP.
+\]
+Rearrange.
+\end{proof}
+
+\subsection{Coherence Defects Under Oblique Observation}
+\label{subsec:oblique-horizons-defect-calculus}
+
+\begin{definition}[Oblique coherence defect of a map]
+\label{def:oblique-coherence-defect}\lean{CoherenceCalculus.AppendixHorizons.obliqueCoherenceDefect}
+For a map $F:\cH\to \cH$ (linear or nonlinear, defined on the relevant domain), define the oblique coherence defect at $x$ by
+\[
+\tau_{P}(F;x) := PF(x) - F(Px).
+\]
+\end{definition}
+
+\begin{proposition}[Chain rule (oblique)]
+\label{prop:oblique-chain-rule}\lean{CoherenceCalculus.AppendixHorizons.oblique_chain_rule}
+Let $F,G:\cH\to \cH$ be maps and $P$ an oblique horizon. Then
+\[
+\tau_P(F\circ G; x) = \tau_P(F;G(x)) + \Big(F(PG(x)) - F(G(Px))\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+Direct expansion (same algebra as the Level-1 proof):
+\[
+\tau_P(F\circ G;x)=PF(G(x)) - F(G(Px))
+= \big(PF(G(x)) - F(PG(x))\big) + \big(F(PG(x)) - F(G(Px))\big).
+\]
+The first bracket is $\tau_P(F;G(x))$.
+\end{proof}
+
+\begin{proposition}[Product rule (oblique)]
+\label{prop:oblique-product-rule}\lean{CoherenceCalculus.AppendixHorizons.oblique_product_rule}
+Let $B:\cH\times \cH\to \cH$ be bilinear and $P$ an oblique horizon with $Q=I-P$.
+Define $\tau_P(B;x,y):=PB(x,y)-B(Px,Py)$.
+Then
+\[
+\tau_P(B;x,y) = PB(Px,Qy) + PB(Qx,Py) + PB(Qx,Qy).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $x=Px+Qx$ and $y=Py+Qy$. By bilinearity,
+\[
+B(x,y)=B(Px,Py)+B(Px,Qy)+B(Qx,Py)+B(Qx,Qy).
+\]
+Apply $P$ and subtract $B(Px,Py)$.
+\end{proof}
+
+\begin{remark}[Stability check: what survives / what breaks]
+\label{rem:oblique-stability}\lean{CoherenceCalculus.AppendixHorizons.oblique_stability_note}
+\emph{Survives (pure algebra):} all identities whose proofs use only linearity, associativity, and the resolution-of-identity expansion $I=P+Q$ (e.g.\ chain/product rules and block expansions).
+
+\smallskip\noindent
+\emph{Breaks (Hilbert geometry):} any statement that requires $P=P^\ast$ (orthogonality), including Pythagorean norm splitting and PSD order comparisons involving $P$ as a self-adjoint projector.
+\end{remark}
+
+\begin{lemma}[Metricization of an oblique horizon]
+\label{lem:metricization}\lean{CoherenceCalculus.AppendixHorizons.oblique_metricization}
+Let $P$ be an oblique horizon with $Q=I-P$.
+Define
+\[
+\langle x,y\rangle_{P} := \langle Px,Py\rangle + \langle Qx,Qy\rangle.
+\]
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\langle\cdot,\cdot\rangle_P$ is an inner product on $\cH$ with induced norm $\|x\|_P^2 = \|Px\|^2 + \|Qx\|^2$.
+\item Norm equivalence: $\tfrac{1}{\sqrt{2}}\|x\| \le \|x\|_P \le \sqrt{\|P\|^2 + \|Q\|^2}\,\|x\|$.
+\item With respect to $\langle\cdot,\cdot\rangle_P$, the operators $P$ and $Q$ are self-adjoint projections, and $\operatorname{Ran}(P) \perp \operatorname{Ran}(Q)$.
+\end{enumerate}
+Therefore, orthogonality-dependent Level-1 identities can be recovered after choosing this induced metric.
+\end{lemma}
+
+\begin{proof}
+(i) Sesquilinearity and conjugate symmetry are inherited from the original inner product.
+For positive definiteness: $\langle x,x\rangle_P = \|Px\|^2 + \|Qx\|^2 \ge 0$, with equality iff $Px=0$ and $Qx=0$, i.e., $x = Px + Qx = 0$.
+
+(ii) Upper bound: $\|x\|_P^2 = \|Px\|^2 + \|Qx\|^2 \le \|P\|^2\|x\|^2 + \|Q\|^2\|x\|^2$.
+Lower bound: $\|x\|^2 = \|Px + Qx\|^2 \le 2(\|Px\|^2 + \|Qx\|^2) = 2\|x\|_P^2$ (parallelogram bound).
+
+(iii) Self-adjointness in the new metric: $\langle Px,y\rangle_P = \langle P(Px),Py\rangle + \langle Q(Px),Qy\rangle = \langle Px,Py\rangle + 0 = \langle Px,Py\rangle + \langle Qx,Q(Py)\rangle = \langle x,Py\rangle_P$, using $QPx = 0$ and $QP = 0$.
+Orthogonality of ranges: for $u\in\operatorname{Ran}(P)$ and $v\in\operatorname{Ran}(Q)$, we have $Pu=u$, $Qu=0$, $Pv=0$, $Qv=v$, so $\langle u,v\rangle_P = \langle u,0\rangle + \langle 0,v\rangle = 0$.
+\end{proof}

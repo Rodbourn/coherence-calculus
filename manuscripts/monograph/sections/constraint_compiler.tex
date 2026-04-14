@@ -1,0 +1,633 @@
+% ============================================================
+\section{Completion and Selection Algebra}
+\label{sec:constraint-compiler}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this automates.}
+Many derivations in discrete calculus reduce a large rule space to a unique stencil by layering constraints: locality, symmetry, conservation, horizon compatibility, and admissibility.
+This section formalizes that reduction as an admissible-completion scheme: the calculus produces a stability bound, and admissibility selects either a unique completion or a certified residual family.
+\end{quote}
+
+\paragraph{Logical role of admissibility.}
+The admissible-completion scheme is a selector, not the source of dynamics.
+Bedrock continuation enters earlier through nonretroactive exactification
+(Axiom~\ref{ax:nonretroactive-exactification}): nonterminal incidence must
+continue by strict extension. The present section starts only after that
+continuation has already been realized as a defect, residual correction, or
+required stability bound on the chosen operator surface. Admissibility then
+chooses a minimum-burden completion among those already compelled realized
+continuations.
+
+\subsection{The completion pipeline}
+
+The following procedure systematizes the reduction from a general rule space to a unique (or certified non-unique) selection.
+
+\begin{quote}
+\small
+\textbf{Procedure (Admissible completion scheme).}
+\begin{enumerate}[label=\textbf{(C\arabic*)}, leftmargin=2.5em, itemsep=0.3em]
+\item \textbf{Locality.}
+Specify that the rule at each site depends only on a neighborhood of radius $r$.
+This restricts to a finite-dimensional parameter space of local rules.
+
+\item \textbf{Symmetry.}
+Impose equivariance under a local automorphism group $G$ (e.g., permutations, reflections, rotations of the neighborhood).
+This quotients the parameter space by $G$-action.
+
+\item \textbf{Conservation invariants.}
+Require that certain linear functionals (e.g., total mass, momentum) are preserved.
+Additionally, impose polynomial invariants such as $\det = 1$ or $\Tr = D$ for transfer matrices.
+Each invariant is an algebraic constraint.
+
+\item \textbf{Horizon compatibility.}
+Require that the rule respects horizon transitivity: $\CCPi{h} \CCPi{h'} = \CCPi{h}$ for $h \le h'$.
+This ensures the rule is well-defined across coherence levels.
+
+\item \textbf{Admissibility selection.}
+Among remaining candidates, apply the minimum-completion principle against a required stability bound (Definition~\ref{def:admissibility} below).
+
+\item \textbf{Selection certificate.}
+If exactly one rule survives, output it.
+If multiple rules survive, output the residual degrees of freedom as a ``non-uniqueness certificate.''
+If no rule survives, the constraint system is inconsistent.
+\end{enumerate}
+\end{quote}
+
+\paragraph{Certificate gates.}
+\label{rem:certificate-gates}
+Three pre-checks can shortcut the pipeline (see Box~\ref{box:certificate-checklist} for the checklist):
+\begin{itemize}[itemsep=0.2em]
+\item \CertA\ \textbf{(Zero residual):} If $\CCBlockPQ{A} = 0$ or
+      $\CCBlockQP{A} = 0$, no Schur correction is needed and the observed
+      operator is exact, so the elimination step may be omitted.
+\item \CertB\ \textbf{(Solver exactness):} If $\CCCoh{k}(D) = 0$, the Green operator exists, providing canonical integration for the solver layer.
+\item \CertC\ \textbf{(Holographic saturation):} If $\Ker(R_k) = \Img(D_{k-1})$, boundary data fully determines bulk states up to exact forms.
+\end{itemize}
+When applicable, these certificates provide structural guarantees that simplify or eliminate steps (C4)--(C5).
+
+\begin{definition}[Minimum completion admissibility]
+\label{def:admissibility}\lean{Compiler.Admissible}
+Let $D$ be a self-adjoint ``required lower bound'' (or ``defect-to-compensate'') operator on the observable space, derived from defect propagation (Section~\ref{sec:defect-rules}) and/or elimination residuals (Section~\ref{sec:resolvent-defect}) in the problem at hand.
+A candidate completion $Q$ is \emph{admissible} if:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Completion constraint:} $D + Q \succeq 0$ (net quadratic form is bounded below / stable), and
+\item \textbf{Minimality:} among candidates satisfying (i) and the structural constraints (C1)--(C4), $Q$ is minimal in PSD order (no strictly smaller PSD completion is feasible).
+\end{enumerate}
+\end{definition}
+
+\paragraph{Completion constraint is essential.}
+\label{rem:completion-essential}
+PSD-minimality without a completion constraint may fail to have a minimizer (the infimum may not be attained) or may admit degenerate minima.
+The completion constraint $D + Q \succeq 0$ ensures the optimization is well-posed.
+
+\paragraph{Partial order and non-uniqueness.}
+\label{rem:psd-partial-order}
+The PSD order $\preceq$ is a \emph{partial} order: not all pairs of PSD matrices are comparable.
+Consequently, minimal elements need not be unique.
+When multiple minimal elements exist, the selection scheme records the
+\emph{face} of the PSD cone containing all minimal candidates, namely a
+``non-uniqueness certificate.''
+
+\smallskip\noindent
+\textbf{Canonical tie-breaker (optional):}
+If a unique selection is required, choose among minimal candidates by:
+\begin{enumerate}[label=(\alph*)]
+\item Minimum trace: $\arg\min_{Q \text{ minimal}} \Tr(Q)$.
+\item If traces are equal, minimum Frobenius norm: $\arg\min \|Q\|_F$.
+\end{enumerate}
+These tie-breakers are not part of the core definition; they may be applied when a unique output is needed.
+
+\paragraph{Relation to defect rules.}
+The chain and product rules of Section~\ref{sec:defect-rules} describe how defects transform under operations.
+The completion scheme uses these transformations to propagate constraints
+through compositions, reducing the viable rule space at each step.
+
+\begin{theorem}[Completion contract: defect-to-bound-to-completion schema]
+\label{thm:compiler-contract}\lean{Compiler.compiler_contract}
+Let a derivation be built from a finite sequence of operations:
+\begin{enumerate}[label=(\alph*), itemsep=0.1em]
+\item Horizon restriction $\CCRestr{(\cdot)}{h}$.
+\item Composition and linear combination of operators.
+\item Defect propagation using the chain/product rules (Section~\ref{sec:defect-rules}).
+\item Elimination/resummation steps (e.g., Schur/Feshbach, Section~\ref{sec:resolvent-defect}) producing residual corrections on observables.
+\end{enumerate}
+Let $D = D^*$ be any self-adjoint operator that lower-bounds (in PSD order) the net instability contributed by the derived defect/residual terms, as formalized by Definition~\ref{def:admissibility}.
+
+Then:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item \textbf{Canonical target:} The completion problem ``find $Q$ in the constrained candidate family such that $D + Q \succeq 0$'' is the canonical stabilization target produced by the derivation.
+\item \textbf{Certification:} Any admissible $Q$ (Definition~\ref{def:admissibility}) yields a certified bounded-below net quadratic form on observables.
+\item \textbf{Uniqueness or non-uniqueness:} If the admissible set has a unique minimal element, the scheme outputs a unique rule; otherwise it records the minimal face as a non-uniqueness certificate.
+\item \textbf{Scalar case:} When the candidate family is a ray $\{\nu L : \nu \ge 0\}$, the unique minimal completion coefficient is given by a Rayleigh quotient characterization.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\paragraph{Why this is ``more than the sum''.}
+\label{rem:more-than-sum}
+The defect grammar makes $D$ compositional (defects propagate through derivations).
+Elimination makes $D$ computable on observables (shadow degrees of freedom are integrated out).
+Admissibility plus certificates turn the remaining choice into a constrained optimization with explicit outputs (value and tight mode).
+The three components interlock to form a single well-posed contract.
+
+\subsection{Asymptotically closing selectors}
+\label{subsec:asymptotically-closing-selectors}
+
+\begin{definition}[Minimal scalar repair]\lean{Compiler.MinimalScalarRepair}
+\label{def:minimal-scalar-repair}
+Let $D$ be a self-adjoint operator on a finite-dimensional Hilbert space
+$\mathcal K$. Write $\lambda_{\min}(D)$ for its least eigenvalue and define the
+\emph{minimal scalar repair} of $D$ by
+\[
+\nu(D):=\max\{0,-\lambda_{\min}(D)\}.
+\]
+Then $D+\nu(D)I_{\mathcal K}\succeq 0$, and $\nu(D)$ is the least nonnegative
+scalar with that property.
+\end{definition}
+
+\begin{proof}
+If $\lambda_{\min}(D)\ge 0$, then $D\succeq 0$ and the least scalar repair is
+$0$. If $\lambda_{\min}(D)<0$, then the spectrum of
+$D+\nu(D)I_{\mathcal K}$ is obtained by shifting the spectrum of $D$ by
+$-\lambda_{\min}(D)$, so the smallest shifted eigenvalue is $0$. Any smaller
+nonnegative scalar leaves a negative eigenvalue, hence cannot produce a
+positive semidefinite operator.
+\end{proof}
+
+\begin{definition}[Operator-norm minimal admissible selector]\lean{Compiler.OperatorNormMinimalSelector}
+\label{def:operator-norm-minimal-selector}
+Fix a self-adjoint lower-bound operator $D$ on a finite-dimensional Hilbert
+space $\mathcal K$, and let
+\[
+\mathcal Q
+\]
+be a finite-dimensional linear space of self-adjoint corrections on
+$\mathcal K$. A correction
+\[
+C^\ast\in\mathcal Q
+\]
+is an \emph{operator-norm minimal admissible selector} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item $D+C^\ast\succeq 0$;
+\item among all admissible $Q\in\mathcal Q$ satisfying
+      $D+Q\succeq 0$, the correction $C^\ast$ minimizes the operator norm
+      $\|\cdot\|$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Existence of operator-norm minimal selectors]\lean{Compiler.operator_norm_selector_exists}
+\label{prop:operator-norm-selector-exists}
+With the notation of Definition~\ref{def:operator-norm-minimal-selector},
+assume that $\mathcal Q$ contains the identity $I_{\mathcal K}$. Then an
+operator-norm minimal admissible selector exists.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{theorem}[Minimal admissible selectors vanish in asymptotically closing Schur families]\lean{Compiler.minimal_selectors_vanish}
+\label{thm:minimal-selectors-vanish}
+Let $(\CCPi{h})_{h\in\bbN}$ be a faithful horizon tower on $\cH$, let
+$A:\cH\to\cH$ be bounded, and fix $z\in\mathbb C$ such that the hypotheses of
+Theorem~\ref{thm:schur-tower-strong-recovery-general} hold. For each horizon
+$h$, let $D_h$ be a self-adjoint lower-bound operator on $\CCPi{h}\cH$, let
+\[
+\mathcal Q_h
+\]
+be a finite-dimensional linear space of self-adjoint corrections on
+$\CCPi{h}\cH$ containing the identity $I_{\CCPi{h}\cH}$, and let
+$C_h^\ast\in\mathcal Q_h$ be an operator-norm minimal admissible selector.
+Assume
+\[
+\nu(D_h)\to 0
+\qquad\text{as }h\to\infty.
+\]
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item
+      \[
+      \|C_h^\ast\|\le \nu(D_h)
+      \qquad(h\in\bbN);
+      \]
+\item for every $x\in\cH$,
+      \[
+      \|C_h^\ast \CCPi{h}x\|\to 0;
+      \]
+\item the selected effective family
+      \[
+      \widetilde A_h(z):=\CCAeff{A}{\CCPi{h}}(z)+C_h^\ast
+      \]
+      satisfies
+      \[
+      \widetilde A_h(z)x\to Ax
+      \qquad\text{for every }x\in\cH.
+      \]
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Normal form under symmetry (commutant / isotypic decomposition)}
+\label{subsec:normal-form-symmetry}
+
+When the observable subspace $\cH_{\mathrm{obs}} := \CCPi{h} \cH$ carries a symmetry group action, the constraint (C2) can be made completely explicit: $G$-equivariant operators decompose into independent blocks on isotypic components.
+
+\begin{definition}[$G$-equivariant operator and commutant]
+\label{def:commutant}\lean{Compiler.IsGEquivariant}\lean{Compiler.IsInCommutant}
+Let $G$ be a finite group acting unitarily on $\cH_{\mathrm{obs}}$ via $U: G \to U(\cH_{\mathrm{obs}})$.
+An operator $A: \cH_{\mathrm{obs}} \to \cH_{\mathrm{obs}}$ is \emph{$G$-equivariant} if it commutes with the group action:
+\[
+A \, U(g) = U(g) \, A \quad \text{for all } g \in G.
+\]
+The set of all $G$-equivariant operators forms an algebra called the \emph{commutant}:
+\[
+\mathrm{End}_G(\cH_{\mathrm{obs}}) := \{ A : \cH_{\mathrm{obs}} \to \cH_{\mathrm{obs}} \mid A \, U(g) = U(g) \, A \ \forall g \in G \}.
+\]
+\end{definition}
+
+\begin{theorem}[Normal form via isotypic projectors]
+\label{thm:normal-form}\lean{Compiler.normal_form}
+Let $P_\rho$ be the isotypic projectors for the irreducible representations $\rho$ of $G$ appearing in $\cH_{\mathrm{obs}}$.
+Then any $G$-equivariant operator $A \in \mathrm{End}_G(\cH_{\mathrm{obs}})$ satisfies:
+\[
+A = \sum_{\rho} P_\rho \, A \, P_\rho.
+\]
+That is, $A$ is block-diagonal across isotypic components: $P_\rho \, A \, P_{\rho'} = 0$ for distinct irreps $\rho \ne \rho'$.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Block structure on isotypic components]
+\label{cor:isotypic-block}\lean{Compiler.isotypic_block_structure}
+If the $\rho$-isotypic component has the form $\cH_\rho \cong V_\rho \otimes M_\rho$, where $V_\rho$ is the irreducible representation space and $M_\rho$ is the multiplicity space (of dimension $m_\rho$), then on this component:
+\[
+P_\rho \, A \, P_\rho \cong I_{V_\rho} \otimes B_\rho,
+\]
+where $B_\rho: M_\rho \to M_\rho$ is an operator on the multiplicity space.
+\end{corollary}
+
+\paragraph{Standard result.}
+The tensor factorization and the fact that $G$-equivariant maps act as the identity on the irrep factor (Schur's lemma) is a standard result in representation theory.
+Over $\bbR$, the endomorphism algebra of an irrep may be $\bbR$, $\mathbb{C}$, or the quaternions $\mathbb{H}$ (Frobenius--Schur indicator); the parameter count adjusts accordingly.
+
+\begin{corollary}[Parameter count]
+\label{cor:parameter-count}\lean{Compiler.parameter_count_formula}
+In the finite-dimensional case, if $\cH_{\mathrm{obs}}$ decomposes as $\bigoplus_\rho m_\rho \cdot V_\rho$ (where $m_\rho$ is the multiplicity of irrep $\rho$), then:
+\[
+\dim \mathrm{End}_G(\cH_{\mathrm{obs}}) = \sum_\rho m_\rho^2 \cdot \dim \mathrm{End}_G(V_\rho),
+\]
+where $\dim \mathrm{End}_G(V_\rho) \in \{1, 2, 4\}$ over $\bbR$ (corresponding to real, complex, or quaternionic type).
+\end{corollary}
+
+\begin{definition}[Equivariant coupling space]\lean{Compiler.EquivariantCouplingSpace}
+\label{def:equivariant-coupling-space}
+Let $G$ act unitarily on finite-dimensional real Hilbert spaces $X$ and $Y$
+through representations $U_X$ and $U_Y$. The \emph{$G$-equivariant coupling
+space} from $X$ to $Y$ is
+\[
+\mathrm{Hom}_G(X,Y):=
+\{T:X\to Y \mid T\,U_X(g)=U_Y(g)\,T \text{ for all } g\in G\}.
+\]
+\end{definition}
+
+\begin{theorem}[Finite equivariant coupling decomposition]\lean{Compiler.equivariant_coupling_decomposition}
+\label{thm:equivariant-coupling-decomposition}
+Let $G$ act unitarily on finite-dimensional real Hilbert spaces $X$ and $Y$.
+Write their isotypic decompositions as
+\[
+X\cong \bigoplus_{\rho} V_{\rho}\otimes M_{\rho}^X,
+\qquad
+Y\cong \bigoplus_{\rho} V_{\rho}\otimes M_{\rho}^Y,
+\]
+where the sum runs over the irreducible representations appearing in either
+space, and the multiplicity spaces may be zero. Then every
+$G$-equivariant coupling $T\in\mathrm{Hom}_G(X,Y)$ decomposes as
+\[
+T\cong \bigoplus_{\rho} I_{V_{\rho}}\otimes T_{\rho}
+\]
+with linear maps
+\[
+T_{\rho}:M_{\rho}^X\to M_{\rho}^Y.
+\]
+In particular,
+\[
+\dim \mathrm{Hom}_G(X,Y)
+=
+\sum_{\rho}
+(\dim M_{\rho}^X)(\dim M_{\rho}^Y)\,\dim \mathrm{End}_G(V_{\rho}),
+\]
+so the equivariant coupling space is finite-dimensional.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Shared-channel criterion for equivariant coupling]\lean{Compiler.equivariant_coupling_shared_channel}
+\label{cor:equivariant-coupling-shared-channel}
+Let $G$ act unitarily on finite-dimensional real Hilbert spaces $X$ and $Y$.
+If there is no irreducible representation $\rho$ for which both multiplicity
+spaces $M_\rho^X$ and $M_\rho^Y$ are nonzero, then
+\[
+\mathrm{Hom}_G(X,Y)=0.
+\]
+Equivalently, a nonzero $G$-equivariant coupling can occur only through a
+shared isotypic channel.
+\end{corollary}
+
+\begin{proof}
+Under the stated hypothesis, every summand in the dimension formula of
+Theorem~\ref{thm:equivariant-coupling-decomposition} vanishes. Therefore
+\[
+\dim \mathrm{Hom}_G(X,Y)=0,
+\]
+which is equivalent to $\mathrm{Hom}_G(X,Y)=0$.
+\end{proof}
+
+\begin{definition}[Symmetry-scalar operator]\lean{Compiler.SymmetryScalarClosure}
+\label{def:symmetry-scalar-closure}
+Let $A$ be a self-adjoint $G$-equivariant operator on $\cH_{\mathrm{obs}}$, and
+write the isotypic decomposition as
+\[
+\cH_{\mathrm{obs}} \cong \bigoplus_{\rho} V_{\rho}\otimes M_{\rho}.
+\]
+The operator $A$ is \emph{scalar on the channel $\rho$} if there is a real
+number $\lambda_{\rho}$ such that
+\[
+P_{\rho}AP_{\rho}\cong I_{V_{\rho}}\otimes \lambda_{\rho}I_{M_{\rho}}.
+\]
+It is \emph{symmetry-scalar} if it is scalar on every isotypic channel.
+\end{definition}
+
+\begin{theorem}[Multiplicity-free equivariant operators are symmetry-scalar]\lean{Compiler.multiplicity_free_closures_scalar}
+\label{thm:multiplicity-free-closures-scalar}
+Let $A$ be a self-adjoint $G$-equivariant operator on $\cH_{\mathrm{obs}}$. If
+the $G$-representation on $\cH_{\mathrm{obs}}$ is multiplicity-free, then $A$
+is symmetry-scalar.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{theorem}[Orthogonal symmetric-tensor scalarization]\lean{Compiler.orthogonal_symmetric_tensor_scalarization}
+\label{thm:orthogonal-symmetric-tensor-scalarization}
+Let $d\ge 2$, let $\mathrm{Sym}^2(\bbR^d)$ denote the real symmetric
+$d\times d$ matrices, and let
+\[
+L:\mathrm{Sym}^2(\bbR^d)\to \mathrm{Sym}^2(\bbR^d)
+\]
+be a linear map satisfying
+\[
+L(QSQ^\top)=Q\,L(S)\,Q^\top
+\qquad\text{for every }Q\in O(d),\ S\in \mathrm{Sym}^2(\bbR^d).
+\]
+Then there are unique scalars $\alpha,\beta\in\bbR$ such that
+\[
+L(S)
+=
+\alpha\Bigl(S-\frac{\operatorname{tr}(S)}{d}I\Bigr)
++
+\beta\,\frac{\operatorname{tr}(S)}{d}I
+\qquad\text{for every }S\in \mathrm{Sym}^2(\bbR^d).
+\]
+Equivalently, the trace line $\bbR I$ and the traceless carrier
+\[
+\mathrm{Sym}^2_0(\bbR^d)
+:=
+\{S\in \mathrm{Sym}^2(\bbR^d)\mid \operatorname{tr}(S)=0\}
+\]
+are invariant, and $L$ acts by a scalar on each of them.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{quote}\small
+\textbf{Intuition.}
+Locality (C1) restricts the rule to a finite-dimensional parameter space.
+Symmetry (C2) further restricts to $G$-equivariant operators.
+The normal form turns ``symmetry'' into a concrete low-dimensional parameterization: one free operator $B_\rho$ per isotypic block, acting only on multiplicity coordinates.
+\end{quote}
+
+\paragraph{Implementation in the selection algebra.}
+In the admissible-completion scheme, step (C2) is implemented by restricting
+candidate operators to $\mathrm{End}_G(\cH_{\mathrm{obs}})$ and using this
+normal form.
+The isotypic projectors $P_\rho$ are computed via the standard character formula.
+
+\begin{theorem}[Symmetry reduction of admissibility and completion]
+\label{thm:symmetry-reduction-admissibility}\lean{Compiler.symmetry_reduction}
+Let $\cH_{\mathrm{obs}}$ be finite-dimensional with a unitary representation $U: G \to U(\cH_{\mathrm{obs}})$.
+Let $D = D^*$ and candidate completions $Q = Q^*$ be $G$-equivariant (i.e., in $\mathrm{End}_G(\cH_{\mathrm{obs}})$).
+Let $\{P_\rho\}$ be isotypic projectors with $\cH_{\mathrm{obs}} = \bigoplus_\rho \cH_\rho$ where $\cH_\rho = P_\rho \cH_{\mathrm{obs}}$.
+
+Then:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item \textbf{Block diagonalization:} $D = \bigoplus_\rho D_\rho$ and $Q = \bigoplus_\rho Q_\rho$ where $D_\rho := P_\rho D P_\rho$ and $Q_\rho := P_\rho Q P_\rho$.
+\item \textbf{Completion constraint decomposes:}
+\[
+D + Q \succeq 0 \quad\Leftrightarrow\quad \text{for all } \rho,\ D_\rho + Q_\rho \succeq 0 \text{ on } \cH_\rho.
+\]
+\item \textbf{PSD minimality is blockwise:} If $Q$ is minimal among feasible candidates in $\mathrm{End}_G(\cH_{\mathrm{obs}})$, then each $Q_\rho$ is minimal among feasible candidates in $\mathrm{End}_G(\cH_\rho)$.
+Conversely, if each $Q_\rho$ is minimal in its blockwise feasible set, then $Q = \bigoplus_\rho Q_\rho$ is minimal globally.
+\item \textbf{Certificates are blockwise:} A tight mode $x_*$ with $\langle x_*, (D + Q) x_* \rangle = 0$ can be chosen from a single isotypic component.
+A minimal face in $\mathrm{End}_G(\cH_{\mathrm{obs}})$ decomposes as a product of minimal faces in each $\mathrm{End}_G(\cH_\rho)$.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\paragraph{Computational reduction.}
+\label{rem:symmetry-computational-reduction}
+Theorem~\ref{thm:symmetry-reduction-admissibility} reduces the admissibility computation to independent subproblems on each isotypic block.
+When multiplicities $m_\rho$ are small, each block is low-dimensional and the Rayleigh quotient can be evaluated explicitly.
+Certificates for the global problem are assembled from blockwise certificates.
+
+\subsection{Transport-order selection}
+\label{subsec:transport-order-selection}
+
+\begin{definition}[Transport-order filtered admissible family]\lean{TransportOrderFilteredFamily}
+\label{def:transport-order-filtered-family}
+Let $\mathcal F$ be a family of self-adjoint candidate operators on a
+band-split observed sector. The family is \emph{transport-order filtered} if
+every $A\in\mathcal F$ has finite tower transport order in the sense of
+Definition~\ref{def:tower-transport-order}. Write
+\[
+\mathcal F_{\mathrm{adm}}\subseteq \mathcal F
+\]
+for the admissible subset selected by the structural constraints.
+\end{definition}
+
+\begin{definition}[Distinguished admissible transport-order class]\lean{distinguishedTransportOrderClass}
+\label{def:distinguished-transport-order-class}
+Assume the setting of Definition~\ref{def:transport-order-filtered-family} and
+suppose $\mathcal F_{\mathrm{adm}}\neq\varnothing$. The
+\emph{distinguished admissible transport-order class} is the least integer
+\[
+m_\ast:=\min\{\operatorname{ord}_{\mathcal T}(A):A\in\mathcal F_{\mathrm{adm}}\},
+\]
+where $\operatorname{ord}_{\mathcal T}(A)$ denotes the tower transport order
+of $A$.
+\end{definition}
+
+\begin{theorem}[Minimal admissible transport order is constructive and canonical]\lean{minimal_admissible_transport_order}
+\label{thm:minimal-admissible-transport-order}
+Assume the setting of Definition~\ref{def:transport-order-filtered-family} and
+suppose $\mathcal F_{\mathrm{adm}}\neq\varnothing$. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the distinguished admissible transport-order class $m_\ast$ of
+      Definition~\ref{def:distinguished-transport-order-class} exists;
+\item the subclass
+      \[
+      \mathcal F_{\mathrm{adm}}^{\min}
+      :=
+      \{A\in\mathcal F_{\mathrm{adm}}:\operatorname{ord}_{\mathcal T}(A)=m_\ast\}
+      \]
+      is canonical;
+\item if $\mathcal F_{\mathrm{adm}}^{\min}$ is singleton modulo the chosen
+      symmetry or horizon-preserving equivalence relation, then the transport
+      order is forced.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Minimal admissible transport order controls exact Schur jets]\lean{minimal_transport_order_controls_jet}
+\label{cor:minimal-transport-order-controls-jet}
+Assume the setting of Theorem~\ref{thm:minimal-admissible-transport-order}, and
+suppose each admissible candidate $A\in\mathcal F_{\mathrm{adm}}$ admits an
+exact Schur transport jet as in Definition~\ref{def:schur-transport-jet}. Then
+every candidate in the minimal-order subclass
+$\mathcal F_{\mathrm{adm}}^{\min}$ has Schur jet coefficients satisfying
+\[
+\operatorname{ord}_{\mathcal T}(K_{h,n}(A))\le (n+1)m_\ast
+\qquad(n\ge 0)
+\]
+at every horizon where the jet is defined.
+\end{corollary}
+
+\begin{proof}
+If $A\in\mathcal F_{\mathrm{adm}}^{\min}$, then
+\[
+\operatorname{ord}_{\mathcal T}(A)=m_\ast.
+\]
+The coefficient bound is therefore exactly
+Theorem~\ref{thm:schur-transport-jet-order} with $r=m_\ast$.
+\end{proof}
+
+\begin{theorem}[Order-one forcing criterion]\lean{order_one_forced_transport_order, order_one_forcing_forced_class}
+\label{thm:order-one-forcing-criterion}
+Assume the setting of
+Theorem~\ref{thm:minimal-admissible-transport-order}. Suppose moreover that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item there exists an admissible candidate $A_1\in\mathcal F_{\mathrm{adm}}$
+      with
+      \[
+      \operatorname{ord}_{\mathcal T}(A_1)\le 1;
+      \]
+\item no admissible candidate has transport order $0$.
+\end{enumerate}
+Then the distinguished admissible transport-order class is
+\[
+m_\ast=1.
+\]
+If the minimal-order admissible subclass is singleton modulo the chosen
+equivalence relation, then the one-step transport class is forced.
+\end{theorem}
+
+\begin{proof}
+By hypothesis (i),
+\[
+m_\ast \le \operatorname{ord}_{\mathcal T}(A_1)\le 1.
+\]
+By hypothesis (ii), one cannot have $m_\ast=0$. Therefore $m_\ast=1$. The final
+statement is then exactly part (iii) of
+Theorem~\ref{thm:minimal-admissible-transport-order}.
+\end{proof}
+
+\begin{definition}[Transport-generated admissible family]\lean{TransportGeneratedAdmissibleFamily}
+\label{def:transport-generated-admissible-family}
+Assume the setting of Definition~\ref{def:transport-order-filtered-family}. The
+admissible family is \emph{transport-generated} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the hypotheses of Theorem~\ref{thm:order-one-forcing-criterion} hold;
+\item the minimal-order admissible subclass
+      \[
+      \mathcal F_{\mathrm{adm}}^{\min}
+      \]
+      is singleton modulo the chosen equivalence relation and is represented by
+      a bounded transport base
+      \[
+      B:F\to F;
+      \]
+\item the representative $B$ is without preferred direction at quadratic order
+      in the sense of
+      Definition~\ref{def:no-preferred-direction-quadratic-transport}.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Transport generation forces a scalar recursion channel]\lean{transport_generation_forces_scalar_recursion}
+\label{thm:transport-generation-forces-scalar-recursion}
+Assume the setting of
+Definition~\ref{def:transport-generated-admissible-family}, and let
+\[
+B:F\to F
+\]
+be the bounded representative of the unique minimal-order admissible
+equivalence class. Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the distinguished admissible transport-order class is
+      \[
+      m_\ast=1;
+      \]
+\item there exists a unique scalar
+      \[
+      \kappa(B)\ge 0
+      \]
+      such that
+      \[
+      B^*B=\kappa(B)\,I_F;
+      \]
+\item every bi-infinite sequence
+      \[
+      x=(x_n)_{n\in\bbZ}
+      \]
+      propagated by $B$ satisfies the canonical recursion law
+      \[
+      \mathcal R_Bx=0,
+      \qquad\text{equivalently}\qquad
+      x_{n+1}=Bx_n-x_{n-1}.
+      \]
+\end{enumerate}
+In particular, the unique minimal admissible transport datum determines a
+forced scalar quadratic recursion channel.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Worked example: transfer matrix selection}
+
+The following minimal example illustrates the completion-and-selection algebra in action.
+
+\paragraph{Worked example (Two-branch selection via trace and determinant).}
+\label{ex:transfer-compiler}
+Consider a $2 \times 2$ local transfer matrix $M$ subject to:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{(C3) Conservation:} $\det(M) = 1$ (unit determinant, invertibility).
+\item \textbf{(C3) Trace constraint:} $\Tr(M) = D$ for a fixed invariant $D > 2$.
+\end{itemize}
+The characteristic polynomial is forced:
+\[
+\lambda^2 - D\lambda + 1 = 0
+\quad\Rightarrow\quad
+\lambda_\pm = \frac{D \pm \sqrt{D^2 - 4}}{2}.
+\]
+\textbf{(C5) Admissibility:} The stable branch $\lambda_+$ (with $\lambda_+ > 1$) is selected; the contracting branch $\lambda_-$ corresponds to an ill-posed (unbounded below) completion.
+
+\smallskip\noindent
+\textbf{Output:} Unique admissible eigenvalue $\lambda_+$.
+
+\paragraph{Selection algebra as proof assistant.}
+In applications, the admissible-completion scheme is mechanical: once the
+constraints (C1)--(C4) are verified, the derivation of the unique rule follows
+from the resulting completion problem.
+The selection algebra converts domain knowledge (symmetries, conservation laws)
+into algebraic constraints, then applies admissibility as the final selection
+principle.

@@ -1,0 +1,24 @@
+import CoherenceCalculus.AppendixHorizons
+
+#print axioms CoherenceCalculus.AppendixHorizons.ObliqueHorizon
+#print axioms CoherenceCalculus.AppendixHorizons.idempotent_split_algebra
+#print axioms CoherenceCalculus.AppendixHorizons.obliqueCompression
+#print axioms CoherenceCalculus.AppendixHorizons.oblique_hft1
+#print axioms CoherenceCalculus.AppendixHorizons.obliqueCoherenceDefect
+#print axioms CoherenceCalculus.AppendixHorizons.oblique_chain_rule
+#print axioms CoherenceCalculus.AppendixHorizons.oblique_product_rule
+#print axioms CoherenceCalculus.AppendixHorizons.oblique_stability_note
+#print axioms CoherenceCalculus.AppendixHorizons.oblique_metricization
+#print axioms CoherenceCalculus.AppendixHorizons.SpectralHorizonFamily
+#print axioms CoherenceCalculus.AppendixHorizons.spectral_horizon_unbounded_scope
+#print axioms CoherenceCalculus.AppendixHorizons.bandProjection
+#print axioms CoherenceCalculus.AppendixHorizons.resolutionMeasure
+#print axioms CoherenceCalculus.AppendixHorizons.band_energy_measure
+#print axioms CoherenceCalculus.AppendixHorizons.spectral_telescoping
+#print axioms CoherenceCalculus.AppendixHorizons.discrete_tower_special_case
+#print axioms CoherenceCalculus.AppendixHorizons.horizonTraceBandTrace
+#print axioms CoherenceCalculus.AppendixHorizons.two_level_trace_splitting
+#print axioms CoherenceCalculus.AppendixHorizons.trace_telescope_tower
+#print axioms CoherenceCalculus.AppendixHorizons.spectralTraceMeasure
+#print axioms CoherenceCalculus.AppendixHorizons.band_trace_measure
+#print axioms CoherenceCalculus.AppendixHorizons.trace_telescope_spectral

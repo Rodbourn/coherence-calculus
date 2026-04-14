@@ -1,0 +1,275 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:advanced-operators}
+% ============================================================
+
+\begin{quote}\small
+This appendix provides expanded definitions, proofs, and examples for selected operator tools.
+\end{quote}
+
+This section introduces four reusable operator tools that package common derivations in Coherence Calculus:
+horizon flow (discrete update across scales), spectral selection (spectral selector), trace aggregation (coherence trace), and canonical leakage direction (aliasing operator).
+
+% ------------------------------------------------------------
+\subsection{Operator Reference}
+\label{subsec:operator-atlas}
+% ------------------------------------------------------------
+
+This appendix provides expanded definitions, proofs, and examples for the operators introduced in the main text.
+
+% ------------------------------------------------------------
+\subsection{Horizon Flow Operator (Discrete Update)}
+\label{subsec:horizon-flow}
+% ------------------------------------------------------------
+
+The horizon flow operator is a \emph{discrete update} that measures how an observed operator changes across adjacent coherence scales.
+(Note: this is a finite difference, not the tower calculus derivative $\partial = [\CCIndexOp, \cdot]$.)
+
+\begin{definition}[Horizon-restricted operator]
+\label{def:horizon-restricted}\lean{CoherenceCalculus.AppendixOperators.horizonRestrict}
+For an operator $A:\cH \to \cH$ and horizon projection $\CCPi{h}$, define the \emph{horizon-restricted operator}
+\[
+\CCObs{A}{h} := \CCRestr{A}{h}.
+\]
+This is the operator ``seen'' by an observer at horizon level $h$.
+\end{definition}
+
+\begin{definition}[Horizon flow operator]
+\label{def:horizon-flow}\lean{CoherenceCalculus.AppendixOperators.horizonFlow}
+The \emph{horizon flow operator} is the discrete finite difference
+\[
+\CCFlow{A}{h} := \CCObs{A}{h+1} - \CCObs{A}{h} = \CCRestr{A}{h+1} - \CCRestr{A}{h}.
+\]
+This measures the change in the observed operator when the horizon is refined from $h$ to $h+1$.
+\end{definition}
+
+\begin{proposition}[Properties of horizon flow]
+\label{prop:horizon-flow-linear}\lean{CoherenceCalculus.AppendixOperators.horizonFlow_add, CoherenceCalculus.AppendixOperators.horizonFlow_id_eq_increment, CoherenceCalculus.AppendixOperators.horizonFlow_proj_zero}
+The horizon flow operator satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Linearity:} $\CCFlow{(\alpha A + \beta B)}{h} = \alpha \CCFlow{A}{h} + \beta \CCFlow{B}{h}$ for scalars $\alpha, \beta$.
+\item \textbf{Identity:} $\CCFlow{I}{h} = \CCPi{h+1} - \CCPi{h} = \CCDelta{h+1}$.
+\item \textbf{Horizon projector:} $\CCFlow{\CCPi{h}}{h} = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Direct computation using linearity of the projections $\CCPi{h}$ and $\CCPi{h+1}$.
+
+(ii) For the identity operator $I$, we have $\CCObs{I}{h} = \CCPi{h}$ and $\CCObs{I}{h+1} = \CCPi{h+1}$.
+Thus $\CCFlow{I}{h} = \CCPi{h+1} - \CCPi{h}$.
+
+(iii) For the horizon projector $\CCPi{h}$ viewed as an operator: $\CCObs{(\CCPi{h})}{h} = \CCPi{h}$.
+For the refined restriction, $\CCObs{(\CCPi{h})}{h+1} = \CCPi{h}$ by transitivity.
+Thus $\CCFlow{\CCPi{h}}{h} = \CCPi{h} - \CCPi{h} = 0$.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The horizon flow $\CCFlow{A}{h}$ is a discrete finite-difference operator, not
+the tower calculus derivative.
+It measures how the observed operator changes when the horizon is refined by one level.
+No external parameter is involved; only the internal structure of the horizon
+tower enters.
+(For the true calculus derivative with Leibniz rule and fundamental theorem, see the tower derivative $\CCDer{\cdot} = [\CCIndexOp, \cdot]$ in Section~\ref{subsec:tower-derivative}.)
+\end{quote}
+
+\begin{remark}[Continuous scale derivative]
+\lean{CoherenceCalculus.AppendixOperators.continuousScaleDerivative}
+If the horizon tower is indexed continuously by $\ell \in \bbR$ (as in Section~\ref{sec:log-periodic}), one may define the \emph{scale derivative}
+\[
+\partial_\ell A_\ell := \lim_{\epsilon \to 0} \frac{A_{\ell+\epsilon} - A_\ell}{\epsilon}
+\]
+in the strong operator topology, when this limit exists.
+This is a derivative with respect to \emph{scale}, not with respect to any external parameter.
+\end{remark}
+
+% ------------------------------------------------------------
+\subsection{Spectral Selector (Projection onto Discrete Spectrum)}
+\label{subsec:quantization}
+% ------------------------------------------------------------
+
+The spectral selector projects onto eigenstates corresponding to a chosen discrete subset of the spectrum.
+
+\begin{definition}[Spectral selector]
+\label{def:quantization-projector}\lean{CoherenceCalculus.AppendixOperators.spectralSelector}
+Let $A:\cH \to \cH$ be a self-adjoint operator with spectral measure $E_A$.
+For a discrete subset $S \subseteq \bbR$, define the \emph{spectral selector} (also called \emph{quantization projector} in physics contexts)
+\[
+Q_S(A) := E_A(S) = \mathbf{1}_S(A),
+\]
+where $\mathbf{1}_S$ is the indicator function of $S$, applied via functional calculus.
+\end{definition}
+
+\begin{remark}[Finite-dimensional case]
+\lean{CoherenceCalculus.AppendixOperators.finite_quantization_example}
+In finite dimensions, if $A$ has eigenvalues $\lambda_1, \ldots, \lambda_n$ with orthonormal eigenvectors $v_1, \ldots, v_n$, then
+\[
+Q_S(A) = \sum_{j:\, \lambda_j \in S} v_j v_j^*.
+\]
+This is the orthogonal projection onto the span of eigenvectors with eigenvalues in $S$.
+\end{remark}
+
+\begin{proposition}[Properties of spectral selector]
+\label{prop:quantization-properties}\lean{CoherenceCalculus.AppendixOperators.spectralSelector_idem, CoherenceCalculus.AppendixOperators.spectralSelector_meet, CoherenceCalculus.AppendixOperators.spectralSelector_disjoint_join, CoherenceCalculus.AppendixOperators.spectralSelector_whole, CoherenceCalculus.AppendixOperators.spectralSelector_empty}
+For self-adjoint $A$ and discrete $S, T \subseteq \bbR$:
+\begin{enumerate}[label=(\roman*)]
+\item $Q_S(A)$ is an orthogonal projection: $Q_S(A)^2 = Q_S(A) = Q_S(A)^*$.
+\item $Q_S(A) Q_T(A) = Q_{S \cap T}(A)$.
+\item $Q_S(A) + Q_T(A) = Q_{S \cup T}(A)$ if $S \cap T = \emptyset$.
+\item $Q_\bbR(A) = I$ and $Q_\emptyset(A) = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+These are standard properties of spectral projections from the spectral theorem for self-adjoint operators.
+\end{proof}
+
+\begin{example}[Finite-dimensional spectral selection]
+\lean{CoherenceCalculus.AppendixOperators.finite_quantization_example}
+\label{ex:finite-quantization}
+Let $\cH = \bbR^4$ and $A = \mathrm{diag}(0, 1, 2, 3)$ with standard basis $e_1, e_2, e_3, e_4$.
+For $S = \{0, 2\}$:
+\[
+Q_S(A) = e_1 e_1^* + e_3 e_3^* = \mathrm{diag}(1, 0, 1, 0).
+\]
+This projects onto the subspace spanned by $e_1$ and $e_3$.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Spectral selection means projecting onto a discrete admissible spectrum $S$,
+not necessarily one indexed by integers.
+The set $S$ is chosen by invariance or admissibility constraints, not by fitting to data.
+(The term ``quantization projector'' reflects physics usage where discrete spectra arise from quantization conditions.)
+\end{quote}
+
+\begin{remark}[Selection rule]
+\lean{CoherenceCalculus.AppendixOperators.selectionRule}
+In applications, $S$ is typically determined by conservation laws, symmetry constraints, or admissibility conditions (Section~\ref{sec:constraint-compiler}).
+The spectral selector $Q_S(A)$ then projects onto the ``allowed'' eigenspaces.
+\end{remark}
+
+% ------------------------------------------------------------
+\subsection{Coherence Trace (Horizon Trace and Supertrace)}
+\label{subsec:coherence-trace}
+% ------------------------------------------------------------
+
+The coherence trace provides a canonical way to aggregate operator information across the observable subspace.
+
+\begin{definition}[Horizon trace]
+\label{def:horizon-trace}\lean{CoherenceCalculus.AppendixOperators.horizonTrace}
+For a trace-class operator $A$ on $\cH$ (or any operator on a finite-dimensional $\cH$), define the \emph{horizon trace} at level $h$:
+\[
+\CCHTrace{h}{A} := \Tr(\CCRestr{A}{h}).
+\]
+\end{definition}
+
+\begin{lemma}[Properties of horizon trace]
+\label{lem:horizon-trace-properties}\lean{CoherenceCalculus.AppendixOperators.horizonTrace_add, CoherenceCalculus.AppendixOperators.horizonTrace_monotone_statement, CoherenceCalculus.AppendixOperators.horizonTrace_consistency}
+The horizon trace satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Linearity:} $\CCHTrace{h}{\alpha A + \beta B} = \alpha \CCHTrace{h}{A} + \beta \CCHTrace{h}{B}$.
+\item \textbf{Monotonicity:} If $h \le h'$ (nested horizons), then for $A \succeq 0$, $\CCHTrace{h}{A} \le \CCHTrace{h'}{A}$.
+\item \textbf{Consistency:} $\CCHTrace{h}{\CCPi{h}} = \dim(\CCHobs{h})$ (the dimension of the observable subspace).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Linearity of trace.
+(ii) For $A \succeq 0$ and $h \le h'$, the range of $\CCPi{h}$ is contained in the range of $\CCPi{h'}$, so the sum defining $\CCHTrace{h}{A}$ is over a subset of the terms in $\CCHTrace{h'}{A}$.
+(iii) $\Tr(\CCPi{h} \CCPi{h} \CCPi{h}) = \Tr(\CCPi{h}) = \dim(\CCHobs{h})$.
+\end{proof}
+
+\begin{definition}[Coherence supertrace]
+\label{def:supertrace}\lean{CoherenceCalculus.AppendixOperators.coherenceSupertrace}
+If $\cH = \bigoplus_{k=0}^{K} \cH^{(k)}$ is a graded Hilbert space with grading projections $P^{(k)}$, and $\CCPi{h}^{(k)} := \CCPi{h} P^{(k)}$ are the horizon projections restricted to grade $k$, define the \emph{coherence supertrace}:
+\[
+\mathrm{Str}_h(A) := \sum_{k=0}^{K} (-1)^k \Tr(\CCPi{h}^{(k)} A \CCPi{h}^{(k)}).
+\]
+Each term must be finite (finite-dimensional $\cH^{(k)}$ or trace-class restriction).
+\end{definition}
+
+\begin{lemma}[Supertrace linearity]
+\label{lem:supertrace-linear}\lean{CoherenceCalculus.AppendixOperators.coherenceSupertrace_add}
+The coherence supertrace is linear: $\mathrm{Str}_h(\alpha A + \beta B) = \alpha \, \mathrm{Str}_h(A) + \beta \, \mathrm{Str}_h(B)$.
+\end{lemma}
+
+\begin{proof}
+Direct from linearity of trace on each graded component.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The horizon trace $\CCHTrace{h}{A}$ replaces ad hoc ``sums over observable sectors'' with a canonical trace functional.
+The supertrace extends this to graded/complex structures where alternating signs encode cohomological information.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Aliasing Operator (Polar Decomposition of Leakage)}
+\label{subsec:aliasing}
+% ------------------------------------------------------------
+
+The aliasing operator extracts the ``direction'' of leakage from the observable into the shadow subspace.
+
+Recall the \emph{leakage operator} $\CCLeak{d}{h} := \CCLeakExpr{d}{h}$ (Definition~\ref{def:leakage-operator}), the component of $d$ that maps observable states into the shadow.
+
+\begin{theorem}[Polar decomposition of leakage]
+\label{thm:aliasing-polar}\lean{CoherenceCalculus.AppendixOperators.leakageMagnitudeSquared}
+The leakage operator $B_h$ admits a polar decomposition
+\[
+B_h = U_h |B_h|,
+\]
+where:
+\begin{itemize}[itemsep=0.2em]
+\item $|B_h| := (B_h^* B_h)^{1/2}$ is the positive semidefinite ``magnitude'' of leakage.
+\item $U_h$ is a partial isometry with initial space $\overline{\Img(|B_h|)}$ and final space $\overline{\Img(B_h)}$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+This is the standard polar decomposition theorem for bounded operators on Hilbert spaces.
+\end{proof}
+
+\begin{definition}[Aliasing operator]
+\label{def:aliasing-operator}\lean{CoherenceCalculus.AppendixOperators.aliasingProjectorDomain}
+The \emph{aliasing operator} is the partial isometry $U_h$ from the polar decomposition of $B_h$.
+It encodes the ``canonical direction'' of leakage from observable to shadow.
+\end{definition}
+
+\begin{corollary}[Properties of aliasing]
+\label{cor:aliasing-properties}\lean{CoherenceCalculus.AppendixOperators.leakageMagnitude_observable, CoherenceCalculus.AppendixOperators.isometry_property, CoherenceCalculus.AppendixOperators.leakage_norm_eq_abs_norm}
+\begin{enumerate}[label=(\roman*)]
+\item $B_h^* B_h = |B_h|^2 \succeq 0$.
+\item $\|B_h x\|^2 = \langle x, B_h^* B_h \, x \rangle = \langle x, |B_h|^2 x \rangle$ for all $x \in \cH$.
+\item $U_h$ preserves norms on the initial space $\Img(|B_h|)$: for all $z \in \Img(|B_h|)$, $\|U_h z\| = \|z\|$.
+\item $U_h^* U_h$ is the projection onto $\overline{\Img(|B_h|)}$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Standard properties of polar decomposition.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The aliasing operator $U_h$ is the ``direction'' of leakage; $|B_h|$ is its ``magnitude.''
+Together they separate \emph{how much} leaks ($|B_h|$) from \emph{where} it goes ($U_h$).
+\end{quote}
+
+\begin{remark}[Connection to defect energy]
+\lean{CoherenceCalculus.AppendixOperators.defect_energy_aliasing_direction}
+The defect energy (Definition in Section~\ref{sec:hft}) satisfies
+\[
+\CCDefEnergy{h}{x} = \|\CCLeak{d}{h} x\|^2 = \||\CCLeak{d}{h}| x\|^2.
+\]
+The aliasing operator $U_h$ does not affect the magnitude of leakage, only its direction in the shadow subspace.
+\end{remark}
+
+\begin{example}[Finite-dimensional aliasing]
+\lean{CoherenceCalculus.AppendixOperators.finite_quantization_example}
+\label{ex:finite-aliasing}
+Let $\cH = \bbR^2$, $\Pi = e_1 e_1^*$ (projection onto first coordinate), and $d = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix}$.
+Then $B = (I-\Pi)\, d\, \Pi = e_2 e_1^*$ (maps $e_1 \mapsto e_2$).
+Here $|B| = e_1 e_1^*$ and $U = e_2 e_1^*$, so $U$ is the ``rotation'' from observable to shadow direction.
+\end{example}

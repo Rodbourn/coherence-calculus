@@ -1,0 +1,308 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:advanced-operators-iii}
+% ============================================================
+
+These tools extend the operator toolbox beyond the main spine's transport and
+monodromy interfaces by adding principal angles (subspace mismatch via SVD),
+invariant filters (projection onto admissible subalgebras), and unitary
+splittings (norm bookkeeping across observable and shadow components).
+
+% ------------------------------------------------------------
+\subsection{Principal Angles Between Invariant Subspaces (SVD Machinery)}
+\label{subsec:principal-angles}
+% ------------------------------------------------------------
+
+Principal angles measure the ``mismatch'' or ``frustration'' between two subspaces, encoding how far they are from being orthogonal or coincident.
+
+\begin{definition}[Principal angles]
+\label{def:principal-angles}\lean{CoherenceCalculus.AppendixOperators.principalAngles}
+Let $U$ and $V$ be subspaces of a finite-dimensional inner-product space $\cH$, with $\dim U = p$ and $\dim V = q$ where $p \le q$.
+The \emph{principal angles} $0 \le \theta_1 \le \theta_2 \le \cdots \le \theta_p \le \pi/2$ are defined recursively:
+\[
+\cos\theta_k := \max_{\substack{u \in U,\, v \in V \\ \|u\|=\|v\|=1 \\ u \perp u_1, \ldots, u_{k-1} \\ v \perp v_1, \ldots, v_{k-1}}} \langle u, v \rangle,
+\]
+where $(u_k, v_k)$ is a pair achieving the maximum at step $k$.
+\end{definition}
+
+\begin{definition}[Principal angle operator]
+\label{def:principal-angle-operator}\lean{CoherenceCalculus.AppendixOperators.principalAngleOp}
+Let $P_U$ and $P_V$ be the orthogonal projections onto $U$ and $V$ respectively.
+Define the \emph{principal angle operator}
+\[
+A_{UV} := P_U P_V|_V : V \to U,
+\]
+the restriction of $P_U P_V$ to $V$.
+\end{definition}
+
+\begin{proposition}[SVD characterization of principal angles]
+\label{prop:svd-principal}\lean{CoherenceCalculus.AppendixOperators.svd_principal_angles}
+The singular values of $A_{UV} = P_U P_V|_V$ are $\sigma_k = \cos\theta_k$, where $\theta_k$ are the principal angles between $U$ and $V$.
+\end{proposition}
+
+\begin{proof}
+Choose orthonormal bases of \(U\) and \(V\). In those bases, the operator
+\(A_{UV} = P_U P_V|_V\) is represented by the matrix
+\[
+M_{ij} = \langle u_i, v_j \rangle .
+\]
+Apply the singular value decomposition to \(M\). There exist orthonormal bases
+\(\{\tilde u_i\}\) of \(U\) and \(\{\tilde v_j\}\) of \(V\) such that
+\[
+\langle \tilde u_i,\tilde v_j\rangle = \sigma_i \delta_{ij}
+\]
+for singular values \(\sigma_1 \ge \cdots \ge \sigma_p \ge 0\).
+
+The recursive maximization defining the principal angles selects exactly these
+orthonormal pairs, and the maximizing value at step \(i\) is
+\(\cos\theta_i = \sigma_i\). Since the singular values of \(A_{UV}\) are the
+singular values of \(M\), the claim follows.
+\end{proof}
+
+\begin{definition}[Frustration tensor]
+\label{def:frustration-tensor}\lean{CoherenceCalculus.AppendixOperators.frustrationTensor}
+The \emph{frustration tensor} (or \emph{overlap tensor}) between subspaces $U$ and $V$ is the SVD data of $A_{UV}$:
+\[
+\mathcal{F}(U, V) := \bigl( \sigma_1, \sigma_2, \ldots, \sigma_{\min(p,q)} \bigr) = \bigl( \cos\theta_1, \cos\theta_2, \ldots, \cos\theta_{\min(p,q)} \bigr).
+\]
+Equivalently, $\mathcal{F}(U,V)$ can be represented as the matrix of inner products $\langle u_i, v_j \rangle$ in principal bases.
+\end{definition}
+
+\begin{corollary}[Extremal cases]
+\label{cor:principal-extremes}\lean{CoherenceCalculus.AppendixOperators.subspace_inclusion_iff_angles_zero}\lean{CoherenceCalculus.AppendixOperators.subspace_orthogonal_iff_angles_max}\lean{CoherenceCalculus.AppendixOperators.subspace_equality_iff_all_ones}
+\begin{enumerate}[label=(\roman*)]
+\item $U \subseteq V$ if and only if all principal angles are zero (all $\sigma_k = 1$).
+\item $U \perp V$ if and only if all principal angles are $\pi/2$ (all $\sigma_k = 0$).
+\item $U = V$ (when $\dim U = \dim V$) if and only if all $\sigma_k = 1$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Direct from the definition: $\cos\theta = 1$ iff $\theta = 0$; $\cos\theta = 0$ iff $\theta = \pi/2$.
+\end{proof}
+
+\begin{example}[Two lines in $\bbR^2$]
+\lean{CoherenceCalculus.AppendixOperators.lines_r2_example}
+\label{ex:lines-r2}
+Let $U = \Span\{e_1\}$ and $V = \Span\{\cos\theta\, e_1 + \sin\theta\, e_2\}$ for $\theta \in [0, \pi/2]$.
+The single principal angle is $\theta$, and the frustration tensor is $\mathcal{F}(U,V) = (\cos\theta)$.
+\end{example}
+
+\begin{remark}[Connection to representation projectors]
+\lean{CoherenceCalculus.AppendixOperators.IsotypicProperties}
+If $U$ and $V$ are isotypic subspaces for different irreducible representations of a group $G$ (Section~\ref{subsec:representation-projector}), then $U \perp V$ by Schur orthogonality, so all principal angles are $\pi/2$.
+For subspaces corresponding to the \emph{same} irrep, the principal angles measure how ``aligned'' different copies are.
+\end{remark}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Principal angles quantify ``mixing'' or ``frustration'' between two constraint subspaces.
+The frustration tensor is the SVD data packaging all pairwise alignments.
+When subspaces come from symmetry constraints, the principal angles measure compatibility.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Field Filters and Invariant Subalgebras (Selection by Closure)}
+\label{subsec:field-filter}
+% ------------------------------------------------------------
+
+A field filter is a projection operator that enforces coefficient or structure restrictions by projecting onto an invariant subalgebra.
+
+\begin{definition}[Algebra of observables]
+\label{def:observable-algebra}\lean{CoherenceCalculus.AppendixOperators.ObservableAlgebra}
+Let $\mathcal{A}$ be a real or complex $*$-algebra of bounded linear operators on $\cH_{\mathrm{obs}}$.
+Elements of $\mathcal{A}$ are ``observables'' in the algebraic sense.
+\end{definition}
+
+\begin{definition}[Invariant subalgebra]
+\label{def:invariant-subalgebra}\lean{CoherenceCalculus.AppendixOperators.GroupAction}\lean{CoherenceCalculus.AppendixOperators.invariantSubalgebra}
+Let $\Gamma$ be a finite group acting on $\mathcal{A}$ by $*$-automorphisms: for each $g \in \Gamma$, there is a map $\alpha_g: \mathcal{A} \to \mathcal{A}$ satisfying
+\begin{enumerate}[label=(\roman*)]
+\item $\alpha_g(a + b) = \alpha_g(a) + \alpha_g(b)$,
+\item $\alpha_g(ab) = \alpha_g(a)\alpha_g(b)$,
+\item $\alpha_g(a^*) = \alpha_g(a)^*$,
+\item $\alpha_{gh} = \alpha_g \circ \alpha_h$.
+\end{enumerate}
+The \emph{$\Gamma$-invariant subalgebra} is
+\[
+\mathcal{A}^\Gamma := \{ a \in \mathcal{A} : \alpha_g(a) = a \text{ for all } g \in \Gamma \}.
+\]
+\end{definition}
+
+\begin{definition}[Invariant filter (group averaging)]
+\label{def:invariant-filter}\lean{CoherenceCalculus.AppendixOperators.invariantFilter}
+The \emph{invariant filter} associated to the group action $\Gamma$ is
+\[
+\mathcal{G}_\Gamma: \mathcal{A} \to \mathcal{A}, \qquad
+\mathcal{G}_\Gamma(a) := \frac{1}{|\Gamma|} \sum_{g \in \Gamma} \alpha_g(a).
+\]
+\end{definition}
+
+\begin{proposition}[Properties of the invariant filter]
+\label{prop:invariant-filter-properties}\lean{CoherenceCalculus.AppendixOperators.invariantFilter_linear}\lean{CoherenceCalculus.AppendixOperators.invariantFilter_idempotent}\lean{CoherenceCalculus.AppendixOperators.invariantFilter_range}\lean{CoherenceCalculus.AppendixOperators.invariantFilter_fixed_points}\lean{CoherenceCalculus.AppendixOperators.invariantFilter_preserves_star}
+The invariant filter $\mathcal{G}_\Gamma$ satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Linearity:} $\mathcal{G}_\Gamma(\lambda a + \mu b) = \lambda \mathcal{G}_\Gamma(a) + \mu \mathcal{G}_\Gamma(b)$.
+\item \textbf{Idempotence:} $\mathcal{G}_\Gamma^2 = \mathcal{G}_\Gamma$ (projection property).
+\item \textbf{Range:} $\Img(\mathcal{G}_\Gamma) = \mathcal{A}^\Gamma$.
+\item \textbf{Fixed points:} $\mathcal{G}_\Gamma(a) = a$ if and only if $a \in \mathcal{A}^\Gamma$.
+\item \textbf{$*$-preservation:} $\mathcal{G}_\Gamma(a^*) = \mathcal{G}_\Gamma(a)^*$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Linearity follows from linearity of each $\alpha_g$ and of summation.
+
+(ii) For idempotence:
+\[
+\mathcal{G}_\Gamma^2(a) = \frac{1}{|\Gamma|} \sum_{g \in \Gamma} \alpha_g\Bigl( \frac{1}{|\Gamma|} \sum_{h \in \Gamma} \alpha_h(a) \Bigr)
+= \frac{1}{|\Gamma|^2} \sum_{g,h \in \Gamma} \alpha_{gh}(a)
+= \frac{1}{|\Gamma|^2} \sum_{g \in \Gamma} \sum_{k \in \Gamma} \alpha_k(a)
+= \mathcal{G}_\Gamma(a),
+\]
+where we used the substitution $k = gh$ and the fact that as $h$ ranges over $\Gamma$, so does $k = gh$.
+
+(iii) If $a = \mathcal{G}_\Gamma(b)$, then $\alpha_g(a) = \frac{1}{|\Gamma|} \sum_{h} \alpha_{gh}(b) = \mathcal{G}_\Gamma(b) = a$, so $a \in \mathcal{A}^\Gamma$.
+Conversely, if $a \in \mathcal{A}^\Gamma$, then $\mathcal{G}_\Gamma(a) = \frac{1}{|\Gamma|} \sum_g a = a$.
+
+(iv) Follows from (ii) and (iii).
+
+(v) Each $\alpha_g$ preserves the $*$-operation, so $\mathcal{G}_\Gamma(a^*) = \frac{1}{|\Gamma|} \sum_g \alpha_g(a)^* = \mathcal{G}_\Gamma(a)^*$.
+\end{proof}
+
+\begin{example}[Real vs.\ complex: conjugation filter]
+\lean{CoherenceCalculus.AppendixOperators.conjugation_filter_example}
+\label{ex:conjugation-filter}
+Let $\mathcal{A} = M_n(\mathbb{C})$ (complex $n \times n$ matrices) and $\Gamma = \{e, \sigma\}$ where $\sigma$ is complex conjugation: $\alpha_\sigma(A) = \bar{A}$.
+Then
+\[
+\mathcal{G}_\Gamma(A) = \tfrac{1}{2}(A + \bar{A}) = \mathrm{Re}(A),
+\]
+and $\mathcal{A}^\Gamma = M_n(\bbR)$.
+The filter projects onto real matrices.
+\end{example}
+
+\begin{example}[Diagonal filter]
+\lean{CoherenceCalculus.AppendixOperators.diagonal_filter_example}
+\label{ex:diagonal-filter}
+Let $\mathcal{A} = M_n(\mathbb{C})$ and let $\Gamma = (\mathbb{Z}/n\mathbb{Z})$ act by cyclic permutation of basis vectors.
+Then $\mathcal{A}^\Gamma$ consists of circulant matrices.
+For the group of all permutations $\Gamma = S_n$, the invariant subalgebra is scalar multiples of the identity.
+\end{example}
+
+\begin{remark}[Connection to spectral selector]
+\lean{CoherenceCalculus.AppendixOperators.spectralSelector}
+The invariant filter $\mathcal{G}_\Gamma$ and the spectral selector $Q_S$ (Section~\ref{subsec:quantization}) are both selection operators.
+$Q_S$ selects eigenspaces; $\mathcal{G}_\Gamma$ selects by symmetry invariance.
+Both are idempotent and extract a canonical ``admissible'' component.
+\end{remark}
+
+\begin{quote}\small
+\textbf{Intuition.}
+A field/invariant filter enforces coefficient or structure restrictions by averaging over a symmetry group.
+The result is a projection onto the subalgebra of invariants, providing a
+direct way to extract the admissible part of any observable.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Unitary Splittings and Unity Identities}
+\label{subsec:unity-splitting}
+% ------------------------------------------------------------
+
+Unitary splittings provide norm bookkeeping: total norm partitions across observable, shadow, and defect components.
+
+\begin{definition}[Observable-shadow decomposition]
+\label{def:obs-shadow-decomp}\lean{CoherenceCalculus.AppendixOperators.obsShadowDecomp}
+For a Hilbert space $\cH$ with horizon projection $\CCPi{h}$ and shadow projection $\CCPibar{h} = I - \CCPi{h}$, every vector $x \in \cH$ decomposes as
+\[
+x = \CCPi{h} x + \CCPibar{h} x = x_{\mathrm{obs}} + x_{\mathrm{sh}},
+\]
+where $x_{\mathrm{obs}} := \CCPi{h} x \in \cH_{\mathrm{obs}}$ and $x_{\mathrm{sh}} := \CCPibar{h} x \in \cH_{\mathrm{sh}}$.
+\end{definition}
+
+\begin{proposition}[Pythagorean splitting of norms]
+\label{prop:pythagorean-norm}\lean{CoherenceCalculus.AppendixOperators.pythagorean_splitting}
+For the orthogonal decomposition $x = x_{\mathrm{obs}} + x_{\mathrm{sh}}$:
+\[
+\|x\|^2 = \|x_{\mathrm{obs}}\|^2 + \|x_{\mathrm{sh}}\|^2 = \|\CCPi{h} x\|^2 + \|\CCPibar{h} x\|^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Since $\CCPi{h}$ and $\CCPibar{h}$ are orthogonal projections with $\CCPi{h} \CCPibar{h} = 0$, we have $\langle x_{\mathrm{obs}}, x_{\mathrm{sh}} \rangle = 0$.
+Thus $\|x\|^2 = \langle x, x \rangle = \|x_{\mathrm{obs}}\|^2 + 2\langle x_{\mathrm{obs}}, x_{\mathrm{sh}} \rangle + \|x_{\mathrm{sh}}\|^2 = \|x_{\mathrm{obs}}\|^2 + \|x_{\mathrm{sh}}\|^2$.
+\end{proof}
+
+\begin{definition}[Defect energy]
+\label{def:defect-energy-unity}\lean{CoherenceCalculus.AppendixOperators.defectEnergy_eq_leakage_norm}
+For a nilpotent differential $d$ with leakage operator $\CCLeak{d}{h} = \CCLeakExpr{d}{h}$, the \emph{defect energy} of $x \in \cH_{\mathrm{obs}}$ is
+\[
+\CCDefEnergy{h}{x} := \|\CCLeak{d}{h} x\|^2 = \langle x, \CCLeak{d}{h}^\ast \CCLeak{d}{h}\, x \rangle.
+\]
+\end{definition}
+
+\begin{proposition}[Defect energy decomposition]
+\label{prop:defect-decomp}\lean{CoherenceCalculus.AppendixOperators.defect_energy_decomposition}
+For $x \in \cH_{\mathrm{obs}}$ and $y := dx$ (the result of applying $d$), write $y = y_{\mathrm{obs}} + y_{\mathrm{sh}}$ where $y_{\mathrm{obs}} = \CCPi{h} y = \CCObs{d}{h} x$ and $y_{\mathrm{sh}} = \CCPibar{h} y = \CCLeak{d}{h} x$.
+Then:
+\[
+\|dx\|^2 = \|\CCObs{d}{h} x\|^2 + \CCDefEnergy{h}{x}.
+\]
+That is, the squared norm of $dx$ splits into the observed part $\|\CCObs{d}{h} x\|^2$ and the defect $\CCDefEnergy{h}{x}$.
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:pythagorean-norm} to $y = dx$:
+\[
+\|dx\|^2 = \|\CCPi{h} dx\|^2 + \|\CCPibar{h} dx\|^2 = \|\CCObs{d}{h} x\|^2 + \|\CCLeak{d}{h} x\|^2 = \|\CCObs{d}{h} x\|^2 + \CCDefEnergy{h}{x}. \qedhere
+\]
+\end{proof}
+
+\begin{corollary}[Norm bound on observed operator]
+\label{cor:norm-bound}\lean{CoherenceCalculus.AppendixOperators.norm_bound_observed_statement}\lean{CoherenceCalculus.AppendixOperators.norm_bound_equality_iff}
+For $x \in \cH_{\mathrm{obs}}$:
+\[
+\|\CCObs{d}{h} x\|^2 \le \|dx\|^2, \qquad \text{with equality iff } \CCDefEnergy{h}{x} = 0.
+\]
+The observed operator cannot increase squared norm beyond the full operator; defect accounts for any ``missing'' norm.
+\end{corollary}
+
+\begin{proposition}[Isometry property from polar decomposition]
+\label{prop:isometry-property}\lean{CoherenceCalculus.AppendixOperators.PolarDecomp}\lean{CoherenceCalculus.AppendixOperators.isometry_property}\lean{CoherenceCalculus.AppendixOperators.leakage_norm_eq_abs_norm}
+Let $\CCLeak{d}{h} = U_h |\CCLeak{d}{h}|$ be the polar decomposition of the leakage operator (Section~\ref{subsec:aliasing}).
+The partial isometry $U_h$ satisfies:
+\[
+\|U_h z\| = \|z\| \quad \text{for all } z \in \overline{\Img(|\CCLeak{d}{h}|)}.
+\]
+In particular, $\|\CCLeak{d}{h} x\| = \||\CCLeak{d}{h}| x\|$ for all $x$.
+\end{proposition}
+
+\begin{proof}
+By definition of partial isometry, $U_h^* U_h$ is the projection onto the initial space $\overline{\Img(|\CCLeak{d}{h}|)}$.
+For $z$ in this subspace, $\|U_h z\|^2 = \langle U_h z, U_h z \rangle = \langle z, U_h^* U_h z \rangle = \langle z, z \rangle = \|z\|^2$.
+The second statement follows since $\CCLeak{d}{h} x = U_h |\CCLeak{d}{h}| x$ and $|\CCLeak{d}{h}| x \in \Img(|\CCLeak{d}{h}|)$.
+\end{proof}
+
+\begin{remark}[Connection to telescoping identity]
+\lean{CoherenceCalculus.AppendixOperators.pythagorean_splitting}
+The norm splitting $\|x\|^2 = \|\CCPi{h} x\|^2 + \|\CCPibar{h} x\|^2$ underlies the telescoping decomposition in the Horizon Fundamental Theorem (Section~\ref{sec:hft}).
+Each horizon level $h$ contributes its share of the total norm, with no overlap due to orthogonality.
+\end{remark}
+
+\begin{example}[Norm accounting in $\bbR^3$]
+\lean{CoherenceCalculus.AppendixOperators.norm_r3_example}
+\label{ex:norm-r3}
+Let $\cH = \bbR^3$ with $\CCPi{h} = e_1 e_1^* + e_2 e_2^*$ (projection onto the $(x,y)$-plane).
+For $x = (a, b, c)^\top$:
+\[
+\|x\|^2 = a^2 + b^2 + c^2 = \underbrace{(a^2 + b^2)}_{\|\CCPi{h} x\|^2} + \underbrace{c^2}_{\|\CCPibar{h} x\|^2}.
+\]
+The ``shadow'' component $c^2$ is exactly what the planar observer cannot account for.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Unity identities are bookkeeping laws: total norm (or squared norm) splits cleanly across observable and shadow components.
+Defect energy $\CCDefEnergy{h}{x}$ measures the portion of $\|dx\|^2$ that ``leaks'' out of the observable.
+Isometries (from polar decomposition) preserve norms, so they transfer magnitude without creating or destroying it.
+\end{quote}

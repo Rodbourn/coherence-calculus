@@ -1,0 +1,235 @@
+% ============================================================
+\section{Notation and Toolkit}
+\label{sec:orientation}
+% ============================================================
+
+\subsection{The Problem: Finite Observability}
+
+When an observer has finite resolution, not all structure is representable.
+A projection $\CCPi{h}$ captures ``what can be seen at resolution $h$.''
+The fundamental question:
+\begin{center}
+\emph{What is lost, and what defects arise, when operators are applied under finite observability?}
+\end{center}
+
+\subsection{The Interface Objects}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\textbf{Object} & \textbf{Notation} & \textbf{Role} \\
+\hline
+Additive state space & $\cH$ & Ambient space for structure \\
+Horizon projection & $\CCPi{h}$ & What the observer can represent \\
+Shadow projection & $\CCPibar{h} = \id - \CCPi{h}$ & What escapes observation \\
+Field-induced projection & $\CCSpProj{\CCField}{S}$ & Spectral cut on field $\CCField$ \\
+Observed operator & $\CCObs{A}{h} = \CCRestr{A}{h}$ & The operator as seen \\
+Leakage operator & $\CCLeak{A}{h} = \CCLeakExpr{A}{h}$ & Observable $\to$ shadow flow \\
+Defect operator & $\CCDefect{A}{h} = \CCDefectExpr{A}{h}$ & Round-trip through shadow \\
+\end{tabular}
+\end{center}
+
+\subsection{The Tower Calculus}
+
+The \emph{tower calculus} is the algebraic spine of Coherence Calculus.
+It applies to \emph{any} operator on a discrete horizon tower; no nilpotency
+assumption is required.
+
+\smallskip\noindent
+\textbf{Calculus completeness.}
+The framework is internally complete in exactly three components:
+\begin{enumerate}[label=(\roman*), itemsep=0.1em, leftmargin=2em]
+\item \textbf{Tower calculus}: derivative $\partial$, antiderivative $\CCInt{\cdot}$, FTC (Section~\ref{subsec:tower-antiderivative}; Theorem~\ref{thm:ftc-tower}).
+\item \textbf{Defect grammar}: chain/product rules for $\CCTau{h}{F}{x}$ (Section~\ref{sec:defect-rules}).
+\item \textbf{Elimination/resummation}: split transform, Schur correction $\CCSigma{h}{z}$ (Section~\ref{sec:resolvent-defect}).
+\end{enumerate}
+These are not separate theories; they form a unified grammar for manipulating horizon-restricted operators.
+The completion-and-selection contract theorem (Section~\ref{sec:constraint-compiler}) makes this composition explicit: defect and elimination produce a bound \(D\), and admissibility selects a minimal completion together with its forcing or residual data.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\textbf{Calculus Role} & \textbf{Object} & \textbf{Identity} \\
+\hline
+Derivative & $\CCDer{A} = \CCComm{\CCIndexOp}{A}$ & Leibniz rule, block formula \\
+Integral & $\CCInt{B}_{hk} = \frac{1}{h-k} B_{hk}$ & Right-inverse on off-diagonal \\
+FTC analog & $A = \CCDiag{A} + \CCInt{\CCDer{A}}$ & Decomposition \\
+IBP & $\Tr(\CCDer{A} B) = -\Tr(A \CCDer{B})$ & Trace pairing \\
+\hline
+\multicolumn{3}{@{}l@{}}{\emph{Elimination (any projection $P$):}} \\
+Split transform & $\CCSplit{P}{A}{z} = (\CCAeff{A}{P}, \CCSigmaP{P}{z})$ & Effective + residual \\
+Inverse design & $\CCDesign{P} = \|\CCSigmaP{P}{z} - \Sigma^\star\|^2$ & Existence on $\CCGrass{r}$ \\
+\hline
+\multicolumn{3}{@{}l@{}}{\emph{Solver layer (when graded complex is exact):}} \\
+Hodge Laplacian & $\CCLap{k} = D_{k-1}D_{k-1}^* + D_k^* D_k$ & Invertible if $\CCCoh{k}(D)=0$ \\
+Canonical integration & $\CCHom{k} = D_{k-1}^* \CCGreen{k}$ & Homotopy: $DK + KD = I$ \\
+\end{tabular}
+\end{center}
+
+% ------------------------------------------------------------
+\begin{tcolorbox}[colback=white, colframe=black!70, title={Certificate Checklist}]
+\label{box:certificate-checklist}
+Three certifications gate the main capabilities of Coherence Calculus:
+
+\smallskip
+\textbf{\CertA\ Perfect Coherence (Zero Residual):}
+Check $\CCBlockPQ{A} = 0$ or $\CCBlockQP{A} = 0$.\\
+\emph{If satisfied:} No Schur correction needed; observed dynamics are exact.\\
+\emph{Reference:} Theorem~\ref{thm:block-diagonal-sufficient} (Section~\ref{sec:targets}).
+
+\smallskip
+\textbf{\CertB\ Solver Exactness:}
+Check $\CCCoh{k}(D) = 0$ (cohomology vanishes at degree $k$).\\
+\emph{If satisfied:} Green operator $\CCGreen{k} = \CCLap{k}^{-1}$ and homotopy $\CCHom{k}$ exist.\\
+\emph{Reference:} Definition~\ref{def:exactness}, Theorem~\ref{thm:homotopy-identity} (Section~\ref{subsec:solver-layer}).
+
+\smallskip
+\textbf{\CertC\ Holographic Saturation:}
+Check $\Ker(R_k) = \Img(D_{k-1})$ (relative exactness).\\
+\emph{If satisfied:} Zero boundary data implies pure gauge (bulk state is exact).\\
+\emph{Reference:} Definition~\ref{def:holographic-saturation} (Section~\ref{subsec:solver-layer}).
+
+\smallskip
+\emph{The admissible-completion layer (Section~\ref{sec:constraint-compiler}) uses these certificates as gates in the selection pipeline.}
+\end{tcolorbox}
+% ------------------------------------------------------------
+
+% ------------------------------------------------------------
+\begin{tcolorbox}[colback=white, colframe=black!70, title={Taxonomy of Operators}]
+\label{box:taxonomy}
+\textbf{Problem data} (given by the application):
+\begin{itemize}[itemsep=0.2em, leftmargin=1.5em]
+\item \textbf{Problem differential} $d$ (or graded $D_k: H^k \to H^{k+1}$): the closure operator of interest, satisfying $d^2 = 0$.
+\end{itemize}
+
+\smallskip
+\textbf{Horizon-restricted operators} (derived from $d$ and $\CCPi{h}$):
+\begin{itemize}[itemsep=0.2em, leftmargin=1.5em]
+\item \textbf{Observed differential} $\CCObs{d}{h} = \CCRestr{d}{h}$: what the observer sees when applying $d$.
+\item \textbf{Leakage operator} $\CCLeak{d}{h} = \CCLeakExpr{d}{h}$: the part of $d$ that sends observable states into shadow.
+\item \textbf{Defect operator} $\CCDefect{d}{h} = \CCDefectExpr{d}{h}$: round-trip through shadow; measures $\CCObs{d}{h}^2 = -\CCDefect{d}{h}$.
+\end{itemize}
+
+\smallskip
+\textbf{Tower calculus operators} (the calculus machinery):
+\begin{itemize}[itemsep=0.2em, leftmargin=1.5em]
+\item \textbf{Tower derivative} $\CCDer{A} = \CCComm{\CCIndexOp}{A}$: \emph{the} calculus derivative; acts on operators, extracts cross-scale transport with scale-separation weights. Satisfies Leibniz rule.
+\item \textbf{Tower antiderivative} $\CCInt{B}$: right-inverse of $\partial$ on off-diagonal blocks; $\CCBlock{(\CCInt{B})}{h}{k} = \frac{1}{h-k} \CCBlock{B}{h}{k}$ for $h \ne k$. Recovers off-diagonal structure from derivative data.
+\end{itemize}
+
+\smallskip
+\textbf{Discrete update operators} (NOT calculus derivatives):
+\begin{itemize}[itemsep=0.2em, leftmargin=1.5em]
+\item \textbf{Horizon flow} $\CCFlow{A}{h} = A_{h+1} - A_h$: finite difference of observed operators across adjacent horizons. A discrete update, not a commutator derivative.
+\item \textbf{Increment projector} $\CCDelta{h} = \CCPi{h} - \CCPi{h-1}$: projects onto the ``layer'' added at resolution $h$.
+\end{itemize}
+
+\smallskip
+\textbf{Key disambiguation:}
+$\partial$ and $\CCInt{\cdot}$ are the calculus operators (derivative/antiderivative on the operator algebra).
+$d$ is problem data (the differential whose behavior under projection we study).
+$\nabla_h$ is a discrete update, not a derivative.
+\end{tcolorbox}
+% ------------------------------------------------------------
+
+\subsection{The Horizon Fundamental Theorem}
+
+The \emph{Horizon Fundamental Theorem} applies specifically to \emph{graded
+differentials} ($d^2 = 0$) under horizon projection. It is an exact identity
+from block algebra. Its role is organizational: it gives a compact entry point
+to the defect grammar developed later in this part.
+
+\begin{tcolorbox}[colback=black!3, colframe=black!50, title={Horizon Fundamental Theorem (Preview)}]
+\textbf{HFT-1 (Defect Identity):} If $d^2 = 0$, then $\CCObs{d}{h}^2 = -\CCDefect{d}{h}$.
+
+\smallskip
+\textbf{HFT-2 (Telescoping):} Total deviation = sum of orthogonal layer increments.
+
+\smallskip
+\emph{These identities organize the chain rules, product rules, and elimination patterns of the later chapters of Part~II.}
+\end{tcolorbox}
+
+\subsection{Running Example: The 4-Vertex Path}
+\label{subsec:hello-world}
+
+\begin{example}[Running example used throughout]
+\label{ex:hello-world}\lean{CoherenceCalculus.pathGraph4, CoherenceCalculus.blockAverageProj4}
+Let $\cH = \bbR^4$ with standard basis $e_1, e_2, e_3, e_4$, and let $P$ be
+the block-averaging projection defined below.
+
+\textbf{Differential} (degree-0$\to$1 map in a graded complex; grading suppressed):
+\[
+(Dx)_1 = x_2 - x_1, \quad (Dx)_2 = x_3 - x_2, \quad (Dx)_3 = x_4 - x_3.
+\]
+
+\textbf{Horizon projection} (block averaging $\{1,2\}$ and $\{3,4\}$):
+\[
+(P x)_1 = (P x)_2 = \tfrac{x_1+x_2}{2}, \quad
+(P x)_3 = (P x)_4 = \tfrac{x_3+x_4}{2}.
+\]
+
+\textbf{Observable operator:} $PDP$ sees only inter-block differences.
+
+\textbf{Leakage:} $(I-P)DPx$ captures within-block differences that escape observation.
+
+\textbf{Defect energy:} For $x = (0,1,1,0)$:
+$Dx = (1,0,-1)$, $Px = (\frac{1}{2}, \frac{1}{2}, \frac{1}{2}, \frac{1}{2})$, $DPx = (0,0,0)$.
+Thus $\|Dx\|^2 - \|DPx\|^2 = 2$.
+
+\emph{This example will be referenced as ``the 4-vertex path'' throughout.}
+\end{example}
+
+% --- Horizon Tower Diagram ---
+\begin{figure}[ht]
+\centering
+\resizebox{0.82\textwidth}{!}{%
+\begin{tikzpicture}[node distance=1.5cm]
+  \node[font=\small\bfseries] at (0,1.2) {Nested subspaces};
+  \node[font=\small\bfseries] at (6.2,1.2) {Increment projectors};
+
+  \node[ccbox] (H) at (0,0) {$\cH$};
+  \node[ccbox, below=of H] (H2) {$\CCHobs{2}$};
+  \node[ccbox, below=of H2] (H1) {$\CCHobs{1}$};
+  \node[ccbox, below=of H1] (H0) {$\CCHobs{0}$};
+
+  \draw[ccarrow] (H) -- node[right, cclabel] {$\CCPi{2}$} (H2);
+  \draw[ccarrow] (H2) -- node[right, cclabel] {$\CCPi{1}$} (H1);
+  \draw[ccarrow] (H1) -- node[right, cclabel] {$\CCPi{0}$} (H0);
+
+  \node[ccband, minimum width=1.5cm, minimum height=0.8cm] (D2) at (4.8,-1.5) {$\CCDelta{2}$};
+  \node[ccband, minimum width=1.5cm, minimum height=0.8cm] (D1) at (4.8,-3.0) {$\CCDelta{1}$};
+  \node[ccband, minimum width=1.5cm, minimum height=0.8cm] (D0) at (4.8,-4.5) {$\CCDelta{0}$};
+
+  \node[right=0.55cm of D2, font=\scriptsize] {$= \CCPi{2} - \CCPi{1}$};
+  \node[right=0.55cm of D1, font=\scriptsize] {$= \CCPi{1} - \CCPi{0}$};
+  \node[right=0.55cm of D0, font=\scriptsize] {$= \CCPi{0}$};
+\end{tikzpicture}%
+}
+\caption{Horizon tower with nested subspaces (left) and increment projectors as ``bands'' (right).}
+\label{fig:horizon-tower}
+\end{figure}
+
+% --- Defect Round-Trip Diagram ---
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=3cm, scale=1.1, every node/.style={scale=1.1}]
+  % Observable and shadow
+  \node[ccbox, minimum width=2.2cm] (obs) {$\cH_{\mathrm{obs}}$};
+  \node[ccbox, minimum width=2.2cm, right=of obs] (sh) {$\cH_{\mathrm{sh}}$};
+
+  % Arrows forming round trip
+  \draw[ccarrow, bend left=25] (obs.north east) to node[above, cclabel] {$\CCPibar{h} d$} (sh.north west);
+  \draw[ccarrow, bend left=25] (sh.south west) to node[below, cclabel] {$\CCPi{h} d$} (obs.south east);
+
+  % Self-loop for observed operator
+  \draw[ccarrow] (obs.south) arc[start angle=-90, end angle=-270, radius=0.55cm]
+    node[left, pos=0.5, cclabel] {$\CCObs{d}{h}$};
+
+  % Annotation
+  \node[below=1.6cm of obs, font=\small, align=center] {
+    Round trip: $\CCDefect{d}{h} = \CCPi{h} d \CCPibar{h} d \CCPi{h}$
+  };
+\end{tikzpicture}
+\caption{Defect as ``round trip through shadow'': leakage out ($\CCPibar{h} d$) and return ($\CCPi{h} d$).}
+\label{fig:defect-roundtrip}
+\end{figure}

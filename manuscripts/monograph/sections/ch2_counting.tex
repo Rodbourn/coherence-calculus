@@ -1,0 +1,140 @@
+% ============================================================
+\section{From Distinction to Counting}
+\label{sec:counting}
+% ============================================================
+
+If things can be told apart, you can ask ``how many?'' The natural numbers are
+the answer to that question. This chapter constructs a canonical counting
+object~$\bbN$ satisfying Peano's axioms and builds the arithmetic needed for
+the Diophantine selection of the balanced dimension.
+The two counting functionals that govern the closure-balance equation are the
+pair count~$\binom{D}{2}$ and the cyclic-order count~$(D{-}1)!$; this section
+shows why they are the natural minimal choices. The construction of this
+counting object from finite composites is closely related to Dedekind's
+original characterization \cite{Dedekind1888}.
+
+\subsection{Naturality of the Counting Functionals}
+\label{subsec:counting-functional-classification}
+% ------------------------------------------------------------
+
+The present closure-balance equation compares two specific counts:
+\[
+\binom{D}{2}
+\qquad\text{and}\qquad
+(D-1)!.
+\]
+These are not arbitrary choices. The pair count \(\binom{D}{2}\) is the
+lowest-arity unordered incidence count that still records nontrivial internal
+coupling, and the cyclic-order count \((D-1)!\) is the corresponding minimal
+ordering count once one primitive is held fixed as a local anchor.
+
+\paragraph{Restricted comparison with the nearest alternatives.}
+Within the low-arity candidates naturally available at this stage, the chosen
+pair is the only one used in the manuscript that yields both:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item a nontrivial balanced dimension, and
+\item a nontrivial positive residual dimension.
+\end{enumerate}
+More precisely:
+\begin{itemize}[itemsep=0.2em]
+\item \(\binom{D}{2}=(D-1)!\) yields the two balanced dimensions \(D=2,4\) and
+      the unique positive residual dimension \(D=3\);
+\item \(\binom{D}{2}=D!\) has no nontrivial solution;
+\item \(\binom{D}{3}=(D-1)!\) has no nontrivial balanced solution and no
+      residual buffer between a unit seed and a higher balanced carrier.
+\end{itemize}
+This restricted comparison is all that is needed for the present monograph.
+It shows that the chosen pair is not decorative: it is the minimal low-arity
+counting surface in this neighborhood that supports the seed/interface/carrier
+trichotomy used later.
+
+\paragraph{Scope.}
+The manuscript does not claim here to classify every conceivable
+``natural'' counting convention. The point is narrower and sufficient for the
+current proof chain: among the immediate unordered-pair / ordered-arrangement
+competitors available at bedrock level, the pair
+\(\bigl(\binom{D}{2},(D-1)!\bigr)\) is the only one that produces both the
+nontrivial balanced carrier \(D=4\) and the unique residual interface \(D=3\).
+
+% ------------------------------------------------------------
+\subsection{The Emergence of Arithmetic}
+\label{subsec:emergence-arithmetic}
+% ------------------------------------------------------------
+
+The first consequences are arithmetic and finite combinatorics.
+
+\begin{theorem}[Distinction]\label{thm:distinction}\lean{primitive_distinction}
+Primitives meeting in an incidence are distinguishable.
+\end{theorem}
+
+\begin{proof}
+Any two primitives are either equal or unequal. Distinguishability is exactly
+that dichotomy.
+\end{proof}
+
+\begin{remark}[Finiteness]\label{rem:finiteness}\lean{event_finiteness}
+Finiteness is already built into the incidence surface: every incidence carries
+a natural-number dimension datum, so only finitely many primitives meet at any
+incidence.
+\end{remark}
+
+\begin{theorem}[Finite choice; no Axiom of Choice required]
+\label{thm:choice}\lean{FiniteChoiceFamily}\lean{finite_choice}
+In this paper's finite-dimensional setting, choice functions exist constructively for explicitly enumerated finite families. The full set-theoretic Axiom of Choice is \emph{not} derived.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-foundations}.)
+
+\begin{quote}\small
+\textbf{Clarification.} This theorem does \emph{not} claim to derive the full Axiom of Choice from first principles. It states only that within the explicitly finite framework used throughout this paper, choice is unproblematic and constructively available. The AC debate concerns infinite collections and witness extraction from purely existential hypotheses; we avoid both by working with finite enumerations.
+\end{quote}
+
+\begin{definition}[Natural Numbers]\label{def:natural-numbers}\lean{NatFromPrimitive}
+The natural numbers $\bbN$ are taken as the canonical counting object for finite primitive tallies. Read:
+\begin{itemize}[itemsep=0.2em]
+\item $0$ as the empty tally,
+\item $1$ as a single primitive,
+\item $S(n)$ as adjoining one further distinguishable primitive to a tally of size $n$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Peano Structure]\label{thm:peano}\lean{peano_from_counting}
+The natural numbers satisfy Peano's axioms:
+\begin{enumerate}[label=(P\arabic*), itemsep=0.2em]
+\item $0 \in \bbN$.
+\item $n \in \bbN \Rightarrow S(n) \in \bbN$.
+\item $S(n) \neq 0$ for all $n$.
+\item $S(n) = S(m) \Rightarrow n = m$.
+\item If $P(0)$ and $P(n) \Rightarrow P(S(n))$, then $P(n)$ for all $n \in \bbN$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The five displayed clauses are exactly the laws of the canonical counting
+object: empty tally, successor adjunction, successor nonzeroness, successor
+injectivity, and induction over successive adjunction.
+\end{proof}
+
+\begin{definition}[Arithmetic Operations]\label{def:arithmetic-ops}\lean{factorial}\lean{binomial}
+From natural numbers:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Addition}: $m + n$ := combine disjoint configurations.
+\item \textbf{Multiplication}: $m \times n$ := $m$ copies of $n$-configurations (Cartesian product).
+\item \textbf{Factorial}: $n!$ := permutations of $n$ distinguishable primitives.
+\item \textbf{Binomial}: $\binom{n}{k}$ := unordered $k$-selections from $n$ primitives.
+\end{itemize}
+\end{definition}
+
+Arithmetic is complete. No continuum has been invoked. Calculus is not yet necessary.
+
+% ------------------------------------------------------------
+
+\subsection{Scope of the Counting Layer}
+\label{subsec:emergent-algebra}
+% ------------------------------------------------------------
+
+This section records only the counting consequences needed to build the
+horizon calculus itself: distinction, finiteness, arithmetic, Closure
+Balance, and the resulting balanced/residual classification.
+
+% ------------------------------------------------------------

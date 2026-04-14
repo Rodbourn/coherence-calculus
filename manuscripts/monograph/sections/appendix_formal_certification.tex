@@ -1,0 +1,185 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:formal-certification-boundary}
+% ============================================================
+
+This appendix records the role of the Lean formalization relative to the
+mathematical claims of the manuscript. It is documentary rather than foundational:
+it states what is certified, what is separately audited, and what lies outside
+the certified claim.
+
+\subsection{Trusted Meta-Level and Certified Claim}
+\label{subsec:formal-trust-boundary}
+
+The trusted meta-level engine is Lean's kernel, dependent type theory,
+inductive definitions, definitional equality, and the proof checker itself.
+For the system-level architecture of Lean itself, see
+\cite{deMouraKongAvigadEtAl2015}.
+Inside that engine, the certified claim is intentionally lane-specific: the
+active theorem-bearing manuscript surface in Parts~I--II together with the
+formal appendix lanes is linked to explicit
+audited Lean declarations on designated theorem surfaces, and no hidden
+imported mathematical or logical axioms are to be counted as part of those
+surfaces.
+
+This is not the claim that every sentence in the repository has been
+formalized. The claim is instead that the active formal manuscript items are
+tracked against audited Lean declarations on the designated theorem surfaces.
+
+\subsection{Certified Bedrock Lane}
+\label{subsec:formal-bedrock-lane}
+
+The primary certified lane is the rebuilt bedrock-and-tower spine. In the
+manuscript this is the opening structural chain through Chapters~1--6, now
+collected inside Part~I. It starts from the manuscript's lower counting
+bedrock and then proceeds forward through the active foundation and
+realized-model chain. In the manuscript, that lower bedrock is stated as
+Distinction, Free Composition, and Realized Closure, and the older package of
+Constancy, Existence, Incidence, and Closure Balance is recovered as the first
+theorem ladder. On the current Lean side, however, the certified lane still
+begins from the equivalent unpacked declaration surface corresponding to that
+recovered package. Acceptance on this lane is based on axiom-surface audits of
+the exposed declarations rather than on import inspection alone: the point is
+to certify what the exported theorem surface actually depends on.
+
+Accordingly, the bedrock claim is not that Lean contributes extra mathematics.
+It is that the active bedrock-and-tower proof chain is forced from the stated
+counting bedrock, relative only to Lean's proof checker, with the current Lean
+formalization still certifying the equivalent unpacked interface.
+
+\subsection{Separate Lean PartIII Bridge Lane}
+\label{subsec:formal-part3-lane}
+
+The continuum-bridge layer at the end of manuscript Part~I is formalized on
+a separate Lean root, historically named \texttt{PartIII.lean}, and audited on
+its own strict no-axioms surface. That separation is intentional. It allows
+the continuum-identification layer to evolve as a bridge from the discrete
+calculus into faithful limit classes without altering the bedrock-certified
+bedrock-and-tower root.
+
+The Lean PartIII bridge lane is therefore formalized and audited, but it is
+not folded back into the narrower statement that the bedrock-and-tower spine
+alone is forced from bedrock. The manuscript uses its results as an explicitly
+separate bridge lane.
+
+\subsection{Separate Lean PartIV Law-Side Lane}
+\label{subsec:formal-part4-lane}
+
+The least-observer-motion layer of manuscript Part~II is also formalized on a
+separate Lean root, historically named \texttt{PartIV.lean}, and audited on
+its own strict no-axioms surface. That lane sits above the exported
+bedrock-and-tower interfaces together with the separate continuum-bridge lane,
+together with explicit law-side data for the Part~II physical realization
+principle, its observer / exchange / residual-return clauses, the four-step
+law-completion chain, and the
+non-dictionary sector-generation / classification interfaces used in the
+chapter. The current audited surface also includes a concrete finite
+observer-motion functional on admissible cuts and a concrete HFT-2-based
+returned-flux / unrecovered-stock functional for the residual-return side,
+together with a canonical selected Schur bridge whose selected-cut layer
+already packages the least-motion cut and residual accounting on one selected
+observer datum, and which now reads its law-side content from the grounded
+self-sufficient realization bridge on that same datum. On the current Lean
+surface, the exact-Schur side is still reduced to the one exact-visible-law
+condition that the selected law is already exactly visible on that same
+selected cut; the local conditions of observable support and cut commutation
+are derived consequences of that clause. The manuscript reads this as the
+sharp formal core of the self-sufficient realization principle on the
+least-motion cut.
+
+The Lean PartIV law-side lane is therefore covered in Lean as a separate
+certified physical-realization/observer/sector-generation/law-completion lane.
+But it is not folded back into the narrower statement that the
+bedrock-and-tower spine alone is forced from bedrock. The reason for keeping
+the Lean PartIV lane separate is the same as for the Lean PartIII lane: the
+observer-selection and law-side physical bridge layer should remain explicit rather than being
+blurred into the
+bedrock-certified root.
+
+\subsection{Separate Appendix Certification Lanes}
+\label{subsec:formal-appendix-status}
+
+The supplementary appendices are now covered in Lean as two explicit separate
+appendix lanes. The operator-side appendices on advanced operators and
+kernel/constraint maps are tracked against a strict no-axioms root
+\texttt{AppendixOperators.lean}. The oblique-horizon, continuous spectral
+horizon, and trace-level appendices are tracked against a separate strict
+no-axioms root \texttt{AppendixHorizons.lean}.
+
+Those appendix lanes are rigorous in the same sense as the other audited
+lanes: the theorem-bearing manuscript items are tagged, the tags are checked
+against the corresponding Lean roots, and the exposed theorem surfaces are
+audited by \verb|#print axioms|. But the appendix lanes are still kept
+separate from the narrower bedrock-and-tower bedrock-forcing claim.
+
+The reason for that separation is mathematical honesty. Several appendix
+statements require genuinely extra operator, trace, spectral, finite, or
+oblique datum. In the rebuilt formalization such ingredients are not imported
+silently from archived files or external foundations. They are packaged as
+explicit local data on the appendix lanes themselves. Thus the appendices are
+covered, but they are not to be described as hidden consequences of the
+bedrock spine alone.
+
+\subsection{Manuscript Tags and Audit Discipline}
+\label{subsec:formal-tags}
+
+The local \verb|\lean{...}| tags in the manuscript source identify the Lean
+declarations intended to certify the corresponding formal manuscript items.
+Those tags are hidden in the ordinary reading copy and are intended primarily
+for audit builds, coverage scripts, and reproducibility checks.
+
+Their role is a manuscript-to-Lean crosswalk. A tagged item is required to
+land on the appropriate audited Lean surface, and the audit reports check both
+directions:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item that each active formal manuscript item in Parts~I--II and in the audited appendices carries a nearby Lean tag, and
+\item that each tagged Lean name resolves to the correct audited declaration
+surface for its lane.
+\end{enumerate}
+This is a formal-item correspondence discipline, not a literal
+sentence-by-sentence certification of every prose clause in the exposition.
+
+In particular, appendix tags now count as certification evidence only when they
+resolve to the active audited appendix roots. Historical or exploratory
+cross-references elsewhere on disk remain documentary only and are not to be
+read as evidence that the corresponding appendix statements are part of the
+current certified manuscript surface.
+
+\subsection{Included Lean/mathlib Validation Realizations}
+\label{subsec:formal-mathlib-bridge}
+
+The repository also contains an included one-way Lean/mathlib validation lane.
+Its role is to show that the exported bridge interfaces can be instantiated
+inside standard Hilbert, topological, continuum, and operator settings already
+available in mathlib, and thereby to justify the use of the higher-structure
+carrier mathematics in the Part~II and appendix interpretations by validating
+those standard realizations explicitly. For the architecture and design of the
+Lean mathematical library used on that external side, see
+\cite{mathlibCommunity2020}. More broadly, this validation lane sits alongside
+the recent growth of Lean-backed scientific formalization in adjacent domains,
+including chemical physics and high-energy physics
+\cite{BobbinEtAl2024,ToobySmith2025}.
+
+That validation lane belongs to the overall formal package and is therefore
+shown on the dashboard and in the upload-facing artifacts. But the direction
+of use is still one-way: no theorem on the strict manuscript proof lanes
+depends on mathlib imports, and those proofs are not discharged by the
+existence of the external realizations. The bridge validates external
+mathematical realizability; it does not back-feed axioms into the audited
+manuscript lanes.
+
+\subsection{Reproducibility}
+\label{subsec:formal-reproducibility}
+
+The repository includes build and audit scripts that:
+\begin{itemize}[itemsep=0.2em]
+\item build the active Lean lanes for the bedrock-and-tower spine, the separate Lean PartIII and PartIV lanes, the two appendix lanes, and the included mathlib validation lane when requested,
+\item print axiom dependencies of the exposed theorem surfaces, and
+\item regenerate the manuscript tag and coverage reports used to keep the
+      manuscript aligned with the formal development.
+\end{itemize}
+
+The purpose of those checks is straightforward: as the manuscript and Lean
+development change, the theorem-bearing surface, the audited proof surfaces,
+and the manuscript tags should remain synchronized. This appendix records the
+boundary those checks are meant to protect.

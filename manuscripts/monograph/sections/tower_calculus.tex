@@ -1,0 +1,818 @@
+% ============================================================
+\section{Tower Calculus}
+\label{sec:tower-calculus}
+% ============================================================
+
+The defect identities of Chapter~5 admit a companion calculus on operators
+adapted to a discrete horizon tower. This calculus is not introduced as new
+analysis. It is a clean way to record cross-scale transport, reconstruction, and exact
+telescoping on finite or finitely supported towers.
+
+\subsection{Scale index and tower derivative}
+\label{subsec:tower-derivative}
+
+\begin{definition}[Scale index operator]
+\label{def:scale-index-operator}\lean{towerIndexOperator}
+Assume the horizon tower is split into refinement bands
+\[
+\Delta_h := \CCPi{h} - \CCPi{h-1},
+\qquad
+\CCPi{-1} := 0,
+\]
+so that the observable space is the orthogonal sum of its bands. The
+\emph{scale index operator} $\CCIndexOp$ is the operator that acts by
+multiplication by $h$ on the $h$th band:
+\[
+\CCIndexOp|_{\Delta_h \cH} = h\, I.
+\]
+\end{definition}
+
+\begin{definition}[Tower derivative]
+\label{def:tower-derivative}\lean{towerDerivative}
+For an operator $A$ on a band-split horizon space, define its
+\emph{tower derivative} by
+\[
+\CCDer{A} := \CCComm{\CCIndexOp}{A}.
+\]
+\end{definition}
+
+\begin{lemma}[Block formula and Leibniz rule]
+\label{lem:tower-derivative-block}\lean{towerDerivative_block_formula, towerDerivative_leibniz}
+Let $\CCBlock{A}{h}{k} := \Delta_h A \Delta_k$ denote the $(h,k)$ block of $A$.
+Then
+\[
+\CCBlock{\CCDer{A}}{h}{k} = (h-k)\, \CCBlock{A}{h}{k}.
+\]
+Consequently,
+\[
+\CCDer{(AB)} = \CCDer{A}\, B + A\, \CCDer{B}.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Transport order on the tower}
+\label{subsec:tower-transport-order}
+
+\begin{definition}[Tower transport order]\lean{towerTransportOrderAtMost}
+\label{def:tower-transport-order}
+Let $(\CCPi{h})_{h\in\bbN}$ be an energy-orthogonal horizon tower with band
+projectors $\CCDelta{h}=\CCPi{h}-\CCPi{h-1}$. An operator $A$ on $\cH$ has
+\emph{tower transport order at most $m$} if
+\[
+\CCDelta{j}A\CCDelta{k}=0
+\qquad\text{whenever }|j-k|>m.
+\]
+Equivalently, $A$ transports mass across at most $m$ horizon bands in one step.
+If $m$ is the least such integer, it is called the \emph{tower transport order}
+of $A$.
+\end{definition}
+
+\begin{proposition}[Order arithmetic on the tower]\lean{towerTransportOrder_add_certificate, towerTransportOrder_comp, towerTransportOrder_derivative}
+\label{prop:tower-order-arithmetic}
+Let $A$ and $B$ be operators on a band-split horizon tower.
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item If $A$ has order at most $m$ and $B$ has order at most $n$, then
+      $A+B$ has order at most $\max\{m,n\}$.
+\item If $A$ has order at most $m$ and $B$ has order at most $n$, then
+      $AB$ has order at most $m+n$.
+\item If $A$ has order at most $m$, then the tower derivative $\CCDer{A}$ has
+      order at most $m$.
+\end{enumerate}
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Reversible transport and recursion}
+\label{subsec:reversible-transport-recursion}
+
+\begin{definition}[Sequence transport space]\lean{SequenceTransportSpace}
+\label{def:sequence-transport-space}
+Let $F$ be a Hilbert space. The \emph{sequence transport space} on $F$ is the
+space
+\[
+F^{\bbZ}
+\]
+of bilateral sequences $x=(x_n)_{n\in\bbZ}$ with $x_n\in F$ for every
+$n\in\bbZ$.
+\end{definition}
+
+\begin{definition}[Recursion operator induced by a transport base]\lean{transportRecursionOperator}
+\label{def:transport-recursion-operator}
+Let $B:F\to F$ be a bounded operator. The \emph{recursion operator} induced by
+$B$ is the map
+\[
+\mathcal R_B:F^{\bbZ}\to F^{\bbZ}
+\]
+defined by
+\[
+(\mathcal R_B x)_n := x_{n+1} - Bx_n + x_{n-1}.
+\]
+\end{definition}
+
+\begin{lemma}[Kernel characterization of the recursion operator]\lean{transport_recursion_kernel}
+\label{lem:transport-recursion-kernel}
+Let $B:F\to F$ be bounded. A sequence $x=(x_n)_{n\in\bbZ}$ satisfies
+\[
+\mathcal R_Bx=0
+\]
+if and only if it obeys the second-order recurrence
+\[
+x_{n+1}=Bx_n-x_{n-1}
+\qquad(n\in\bbZ).
+\]
+\end{lemma}
+
+\begin{proof}
+The identity $(\mathcal R_Bx)_n=0$ is exactly
+\[
+x_{n+1} - Bx_n + x_{n-1}=0
+\]
+for every $n\in\bbZ$, which rearranges to the displayed recurrence.
+\end{proof}
+
+\begin{proposition}[Symmetry, phase, and adjoint compatibility of recursion]\lean{transport_recursion_compatibility}
+\label{prop:transport-recursion-compatibility}
+Let $B:F\to F$ be bounded. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a unitary action $U:G\to U(F)$ of a finite group $G$ satisfies
+      \[
+      U(g)B=BU(g)
+      \qquad(g\in G);
+      \]
+\item a phase carrier $J_F$ on $F$ satisfies
+      \[
+      J_F^2=-I,
+      \qquad
+      J_FB=BJ_F.
+      \]
+\end{enumerate}
+Define the induced diagonal actions on $F^{\bbZ}$ by
+\[
+(\mathcal U(g)x)_n:=U(g)x_n,
+\qquad
+(\mathcal Jx)_n:=J_Fx_n.
+\]
+Then:
+\begin{enumerate}[label=(\alph*), leftmargin=2em, itemsep=0.2em]
+\item $\mathcal R_B$ commutes with every $\mathcal U(g)$;
+\item $\mathcal R_B$ commutes with $\mathcal J$;
+\item if $B=B^*$, then $\mathcal R_B$ is self-adjoint on finitely supported
+      sequences with respect to the sum inner product on $F^{\bbZ}$.
+\end{enumerate}
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{theorem}[Reversible first-order transport induces a canonical second-order constraint]\lean{reversible_transport_recursion}
+\label{thm:reversible-transport-recursion}
+Let $B:F\to F$ be a bounded transport base. Then the reversible update rule
+\[
+x_{n+1}=Bx_n-x_{n-1}
+\]
+is equivalent to the kernel condition
+\[
+\mathcal R_Bx=0
+\]
+for the recursion operator of
+Definition~\ref{def:transport-recursion-operator}. In particular, once a
+one-step transport base $B$ has been selected, the associated second-order
+recursion constraint is forced and constructive.
+\end{theorem}
+
+\begin{proof}
+This is exactly Lemma~\ref{lem:transport-recursion-kernel}.
+\end{proof}
+
+\begin{definition}[Transport step operator]\lean{CoherenceCalculus.TransportStep}
+\label{def:transport-step}
+Let $F$ be a Hilbert space. A \emph{transport step operator} on $F$ is a
+bounded linear operator
+\[
+T:F\to F.
+\]
+\end{definition}
+
+\begin{definition}[Cycle of transport steps]\lean{CoherenceCalculus.TransportCycle}\lean{CoherenceCalculus.monodromy}
+\label{def:transport-cycle}
+Let $F$ be a Hilbert space. A \emph{cycle of transport steps} is a finite
+sequence of bounded operators
+\[
+\{T_1,T_2,\dots,T_k\}
+\]
+on $F$. Its \emph{monodromy operator} is the composition
+\[
+\mathcal M:=T_kT_{k-1}\cdots T_1.
+\]
+For a single repeated step $T$, write
+\[
+\mathcal M_n:=T^n
+\]
+for the $n$-fold monodromy.
+\end{definition}
+
+\begin{definition}[Spectral radius]\lean{CoherenceCalculus.spectralRadius}
+\label{def:spectral-radius}
+For a bounded operator $A$ on a Banach space, the \emph{spectral radius} is
+\[
+\rho(A):=\max\{|\lambda|:\lambda\in\sigma(A)\}.
+\]
+\end{definition}
+
+\begin{lemma}[Gelfand formula for spectral radius]\lean{CoherenceCalculus.gelfand_formula}
+\label{lem:gelfand}
+For a bounded operator $A$ on a Banach space,
+\[
+\rho(A)=\lim_{n\to\infty}\|A^n\|^{1/n}
+=
+\inf_{n\ge 1}\|A^n\|^{1/n}.
+\]
+\end{lemma}
+
+\begin{proof}[Proof (standard)]
+This is the standard Gelfand formula. The limit exists by
+submultiplicativity of operator norms and equals the stated infimum.
+\end{proof}
+
+\begin{proposition}[Monodromy eigenvalues in the $2\times 2$ unimodular case]\lean{CoherenceCalculus.Monodromy2x2}\lean{CoherenceCalculus.monodromy_2x2_char_poly}
+\label{prop:monodromy-2x2}
+Let $\mathcal M$ be a $2\times 2$ monodromy operator with
+\[
+\det(\mathcal M)=1,
+\qquad
+\Tr(\mathcal M)=D.
+\]
+Then its eigenvalues satisfy
+\[
+\lambda^2-D\lambda+1=0,
+\]
+so
+\[
+\lambda_\pm=\frac{D\pm\sqrt{D^2-4}}{2}.
+\]
+\end{proposition}
+
+\begin{proof}
+The characteristic polynomial of a $2\times 2$ matrix with trace $D$ and
+determinant $1$ is $\lambda^2-D\lambda+1$. The quadratic formula gives the
+displayed roots.
+\end{proof}
+
+\begin{remark}[Recursion and monodromy]
+\label{rem:recursion-and-monodromy}\lean{CoherenceCalculus.reversible_transport_recursion}\lean{CoherenceCalculus.repeat_cycle_monodromy_factorization}
+The recursion operator and the monodromy operator are two presentations of the
+same reversible transport content. The recursion operator records the forced
+second-order constraint
+\[
+x_{n+1}=Bx_n-x_{n-1},
+\]
+while the monodromy operator records one full return of the corresponding
+transport cycle. In the one-channel case, the $2\times 2$ unimodular
+monodromy law above is therefore the natural spectral normal form of the same
+reversible seed mechanism.
+\end{remark}
+
+\begin{definition}[Primitive transport cycle and repeat]
+\label{def:primitive-transport-cycle}\lean{CoherenceCalculus.TransportCycleRepeat}\lean{CoherenceCalculus.PrimitiveTransportCycle}
+Let
+\[
+W=(T_1,\dots,T_r)
+\]
+be a transport cycle in the sense of Definition~\ref{def:transport-cycle}. For
+an integer \(m\ge 1\), write
+\[
+W^{\times m}
+:=
+(\underbrace{T_1,\dots,T_r,T_1,\dots,T_r,\dots,T_1,\dots,T_r}_{m\text{ copies}})
+\]
+for the \(m\)-fold concatenated repeat of \(W\).
+
+A transport cycle \(C\) is a \emph{repeat} if \(C=W^{\times m}\) for some
+shorter transport cycle \(W\) and some \(m>1\). It is \emph{primitive} if it is
+not a repeat.
+\end{definition}
+
+\begin{remark}[Primitive means irreducible under repetition]
+\label{rem:primitive-not-arithmetic}\lean{CoherenceCalculus.PrimitiveTransportCycle}
+The adjective ``primitive'' here is purely operator-theoretic. It means only
+that the transport word is not obtained by repeating a shorter word. No
+arithmetic prime identification is intended or used.
+\end{remark}
+
+\begin{proposition}[Repeat cycles factor through primitive monodromy]
+\label{prop:repeat-cycle-monodromy-factorization}\lean{CoherenceCalculus.repeat_cycle_monodromy_factorization}
+Let \(W=(T_1,\dots,T_r)\) be a transport cycle with monodromy
+\[
+\mathcal M(W)=T_r\cdots T_1.
+\]
+If a second cycle is the \(m\)-fold repeat \(W^{\times m}\), then its monodromy
+is
+\[
+\mathcal M(W^{\times m})=\mathcal M(W)^m.
+\]
+In particular, a repeated cycle introduces no new transport operator beyond a
+power of the monodromy of its shorter core cycle.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{remark}[Primitive core and spectral data]
+\label{rem:primitive-core-spectral-data}\lean{CoherenceCalculus.repeat_cycle_monodromy_factorization}\lean{CoherenceCalculus.PrimitiveTransportCycle}
+Whenever a transport cycle is a repeat, all spectral data derived from its
+monodromy are inherited from a shorter core cycle together with the repeat
+exponent. Thus primitive cycles are the irreducible source of reversible
+transport data, while repeats contribute only powers of previously visible
+monodromy.
+\end{remark}
+
+\begin{definition}[Cyclic refinement chain]
+\label{def:cyclic-refinement-chain}\lean{CoherenceCalculus.CyclicRefinementChain}
+For an integer \(k\ge 2\), let
+\[
+C_k:=\bbZ/k\bbZ.
+\]
+A \emph{cyclic refinement chain} for \(C_k\) is a chain of subgroups
+\[
+C_k=H_0\supset H_1\supset\cdots\supset H_r=\{0\}.
+\]
+It is \emph{maximal} if every inclusion \(H_{i+1}\subsetneq H_i\) is maximal,
+meaning that there is no subgroup \(K\) with
+\[
+H_{i+1}\subsetneq K\subsetneq H_i.
+\]
+\end{definition}
+
+\begin{proposition}[Maximal cyclic refinement steps have prime index]
+\label{prop:cyclic-refinement-prime-step}\lean{CoherenceCalculus.maximal_cyclic_refinement_prime_step}
+Let \(C_k\) be cyclic and let \(H'\subsetneq H\le C_k\) be a maximal inclusion.
+Then the index
+\[
+[H:H']
+\]
+is prime.
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{theorem}[Prime-index invariance of maximal cyclic refinement]
+\label{thm:cyclic-refinement-prime-invariant}\lean{CoherenceCalculus.cyclic_refinement_prime_invariant}
+Any two maximal cyclic refinement chains of \(C_k\) have the same multiset of
+prime indices
+\[
+\{[H_i:H_{i+1}]\},
+\]
+counted with multiplicity, up to permutation.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{remark}[Periodic-support interpretation]
+\label{rem:periodic-support-prime-refinement}\lean{CoherenceCalculus.cyclic_refinement_prime_invariant}
+When a periodic support of period \(k\) is refined through cyclic quotient
+constraints, maximal refinement proceeds by prime-index steps only. This is a
+purely finite structural statement. It does not identify any transport period
+or support class with arithmetic primes; it only says that maximal cyclic
+refinement resolves through irreducible prime-index jumps.
+\end{remark}
+
+\begin{definition}[Isotropic transport channel]\lean{IsotropicTransportChannel}
+\label{def:isotropic-transport-channel}
+An \emph{isotropic transport channel} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a finite-dimensional real Hilbert space $F$;
+\item an orthogonal group action
+      \[
+      U:K\to O(F)
+      \]
+      such that $F$ is irreducible as a real $K$-module;
+\item a bounded transport base $B:F\to F$ satisfying
+      \[
+      U(g)B=BU(g)
+      \qquad(g\in K).
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Quadratic transport operator]\lean{QuadraticTransportOperator}
+\label{def:quadratic-transport-operator}
+For a bounded transport base $B:F\to F$, define its \emph{quadratic transport
+operator} by
+\[
+\mathcal Q_B:=B^*B.
+\]
+The associated quadratic transport energy is
+\[
+E_B(v):=\langle v,\mathcal Q_B v\rangle=\|Bv\|^2.
+\]
+\end{definition}
+
+\begin{theorem}[Isotropic quadratic transport scalarization]\lean{isotropic_quadratic_transport}
+\label{thm:isotropic-quadratic-transport}
+Let $(F,U,B)$ be an isotropic transport channel in the sense of
+Definition~\ref{def:isotropic-transport-channel}. Then there exists a unique
+scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+\mathcal Q_B=B^*B=\kappa(B)\,I_F.
+\]
+Equivalently,
+\[
+E_B(v)=\kappa(B)\,\|v\|^2
+\qquad(v\in F).
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Canonical quadratic coefficient on an isotropic one-step channel]\lean{isotropic_one_step_quadratic_coefficient}
+\label{cor:isotropic-one-step-quadratic-coefficient}
+Let $(F,U,B)$ be an isotropic transport channel. If $B$ is the forced
+order-one transport base on that channel, then the second-order quadratic data
+carried by that one-step transport are reduced to the single coefficient
+\[
+\kappa(B).
+\]
+Together with the reversible recursion constraint
+\[
+x_{n+1}=Bx_n-x_{n-1},
+\]
+this gives a constructive isotropic second-order channel determined by one
+scalar transport coefficient.
+\end{corollary}
+
+\begin{proof}
+The scalarization statement is exactly
+Theorem~\ref{thm:isotropic-quadratic-transport}. The reversible recursion
+constraint is Theorem~\ref{thm:reversible-transport-recursion}. Combining the
+two gives the stated second-order channel description.
+\end{proof}
+
+\begin{definition}[Sphere-transitive transport channel]\lean{SphereTransitiveTransportChannel}
+\label{def:sphere-transitive-transport-channel}
+A \emph{sphere-transitive transport channel} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a finite-dimensional real Hilbert space $F$;
+\item an orthogonal action
+      \[
+      U:K\to O(F)
+      \]
+      such that for any unit vectors $u,v\in F$ there exists $g\in K$ with
+      \[
+      U(g)u=v;
+      \]
+\item a bounded transport base $B:F\to F$ satisfying
+      \[
+      U(g)B=BU(g)
+      \qquad(g\in K).
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Sphere-transitive symmetry forces irreducibility]\lean{sphere_transitive_implies_irreducible}
+\label{thm:sphere-transitive-implies-irreducible}
+Let $U:K\to O(F)$ be an orthogonal action on a finite-dimensional real Hilbert
+space $F$. If the action is transitive on the unit sphere of $F$, then $F$ is
+irreducible as a real $K$-module.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Sphere-transitive quadratic transport scalarization]\lean{sphere_transitive_quadratic_transport}
+\label{cor:sphere-transitive-quadratic-transport}
+Let $(F,U,B)$ be a sphere-transitive transport channel. Then there exists a
+unique scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:sphere-transitive-implies-irreducible}, the orthogonal
+action is irreducible. Therefore the channel satisfies the hypotheses of
+Definition~\ref{def:isotropic-transport-channel}, and
+Theorem~\ref{thm:isotropic-quadratic-transport} gives the stated scalarization.
+\end{proof}
+
+\begin{definition}[Full orthogonal transport channel]\lean{FullOrthogonalTransportChannel}
+\label{def:full-orthogonal-transport-channel}
+A \emph{full orthogonal transport channel} consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a finite-dimensional real Hilbert space $F$;
+\item the tautological orthogonal action
+      \[
+      U:O(F)\to O(F),
+      \qquad
+      U(g)=g;
+      \]
+\item a bounded transport base $B:F\to F$ satisfying
+      \[
+      gB=Bg
+      \qquad(g\in O(F)).
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{corollary}[Full orthogonal covariance implies sphere transitivity]\lean{full_orthogonal_implies_sphere_transitive}
+\label{cor:full-orthogonal-implies-sphere-transitive}
+Every full orthogonal transport channel is sphere-transitive.
+\end{corollary}
+
+\begin{proof}
+Let $(F,U,B)$ be a full orthogonal transport channel and let $u,v\in F$ be unit
+vectors. Extend $u$ to an orthonormal basis of $F$, and likewise extend $v$ to
+an orthonormal basis. The unique linear map sending the first basis to the
+second is orthogonal, hence belongs to $O(F)$, and sends $u$ to $v$. This is
+exactly sphere transitivity.
+\end{proof}
+
+\begin{corollary}[Full orthogonal quadratic transport scalarization]\lean{full_orthogonal_quadratic_transport}
+\label{cor:full-orthogonal-quadratic-transport}
+Let $(F,U,B)$ be a full orthogonal transport channel. Then there exists a
+unique scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:full-orthogonal-implies-sphere-transitive}, the channel
+is sphere-transitive. The conclusion is then exactly
+Corollary~\ref{cor:sphere-transitive-quadratic-transport}.
+\end{proof}
+
+\begin{definition}[Metric-isotropic quadratic transport]\lean{MetricIsotropicQuadraticTransport}
+\label{def:metric-isotropic-quadratic-transport}
+Let $F$ be a finite-dimensional real Hilbert space and let $Q:F\to F$ be a
+self-adjoint operator. The operator $Q$ is \emph{metric-isotropic} if there
+exists a real scalar $\kappa(Q)$ such that
+\[
+\langle Qu,u\rangle=\kappa(Q)
+\]
+for every unit vector $u\in F$.
+\end{definition}
+
+\begin{theorem}[Metric-isotropic quadratic operators are scalar]\lean{metric_isotropic_quadratic_scalar}
+\label{thm:metric-isotropic-quadratic-scalar}
+Let $Q:F\to F$ be a self-adjoint operator on a finite-dimensional real Hilbert
+space $F$. If $Q$ is metric-isotropic, then
+\[
+Q=\kappa(Q)\,I_F.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Metric-isotropic transport scalarization]\lean{metric_isotropic_transport}
+\label{cor:metric-isotropic-transport}
+Let $B:F\to F$ be a bounded one-step transport base on a finite-dimensional
+real Hilbert space $F$. Assume there exists a scalar $\kappa(B)\ge 0$ such that
+\[
+\|Bu\|^2=\kappa(B)
+\]
+for every unit vector $u\in F$. Then
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{corollary}
+
+\begin{proof}
+The quadratic transport operator $Q:=B^*B$ is self-adjoint, and
+\[
+\langle Qu,u\rangle=\|Bu\|^2=\kappa(B)
+\]
+for every unit vector $u$. Thus $Q$ is metric-isotropic in the sense of
+Definition~\ref{def:metric-isotropic-quadratic-transport}. The conclusion
+follows from Theorem~\ref{thm:metric-isotropic-quadratic-scalar}.
+\end{proof}
+
+\begin{definition}[Tight isotropic direction frame]\lean{TightIsotropicDirectionFrame}
+\label{def:tight-isotropic-direction-frame}
+Let $F$ be a finite-dimensional real Hilbert space. A
+\emph{tight isotropic direction frame} on $F$ consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a finite index set $\mathcal D$;
+\item rank-one orthogonal projections
+      \[
+      \Pi_{\alpha}:F\to F
+      \qquad(\alpha\in\mathcal D);
+      \]
+\item an orthogonal action
+      \[
+      U:K\to O(F)
+      \]
+      together with a transitive action of $K$ on $\mathcal D$ such that
+      \[
+      U(g)\Pi_{\alpha}U(g)^*=\Pi_{g\cdot \alpha}
+      \qquad(g\in K,\ \alpha\in\mathcal D);
+      \]
+\item a scalar $c>0$ such that
+      \[
+      \sum_{\alpha\in\mathcal D}\Pi_{\alpha}=c\,I_F.
+      \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Direction-adapted quadratic transport operator]\lean{DirectionAdaptedQuadraticTransport}
+\label{def:direction-adapted-quadratic-transport}
+Let $\{\Pi_{\alpha}\}_{\alpha\in\mathcal D}$ be a tight isotropic direction
+frame on $F$. A self-adjoint operator $Q$ on $F$ is
+\emph{direction-adapted} to that frame if there exist real coefficients
+$q_{\alpha}$ such that
+\[
+Q=\sum_{\alpha\in\mathcal D} q_{\alpha}\Pi_{\alpha}.
+\]
+\end{definition}
+
+\begin{theorem}[Transitive direction isotropy forces a scalar quadratic operator]\lean{transitive_direction_isotropy}
+\label{thm:transitive-direction-isotropy}
+Let $\{\Pi_{\alpha}\}_{\alpha\in\mathcal D}$ be a tight isotropic direction
+frame on $F$, and let $Q$ be a self-adjoint direction-adapted operator:
+\[
+Q=\sum_{\alpha\in\mathcal D} q_{\alpha}\Pi_{\alpha}.
+\]
+Assume moreover that $Q$ is equivariant for the orthogonal $K$-action:
+\[
+U(g)Q=QU(g)
+\qquad(g\in K).
+\]
+Then there exists a unique scalar $\kappa(Q)\in\bbR$ such that
+\[
+Q=\kappa(Q)\,I_F.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{corollary}[Direction-frame quadratic coefficient for one-step transport]\lean{direction_frame_quadratic_coefficient}
+\label{cor:direction-frame-quadratic-coefficient}
+Let $B:F\to F$ be a bounded one-step transport base. Suppose $B^*B$ is
+direction-adapted to a tight isotropic direction frame and is equivariant for
+the corresponding orthogonal action. Then there exists a unique scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:transitive-direction-isotropy} to
+\[
+Q=B^*B.
+\]
+Positivity of $B^*B$ implies $\kappa(B)\ge 0$.
+\end{proof}
+
+\begin{definition}[Quadratic transport rigidity package]\lean{QuadraticTransportRigidityPackage}
+\label{def:quadratic-transport-rigidity-package}
+Let $B:F\to F$ be a bounded one-step transport base on a finite-dimensional
+real Hilbert space $F$. A \emph{quadratic transport rigidity package} for $B$
+consists of any one of the following data:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item an isotropic transport channel for $B$ in the sense of
+      Definition~\ref{def:isotropic-transport-channel};
+\item a sphere-transitive transport channel for $B$ in the sense of
+      Definition~\ref{def:sphere-transitive-transport-channel};
+\item a full orthogonal transport channel for $B$ in the sense of
+      Definition~\ref{def:full-orthogonal-transport-channel};
+\item metric-isotropy of the quadratic transport operator $B^*B$ in the sense
+      of Definition~\ref{def:metric-isotropic-quadratic-transport};
+\item a tight isotropic direction frame together with direction-adapted
+      equivariance of $B^*B$ in the sense of
+      Definition~\ref{def:direction-adapted-quadratic-transport}.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Quadratic transport rigidity]\lean{quadratic_transport_rigidity}
+\label{thm:quadratic-transport-rigidity}
+Let $B:F\to F$ be a bounded one-step transport base on a finite-dimensional
+real Hilbert space $F$. If $B$ carries a quadratic transport rigidity package
+in the sense of Definition~\ref{def:quadratic-transport-rigidity-package},
+then there exists a unique scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{definition}[No-preferred-direction quadratic transport]\lean{NoPreferredDirectionQuadraticTransport}
+\label{def:no-preferred-direction-quadratic-transport}
+Let $B:F\to F$ be a bounded one-step transport base on a finite-dimensional
+real Hilbert space $F$. The transport base is \emph{without preferred
+direction at quadratic order} if it carries a quadratic transport rigidity
+package in the sense of
+Definition~\ref{def:quadratic-transport-rigidity-package}.
+\end{definition}
+
+\begin{corollary}[No-preferred-direction scalarizes quadratic transport]\lean{no_preferred_direction_quadratic_transport}
+\label{cor:no-preferred-direction-quadratic-transport}
+Let $B:F\to F$ be a bounded one-step transport base on a finite-dimensional
+real Hilbert space $F$. If $B$ is without preferred direction at quadratic
+order, then there exists a unique scalar
+\[
+\kappa(B)\ge 0
+\]
+such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+\end{corollary}
+
+\begin{proof}
+This is exactly Theorem~\ref{thm:quadratic-transport-rigidity}.
+\end{proof}
+
+\begin{theorem}[Orbit-generated tight isotropic frame]\lean{orbit_generated_direction_frame}
+\label{thm:orbit-generated-direction-frame}
+Let $(F,U)$ be an isotropic transport channel in the sense of
+Definition~\ref{def:isotropic-transport-channel}, and let
+\[
+\Pi_0:F\to F
+\]
+be a rank-one orthogonal projection. Let
+\[
+\mathcal D:=K\cdot \Pi_0
+\]
+be its orbit under conjugation by the orthogonal action, and write
+\[
+\Pi_{\alpha}:=U(g)\Pi_0U(g)^*
+\qquad
+(\alpha=g\cdot \Pi_0\in\mathcal D).
+\]
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the family $\{\Pi_{\alpha}\}_{\alpha\in\mathcal D}$ is a tight isotropic
+      direction frame on $F$;
+\item its frame constant is
+      \[
+      c=\frac{|\mathcal D|}{\dim F}.
+      \]
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\subsection{Tower antiderivative and reconstruction}
+\label{subsec:tower-antiderivative}
+
+\begin{definition}[Tower antiderivative]
+\label{def:tower-antiderivative}\lean{towerAntiderivative}
+For an operator $B$ with vanishing diagonal blocks, define the
+\emph{tower antiderivative} $\CCInt{B}$ by
+\[
+\CCBlock{(\CCInt{B})}{h}{k} :=
+\frac{1}{h-k}\, \CCBlock{B}{h}{k}
+\qquad (h \neq k),
+\]
+and set the diagonal blocks of $\CCInt{B}$ to zero.
+\end{definition}
+
+\begin{theorem}[Fundamental theorem for tower calculus]
+\label{thm:ftc-tower}\lean{towerCalculus_FTC}
+Assume the tower is finite, or more generally that only finitely many blocks of
+$A$ are nonzero. Then
+\[
+A = \CCDiag{A} + \CCInt{\CCDer{A}}.
+\]
+Equivalently, the tower derivative determines the full off-diagonal content of
+$A$, while the diagonal remains the integration constant.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{proposition}[Tower integration by parts]
+\label{prop:tower-ibp}\lean{towerCalculus_IBP}
+If the relevant block sums are finite, then
+\[
+\Tr(\CCDer{A}\, B) = -\, \Tr(A\, \CCDer{B}).
+\]
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+\begin{quote}\small
+\textbf{Role in the manuscript.}
+The tower derivative is the calculus derivative of Coherence Calculus. It is
+different from the problem differential $d$ and different again from the
+one-step horizon flow $\CCFlow{\cdot}{h}$. The three should not be conflated:
+$d$ records closure, $\partial$ records cross-scale transport, and
+$\CCFlow{\cdot}{h}$ records a discrete update between adjacent horizons.
+\end{quote}

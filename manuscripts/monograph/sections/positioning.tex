@@ -1,0 +1,131 @@
+% ============================================================
+\section{Positioning and Connections}
+\label{sec:positioning}\lean{CoherenceCalculus.operatorCompression_eq_blockPP, CoherenceCalculus.unifiedGrammar_projection_algebra, CoherenceCalculus.towerCalculus_summary}
+% ============================================================
+
+This section situates Coherence Calculus relative to established mathematical
+frameworks. Its ingredients are elementary: projection algebra, block
+decomposition, and Hilbert-complex methods. It separates
+standard background from the organizing contribution of the calculus.
+
+\subsection{Finite observability in ergodic and systems settings}
+\label{subsec:finite-observability-context}
+
+The phrase \emph{finite observability} already has established narrow meanings
+in nearby literatures. In ergodic theory, Ornstein and Weiss use it for
+invariants that can be recovered almost surely from longer but still finite
+typical observation windows, and show that entropy is the only finitely
+observable invariant of stationary ergodic finite-valued processes in that
+sense \cite{OrnsteinWeiss2007}. In linear systems theory, Kalman's
+state-space framework and its descendants make observability precise by asking
+which internal degrees of freedom are recoverable from finite output data
+\cite{Kalman1963,Antoulas2005}. Coherence Calculus does not identify with
+either framework, but it lives in the same conceptual neighborhood: the
+observable/shadow split is treated as structural data rather than as a mere
+numerical approximation device.
+
+\subsection{Operator compression and projection-induced error}
+\label{subsec:operator-compression}\lean{CoherenceCalculus.operatorCompression_eq_blockPP, CoherenceCalculus.leakageCorrectionTerm}
+
+The basic operation of Coherence Calculus, namely compressing an operator $A$
+to $\CCRestr{A}{h} = \CCPi{h} A \CCPi{h}$, is standard in numerical linear
+algebra and model reduction.
+Projection-based compression and the resulting coarse/fine correction terms are
+standard in reduced-order modeling, multilevel solvers, and open-system
+effective dynamics \cite{Antoulas2005,BriggsHensonMcCormick2000,BreuerPetruccione2002}.
+The ``leakage correction'' $\CCLeakCorr{h}{A}{B} = \CCPi{h} A \CCPibar{h} B \CCPi{h}$ that appears in product compression is the same cross-term that arises in:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Reduced-order modeling:} Galerkin projection onto a subspace introduces closure terms from the neglected modes.
+\item \textbf{Multigrid and domain decomposition:} Coarse-grid corrections require accounting for fine-grid residuals.
+\item \textbf{Quantum open systems:} Tracing over environment degrees of freedom generates effective dynamics with ``system-bath'' correction terms.
+\end{itemize}
+Coherence Calculus organizes these correction terms into a common grammar of
+chain rules, product rules, and elimination patterns, rather than treating
+each application separately.
+
+\subsection{Conditional expectation and coarse-graining}
+\label{subsec:coarse-graining}\lean{CoherenceCalculus.shadow_plus_proj_identity, CoherenceCalculus.proj_shadow_orthogonal}
+
+When $\CCPi{h}$ is a conditional expectation (e.g., block averaging), the coherence defect $\CCTau{h}{F}{x} = \CCPi{h} F(x) - F(\CCPi{h} x)$ is the ``closure term'' familiar from:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Turbulence modeling:} Reynolds decomposition and subgrid-scale closures.
+\item \textbf{Statistical mechanics:} Coarse-grained free energies and renormalization group.
+\item \textbf{Large eddy simulation:} Filtered equations require modeling of unresolved scales.
+\end{itemize}
+These interpretations are standard in coarse-grained fluid and statistical
+descriptions \cite{Pope2000,Goldenfeld1992}.
+The bilinear defect $\CCTauBi{h}{B}{x}{y}$
+(Proposition~\ref{prop:product-rule}) is the same algebraic object that
+appears as subgrid stress or eddy-viscosity defect in these settings.
+Coherence Calculus does not solve the closure problem; it records exact
+identities for the defect structure. The broader idea that elimination of
+unresolved variables produces memory, noise, and effective closure terms is
+also classical in the Mori--Zwanzig and optimal-prediction literature
+\cite{Zwanzig1961,Mori1965,ChorinHaldKupferman2000}.
+
+\subsection{Schur complement and Feshbach projection}
+\label{subsec:schur-feshbach}\lean{schurComplement, effectiveOp, schur_factorization}
+
+The Schur complement formula (Section~\ref{sec:resolvent-defect}) is classical
+\cite{Haynsworth1968,Zhang2005}:
+\[
+(M/D) = A - BD^{-1}C \quad \text{for } M = \begin{pmatrix} A & B \\ C & D \end{pmatrix}.
+\]
+In physics, this is known as the \emph{Feshbach projection} or \emph{effective Hamiltonian} method
+\cite{Feshbach1958,Feshbach1962}:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Quantum mechanics:} Projecting onto a ``P-space'' generates an effective operator with ``self-energy'' corrections from the ``Q-space.''
+\item \textbf{Scattering theory:} T-matrix formulations via elimination of closed channels.
+\item \textbf{Renormalization:} Integrating out high-energy modes generates effective low-energy couplings.
+\item \textbf{Statistical coarse-graining:} Projection formalisms generate exact memory and return terms for unresolved variables \cite{Zwanzig1961,Mori1965,ChorinHaldKupferman2000}.
+\end{itemize}
+Coherence Calculus uses the Schur complement as the canonical elimination
+pattern for shadow degrees of freedom. The distinctive step is its systematic
+connection to the tower calculus through derivative, antiderivative, and
+telescoping identities.
+
+\subsection{Multiresolution and nested projections}
+\label{subsec:multiresolution}\lean{CoherenceCalculus.multiresolution_nesting, CoherenceCalculus.wavelet_detail_analog, CoherenceCalculus.increment_orthogonality}
+
+The horizon tower $\CCPi{0} \le \CCPi{1} \le \cdots$ is a nested sequence of orthogonal projections.
+This structure appears in:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Wavelet analysis:} Multiresolution analysis with nested approximation spaces $V_0 \subset V_1 \subset \cdots$.
+\item \textbf{Martingale theory:} Filtrations and conditional expectations with respect to nested $\sigma$-algebras.
+\item \textbf{Spectral theory:} Spectral projections $E_{(-\infty, \lambda]}$ for self-adjoint operators.
+\end{itemize}
+Standard references include multiresolution analysis, martingale filtrations,
+and spectral projection theory \cite{Mallat1989,Daubechies1992,Doob1953,ReedSimon1972}.
+The tower derivative $\CCDer{A} = [\CCIndexOp, A]$ and antiderivative
+$\CCInt{B}$ provide algebraic tools for these nested structures. The
+fundamental theorem (Theorem~\ref{thm:ftc-tower}) is an operator analogue of a
+reconstruction formula.
+
+\subsection{Hilbert complexes and Hodge theory}
+\label{subsec:hodge}\lean{CoherenceCalculus.complex_nilpotency, CoherenceCalculus.intertwining_preserves_complex, CoherenceCalculus.cohomology_splits}
+
+The solver layer (Section~\ref{subsec:solver-layer}) uses standard finite-dimensional Hodge theory
+\cite{ArnoldFalkWinther2006,Schwarz1995,Warner1983}:
+\begin{itemize}[itemsep=0.2em]
+\item \textbf{Hodge decomposition:} $H^k = \Img(D_{k-1}) \oplus \Img(D_k^*) \oplus \Ker(\mathcal{L}_k)$ is the standard orthogonal decomposition.
+\item \textbf{Green operator:} $\CCGreen{k} = \mathcal{L}_k^{-1}$ under exactness is the standard pseudo-inverse.
+\item \textbf{Homotopy identity:} $DK + KD = I$ under exactness is the standard Hodge--de Rham result.
+\end{itemize}
+For infinite-dimensional Hilbert complexes, the same circle of ideas extends to
+functional-analytic Hilbert-complex settings and finite element exterior
+calculus \cite{ArnoldFalkWinther2006}.
+Coherence Calculus restricts to the finite-dimensional case at the structural
+level. Infinite-dimensional extensions require the usual functional-analytic
+care with closedness and Fredholm conditions.
+
+\subsection{Distinctive Features}
+\label{subsec:what-is-new}\lean{CoherenceCalculus.unifiedGrammar_projection_algebra, CoherenceCalculus.towerCalculus_summary, CoherenceCalculus.diagonal_offdiagonal_decomposition}
+
+The individual components above are standard. In the present setting, the
+distinctive features are:
+\begin{enumerate}[label=(\roman*), itemsep=0.3em]
+\item \textbf{Unified grammar:} Chain rule, product rule, and elimination patterns organized around the defect identity.
+\item \textbf{Tower calculus:} Derivative $\partial = [\CCIndexOp, \cdot]$, antiderivative $\CCInt{\cdot}$, fundamental theorem, and IBP as a self-contained calculus on operator algebras.
+\item \textbf{Completion-and-selection algebra:} Systematic reduction of locality, symmetry, and conservation constraints to explicit operator selections via isotypic decomposition.
+\item \textbf{Integration of solver layer:} Hodge/Green/homotopy operators connected to the tower structure, with holographic saturation as relative exactness.
+\end{enumerate}

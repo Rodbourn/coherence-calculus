@@ -1,0 +1,90 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:continuous-spectral-horizons}
+% ============================================================
+
+This appendix extends the horizon grammar from discrete towers to continuous
+resolution families via spectral projections.
+
+\subsection{Spectral Horizon Families}
+\label{subsec:spectral-horizon-families}
+
+\begin{definition}[Spectral horizon family]
+\label{def:spectral-horizon-family}\lean{CoherenceCalculus.AppendixHorizons.SpectralHorizonFamily}
+A \emph{spectral horizon family} is a right-continuous, monotone family of orthogonal projections $\{\CCPi{\lambda}\}_{\lambda\in\bbR}$ satisfying:
+\begin{enumerate}[label=(\roman*)]
+\item $\CCPi{\lambda} \CCPi{\mu} = \CCPi{\min(\lambda,\mu)}$,
+\item $\mathrm{s}\text{-}\lim_{\mu\downarrow\lambda}\CCPi{\mu}=\CCPi{\lambda}$,
+\item $\mathrm{s}\text{-}\lim_{\lambda\to-\infty}\CCPi{\lambda}=0$ and $\mathrm{s}\text{-}\lim_{\lambda\to+\infty}\CCPi{\lambda}=I$.
+\end{enumerate}
+(Here $\mathrm{s}\text{-}\lim$ denotes the strong operator limit, i.e., convergence in the strong operator topology: $\mathrm{s}\text{-}\lim_n A_n = A$ means $\|A_n x - Ax\| \to 0$ for all $x \in \cH$.)
+
+\smallskip\noindent
+Equivalently, there exists a (possibly unbounded) self-adjoint operator $\CCField$ with spectral measure $E_{\CCField}$ such that $\CCPi{\lambda} = E_{\CCField}((-\infty,\lambda])$.
+\end{definition}
+
+\begin{remark}[Scope: bounded vs.\ unbounded $\CCField$]
+\label{rem:scope-unbounded-field}\lean{CoherenceCalculus.AppendixHorizons.spectral_horizon_unbounded_scope}
+In finite dimensions (the default setting for Level-1 and Level-2), $\CCField$ is bounded and all spectral statements are elementary linear algebra.
+In infinite dimensions, the equivalence to a self-adjoint operator is standard spectral theory; domain considerations for unbounded $\CCField$ are outside Level-1/Level-2 default scope unless explicitly assumed.
+\end{remark}
+
+\begin{definition}[Band projections]
+\label{def:band-projection}\lean{CoherenceCalculus.AppendixHorizons.bandProjection}
+For $a<b$, define the \emph{band projection}
+\[
+\CCDelta{(a,b]} := \CCPi{b} - \CCPi{a}.
+\]
+Then $\CCDelta{(a,b]} = E_{\CCField}((a,b])$ is an orthogonal projection. Disjoint bands are orthogonal:
+if $(a,b]\cap(c,d]=\emptyset$ then $\CCDelta{(a,b]}\CCDelta{(c,d]}=0$.
+\end{definition}
+
+\begin{definition}[Resolution measure of a state]
+\label{def:resolution-measure}\lean{CoherenceCalculus.AppendixHorizons.resolutionMeasure}
+For $x\in \cH$, define a finite positive Borel measure $\mu_x$ by
+\[
+\mu_x(B) := \langle x, E_{\CCField}(B)x\rangle.
+\]
+\end{definition}
+
+\begin{lemma}[Band energy equals measure mass]
+\label{lem:band-energy-measure}\lean{CoherenceCalculus.AppendixHorizons.band_energy_measure}
+For any $a<b$ and any $x\in \cH$,
+\[
+\|\CCDelta{(a,b]}x\|^2 = \mu_x((a,b]).
+\]
+\end{lemma}
+
+\begin{proof}
+$\CCDelta{(a,b]}$ is an orthogonal projection, so
+$\|\CCDelta{(a,b]}x\|^2=\langle x,\CCDelta{(a,b]}x\rangle
+=\langle x,E_{\CCField}((a,b])x\rangle=\mu_x((a,b])$.
+\end{proof}
+
+\begin{theorem}[Spectral telescoping (continuous HFT-2)]
+\label{thm:spectral-telescoping}\lean{CoherenceCalculus.AppendixHorizons.spectral_telescoping}
+Fix $a<b$ and a partition $a=\lambda_0<\lambda_1<\cdots<\lambda_N=b$.
+Then for all $x\in \cH$,
+\[
+\|\CCDelta{(a,b]}x\|^2 = \sum_{j=1}^{N}\|\CCDelta{(\lambda_{j-1},\lambda_j]}x\|^2.
+\]
+Moreover,
+\[
+\|x-\CCPi{a} x\|^2 = \mu_x((a,\infty)).
+\]
+\end{theorem}
+
+\begin{proof}
+The band projections $\CCDelta{(\lambda_{j-1},\lambda_j]}$ are mutually orthogonal (disjoint spectral sets), and
+\[
+\CCDelta{(a,b]} = \sum_{j=1}^{N}\CCDelta{(\lambda_{j-1},\lambda_j]}.
+\]
+Apply the Pythagorean theorem for orthogonal sums to obtain the first identity.
+For the second, $x-\CCPi{a} x = (I-\CCPi{a})x = E_{\CCField}((a,\infty))x$ and apply Lemma~\ref{lem:band-energy-measure} with the half-infinite band.
+\end{proof}
+
+\begin{remark}[Discrete towers as a special case]
+\label{rem:discrete-as-special-case}\lean{CoherenceCalculus.AppendixHorizons.discrete_tower_special_case}
+A transitive discrete tower $\{\CCPi{h}\}_{h\in\bbN}$ is recovered by taking $\CCField$ with pure point spectrum and setting $\CCPi{h}=E_{\CCField}((-\infty,h])$.
+Then $\CCDelta{h}=\CCPi{h}-\CCPi{h-1}$ corresponds to singleton spectral bands, and Theorem~\ref{thm:spectral-telescoping} reduces to the discrete telescoping identity (HFT-2).
+\end{remark}

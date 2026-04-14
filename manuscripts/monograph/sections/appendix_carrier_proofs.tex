@@ -1,0 +1,1455 @@
+% Appendix E: Carrier Forcing Proofs (Chapters 7--8)
+\label{sec:appendix-carrier}
+
+% ── Chapter 7: ch7_carrier_forcing.tex ──
+
+\begin{proof}[Proof of Theorem~\ref{thm:persistence-mode-separation}]
+\label{proof:thm:persistence-mode-separation}
+Local-state persistence and propagative persistence are distinct because the
+former preserves phase-compatible reversible scalar transport, while the latter
+preserves reversible second-order transport with no preferred direction. These
+are different compatibility signatures. Comparative persistence is distinct
+from both because its physically visible datum is a comparison class modulo
+local relabeling, governed by exactness and local gauge covariance rather than
+by scalar transport alone. The causal-structural lane is distinct from
+comparative persistence because it is not the same visible datum at all: it is
+the symmetric-response lift of the primitive \(3\)-channel, with
+divergence-compatible response and tensor exchange source, not a one-form
+comparison class with exactness constraint. In each case, identifying two
+roles would remove one of the defining compatibility signatures or replace one
+admissible source profile by another. Therefore the three primitive channels
+and the causal-structural lift are pairwise distinct in the required sense.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:resolution_integrated_balance_closure_not_intrinsic_mode}]
+\label{proof:thm:resolution_integrated_balance_closure_not_intrinsic_mode}
+The intrinsic roles of Definition~\ref{def:five-persistence-modes} are defined
+either by direct compatibility signatures visible on irreducible subcarriers of
+the selected cut itself, or by the canonical symmetric-response lift of the
+primitive \(3\)-channel: phase-compatible scalar transport, reversible
+second-order propagation, exactness with local gauge covariance, and the
+geometric symmetric-response lift. A hydrodynamic law obtained from a
+resolution-integrated balance hierarchy is different in kind. Its exact visible
+content begins with the balance hierarchy on collision-invariant observables,
+while its recognizable Navier--Stokes-type form appears only after unresolved
+exchange has been compressed into an effective endpoint response. Therefore it
+is not an intrinsic visible law on the same footing as the three primitive
+channels or the geometric lift, but an effective closure built from integrated
+unresolved exchange.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:canonical-sector-generation-reduction}]
+\label{proof:thm:canonical-sector-generation-reduction}
+Hypothesis~\emph{(i)} identifies the selected visible effective law as the
+exact reduced law after residual return elimination, so all observable forcing
+already factors through returned residual on the selected cut. Hypothesis
+~\emph{(ii)} gives one common selected observed bundle carrying the four
+intrinsic flagship sectors together with the hydrodynamic closure lane.
+Hypothesis~\emph{(iii)} then states that these intrinsic sectors are not
+assigned by a primitive dictionary but realized as the canonical minimal
+compatible realizations of the three primitive persistence channels together
+with the canonical symmetric-response lift of the primitive \(3\)-channel.
+Hypothesis~\emph{(iv)} then records the kinetic lane in its proper place: not
+as a further primitive channel or intrinsic lift, but as the
+resolution-integrated effective balance closure carried by the same selected
+bundle. Once those realizations are fixed, one identifies the unique canonical
+representative of the distinguished minimal compatible closure class on each
+intrinsic carrier together with the canonical effective normal form on the
+balance hierarchy, which is exactly the data requested by
+Definition~\ref{def:carrier-level-classification}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:existence-of-five-persistence-modes}]
+\label{proof:thm:existence-of-five-persistence-modes}
+By Theorem~\ref{thm:canonical-sector-generation-reduction}, the four intrinsic
+flagship carriers on the selected observed bundle are exactly the canonical
+realizations of the persistence modes listed in
+Definition~\ref{def:canonical-sector-generation}. Those realization clauses are
+explicit: the phase carrier realizes local-state persistence, the wave carrier
+realizes propagative persistence, the gauge carrier realizes comparative
+persistence, and the geometric carrier realizes causal-structural persistence
+as the canonical symmetric-response lift of the primitive \(3\)-channel. Hence
+every one of the three primitive channels together with the geometric lift is
+realized on the selected observed bundle.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:flagship-mode-classification}]
+\label{proof:thm:flagship-mode-classification}
+By Theorem~\ref{thm:canonical-sector-generation-reduction}, the intrinsic
+flagship lanes are precisely the canonical realizations of the structural
+roles listed in Definition~\ref{def:canonical-sector-generation} on the
+selected observed bundle. Thus each such lane belongs to at least one of those
+roles. By Theorem~\ref{thm:persistence-mode-separation}, the three primitive
+channels and the geometric lift are pairwise distinct in role, so no intrinsic
+flagship lane can belong to more than one without destroying its defining
+compatibility signature or source-admissibility profile. Therefore each
+intrinsic flagship visible law belongs to exactly one of those structural
+roles.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:flagship-family-exhausts-five-persistence-modes}]
+\label{proof:cor:flagship-family-exhausts-five-persistence-modes}
+Item~\emph{(i)} is exactly
+Theorem~\ref{thm:flagship-mode-classification}. For item~\emph{(ii)},
+Theorem~\ref{thm:existence-of-five-persistence-modes} gives at least one
+intrinsic flagship realization of each primitive channel together with the
+geometric lift. Suppose one of the three primitive channels were realized by
+two distinct intrinsic flagship carrier classes. By
+Definition~\ref{def:canonical-sector-generation}, those distinct carrier
+classes come with distinct compatibility signatures on the selected observed
+bundle. One of those carrier classes would then belong both to its own
+designated mode and to the repeated mode, contradicting
+Theorem~\ref{thm:flagship-mode-classification}. Hence each primitive channel is
+realized by exactly one intrinsic flagship carrier class. The geometric clause
+of item~\emph{(ii)} is exactly the fourth clause of
+Definition~\ref{def:canonical-sector-generation}. For item~\emph{(iii)}: if a
+fourth primitive channel or an additional intrinsic lift occurred in the
+intrinsic flagship family, some intrinsic flagship carrier class would realize
+a role outside the three primitive channels together with the geometric lift
+listed in Definition~\ref{def:five-persistence-modes},
+contradicting item~\emph{(i)}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:common-selected-bundle-assembly}]
+\label{proof:thm:common-selected-bundle-assembly}
+These four intrinsic carriers together with the hydrodynamic balance carrier
+are taken on the same physically realized selected cut, so by
+Definition~\ref{def:characteristic-observer-datum} they are visible sectors of
+the one selected bundle \(\mathcal X_h=P_h\cH^\bullet\). By
+Definition~\ref{def:selected-visible-effective-law}, the same exact effective
+operator \(\mathcal L_{\mathrm{vis},h}(z)\) and the same inherited endpoint
+closure mechanism are evaluated on that cut before any carrier-specific
+restriction is made. The only remaining carrier-dependent step is therefore the
+classification of the surviving endpoint operator on the chosen visible
+carrier, followed by the final carrier-level physical identification. This is
+exactly the common grammar of Remark~\ref{rem:common-part-iv-grammar}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:common-endpoint-rigidity-reduction}]
+\label{proof:thm:common-endpoint-rigidity-reduction}
+By
+Theorem~\ref{thm:least-motion-observer-equivalence-class-is-admissible-selected-class}(iv),
+together with Theorem~\ref{thm:selection-interface} and
+Corollary~\ref{cor:selection-to-forcing}, the selected observed law on
+\(\mathcal X_h^{\mathrm{vis}}\) is unique modulo horizon-preserving
+equivalence at each relevant horizon. The scalarization surface built into the
+theorem statement, together with
+Corollary~\ref{cor:realized-self-adjoint-scalarization} and
+Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization},
+reduces every admissible selected closure operator to scalar action on the
+intrinsic symmetry channels carried by \(\mathcal X_h^{\mathrm{vis}}\). By
+Definition~\ref{def:selected-visible-effective-law}, the selected endpoint
+closure class on that same carrier is already the carrier-side exact closure
+class obtained from the one exact visible law on the selected cut by
+characteristic boundary reduction. Hence that class already has a unique exact
+carrier-side representative and is unique modulo the continuum equivalence used
+later in the carrier-level endpoint identifications. Combined with the
+channelwise scalarization above, the class is encoded entirely by its scalar
+data on the intrinsic symmetry channels. The only remaining carrier-level
+physical task is therefore to identify the canonical representative of that
+already forced class.
+\end{proof}
+
+% ── Chapter 8: flagship_quantum.tex (Phase / Schr\"odinger) ──
+
+\begin{proof}[Proof of Theorem~\ref{thm:least-motion-phase-observer}]
+\label{proof:thm:least-motion-phase-observer}
+Hypothesis \emph{(i)} gives faithfulness, closure-admissibility, and promotion
+stability of the phase carrier. Hypothesis \emph{(ii)} says that no proper
+visible subcarrier still supports the same forced phase, transport, and scalar
+closure data. Hypothesis \emph{(iii)} says that any competing characteristic
+observer datum with those properties is horizon-preserving equivalent to the
+datum generated by \(\mathcal X_{\mathrm{ph}}\). Therefore that datum
+satisfies the clauses of
+Definition~\ref{def:least-motion-characteristic-observer} and is unique up to
+horizon-preserving equivalence. Hence \(\mathcal X_{\mathrm{ph}}\) is the
+unique least-motion characteristic observer for the realized family.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:induced-phase-hamiltonian-law}]
+\label{proof:thm:induced-phase-hamiltonian-law}
+By Theorem~\ref{thm:least-motion-phase-observer}, the visible law is carried by
+the selected phase carrier \(\mathcal X_{\mathrm{ph}}\). For each discrete
+level of the realized family,
+Corollary~\ref{cor:intrinsic-package-implies-governing-datum-rigid} places the
+selected channels in a governing-datum rigid realized class. Therefore
+Theorem~\ref{cor:realized-local-internal-datum-forcing} yields, on every
+relevant selected channel, a forced phase-carrier class, a unique nonnegative
+scalar quadratic recursion datum, and a scalar closure class.
+
+By the phase-Hamiltonian realization hypotheses, those selected channel data
+are organized into a refinement-compatible family on
+\(C^1(J,\mathcal W_0)\) with a refinement-coherent reconstruction datum whose
+exact core realization is bounded. The transport side therefore carries the
+self-adjoint second-order operator \(\mathcal T_{\chi}\), while the scalar
+closure side carries the self-adjoint operator \(V_{\chi}\) on the same
+selected cut. The phase side inherits a representative \(J_{\chi}\) of the
+forced phase-carrier class on that cut. The unique scalar coefficient induced
+by the selected transport class is denoted \(\kappa_{\chi}\ge 0\). All
+higher-order unresolved endpoint return is absorbed into the remainder
+\(\mathsf R_{\mathrm{ph}}\), which by
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+records the admissible exchange trace of unresolved endpoint return. This
+yields the displayed reversible phase law.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:phase-generation-and-energy-orthogonality-force-complex-generator}]
+\label{proof:thm:phase-generation-and-energy-orthogonality-force-complex-generator}
+By Corollary~\ref{cor:realized-phase-generation-forcing}, every relevant
+selected phase channel carries a forced phase-carrier class modulo
+phase-equivalence. Passing to the refinement-compatible selected carrier
+\(\mathcal X_{\mathrm{ph}}\) therefore yields a unique weak phase-law class on
+the selected cut, with residual freedom only by channelwise phase-equivalent
+sign changes.
+
+By
+Theorem~\ref{thm:canonical-selected-schur-bridge-forces-exact-selected-cut-energy-split},
+the canonical selected Schur bridge supplies the exact selected-cut energy
+split and hence the canonical pairing on \(\mathcal X_{\mathrm{ph}}\). The
+weak phase law of Theorem~\ref{thm:induced-phase-hamiltonian-law} already fixes
+the selected transport coefficient \(\kappa_{\chi}\ge 0\), the transport class,
+and the scalar closure class. Replacing the phase representative by a
+nontrivial phase-equivalent sign change would reverse the phase side of that
+same weak law on the affected selected channel while leaving the transport and
+closure data fixed, so it would no longer represent the same weak law on the
+canonical pairing. Hence exactly one member of the phase-equivalence class is
+pairing-compatible with the selected weak law.
+
+Therefore the forced phase-carrier class on the selected cut has a unique
+pairing-compatible strong representative. That representative is, by
+construction, the canonical complex structure carried by the selected phase
+cut. Writing that canonical complex structure in standard complex notation
+gives the stated complex phase generator.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:phase-local-endpoint-collapse}]
+\label{proof:thm:phase-local-endpoint-collapse}
+By
+Theorem~\ref{thm:phase-generation-and-energy-orthogonality-force-complex-generator},
+the forced phase-carrier class on the selected cut already has a unique
+pairing-compatible strong representative, written in standard complex notation
+as \(J_{\chi}=i\).
+
+For the transport side, item \emph{(i)} gives a finite local closure surface
+of scalar second-order candidates, while item \emph{(ii)} supplies the
+no-preferred-direction quadratic rigidity on each relevant selected channel.
+By Corollary~\ref{cor:realized-no-preferred-direction-quadratic-transport}, the
+quadratic transport datum is already reduced channelwise to a single scalar
+coefficient. The completion-and-selection algebra of
+Section~\ref{sec:constraint-compiler} therefore collapses the admissible local
+pairing-symmetric second-order scalar class to its unique isotropic local
+representative. By item \emph{(iii)} and
+Theorem~\ref{thm:refinement-coherent-core-realization}, the reconstructed
+transport family carries a unique exact core representative; denote that
+positive
+Laplace-type representative by \(\Delta_{\chi}\).
+
+For the closure side, item \emph{(iv)} says that the selected scalar closure
+family has local order \(0\). Hence at each site of the local scalar carrier,
+the value of the closure operator depends only on the value of the field at
+that same site. Linearity therefore forces pointwise multiplication by a scalar
+profile, and self-adjointness forces that profile to be real. By item
+\emph{(v)} and Theorem~\ref{thm:refinement-coherent-core-realization}, the
+corresponding reconstructed closure family carries a unique exact core
+representative; write it as the real multiplication operator \(V\).
+
+Substituting the forced representatives \(J_{\chi}=i\),
+\(\mathcal T_{\chi}=\Delta_{\chi}\), and the scalar closure operator \(V\) into
+Theorem~\ref{thm:induced-phase-hamiltonian-law} gives the displayed identity.
+The lossless statement is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:phase-schur-remainder-identity}]
+\label{proof:cor:phase-schur-remainder-identity}
+By Theorem~\ref{thm:canonical-selected-schur-realization}, the only hidden-side
+visible forcing on the selected cut is the returned residual, and that
+returned residual is exactly the Schur correction \(\CCSigma{h}{z}\). By
+Theorem~\ref{thm:phase-local-endpoint-collapse}, the selected phase endpoint
+class has a unique canonical representative on the selected carrier. Therefore
+the common Schur correction has a unique phase-side image on that
+representative; denote it by \(\Sigma_{h,\mathrm{ph}}(z)\). By
+Theorem~\ref{thm:returned-remainders-form-predictive-correction-surface}, the
+phase remainder is exactly that returned correction on the phase lane, so
+\(\mathsf R_{\mathrm{ph}}=\Sigma_{h,\mathrm{ph}}(z)\). Substituting this
+identity into Theorem~\ref{thm:phase-local-endpoint-collapse} gives the
+displayed equation.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hidden-channel-phase-remainder-and-spectral-splitting}]
+\label{proof:thm:hidden-channel-phase-remainder-and-spectral-splitting}
+Substituting the common plane-wave ansatz of item \emph{(iv)} into the visible
+and hidden phase laws gives
+\[
+\omega\Psi
+=
+E_{\mathrm{vis}}(k)\Psi+\gamma_{\chi}H,
+\]
+\[
+\omega H
+=
+E_{\mathrm{hid}}(k)H+\gamma_{\chi}\Psi.
+\]
+If \(E_{\mathrm{hid}}(k)\neq \omega\), the second identity gives
+\[
+H
+=
+\frac{\gamma_{\chi}}{E_{\mathrm{hid}}(k)-\omega}\Psi.
+\]
+Substituting this into the visible equation yields
+\[
+\omega\Psi
+=
+E_{\mathrm{vis}}(k)\Psi
++
+\frac{\gamma_{\chi}^2}{E_{\mathrm{hid}}(k)-\omega}\Psi.
+\]
+Cancelling the nonzero visible amplitude \(\Psi\) gives
+\[
+\omega
+=
+E_{\mathrm{vis}}(k)
++
+\frac{\gamma_{\chi}^2}{E_{\mathrm{hid}}(k)-\omega}.
+\]
+This is exactly the displayed phase law with
+\[
+\sigma_{\chi}^{\mathrm{ph,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{E_{\mathrm{hid}}(k)-\omega}.
+\]
+Multiplying by \(E_{\mathrm{hid}}(k)-\omega\) gives
+\[
+(\omega-E_{\mathrm{vis}}(k))
+(\omega-E_{\mathrm{hid}}(k))
+=
+\gamma_{\chi}^2.
+\]
+Solving this quadratic equation in \(\omega\) yields the two displayed branch
+functions \(\omega_{\pm}(k)\).
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-off-resonant-phase-line-shifts}]
+\label{proof:cor:exact-off-resonant-phase-line-shifts}
+By
+Theorem~\ref{thm:hidden-channel-phase-remainder-and-spectral-splitting},
+\[
+\omega_{\pm}(k)
+=
+\frac{
+E_{\mathrm{vis}}(k)+E_{\mathrm{hid}}(k)
+\pm
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{ph}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Since \(E_{\mathrm{hid}}(k)=E_{\mathrm{vis}}(k)+\delta_{\chi}^{\mathrm{ph}}(k)\),
+\[
+\omega_-(k)
+=
+E_{\mathrm{vis}}(k)
++
+\frac{
+\delta_{\chi}^{\mathrm{ph}}(k)
+-
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{ph}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Rationalizing the numerator gives the displayed formula for \(\omega_-(k)\),
+and the formula for \(\omega_+(k)\) is obtained similarly. Because
+\(\delta_{\chi}^{\mathrm{ph}}(k)>0\), the visible-like shift is negative and
+the hidden-like shift is positive.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-avoided-crossing-coupled-phase-branches}]
+\label{proof:cor:exact-avoided-crossing-coupled-phase-branches}
+At a selected mode \(k_\ast\) with
+\(E_{\mathrm{vis}}(k_\ast)=E_{\mathrm{hid}}(k_\ast)\), the branch formula of
+Theorem~\ref{thm:hidden-channel-phase-remainder-and-spectral-splitting} becomes
+\[
+\omega_{\pm}(k_\ast)
+=
+\frac{2E_\ast\pm\sqrt{4\gamma_{\chi}^2}}{2}
+=
+E_\ast\pm\gamma_{\chi}.
+\]
+Subtracting the two identities gives the exact gap.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:low-energy-renormalized-phase-offset-and-transport-coefficient}]
+\label{proof:cor:low-energy-renormalized-phase-offset-and-transport-coefficient}
+For small \(k\),
+\[
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+=
+\frac{k^2\ell_{\chi}^2}{4}+O(k^4),
+\]
+so
+\[
+E_{\mathrm{vis}}(k)
+=
+U_{\chi}+\kappa_{\chi}k^2+O(k^4),
+\qquad
+E_{\mathrm{hid}}(k)
+=
+\widetilde U_{\chi}+\widetilde\kappa_{\chi}k^2+O(k^4).
+\]
+Hence
+\[
+\delta_{\chi}^{\mathrm{ph}}(k)
+=
+\Delta_0^{\mathrm{ph}}+\Delta_1^{\mathrm{ph}}k^2+O(k^4).
+\]
+By
+Theorem~\ref{thm:hidden-channel-phase-remainder-and-spectral-splitting},
+\[
+\omega_-(k)
+=
+\frac{
+E_{\mathrm{vis}}(k)+E_{\mathrm{hid}}(k)
+-
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{ph}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Expanding the square root at \(k=0\) gives
+\[
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{ph}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+=
+\sqrt{
+\bigl(\Delta_0^{\mathrm{ph}}\bigr)^2+4\gamma_{\chi}^2
+}
++
+\frac{
+\Delta_0^{\mathrm{ph}}\Delta_1^{\mathrm{ph}}
+}{
+\sqrt{
+\bigl(\Delta_0^{\mathrm{ph}}\bigr)^2+4\gamma_{\chi}^2
+}
+}k^2
++
+O(k^4).
+\]
+Substituting these expansions into the branch formula and collecting the
+constant and quadratic terms yields the displayed formulas for
+\(U_{\chi,\mathrm{eff}}\) and \(\kappa_{\chi,\mathrm{eff}}\).
+\end{proof}
+
+% ── Chapter 8: flagship_wave.tex (Wave / Klein--Gordon) ──
+
+\begin{proof}[Proof of Theorem~\ref{thm:least-motion-wave-observer}]
+\label{proof:thm:least-motion-wave-observer}
+Hypothesis \emph{(i)} gives faithfulness, closure-admissibility, and promotion
+stability of the wave carrier. Hypothesis \emph{(ii)} says that no proper
+visible subcarrier still supports the same scalar second-order transport and
+scalar endpoint closure data. Hypothesis \emph{(iii)} says that any competing
+characteristic observer datum with those properties is horizon-preserving
+equivalent to the datum generated by \(\mathcal X_{\mathrm{wav}}\).
+Therefore that datum satisfies the clauses of
+Definition~\ref{def:least-motion-characteristic-observer} and is unique up to
+horizon-preserving equivalence. Hence \(\mathcal X_{\mathrm{wav}}\) is the
+unique least-motion characteristic observer for the realized family.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:induced-wave-law}]
+\label{proof:thm:induced-wave-law}
+By Theorem~\ref{thm:least-motion-wave-observer}, the visible law is carried by
+the selected wave carrier \(\mathcal X_{\mathrm{wav}}\). For each discrete
+level of the realized family,
+Corollary~\ref{cor:intrinsic-package-implies-governing-datum-rigid} places the
+selected channels in a governing-datum rigid realized class. Therefore
+Theorem~\ref{cor:realized-local-internal-datum-forcing} yields, on every
+relevant selected channel, a forced scalar second-order transport datum and a
+scalar endpoint closure class.
+
+By the reversible wave realization hypotheses, those selected channel data are
+organized into a refinement-compatible family on \(C^2(J,\mathcal W_0)\) with
+a refinement-coherent reconstruction datum whose exact core realization is
+bounded. The transport side therefore carries the self-adjoint nonnegative
+second-order operator \(\mathcal T_{\chi}\), while the scalar closure side
+carries the self-adjoint operator \(M_{\chi}\) on the same selected cut. The
+unique scalar coefficient induced by the selected transport class is denoted
+\(c_{\chi}>0\). All higher-order unresolved endpoint return is absorbed into
+the remainder \(\mathsf R_{\mathrm{wav}}\), which by
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+records the admissible exchange trace of unresolved endpoint return. This
+yields the displayed reversible wave law.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:wave-local-endpoint-collapse}]
+\label{proof:thm:wave-local-endpoint-collapse}
+For the transport side, item \emph{(i)} gives a finite local closure surface
+of scalar second-order candidates, while item \emph{(ii)} supplies the
+no-preferred-direction quadratic rigidity on each relevant selected wave
+channel. By Corollary~\ref{cor:realized-no-preferred-direction-quadratic-transport},
+the quadratic transport datum is already reduced channelwise to a single scalar
+coefficient. The completion-and-selection algebra of
+Section~\ref{sec:constraint-compiler} therefore collapses the admissible local
+pairing-symmetric second-order scalar class to its unique isotropic local
+representative. By item \emph{(iii)} and
+Theorem~\ref{thm:refinement-coherent-core-realization}, the reconstructed
+transport family carries a unique exact core representative; denote the corresponding
+positive Laplace-type representative by \(\Delta_{\chi}\). In the sign
+convention of Theorem~\ref{thm:induced-wave-law}, this means
+\[
+\mathcal T_{\chi}=-\Delta_{\chi}.
+\]
+
+For the closure side, item \emph{(iv)} says that the selected scalar closure
+family has local order \(0\). Hence at each site of the local scalar carrier,
+the value of the closure operator depends only on the value of the field at
+that same site. Linearity therefore forces pointwise multiplication by a scalar
+profile, and self-adjointness forces that profile to be real. By item
+\emph{(v)} and Theorem~\ref{thm:refinement-coherent-core-realization}, the
+corresponding reconstructed closure family carries a unique exact core
+representative; write it as the real multiplication operator \(W_{\chi}\).
+
+Substituting \(\mathcal T_{\chi}=-\Delta_{\chi}\) and \(M_{\chi}=W_{\chi}\)
+into Theorem~\ref{thm:induced-wave-law} yields the displayed identity. The
+lossless statement is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:wave-schur-remainder-identity}]
+\label{proof:cor:wave-schur-remainder-identity}
+By Theorem~\ref{thm:canonical-selected-schur-realization}, the selected cut
+carries one common returned residual field, and that returned residual is
+exactly the Schur correction \(\CCSigma{h}{z}\). By
+Theorem~\ref{thm:wave-local-endpoint-collapse}, the selected wave endpoint
+class has a unique canonical representative on the selected carrier. Hence the
+common Schur correction has a unique wave-side image there; denote it by
+\(\Sigma_{h,\mathrm{wav}}(z)\). By
+Theorem~\ref{thm:returned-remainders-form-predictive-correction-surface}, the
+wave remainder is exactly that returned correction on the wave lane, so
+\(\mathsf R_{\mathrm{wav}}=\Sigma_{h,\mathrm{wav}}(z)\). Substituting this into
+Theorem~\ref{thm:wave-local-endpoint-collapse} yields the displayed equation.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass}]
+\label{proof:thm:homogeneous-wave-scalar-profile-forces-constant-mass}
+By Theorem~\ref{thm:wave-local-endpoint-collapse}, the selected scalar closure
+class is already represented on the selected wave carrier by a real
+multiplication operator \(W_{\chi}\) of local order \(0\).
+
+Fix a relevant selected wave channel. By item \emph{(i)} and
+Corollary~\ref{cor:locally-homogeneous-implies-symmetry-generated}, the
+corresponding admissible realized class is symmetry-generated on that channel.
+By Corollary~\ref{cor:symmetry-generated-implies-closure-rigid}, the selected
+self-adjoint closure operator on that homogeneous sector is closure-rigid.
+Because \(W_{\chi}\) is already a zeroth-order real multiplication operator and
+is equivariant under the induced local symmetry action by item \emph{(ii)},
+closure-rigidity forces that multiplication profile to be scalar on the
+homogeneous selected-wave sector. Denote the resulting real scalar by
+\(m_{\chi}^2\).
+
+Item \emph{(iii)} says that after restricting to the selected wave carrier
+there is no residual site-dependent scalar defect beyond this homogeneous
+sector. Therefore the full forced scalar profile on the selected wave carrier
+is exactly constant multiplication by \(m_{\chi}^2\):
+\[
+W_{\chi}=m_{\chi}^2 I.
+\]
+Item \emph{(iv)} gives \(m_{\chi}^2\ge 0\). Uniqueness is immediate, since two
+constant scalar multiplication operators agreeing on the selected wave carrier
+have the same scalar.
+
+Substituting \(W_{\chi}=m_{\chi}^2 I\) into
+Theorem~\ref{thm:wave-local-endpoint-collapse} yields the displayed identity.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-wave-dispersion}]
+\label{proof:thm:exact-wave-dispersion}
+Under the nearest-neighbor wave specialization, the lossless massless law of
+Theorem~\ref{thm:induced-wave-law} becomes
+\[
+\partial_t^2\phi_n
++
+\frac{c_{\chi}^2}{\ell_{\chi}^2}
+\bigl(2\phi_n-\phi_{n+1}-\phi_{n-1}\bigr)
+=
+0.
+\]
+Substituting the plane-wave ansatz
+\(\phi_n(t)=e^{i(nk\ell_{\chi}-\omega t)}\) gives
+\[
+-\omega^2
++
+\frac{c_{\chi}^2}{\ell_{\chi}^2}
+\bigl(2-e^{ik\ell_{\chi}}-e^{-ik\ell_{\chi}}\bigr)
+=
+0.
+\]
+Using
+\[
+2-e^{ik\ell_{\chi}}-e^{-ik\ell_{\chi}}
+=
+4\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right),
+\]
+we obtain
+\[
+\omega(k)^2
+=
+\frac{4c_{\chi}^2}{\ell_{\chi}^2}
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right).
+\]
+Taking the positive branch,
+\[
+\omega(k)
+=
+\frac{2c_{\chi}}{\ell_{\chi}}
+\sin\!\left(\frac{k\ell_{\chi}}{2}\right),
+\]
+so
+\[
+v_g(k)
+=
+\frac{d\omega}{dk}
+=
+c_{\chi}\cos\!\left(\frac{k\ell_{\chi}}{2}\right).
+\]
+Since
+\[
+E=\hbar\omega
+=
+2E_{\chi}\sin\!\left(\frac{k\ell_{\chi}}{2}\right),
+\]
+we have
+\[
+\sin\!\left(\frac{k\ell_{\chi}}{2}\right)=\frac{E}{2E_{\chi}},
+\]
+and therefore
+\[
+v_g(E)
+=
+c_{\chi}\sqrt{1-\left(\frac{E}{2E_{\chi}}\right)^2}.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:observable-wave-carrier-signature}]
+\label{proof:cor:observable-wave-carrier-signature}
+Expand the square root in Theorem~\ref{thm:exact-wave-dispersion} at
+\(E/E_{\chi}=0\):
+\[
+\sqrt{1-\left(\frac{E}{2E_{\chi}}\right)^2}
+=
+1-\frac18\left(\frac{E}{E_{\chi}}\right)^2
++O\!\left(\frac{E^4}{E_{\chi}^4}\right).
+\]
+Subtract \(1\) and multiply by \(c_{\chi}\). The exact cutoff is the endpoint
+\(E=2E_{\chi}\) of the same formula.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-schur-corrected-wave-dispersion}]
+\label{proof:thm:exact-schur-corrected-wave-dispersion}
+By Theorem~\ref{thm:homogeneous-wave-scalar-profile-forces-constant-mass} and
+Corollary~\ref{cor:wave-schur-remainder-identity}, every
+\(\phi\in C^2(J,\mathcal W_0)\) satisfies
+\[
+\partial_t^2\phi
+-
+c_{\chi}^2\Delta_{\chi}\phi
++
+m_{\chi}^2\phi
+=
+\Sigma_{h,\mathrm{wav}}(z).
+\]
+Under item \emph{(ii)} of
+Definition~\ref{def:mode-compatible-schur-corrected-lattice-wave-specialization},
+\[
+(\Delta_{\chi}\phi)_n
+=
+\frac{\phi_{n+1}-2\phi_n+\phi_{n-1}}{\ell_{\chi}^2}.
+\]
+Substituting the plane-wave ansatz from item \emph{(iv)} and the returned
+remainder profile from item \emph{(v)} therefore gives
+\[
+-\omega^2\phi_n
+-
+\frac{c_{\chi}^2}{\ell_{\chi}^2}
+\bigl(e^{ik\ell_{\chi}}-2+e^{-ik\ell_{\chi}}\bigr)\phi_n
++
+m_{\chi}^2\phi_n
+=
+\sigma_{\chi}(k;z)\phi_n.
+\]
+Using
+\[
+2-e^{ik\ell_{\chi}}-e^{-ik\ell_{\chi}}
+=
+4\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right),
+\]
+and cancelling the nonzero plane-wave factor \(\phi_n\), we obtain
+\[
+\omega(k;z)^2
+=
+m_{\chi}^2
++
+\frac{4c_{\chi}^2}{\ell_{\chi}^2}
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+-
+\sigma_{\chi}(k;z).
+\]
+
+If \(k\mapsto \sigma_{\chi}(k;z)\) is differentiable and the right-hand side
+is positive, then differentiating the dispersion identity gives
+\[
+2\omega(k;z)\,v_g(k;z)
+=
+\frac{2c_{\chi}^2}{\ell_{\chi}}\sin(k\ell_{\chi})
+-
+\partial_k\sigma_{\chi}(k;z),
+\]
+which yields the displayed group-velocity formula after substituting
+\[
+\omega(k;z)
+=
+\sqrt{
+m_{\chi}^2
++
+\frac{4c_{\chi}^2}{\ell_{\chi}^2}
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+-
+\sigma_{\chi}(k;z)
+}.
+\]
+The lossless and massless reductions are immediate.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hidden-channel-wave-remainder-and-branch-splitting}]
+\label{proof:thm:hidden-channel-wave-remainder-and-branch-splitting}
+Substituting the common plane-wave ansatz of item \emph{(iv)} into the coupled
+visible and hidden equations of item \emph{(iii)} gives
+\[
+\bigl(\omega_{\mathrm{vis}}(k)^2-\omega^2\bigr)\Phi
+=
+\gamma_{\chi}H,
+\]
+\[
+\bigl(\omega_{\mathrm{hid}}(k)^2-\omega^2\bigr)H
+=
+\gamma_{\chi}\Phi.
+\]
+If \(\omega_{\mathrm{hid}}(k)^2\neq \omega^2\), the second identity gives
+\[
+H
+=
+\frac{\gamma_{\chi}}{\omega_{\mathrm{hid}}(k)^2-\omega^2}\,\Phi.
+\]
+Substituting this into the first identity yields
+\[
+\bigl(\omega_{\mathrm{vis}}(k)^2-\omega^2\bigr)\Phi
+=
+\frac{\gamma_{\chi}^2}{\omega_{\mathrm{hid}}(k)^2-\omega^2}\,\Phi.
+\]
+Cancelling the nonzero visible amplitude \(\Phi\) gives
+\[
+\omega^2
+=
+\omega_{\mathrm{vis}}(k)^2
+-
+\frac{\gamma_{\chi}^2}{\omega_{\mathrm{hid}}(k)^2-\omega^2}.
+\]
+This is exactly the displayed visible law with
+\[
+\sigma_{\chi}^{\mathrm{hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\omega_{\mathrm{hid}}(k)^2-\omega^2}.
+\]
+Multiplying by \(\omega_{\mathrm{hid}}(k)^2-\omega^2\) gives
+\[
+\bigl(\omega_{\mathrm{vis}}(k)^2-\omega^2\bigr)
+\bigl(\omega_{\mathrm{hid}}(k)^2-\omega^2\bigr)
+=
+\gamma_{\chi}^2,
+\]
+equivalently
+\[
+(\omega^2-\omega_{\mathrm{vis}}(k)^2)
+(\omega^2-\omega_{\mathrm{hid}}(k)^2)
+=
+\gamma_{\chi}^2.
+\]
+This is a quadratic equation in \(\omega^2\), and solving it gives the two
+branches \(\omega_{\pm}(k)^2\) displayed above.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-off-resonant-hidden-channel-branch-shifts}]
+\label{proof:cor:exact-off-resonant-hidden-channel-branch-shifts}
+By Theorem~\ref{thm:hidden-channel-wave-remainder-and-branch-splitting},
+\[
+\omega_{\pm}(k)^2
+=
+\frac{
+\omega_{\mathrm{vis}}(k)^2+\omega_{\mathrm{hid}}(k)^2
+\pm
+\sqrt{
+\delta_{\chi}(k)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Since \(\omega_{\mathrm{hid}}(k)^2=\omega_{\mathrm{vis}}(k)^2+\delta_{\chi}(k)\),
+\[
+\omega_-(k)^2
+=
+\omega_{\mathrm{vis}}(k)^2
++
+\frac{\delta_{\chi}(k)-\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}}{2}.
+\]
+Rationalizing the numerator gives
+\[
+\delta_{\chi}(k)-\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}
+=
+-\frac{4\gamma_{\chi}^2}{
+\delta_{\chi}(k)+\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}
+},
+\]
+which yields the displayed formula for \(\omega_-(k)^2\). The formula for
+\(\omega_+(k)^2\) is obtained similarly from
+\[
+\omega_+(k)^2
+=
+\omega_{\mathrm{hid}}(k)^2
+-
+\frac{\delta_{\chi}(k)-\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}}{2}.
+\]
+Because \(\delta_{\chi}(k)>0\), the correction denominator is positive, so the
+visible-like shift is negative and the hidden-like shift is positive.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-avoided-crossing-coupled-wave-branches}]
+\label{proof:cor:exact-avoided-crossing-coupled-wave-branches}
+At a mode \(k_\ast\) with
+\(\omega_{\mathrm{vis}}(k_\ast)^2=\omega_{\mathrm{hid}}(k_\ast)^2\), the
+branch formula of
+Theorem~\ref{thm:hidden-channel-wave-remainder-and-branch-splitting} becomes
+\[
+\omega_{\pm}(k_\ast)^2
+=
+\frac{2\omega_\ast^2\pm\sqrt{4\gamma_{\chi}^2}}{2}
+=
+\omega_\ast^2\pm\gamma_{\chi}.
+\]
+Subtracting the two identities gives the exact gap.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:low-energy-renormalized-mass-and-wave-speed-hidden-channel}]
+\label{proof:cor:low-energy-renormalized-mass-and-wave-speed-hidden-channel}
+For small \(k\),
+\[
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+=
+\frac{k^2\ell_{\chi}^2}{4}+O(k^4),
+\]
+so
+\[
+\omega_{\mathrm{vis}}(k)^2
+=
+m_{\chi}^2+c_{\chi}^2k^2+O(k^4),
+\qquad
+\omega_{\mathrm{hid}}(k)^2
+=
+\widetilde m_{\chi}^2+\widetilde c_{\chi}^2k^2+O(k^4).
+\]
+Hence
+\[
+\delta_{\chi}(k)
+=
+\Delta_0+\Delta_1 k^2+O(k^4).
+\]
+By
+Theorem~\ref{thm:hidden-channel-wave-remainder-and-branch-splitting},
+\[
+\omega_-(k)^2
+=
+\frac{
+\omega_{\mathrm{vis}}(k)^2+\omega_{\mathrm{hid}}(k)^2
+-\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}
+}{2}.
+\]
+Expanding the square root at \(k=0\) gives
+\[
+\sqrt{\delta_{\chi}(k)^2+4\gamma_{\chi}^2}
+=
+\sqrt{\Delta_0^2+4\gamma_{\chi}^2}
++
+\frac{\Delta_0\Delta_1}{\sqrt{\Delta_0^2+4\gamma_{\chi}^2}}\,k^2
++
+O(k^4).
+\]
+Substituting the expansions into the branch formula and collecting the constant
+and quadratic terms yields the displayed formulas for
+\(m_{\chi,\mathrm{eff}}^2\) and \(c_{\chi,\mathrm{eff}}^2\).
+\end{proof}
+
+% ── Chapter 8: flagship_gauge.tex (Gauge / Maxwell) ──
+
+\begin{proof}[Proof of Theorem~\ref{thm:least-motion-gauge-observer}]
+\label{proof:thm:least-motion-gauge-observer}
+Hypothesis \emph{(ii)} gives faithfulness, closure-admissibility, and
+promotion stability of the selected one-form carrier. Hypothesis \emph{(iii)}
+says that no proper visible subcarrier still supports gauge-covariant,
+exactness-compatible exchange response together with those same structural
+properties. Hypothesis \emph{(iv)} says that any competing characteristic
+observer datum satisfying \emph{(i)}--\emph{(iii)} is horizon-preserving
+equivalent to the datum generated by the selected one-form carrier. Therefore
+that datum satisfies the clauses of
+Definition~\ref{def:least-motion-characteristic-observer} and is unique up to
+horizon-preserving equivalence. Hence the selected one-form carrier is the
+unique least-motion characteristic observer for the realized family.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:induced-gauge-compatible-law}]
+\label{proof:thm:induced-gauge-compatible-law}
+By Theorem~\ref{thm:least-motion-gauge-observer}, the visible law is carried by
+the selected one-form carrier. Hypothesis~\emph{(i)} of that theorem and
+Corollary~\ref{cor:intrinsic-package-yields-gauge-compatible-local-datum}
+therefore place on that selected cut a unique gauge-compatible local internal
+datum, while Corollary~\ref{cor:realized-local-gauge-covariance} gives local
+gauge covariance of the selected transport.
+
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+permits only exchange-current source data on that cut. Thus the
+compatibility condition \(\delta J=0\) is the one-form expression of exact
+balanced internal exchange rather than an independent constitutive insertion.
+
+Because the visible datum is a local gauge class \([A]\), the transported
+curvature \(F:=dA\) is independent of the chosen representative. Exactness of
+the underlying complex gives
+\[
+dF=d^2A=0.
+\]
+Definition~\ref{def:selected-visible-effective-law} now identifies the
+selected endpoint closure class on the selected carrier as the exact
+carrier-side closure class of the one selected visible law on that cut. The
+closure statement therefore reduces to the unique
+gauge-compatible response operator in that class; denote it by
+\(\mathcal M_{\mathrm g}\). Its output is the selected exchange current plus the
+remaining local gauge-invariant endpoint error, recorded by
+\(\mathsf R_{\mathrm g}\). This gives the displayed gauge-compatible law.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:gauge-local-endpoint-collapse}]
+\label{proof:thm:gauge-local-endpoint-collapse}
+By Theorem~\ref{thm:induced-gauge-compatible-law}, there is already a unique
+minimal gauge-compatible local response operator
+\[
+\mathcal M_{\mathrm g}:\Omega^1(M)/d\Omega^0(M)\to\Omega^1(M)
+\]
+on the selected cut, satisfying
+\[
+dF=0,
+\qquad
+\mathcal M_{\mathrm g}([A])=J+\mathsf R_{\mathrm g}.
+\]
+
+Because the visible datum is the local gauge class \([A]\), local gauge
+covariance implies that \(\mathcal M_{\mathrm g}\) depends only on the
+curvature \(F=dA\). Item~\emph{(iii)} says that the response family has
+minimal local order \(2\) in \(A\), hence local order \(1\) in \(F\). Thus
+there is a first-order local curvature-side operator
+\[
+\widetilde{\mathcal M}_{\mathrm g}:\Omega^2(M)\to\Omega^1(M)
+\]
+with
+\[
+\mathcal M_{\mathrm g}([A])=\widetilde{\mathcal M}_{\mathrm g}(F).
+\]
+
+Item~\emph{(iii)} and
+Theorem~\ref{thm:refinement-coherent-core-realization} supply a constructive
+local representative family for that already exact selected endpoint class, so
+the reconstructed endpoint law has a unique exact core representative up to
+local gauge and continuum equivalence. By
+Theorem~\ref{thm:energy-orthogonal-cut-forces-canonical-duality}, applied to
+the selected one-form carrier using item~\emph{(i)} and the already forced
+uniqueness of the endpoint closure class from
+Theorem~\ref{thm:induced-gauge-compatible-law}, the final carrier-level
+representative is fixed internally by the selected-cut pairing.
+
+Let \(\delta_{\chi}\) denote the adjoint of \(d\) with respect to that
+canonical selected-cut pairing on the one-form carrier. Since the response has
+already descended to a first-order local curvature operator and the
+pairing-compatible strong representative is unique, the only admissible
+pairing-compatible representative of that constructively forced endpoint class is
+the curvature-adjoint response. Therefore
+\[
+\widetilde{\mathcal M}_{\mathrm g}(F)=\delta_{\chi}F,
+\qquad\text{hence}\qquad
+\mathcal M_{\mathrm g}([A])=\delta_{\chi}dA=\delta_{\chi}F.
+\]
+Substituting this identity into
+Theorem~\ref{thm:induced-gauge-compatible-law} yields the displayed system.
+The lossless statement is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:gauge-schur-remainder-identity}]
+\label{proof:cor:gauge-schur-remainder-identity}
+By Theorem~\ref{thm:canonical-selected-schur-realization}, the only hidden-side
+visible forcing on the selected cut is the returned residual, and that forcing
+is exactly the Schur correction \(\CCSigma{h}{z}\). By
+Theorem~\ref{thm:gauge-local-endpoint-collapse}, the selected gauge endpoint
+class has a unique canonical curvature-adjoint representative on the selected
+carrier. Therefore the common Schur correction has a unique gauge-side image on
+that representative; denote it by \(\Sigma_{h,\mathrm g}(z)\). By
+Theorem~\ref{thm:returned-remainders-form-predictive-correction-surface}, the
+gauge remainder is exactly that returned correction on the gauge lane, so
+\(\mathsf R_{\mathrm g}=\Sigma_{h,\mathrm g}(z)\). Substituting this into
+Theorem~\ref{thm:gauge-local-endpoint-collapse} gives the displayed identity.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hidden-channel-gauge-current-and-branch-splitting}]
+\label{proof:thm:hidden-channel-gauge-current-and-branch-splitting}
+By item \emph{(v)} of
+Definition~\ref{def:coupled-visible-shadow-gauge-mode-model},
+\[
+\bigl(\Omega_{\mathrm{g,vis}}(k)^2-\omega^2\bigr)a
+=
+j_0+\gamma_{\chi}b,
+\]
+\[
+\bigl(\Omega_{\mathrm{g,hid}}(k)^2-\omega^2\bigr)b
+=
+\gamma_{\chi}a.
+\]
+If \(\Omega_{\mathrm{g,hid}}(k)^2\neq\omega^2\), the second identity gives
+\[
+b
+=
+\frac{\gamma_{\chi}}{\Omega_{\mathrm{g,hid}}(k)^2-\omega^2}\,a.
+\]
+Substituting this into the visible equation yields
+\[
+\bigl(\Omega_{\mathrm{g,vis}}(k)^2-\omega^2\bigr)a
+=
+j_0
++
+\frac{\gamma_{\chi}^2}{\Omega_{\mathrm{g,hid}}(k)^2-\omega^2}\,a.
+\]
+This is exactly the displayed visible response law with
+\[
+\sigma_{\chi}^{\mathrm{g,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\Omega_{\mathrm{g,hid}}(k)^2-\omega^2}.
+\]
+Multiplying by the mode one-form
+\(a\,\varepsilon\,e^{i(nk\ell_{\chi}-\omega t)}\) gives the displayed
+one-form remainder. If \(j_0=0\), then multiplying the visible equation by
+\(\Omega_{\mathrm{g,hid}}(k)^2-\omega^2\) gives
+\[
+\bigl(\Omega_{\mathrm{g,vis}}(k)^2-\omega^2\bigr)
+\bigl(\Omega_{\mathrm{g,hid}}(k)^2-\omega^2\bigr)
+=
+\gamma_{\chi}^2,
+\]
+equivalently
+\[
+(\omega^2-\Omega_{\mathrm{g,vis}}(k)^2)
+(\omega^2-\Omega_{\mathrm{g,hid}}(k)^2)
+=
+\gamma_{\chi}^2.
+\]
+This is a quadratic equation in \(\omega^2\), and solving it gives the two
+displayed branch functions.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-off-resonant-gauge-pole-shifts}]
+\label{proof:cor:exact-off-resonant-gauge-pole-shifts}
+By Theorem~\ref{thm:hidden-channel-gauge-current-and-branch-splitting},
+\[
+\omega_{\pm}(k)^2
+=
+\frac{
+\Omega_{\mathrm{g,vis}}(k)^2+\Omega_{\mathrm{g,hid}}(k)^2
+\pm
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm g}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Since
+\(\Omega_{\mathrm{g,hid}}(k)^2=\Omega_{\mathrm{g,vis}}(k)^2+\delta_{\chi}^{\mathrm g}(k)\),
+\[
+\omega_-(k)^2
+=
+\Omega_{\mathrm{g,vis}}(k)^2
++
+\frac{
+\delta_{\chi}^{\mathrm g}(k)
+-
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm g}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Rationalizing the numerator gives the displayed formula for \(\omega_-(k)^2\),
+and the formula for \(\omega_+(k)^2\) is obtained similarly. Because
+\(\delta_{\chi}^{\mathrm g}(k)>0\), the visible-like shift is negative and the
+hidden-like shift is positive.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-avoided-crossing-coupled-gauge-branches}]
+\label{proof:cor:exact-avoided-crossing-coupled-gauge-branches}
+At a mode \(k_\ast\) with
+\(\Omega_{\mathrm{g,vis}}(k_\ast)^2=\Omega_{\mathrm{g,hid}}(k_\ast)^2\), the
+branch formula of
+Theorem~\ref{thm:hidden-channel-gauge-current-and-branch-splitting} becomes
+\[
+\omega_{\pm}(k_\ast)^2
+=
+\frac{2\Omega_{\ast}^2\pm\sqrt{4\gamma_{\chi}^2}}{2}
+=
+\Omega_{\ast}^2\pm\gamma_{\chi}.
+\]
+Subtracting the two identities gives the exact gap.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:low-frequency-induced-exchange-susceptibility}]
+\label{proof:cor:low-frequency-induced-exchange-susceptibility}
+By Theorem~\ref{thm:hidden-channel-gauge-current-and-branch-splitting},
+\[
+\sigma_{\chi}^{\mathrm{g,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{
+\Omega_{\mathrm{g,hid}}(k)^2-\omega^2
+}.
+\]
+For small \(k\),
+\[
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+=
+\frac{k^2\ell_{\chi}^2}{4}+O(k^4),
+\]
+so
+\[
+\Omega_{\mathrm{g,hid}}(k)^2
+=
+\nu_{\chi}^2+\widetilde c_{\chi}^2k^2+O(k^4).
+\]
+Hence
+\[
+\Omega_{\mathrm{g,hid}}(k)^2-\omega^2
+=
+\nu_{\chi}^2+\widetilde c_{\chi}^2k^2-\omega^2+O(k^4).
+\]
+Writing
+\[
+x
+:=
+\frac{\widetilde c_{\chi}^2k^2-\omega^2+O(k^4)}{\nu_{\chi}^2},
+\]
+we have
+\[
+\sigma_{\chi}^{\mathrm{g,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^2}\frac{1}{1+x}.
+\]
+Expanding \((1+x)^{-1}=1-x+O(x^2)\) gives
+\[
+\sigma_{\chi}^{\mathrm{g,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^2}
+-
+\frac{\gamma_{\chi}^2\widetilde c_{\chi}^2}{\nu_{\chi}^4}k^2
++
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^4}\omega^2
++
+O(k^4+k^2\omega^2+\omega^4),
+\]
+as claimed.
+\end{proof}
+
+% ── Chapter 8: flagship_geometry.tex (Geometric / Einstein) ──
+
+\begin{proof}[Proof of Theorem~\ref{thm:least-motion-geometric-observer}]
+\label{proof:thm:least-motion-geometric-observer}
+Hypothesis \emph{(i)} gives faithfulness, closure-admissibility, and promotion
+stability of the symmetric \(2\)-tensor carrier. Hypothesis \emph{(ii)} says
+that no proper visible subcarrier still supports a faithful
+divergence-compatible second-order response law at the observed scale.
+Hypothesis \emph{(iii)} says that any competing characteristic observer datum
+with those properties is horizon-preserving equivalent to the symmetric
+\(2\)-tensor carrier. Therefore the datum generated by that carrier satisfies
+the clauses of Definition~\ref{def:least-motion-characteristic-observer} and
+is unique up to horizon-preserving equivalence. Hence the symmetric
+\(2\)-tensor carrier is the unique least-motion characteristic observer for
+the promoted source/transport family.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:weak-field-geometric-response-law}]
+\label{proof:thm:weak-field-geometric-response-law}
+The least-motion observer theorem places the observable law on the symmetric
+tensor carrier. Interpreted through temporal realization and least-motion
+selection, this carrier is the minimal faithful divergence-compatible visible
+cut at the selected scale. By
+Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization}, the
+orthogonal-equivariance hypothesis forces the trace line and traceless carrier
+to be the intrinsic scalar channels of the leading response. The
+divergence-compatibility hypothesis therefore selects a unique leading operator
+\(\mathcal E_{\mathrm{lin}}\) compatible with that two-channel decomposition,
+while the residual scalar trace contribution is recorded by
+\(\Lambda_{\mathrm{ind}}\). The source coupling to the preceding selected law
+is, by
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation},
+likewise an exchange coupling on the same selected channels,
+hence is encoded by a single induced coefficient \(\kappa_{\mathrm{ind}}\).
+All quadratic and higher response terms are absorbed into
+\(\mathsf R_{\mathrm{grav}}\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:characteristic-covariant-geometric-reduction}]
+\label{proof:thm:characteristic-covariant-geometric-reduction}
+By Theorem~\ref{thm:weak-field-geometric-response-law}, the weak-field law
+already furnishes the induced coefficients \(\Lambda_{\mathrm{ind}}\) and
+\(\kappa_{\mathrm{ind}}\) together with the leading divergence-compatible
+linear response operator \(\mathcal E_{\mathrm{lin}}\). By hypothesis, the
+nonlinear correction is carried by a rapidly decaying characteristic memory
+integral. Corollary~\ref{cor:characteristic-boundary-reduction} removes its
+bulk contribution, so after the stated slow-variation hypothesis only the
+endpoint response remains at leading order.
+
+The endpoint map acts on the symmetric tensor carrier. Under least-motion
+selection on the temporally realized class, this is the selected covariant
+visible cut, so all
+unresolved geometric return must re-enter through its exact endpoint response.
+By the no-preferred-direction clause and
+Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization}, the
+trace line and traceless carrier are the intrinsic scalar channels of that
+endpoint response. Covariance and divergence compatibility therefore promote
+the endpoint operator to a local covariant completion class extending the
+weak-field operator \(\mathcal E_{\mathrm{lin}}+\Lambda_{\mathrm{ind}}I\). By
+Definition~\ref{def:selected-visible-effective-law}, the selected cut already
+carries the exact carrier-side endpoint closure class of the one selected
+visible law, and its covariant representative has order \(2\) by the final
+hypothesis. This yields a covariant
+divergence-compatible response operator \(\mathcal G(g)\) of minimal local
+order. Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+identifies the divergence-compatible source field \(T\) as the visible
+symmetric exchange tensor of the coupled sector. The same
+scalar-channel decomposition therefore encodes that exchange coupling through
+the induced coefficient
+\(\kappa_{\mathrm{ind}}\). All higher endpoint corrections are local symmetric
+tensors and are absorbed into \(\mathsf N_{\mathrm{grav}}(g,T)\). This yields
+the displayed covariant law, and the divergence statement is exactly the
+divergence-compatible endpoint identity together with \(\nabla g=0\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:geometric-local-endpoint-collapse}]
+\label{proof:thm:geometric-local-endpoint-collapse}
+By Theorem~\ref{thm:characteristic-covariant-geometric-reduction}, there are
+already induced coefficients \(\Lambda_{\mathrm{ind}},\kappa_{\mathrm{ind}}\),
+a covariant divergence-compatible response operator \(\mathcal G(g)\) of
+minimal local order, and a local symmetric remainder
+\(\mathsf N_{\mathrm{grav}}(g,T)\) satisfying the displayed covariant law on
+the selected cut.
+
+Item~\emph{(ii)} says that the admissible covariant response family is
+represented levelwise by a local symmetric-tensor differential family of
+minimal local order \(2\), and item~\emph{(iii)} gives a refinement-coherent
+exact-core realization of that family on its dense test domain. By
+Theorem~\ref{thm:energy-orthogonal-cut-forces-canonical-duality}, applied to
+the selected symmetric-tensor carrier using item~\emph{(i)} and the already
+forced uniqueness of the geometric endpoint class from
+Theorem~\ref{thm:characteristic-covariant-geometric-reduction}, the final
+carrier-level representative is fixed internally by the selected-cut pairing.
+
+By
+Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization}, the
+trace line and traceless carrier are the intrinsic scalar channels of that
+response. Let \(\mathcal G_{\chi}(g)\) denote the unique pairing-compatible
+divergence-compatible representative of that constructively forced endpoint
+class on those two scalar channels, and let \(\operatorname{Div}_{\chi}\)
+denote the corresponding selected-cut divergence operator on the symmetric
+tensor carrier. Substituting this unique representative into
+Theorem~\ref{thm:characteristic-covariant-geometric-reduction} yields
+\[
+\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g
+=
+\kappa_{\mathrm{ind}}T+\mathsf N_{\mathrm{grav}}(g,T),
+\qquad
+\operatorname{Div}_{\chi}\bigl(\mathcal G_{\chi}(g)+\Lambda_{\mathrm{ind}}g\bigr)=0.
+\]
+This is exactly the displayed intrinsic selected-cut geometric law. The
+lossless statement is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:geometric-schur-remainder-identity}]
+\label{proof:cor:geometric-schur-remainder-identity}
+By Theorem~\ref{thm:canonical-selected-schur-realization}, the selected cut
+carries one common returned residual field and that returned residual is
+exactly the Schur correction \(\CCSigma{h}{z}\). By
+Theorem~\ref{thm:geometric-local-endpoint-collapse}, the selected geometric
+endpoint class has a unique canonical trace-adjusted curvature representative on the selected
+carrier. Therefore the common Schur correction has a unique geometric-side
+image on that representative; denote it by \(\Sigma_{h,\mathrm{grav}}(z)\). By
+Theorem~\ref{thm:returned-remainders-form-predictive-correction-surface}, the
+geometric remainder is exactly that returned correction on the geometric lane,
+so \(\mathsf N_{\mathrm{grav}}(g,T)=\Sigma_{h,\mathrm{grav}}(z)\). Substituting
+this into Theorem~\ref{thm:geometric-local-endpoint-collapse} yields the
+displayed equation.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting}]
+\label{proof:thm:hidden-channel-geometric-remainder-and-branch-splitting}
+By item \emph{(v)} of
+Definition~\ref{def:coupled-visible-shadow-geometric-mode-model},
+\[
+\bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\omega^2\bigr)u
+=
+\tau_0+\gamma_{\chi}v,
+\]
+\[
+\bigl(\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2\bigr)v
+=
+\gamma_{\chi}u.
+\]
+If \(\Omega_{\mathrm{grav,hid}}(k)^2\neq\omega^2\), the second identity gives
+\[
+v
+=
+\frac{\gamma_{\chi}}{\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2}\,u.
+\]
+Substituting this into the visible equation yields
+\[
+\bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\omega^2\bigr)u
+=
+\tau_0
++
+\frac{\gamma_{\chi}^2}{\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2}\,u.
+\]
+This is exactly the displayed visible response law with
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2}.
+\]
+Multiplying by the mode tensor
+\(u\,E\,e^{i(nk\ell_{\chi}-\omega t)}\) gives the displayed symmetric-tensor
+remainder. If \(\tau_0=0\), then multiplying the visible equation by
+\(\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2\) gives
+\[
+\bigl(\Omega_{\mathrm{grav,vis}}(k)^2-\omega^2\bigr)
+\bigl(\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2\bigr)
+=
+\gamma_{\chi}^2,
+\]
+equivalently
+\[
+(\omega^2-\Omega_{\mathrm{grav,vis}}(k)^2)
+(\omega^2-\Omega_{\mathrm{grav,hid}}(k)^2)
+=
+\gamma_{\chi}^2.
+\]
+This is a quadratic equation in \(\omega^2\), and solving it gives the two
+displayed branch functions.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-off-resonant-geometric-pole-shifts}]
+\label{proof:cor:exact-off-resonant-geometric-pole-shifts}
+By Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting},
+\[
+\omega_{\pm}(k)^2
+=
+\frac{
+\Omega_{\mathrm{grav,vis}}(k)^2+\Omega_{\mathrm{grav,hid}}(k)^2
+\pm
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{grav}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Since
+\(\Omega_{\mathrm{grav,hid}}(k)^2=\Omega_{\mathrm{grav,vis}}(k)^2+\delta_{\chi}^{\mathrm{grav}}(k)\),
+\[
+\omega_-(k)^2
+=
+\Omega_{\mathrm{grav,vis}}(k)^2
++
+\frac{
+\delta_{\chi}^{\mathrm{grav}}(k)
+-
+\sqrt{
+\bigl(\delta_{\chi}^{\mathrm{grav}}(k)\bigr)^2+4\gamma_{\chi}^2
+}
+}{2}.
+\]
+Rationalizing the numerator gives the displayed formula for \(\omega_-(k)^2\),
+and the formula for \(\omega_+(k)^2\) is obtained similarly. Because
+\(\delta_{\chi}^{\mathrm{grav}}(k)>0\), the visible-like shift is negative and
+the hidden-like shift is positive.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exact-avoided-crossing-coupled-geometric-branches}]
+\label{proof:cor:exact-avoided-crossing-coupled-geometric-branches}
+At a mode \(k_\ast\) with
+\(\Omega_{\mathrm{grav,vis}}(k_\ast)^2=\Omega_{\mathrm{grav,hid}}(k_\ast)^2\),
+the branch formula of
+Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting}
+becomes
+\[
+\omega_{\pm}(k_\ast)^2
+=
+\frac{2\Omega_{\ast}^2\pm\sqrt{4\gamma_{\chi}^2}}{2}
+=
+\Omega_{\ast}^2\pm\gamma_{\chi}.
+\]
+Subtracting the two identities gives the exact gap.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:low-frequency-induced-geometric-susceptibility}]
+\label{proof:cor:low-frequency-induced-geometric-susceptibility}
+By Theorem~\ref{thm:hidden-channel-geometric-remainder-and-branch-splitting},
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{
+\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2
+}.
+\]
+For small \(k\),
+\[
+\sin^2\!\left(\frac{k\ell_{\chi}}{2}\right)
+=
+\frac{k^2\ell_{\chi}^2}{4}+O(k^4),
+\]
+so
+\[
+\Omega_{\mathrm{grav,hid}}(k)^2
+=
+\nu_{\chi}^2+\widetilde c_{\chi}^2k^2+O(k^4).
+\]
+Hence
+\[
+\Omega_{\mathrm{grav,hid}}(k)^2-\omega^2
+=
+\nu_{\chi}^2+\widetilde c_{\chi}^2k^2-\omega^2+O(k^4).
+\]
+Writing
+\[
+x
+:=
+\frac{\widetilde c_{\chi}^2k^2-\omega^2+O(k^4)}{\nu_{\chi}^2},
+\]
+we have
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^2}\frac{1}{1+x}.
+\]
+Expanding \((1+x)^{-1}=1-x+O(x^2)\) gives
+\[
+\sigma_{\chi}^{\mathrm{grav,hid}}(k,\omega)
+=
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^2}
+-
+\frac{\gamma_{\chi}^2\widetilde c_{\chi}^2}{\nu_{\chi}^4}k^2
++
+\frac{\gamma_{\chi}^2}{\nu_{\chi}^4}\omega^2
++
+O(k^4+k^2\omega^2+\omega^4),
+\]
+as claimed.
+\end{proof}

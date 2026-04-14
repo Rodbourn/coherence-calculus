@@ -1,0 +1,272 @@
+% ============================================================
+\section{The Bedrock Principles}
+\label{sec:diophantine}
+% ============================================================
+
+The monograph begins from one primitive, three structural axioms, and two
+dynamic bedrock laws. The primitive, Constancy, asserts only that things can
+be told apart through decidable identity. Existence, Incidence, and Closure
+Balance force a finite compositional counting grammar. The termination and
+exactification laws added below then identify exact closure and state what a
+non-closed incidence must do. Crucially, no
+metric, topology, continuum parameter, constitutive law, or physical time is
+imposed in advance. This absence of imposed structure---not any
+presence---is what forces the combinatorial closure grammar and exactification
+spine developed below.
+
+This manuscript is not presented as a discrete spacetime ontology or as a
+replacement for other fundamental-physics programs. Its narrower question is:
+under finite observability, when does a restricted support carry an autonomous
+law of its own? The combinatorics of Parts~I--II provide the minimal
+exactification grammar for that question; geometry, continuum time, and the
+flagship equations enter only later as selected autonomous realizations or
+representative normal forms under explicit additional hypotheses.
+
+The ``no further structure'' clause deserves emphasis. Beyond the explicit
+incidence, closure, termination, and exactification interfaces introduced in
+this chapter, no metric, topology, algebraic operation, continuum parameter,
+or external selection rule is given. On that surface the manuscript adopts the
+\emph{complete} simplicial complex on the available primitives as the
+canonical no-further-structure closure convention: if a face were excluded,
+that exclusion would amount to additional structural datum beyond the present
+axiom surface. Within that convention, together with the finite combinatorics
+of the next chapter and the later soundness bridge, the closure equation
+selects the canonical nondegenerate balanced carrier~$D=4$ and the carrier
+decomposition~$1{+}2{+}3$. The
+concept of decidable equality in a constructive setting is standard
+\cite{Bishop1967,MartinLof1984,deMouraKongAvigadEtAl2015}; what is new here is
+the derivation chain that begins from it.
+
+% ------------------------------------------------------------
+\subsection{Primitive and Structural Axioms}
+\label{subsec:three-axioms}
+% ------------------------------------------------------------
+
+\begin{primitive}[Constancy]\lean{Primitive}
+A \emph{constant object} is a bearer of decidable self-identity: given any two
+instances, their equality is decidable. Constancy records that the object
+persists as the same self-contained whole until incidence with another object
+forces a new composed description. Since time is not yet defined at this
+stage, Constancy is not ``unchanging in time'' but decidable identity prior to
+any temporal interpretation.
+\end{primitive}
+
+In particular, a function may be constant in this primitive sense without being
+pointwise constant: the constancy lies in the persistence of the same identity
+as a whole.
+
+\begin{definition}[Primitive]\label{def:primitive}\lean{Primitive}
+A \emph{primitive object}, or simply a \emph{primitive}, is an irreducible bearer of Constancy.
+\end{definition}
+
+\begin{axiom}[Existence]\label{ax:extent}\lean{Primitive}
+There exists a primitive.
+Primitives are taken with a determinate identity relation, so distinction can
+be formulated at the counting level itself.
+\end{axiom}
+
+\begin{definition}[Incidence]\label{def:incidence}\lean{Event}
+An \emph{incidence} is a finite composite formed by incident primitives.
+\end{definition}
+
+\begin{axiom}[Incidence]\label{ax:meeting}\lean{Event}
+Primitives admit incidence.
+At this stage an incidence carries at least its finite dimension datum and the
+subincidence/presentation structure needed for the exactification law below.
+The counting surface of the next chapter uses only the dimension datum.
+\end{axiom}
+
+\begin{axiom}[Closure Balance]\label{ax:closure}\lean{bulkCount}\lean{boundaryCount}\lean{closure}
+Every complete count must close: the number of admissible pair counts of a structure equals the number of admissible order counts of that structure.
+\end{axiom}
+
+These three structural axioms generate arithmetic and a compositional counting
+grammar. The termination and exactification laws added below supply the
+zero-defect endpoint and the continuation clause for nonterminal incidence.
+Any physical interpretation belongs to a later realization theorem, not to the
+bedrock itself.
+
+% ------------------------------------------------------------
+\subsection{Termination and Exactification}
+\label{subsec:exactification-terminal-incidence}
+% ------------------------------------------------------------
+
+The counting axioms say when an incidence is closed, but by themselves they do
+not yet say how that closure is recognized at bedrock or what a non-closed
+incidence must do. The missing dynamic content is therefore twofold:
+termination identifies exact closure by vanishing defect, and exactification
+forces any nonterminal incidence to continue by strict extension. These laws
+still do not introduce time. They state only how an incidence stands with
+respect to exact closure and further composition.
+
+\begin{definition}[Extension of incidences]
+\label{def:incidence-extension}\lean{CoherenceCalculus.incidenceExtension}
+Let \(I\) and \(J\) be incidences. Write
+\[
+I \preceq J
+\]
+and say that \(J\) is an \emph{extension} of \(I\) if \(J\) contains \(I\) as
+a subincidence and preserves every already-incident primitive relation of
+\(I\). It is a \emph{strict extension}, written
+\[
+I \prec J,
+\]
+if \(I \preceq J\) and \(J\neq I\).
+\end{definition}
+
+\begin{proposition}[Extension is a preorder]
+\label{prop:extension-is-preorder}\lean{CoherenceCalculus.extension_is_preorder}
+The relation \(\preceq\) of
+Definition~\ref{def:incidence-extension} is reflexive and transitive on
+incidences.
+\end{proposition}
+
+\begin{proof}
+Reflexivity is immediate since every incidence contains itself as a
+subincidence and preserves all already-incident primitive relations of itself.
+Transitivity follows because if \(I\preceq J\) and \(J\preceq K\), then
+\(K\) contains \(I\) as a subincidence and preserves every primitive relation
+already incident in \(I\).
+\end{proof}
+
+\begin{definition}[Lift of Constancy to an incidence]
+\label{def:constancy-lift}\lean{CoherenceCalculus.ConstancyLift}
+Let \(I\) be an incidence. A \emph{lift of Constancy to \(I\)} is a compatible
+identity structure on the whole incidence \(I\) that:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item agrees with the primitive identities already carried by the constituents
+      of \(I\);
+\item is stable under incidence-isomorphic presentations of the same
+      incidence; and
+\item preserves the identity of every subincidence already contained in \(I\).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Terminal incidence]
+\label{def:terminal-incidence}\lean{CoherenceCalculus.TerminalIncidence}
+An incidence \(I\) is \emph{terminal} if Constancy lifts to \(I\) as a whole in
+the sense of Definition~\ref{def:constancy-lift}.
+\end{definition}
+
+\begin{proposition}[Terminal subincidence is inherited]
+\label{prop:terminal-subincidence-inherited}\lean{CoherenceCalculus.terminal_subincidence_inherited}
+If \(K\preceq I\preceq J\) and \(K\) is terminal, then the lifted identity
+structure on \(K\) remains preserved in \(J\).
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:incidence-extension}, extension preserves every
+already-incident primitive relation of the smaller incidence. Since
+terminality is the existence of a compatible Constancy lift on \(K\), that
+lift remains preserved under further extension.
+\end{proof}
+
+\begin{definition}[Closure-defect space]
+\label{def:closure-defect-space}\lean{CoherenceCalculus.ClosureDefectSpace}
+A \emph{closure-defect space} is a pointed class \((\mathfrak D,0)\).
+\end{definition}
+
+\begin{definition}[Closure defect]
+\label{def:closure-defect}\lean{CoherenceCalculus.ClosureDefectData, CoherenceCalculus.closureDefect}
+Fix a closure-defect space \((\mathfrak D,0)\). The \emph{closure defect} of
+an incidence \(I\) is a defect datum
+\[
+\Lambda(I)\in\mathfrak D.
+\]
+The distinguished point \(0\in\mathfrak D\) is the zero-defect class.
+\end{definition}
+
+\begin{axiom}[Termination]
+\label{ax:termination}\lean{CoherenceCalculus.TerminationData, CoherenceCalculus.terminal_iff_zero_defect}
+Fix a closure-defect space \((\mathfrak D,0)\) and a closure defect assignment
+\(I\mapsto \Lambda(I)\in\mathfrak D\). Then for every incidence \(I\),
+\[
+I\text{ is terminal}
+\quad\Longleftrightarrow\quad
+\Lambda(I)=0.
+\]
+\end{axiom}
+
+\begin{definition}[Exactifying continuation class]
+\label{def:exactifying-continuation-class}\lean{CoherenceCalculus.ExactifyingContinuationClass}
+For an incidence \(I\), define its \emph{exactifying continuation class} by
+\[
+\mathrm{Ext}(I)
+:=
+\{\,J\succ I : J \text{ preserves every already-incident primitive relation of } I\,\}.
+\]
+\end{definition}
+
+\begin{axiom}[Nonretroactive exactification]
+\label{ax:nonretroactive-exactification}\lean{CoherenceCalculus.NonretroactiveExactificationData}
+Fix a closure-defect space \((\mathfrak D,0)\) and a closure defect assignment
+\(I\mapsto \Lambda(I)\in\mathfrak D\). Then for every incidence \(I\):
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item if \(\Lambda(I)\neq 0\), then
+      \[
+      \mathrm{Ext}(I)\neq\varnothing;
+      \]
+\item if \(\Lambda(I)\neq 0\) and \(J\succeq I\) satisfies \(\Lambda(J)=0\),
+      then \(J\in \mathrm{Ext}(I)\).
+\end{enumerate}
+\end{axiom}
+
+\begin{corollary}[Nonterminal incidences have nonempty continuation class]
+\label{cor:nonterminal-incidences-continue}\lean{CoherenceCalculus.nonterminal_incidences_continue}
+If an incidence \(I\) is not terminal, then \(\Lambda(I)\neq 0\) and
+\[
+\mathrm{Ext}(I)\neq\varnothing.
+\]
+\end{corollary}
+
+\begin{proof}
+If \(I\) is not terminal, Definition~\ref{def:terminal-incidence} implies that
+Constancy does not lift to \(I\). By
+Axiom~\ref{ax:termination}, this is equivalent to \(\Lambda(I)\neq 0\), and
+then Axiom~\ref{ax:nonretroactive-exactification}(i) yields
+\(\mathrm{Ext}(I)\neq\varnothing\).
+\end{proof}
+
+\begin{corollary}[Zero defect cannot arise in place]
+\label{cor:zero-defect-cannot-arise-in-place}\lean{CoherenceCalculus.zero_defect_cannot_arise_in_place}
+If \(\Lambda(I)\neq 0\) and \(J\succeq I\) satisfies \(\Lambda(J)=0\), then
+\[
+J\succ I
+\]
+and \(J\) preserves the already-incident primitive relations of \(I\).
+\end{corollary}
+
+\begin{proof}
+By Axiom~\ref{ax:nonretroactive-exactification}(ii), \(J\in\mathrm{Ext}(I)\). The
+claim follows from Definition~\ref{def:exactifying-continuation-class}.
+\end{proof}
+
+\begin{remark}[Termination and continuation, not yet a chosen dynamics]
+\label{rem:exactification-no-hidden-selector}\lean{CoherenceCalculus.TerminationData, CoherenceCalculus.NonretroactiveExactificationData, CoherenceCalculus.ExactifyingContinuationClass}
+The termination law identifies the exact endpoint. The exactification law does
+not yet choose a unique continuation
+\[
+I \mapsto J.
+\]
+It forces only a nonempty exactifying continuation class \(\mathrm{Ext}(I)\) whenever
+\(I\) is nonterminal. Selection, minimality, and realized law choice enter
+later through the admissibility and selected-cut layers. This prevents a hidden
+selector from being smuggled into bedrock under the name of exactification.
+Likewise, the present bedrock laws identify the zero-defect endpoint and the
+need for continuation, not yet a transport law for defect burden along
+extension. Any stronger monotonicity or comparison statement for unresolved
+content must be added later as an explicit theorem, not inferred rhetorically
+from the existence of \(\mathrm{Ext}(I)\).
+\end{remark}
+
+\begin{remark}[No physical time has been introduced]
+\label{rem:exactification-not-yet-time}\lean{CoherenceCalculus.TerminationData, CoherenceCalculus.ExactifyingContinuationClass, CoherenceCalculus.NonretroactiveExactificationData}
+The termination/exactification laws are bedrock closure and continuation laws,
+not yet temporal ones. They say only that terminality is exact zero defect,
+and that nonterminal incidence cannot close in place and therefore must
+continue by strict extension. Ordered persistence, temporal interface, and
+physical before/after are later realization layers built on top of these
+bedrock laws.
+\end{remark}
+
+% ------------------------------------------------------------

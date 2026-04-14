@@ -1,0 +1,334 @@
+% ============================================================
+\subsection{Selected-Tower Thermodynamics from Residual Return}
+\label{sec:flagship-thermodynamics}
+% ============================================================
+
+The effective-closure lane also carries a thermodynamic reading, but only at
+the level already forced by residual return and unrecovered stock bookkeeping.
+Nothing in this section introduces a new intrinsic persistence mode on the
+same footing as the local, propagative, comparative, or causal-structural
+lanes. Instead, once time has been realized as the causal order of persistent
+exactification, unrecovered residual becomes a one-sided bookkeeping variable
+for coarse visible histories. Following that quantity along the selected tower
+forces monotonicity, entropy production, and an exact thermodynamic state
+space.
+
+The resulting structure is closer to an exact coarse-graining theorem than to
+an axiomatization of full equilibrium thermodynamics. It identifies the
+irreversible bookkeeping already present on the selected bundle and separates
+it from any further constitutive assumptions. This is structurally akin to
+standard memory-based and coarse-graining perspectives on irreversibility
+\cite{Zwanzig1961,ChorinHaldKupferman2000}, although the quantity tracked here
+is unrecovered residual rather than a postulated entropy.
+
+\subsubsection{Mechanically Forced Irreversibility Surface}
+
+Fix a selected cut carrying localized residual return in the sense of
+Definition~\ref{def:localized-residual-return}. At that cut the natural
+effective irreversibility functional is the selected-horizon unrecovered stock
+\[
+\mathcal I_{\mathrm{irr}}(x)
+:=
+\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast),
+\]
+while the visible returned-flux functional is
+\[
+\Phi_{\mathrm{return}}(x)
+:=
+\mathrm{Flux}_{\mathrm{return}}(x;h_\ast).
+\]
+The point of these names is only interpretive: the irreversibility functional
+is the unrecovered stock on the selected cut, and the visible returned-flux
+functional is the corresponding one-step returned flux on that same cut.
+
+The first theorem records exactly what is already forced at this level before
+any cumulative history or state-space packaging is introduced.
+
+\begin{theorem}[Effective thermodynamic closure]
+\label{thm:effective-thermodynamic-closure}\lean{SelectedCut.effectiveThermodynamicClosure}
+Assume localized residual return on the selected cut. Then the following
+effective thermodynamic content is already mechanically forced:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item only return acts on the visible bundle;
+\item observable irreversibility is measured by unrecovered residual;
+\item the selected-cut irreversibility functional satisfies the one-step
+      stock/flux balance law
+      \[
+      \mathcal I_{\mathrm{irr}}(x)
+      =
+      \Phi_{\mathrm{return}}(x)
+      +
+      \mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast+1);
+      \]
+\item along the selected tower, unrecovered residual stock is monotone under
+      one-step refinement.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Items \emph{(i)} and \emph{(ii)} are exactly the return and irreversibility
+clauses already carried by the Part~II law-side bridge on the selected cut. Items
+\emph{(iii)} and \emph{(iv)} are the HFT-2 stock/flux balance identity and its
+monotonicity consequence on the selected energy tower.
+\end{proof}
+
+\subsubsection{Selected-History Entropy Production}
+
+Once the irreversibility surface has been identified pointwise, the next
+question is cumulative history. The selected-history entropy production simply
+packages the total returned release along the realized refinement order.
+
+\begin{definition}[Selected-history entropy production]
+\label{def:selected-history-entropy-production}\lean{SelectedHistory.entropyProduction}
+Assume localized residual return on the selected cut. For a selected initial
+horizon \(h_\ast\), a state \(x\), and an integer \(N\ge 0\), define the
+\emph{selected-history entropy production} by
+\[
+\mathcal S_{\mathrm{th}}^{(N)}(x)
+:=
+\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast)
+-
+\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast+N).
+\]
+Equivalently, with the convention \(\mathcal S_{\mathrm{th}}^{(0)}(x)=0\),
+\[
+\mathcal S_{\mathrm{th}}^{(N)}(x)
+=
+\sum_{j=0}^{N-1}\mathrm{Flux}_{\mathrm{return}}(x;h_\ast+j).
+\]
+\end{definition}
+
+\begin{theorem}[Selected-history second law]
+\label{thm:selected-history-second-law}\lean{SelectedCut.effectiveThermodynamicClosure, unrecoveredResidualStock_prefix, unrecoveredResidualStock_monotone}
+Assume localized residual return on the selected cut. Then for every state
+\(x\) and every \(N\ge 0\):
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected-history entropy production satisfies the telescoping law
+      \[
+      \mathcal S_{\mathrm{th}}^{(N)}(x)
+      =
+      \sum_{j=0}^{N-1}\mathrm{Flux}_{\mathrm{return}}(x;h_\ast+j);
+      \]
+\item the one-step entropy increment is exactly the returned flux:
+      \[
+      \mathcal S_{\mathrm{th}}^{(N+1)}(x)-\mathcal S_{\mathrm{th}}^{(N)}(x)
+      =
+      \mathrm{Flux}_{\mathrm{return}}(x;h_\ast+N);
+      \]
+\item \(\mathcal S_{\mathrm{th}}^{(N)}(x)\) is nonnegative and nondecreasing in
+      \(N\);
+\item \(\mathcal S_{\mathrm{th}}^{(N)}(x)\le
+      \mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast)\) for all \(N\), with equality
+      exactly when the unrecovered stock has fully vanished by stage
+      \(h_\ast+N\).
+\end{enumerate}
+Thus the selected coarse history satisfies a genuine second-law statement:
+entropy production is the cumulative release of unrecovered residual, and it
+cannot decrease along the selected refinement/time order.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Equilibrium criterion on selected coarse histories]
+\label{cor:selected-history-equilibrium-criterion}\lean{SelectedHistory.equilibriumCriterion}
+Assume the hypotheses of
+Theorem~\ref{thm:selected-history-second-law}. Then for a fixed state \(x\) and
+stage \(N_0\), the following are equivalent:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\mathcal S_{\mathrm{th}}^{(N)}(x)\) is constant for all \(N\ge N_0\);
+\item \(\mathrm{Flux}_{\mathrm{return}}(x;h_\ast+N)=0\) for all \(N\ge N_0\);
+\item \(\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast+N)\) is constant for all
+      \(N\ge N_0\).
+\end{enumerate}
+In this sense, equilibrium on the selected coarse path is exactly the stage
+after which no further returned residual is released.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Characteristic cancellation of constitutive detail]
+\label{cor:characteristic-cancellation-of-constitutive-detail}\lean{SelectedHistory.primitiveCancellation}
+Assume two resolution-integrated effective closures on the same selected bundle
+induce the same returned-flux history
+\[
+\mathrm{Flux}_{\mathrm{return}}(x;h_\ast+j)
+\qquad (j\ge 0)
+\]
+for the same coarse state \(x\). Then they induce the same selected-history
+entropy production \(\mathcal S_{\mathrm{th}}^{(N)}(x)\) for every \(N\), and
+the same equilibrium stage in the sense of
+Corollary~\ref{cor:selected-history-equilibrium-criterion}. Thus constitutive
+detail affects the effective closure profile, but not the cumulative
+thermodynamic release once the selected coarse path has been fixed.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:selected-history-second-law}(i),
+\(\mathcal S_{\mathrm{th}}^{(N)}(x)\) is determined entirely by the cumulative
+returned-flux history. Hence two effective closures with the same returned-flux
+history have the same selected-history entropy production for every \(N\). The
+equilibrium criterion of
+Corollary~\ref{cor:selected-history-equilibrium-criterion} depends only on the
+eventual vanishing of that same returned-flux history, so the equilibrium stage
+coincides as well.
+\end{proof}
+
+\subsubsection{Selected-Tower Thermodynamic State Space}
+
+The telescoping history law can then be repackaged as an exact state-space
+statement on the selected tower. This is the canonical effective
+thermodynamic object forced by the present framework.
+
+\begin{definition}[Selected-tower thermodynamic state]
+\label{def:selected-tower-thermodynamic-state}\lean{SelectedTower.state}
+Assume localized residual return on the selected cut, and fix a selected
+initial horizon \(h_\ast\). For a state \(x\) and a stage \(N\ge 0\), define
+the selected-tower unrecovered stock, returned flux, and cumulative entropy by
+\[
+U_N(x)
+:=
+\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast+N),
+\qquad
+\Phi_N(x)
+:=
+\mathrm{Flux}_{\mathrm{return}}(x;h_\ast+N),
+\]
+\[
+\Sigma_N(x)
+:=
+\mathcal S_{\mathrm{th}}^{(N)}(x).
+\]
+The corresponding \emph{selected-tower thermodynamic state} is the triple
+\[
+\Theta_N(x)
+:=
+\bigl(U_N(x),\Phi_N(x),\Sigma_N(x)\bigr).
+\]
+The \emph{selected-tower thermodynamic state space} is the family of all such
+triples arising from realized coarse states \(x\) and stages \(N\) on the
+chosen selected cut.
+\end{definition}
+
+\begin{theorem}[Selected-tower thermodynamic state law]
+\label{thm:selected-tower-thermodynamic-state-law}\lean{SelectedTower.stateLaw}
+Assume the hypotheses of
+Definition~\ref{def:selected-tower-thermodynamic-state}. Then for every state
+\(x\) and every \(N\ge 0\):
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the one-step state update is
+      \[
+      U_N(x)=\Phi_N(x)+U_{N+1}(x),
+      \qquad
+      \Sigma_{N+1}(x)=\Sigma_N(x)+\Phi_N(x);
+      \]
+\item the selected tower carries the exact entropy/stock decomposition law
+      \[
+      U_N(x)+\Sigma_N(x)=U_0(x);
+      \]
+\item \(U_N(x)\) is nonincreasing and \(\Sigma_N(x)\) is nondecreasing in
+      \(N\);
+\item
+      \[
+      0\le \Sigma_N(x)\le U_0(x)
+      \qquad\text{and}\qquad
+      0\le U_N(x)\le U_0(x).
+      \]
+\end{enumerate}
+Thus on the selected tower, thermodynamic evolution is exactly the transfer of
+unrecovered stock into cumulative returned-residual entropy.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{theorem}[Canonical entropy on the selected-tower state space]
+\label{thm:canonical-selected-tower-entropy-functional}\lean{SelectedTower.entropyFunctional}
+Assume the hypotheses of
+Definition~\ref{def:selected-tower-thermodynamic-state}. Let
+\(E_N(x)\) be any scalar functional on the selected-tower thermodynamic states
+satisfying
+\[
+E_0(x)=0
+\qquad\text{and}\qquad
+E_{N+1}(x)-E_N(x)=\Phi_N(x)
+\]
+for every \(x\) and every \(N\ge 0\). Then
+\[
+E_N(x)=\Sigma_N(x)=\mathcal S_{\mathrm{th}}^{(N)}(x)
+\]
+for every \(x\) and every \(N\ge 0\). In particular, the selected-history
+entropy production is the unique entropy functional on the selected-tower
+thermodynamic state space compatible with returned-residual bookkeeping and
+vanishing at the selected initial horizon.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{definition}[Selected-tower equilibrium class]
+\label{def:selected-tower-equilibrium-class}\lean{SelectedTower.equilibriumClass}
+Assume the hypotheses of
+Definition~\ref{def:selected-tower-thermodynamic-state}. A selected-tower
+thermodynamic state \(\Theta_{N_0}(x)\) belongs to the
+\emph{selected-tower equilibrium class} if its future returned-flux tail
+vanishes:
+\[
+\Phi_{N_0+j}(x)=0
+\qquad\text{for all } j\ge 0.
+\]
+\end{definition}
+
+\begin{corollary}[Selected-tower equilibrium class]
+\label{cor:selected-tower-equilibrium-class}\lean{SelectedTower.equilibriumCharacterization}
+Assume the hypotheses of
+Definition~\ref{def:selected-tower-equilibrium-class}. Then for a fixed state
+\(x\) and stage \(N_0\), the following are equivalent:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \(\Theta_{N_0}(x)\) belongs to the selected-tower equilibrium class;
+\item \(\Sigma_N(x)\) is constant for all \(N\ge N_0\);
+\item \(U_N(x)\) is constant for all \(N\ge N_0\).
+\end{enumerate}
+In this exact state-space sense, equilibrium is the vanishing-tail locus of
+returned residual on the selected tower.
+\end{corollary}
+
+\begin{proof}
+Item \emph{(i)} is exactly the future-tail form of item \emph{(ii)} in
+Corollary~\ref{cor:selected-history-equilibrium-criterion}, after rewriting
+\(\mathcal S_{\mathrm{th}}^{(N)}(x)\) as \(\Sigma_N(x)\). Item \emph{(iii)} is
+the same corollary rewritten in the notation
+\(U_N(x)=\mathrm{Stock}_{\mathrm{unrec}}(x;h_\ast+N)\).
+\end{proof}
+
+\begin{remark}[Scope of selected-tower thermodynamics]
+\label{rem:thermodynamic-boundary}\lean{SelectedCut.effectiveThermodynamicClosure}
+This section establishes a genuine thermodynamic closure surface on the
+selected tower, but it does not yet furnish a full macroscopic theory of local
+equilibrium thermodynamics. What is already forced is:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a visible balance law with returned flux as the one-step release from
+      unrecovered stock;
+\item a canonical effective irreversibility candidate given by unrecovered
+      residual;
+\item monotone decay of that unrecovered stock under refinement;
+\item a genuine second-law statement on selected coarse histories, with entropy
+      production given by cumulative returned residual release;
+\item an exact selected-tower thermodynamic state space, carrying a canonical
+      entropy functional, an exact entropy/stock decomposition law, and an
+      exact equilibrium class.
+\end{enumerate}
+What is \emph{not} yet forced without further hypotheses is:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item extension of that canonical entropy functional from the selected tower to
+      arbitrary coarse-state spaces not canonically induced by the realized
+      tower;
+\item local equilibrium, equations of state, or transport coefficients beyond
+      those already induced in specific effective closures such as the
+      hydrodynamic lane;
+\item broader thermodynamic closure principles for general macroscopic
+      evolutions outside the selected-tower realization.
+\end{enumerate}
+So the present status is the right one for an effective-law chapter: the
+calculus already forces the structural origin of irreversible bookkeeping and
+its exact selected-tower thermodynamic realization, while broader macroscopic
+thermodynamics still requires additional coarse-graining or constitutive
+hypotheses.
+\end{remark}

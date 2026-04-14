@@ -1,0 +1,10 @@
+name = "CoherenceCalculus"
+version = "0.5.0"
+defaultTargets = ["coherencecalculus"]
+
+[[lean_lib]]
+name = "CoherenceCalculus"
+
+[[lean_exe]]
+name = "coherencecalculus"
+root = "Main"

@@ -1,0 +1,377 @@
+% ============================================================
+\subsection{Resolution-Integrated Balance Closure and Hydrodynamic Readout}
+\label{sec:flagship-hydrodynamics}
+% ============================================================
+
+The hydrodynamic lane enters only after the common selected-cut law has
+already been fixed. One begins with exact kinetic balance on observables
+preserved by unresolved exchange and then asks what remains visible after the
+higher-moment tail has been compressed to the selected endpoint. In that
+sense, the primitive object of the section is not the Navier--Stokes system
+itself, but the collision-invariant moment hierarchy from which its
+recognizable continuum form is read. This follows the standard kinetic-to-
+hydrodynamic direction of classical moment theory and projection-based
+coarse graining
+\cite{ChapmanCowling1970,Cercignani1988,Zwanzig1961,ChorinHaldKupferman2000},
+but here the closure coefficients are read from the selected-cut endpoint map
+forced by the earlier carrier calculus.
+
+The hydrodynamic lane is therefore not an additional intrinsic persistence
+mode. It is a \emph{resolution-integrated effective closure}: only low-order
+balances remain visible once unresolved exchange has been integrated over a
+resolution family through the tower calculus and compressed into a coarse law.
+The exact visible content of this lane begins with the moment hierarchy on the
+collision-invariant carrier. Exact moment balance, characteristic endpoint
+reduction, and isotropic channel scalarization then determine the endpoint law
+class. What is intrinsic here is the underlying exact balance hierarchy
+together with its exchange bookkeeping; the recognizable Navier--Stokes form
+is the effective constitutive closure read after unresolved kinetic-sector
+return has been compressed into endpoint response.
+
+On this lane,
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+interprets production terms as balanced exchange with unresolved kinetic
+sectors. Collision invariants are precisely the visible observables for which
+that exchange source vanishes, so the hydrodynamic law is not presented on the
+same footing as the intrinsic reversible phase, wave, gauge, and geometric
+sectors.
+
+The relevant exact object on this lane is the balance hierarchy: the selected
+cut is the smallest one on which the low-order moment balances are faithfully
+visible, and the recognizable hydrodynamic law appears only after closing the
+unresolved higher-moment return induced by that hierarchy. The time variable
+appearing below is therefore the coordinate expression of the realized
+temporal order on the kinetic lane.
+
+We therefore proceed in the same order as the underlying mathematics: first
+the exact kinetic hierarchy, then the least carrier on which its visible
+balances close, and only then the induced continuum endpoint law.
+
+\subsubsection{Kinetic Realization and Moment Hierarchy}
+
+\begin{definition}[Characteristic kinetic realization]
+\label{def:kinetic-transport-branch}\lean{HydrodynamicLane.KineticRealization}
+Let \(X\subseteq \mathbb R^d\) be a spatial domain, let \(\Xi\subseteq \mathbb
+R^d\) be a velocity space with measure \(d\mu(\xi)\), and let
+\[
+f : X\times \Xi\times \mathbb R \to \mathbb R
+\]
+be a resolved state. A \emph{characteristic kinetic realization} consists of a streaming
+field
+\[
+v : X\times \Xi\times \mathbb R \to \mathbb R^d,
+\]
+a gain kernel \(K(x,t;\xi,\eta)\), and a loss rate \(\sigma(x,t;\xi)\) such
+that \(f\) satisfies
+\[
+\partial_t f(x,\xi,t)
++
+\nabla\!\cdot\bigl(v(x,\xi,t)f(x,\xi,t)\bigr)
+=
+\int_\Xi K(x,t;\xi,\eta)f(x,\eta,t)\,d\mu(\eta)
+-\sigma(x,t;\xi)f(x,\xi,t).
+\]
+\end{definition}
+
+\begin{definition}[Kinetic moment observable]
+\label{def:kinetic-moment-observable}\lean{HydrodynamicLane.MomentObservable}
+Assume the hypotheses of Definition~\ref{def:kinetic-transport-branch}. Let
+\[
+\varphi:\Xi\to\mathbb R
+\]
+be a measurable observable. Its associated moment density, moment flux, and
+collision production (equivalently, internal exchange production) are
+\[
+M_\varphi(x,t)
+:=
+\int_\Xi \varphi(\xi)f(x,\xi,t)\,d\mu(\xi),
+\]
+\[
+F_\varphi(x,t)
+:=
+\int_\Xi \varphi(\xi)v(x,\xi,t)f(x,\xi,t)\,d\mu(\xi),
+\]
+\[
+Q_\varphi(x,t)
+:=
+\int_\Xi\int_\Xi
+\bigl(\varphi(\xi)-\varphi(\eta)\bigr)
+K(x,t;\xi,\eta)f(x,\eta,t)\,d\mu(\eta)\,d\mu(\xi).
+\]
+\end{definition}
+
+\begin{theorem}[Kinetic moment hierarchy]
+\label{thm:kinetic-moment-hierarchy}\lean{HydrodynamicLane.kineticMomentHierarchy}
+Assume the hypotheses of Definition~\ref{def:kinetic-moment-observable}. Then
+\[
+\partial_t M_\varphi(x,t)
++
+\nabla\!\cdot F_\varphi(x,t)
+=
+Q_\varphi(x,t).
+\]
+In particular, if \(\varphi\) is a collision invariant in the sense that
+\[
+\int_\Xi \varphi(\xi)K(x,t;\xi,\eta)\,d\mu(\xi)
+=
+\varphi(\eta)\sigma(x,t;\eta)
+\]
+for a.e. \((x,t,\eta)\), then
+\[
+Q_\varphi(x,t)=0
+\]
+and hence
+\[
+\partial_t M_\varphi(x,t)
++
+\nabla\!\cdot F_\varphi(x,t)=0.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+On the selected cut,
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+interprets \(Q_\varphi\) as the visible exchange source generated by
+unresolved kinetic transfer. Collision invariants are
+therefore exactly those observables for which the selected visible exchange
+source vanishes identically.
+
+\begin{definition}[Hydrodynamic carrier and velocity moments]
+\label{def:velocity-channel-kinetic-branch}\lean{HydrodynamicLane.CarrierAndVelocityMoments}
+Assume the hypotheses of Definition~\ref{def:kinetic-transport-branch}.
+Assume moreover that \(\Xi\subseteq \mathbb R^d\) and that the streaming field
+is the native velocity:
+\[
+v(x,\xi,t)=\xi.
+\]
+Define the first three observed moments by
+\[
+U_0(x,t):=\int_\Xi f(x,\xi,t)\,d\mu(\xi),
+\]
+\[
+U_1(x,t):=\int_\Xi \xi\,f(x,\xi,t)\,d\mu(\xi),
+\]
+\[
+U_2(x,t):=\int_\Xi \xi\otimes \xi\,f(x,\xi,t)\,d\mu(\xi).
+\]
+\[
+\mathcal X_{\mathrm{hyd}}
+:=
+\operatorname{span}\{1,\xi_1,\dots,\xi_d\}.
+\]
+\end{definition}
+
+\subsubsection{Least-Motion Hydrodynamic Carrier}
+
+\begin{theorem}[Least-motion hydrodynamic observer]
+\label{thm:least-motion-hydrodynamic-observer}\lean{HydrodynamicLane.leastMotionObserver}
+Assume the hypotheses of Definition~\ref{def:velocity-channel-kinetic-branch}.
+Suppose:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item every observable in \(\mathcal X_{\mathrm{hyd}}\) is a collision
+      invariant of the realized kinetic law;
+\item the carrier \(\mathcal X_{\mathrm{hyd}}\) is faithful,
+      closure-admissible, and stable under admissible promotion for the
+      realized kinetic family;
+\item no proper subcarrier of \(\mathcal X_{\mathrm{hyd}}\) still gives exact
+      visible mass-momentum balance together with faithful reconstruction and
+      stable promotion at the observed scale;
+\item any characteristic observer datum satisfying \emph{(i)}--\emph{(iii)} is
+      horizon-preserving equivalent to the one generated by
+      \(\mathcal X_{\mathrm{hyd}}\).
+\end{enumerate}
+Then the carrier generated by \(1,\xi_1,\dots,\xi_d\) is the unique
+least-motion characteristic observer for the realized kinetic family.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Hydrodynamic moment balance]
+\label{cor:hydrodynamic-moment-balance}\lean{HydrodynamicLane.momentBalance}
+Assume the hypotheses of
+Theorem~\ref{thm:least-motion-hydrodynamic-observer}. Then
+\[
+\partial_t U_0 + \nabla\!\cdot U_1 = 0
+\]
+and
+\[
+\partial_t U_1 + \nabla\!\cdot U_2 = 0,
+\]
+where the divergence of \(U_2\) is taken row by row.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\subsubsection{Induced Hydrodynamic Law}
+
+At this stage the effective character of the hydrodynamic lane first becomes
+explicit. The low-order mass-momentum balances are exact on the least-motion
+carrier, but the stress channel still records unresolved higher-moment return.
+The next theorem identifies the first selected-cut endpoint law obtained by
+reducing that return to isotropic boundary data.
+
+\begin{theorem}[Induced hydrodynamic law on the selected cut]
+\label{cor:hydrodynamic-closure-law}\lean{HydrodynamicLane.closureLaw}
+Assume the hypotheses of Corollary~\ref{cor:hydrodynamic-moment-balance}.
+Assume that \(U_0>0\) and define
+\[
+w:=U_0^{-1}U_1.
+\]
+Define the scalar and traceless channels by
+\[
+s:=\frac{1}{d}\operatorname{tr}\bigl(U_2-U_0\,w\otimes w\bigr),
+\qquad
+\Theta:=U_2-U_0\,w\otimes w-sI.
+\]
+Assume moreover that the selected cut satisfies the following characteristic
+return properties:
+\begin{enumerate}[label=(\roman*),itemsep=0.2em]
+\item for each \((x,t)\), with \(\gamma_{x,t}\) the realized characteristic
+      through \((x,t)\), there is a rapidly decaying memory family
+      \(\mathcal K_{x,t}(s)\) on \(s\le 0\) such that
+      \[
+      \Theta(x,t)
+      =
+      \int_{-\infty}^0
+      \mathcal K_{x,t}(s)\bigl[\nabla w(\gamma_{x,t}(s),t+s)\bigr]\,ds;
+      \]
+\item the bulk contribution of this characteristic integral reduces to endpoint
+      data by Corollary~\ref{cor:characteristic-boundary-reduction};
+\item on the decay scale of \(\mathcal K_{x,t}\), the field \(w\) varies
+      slowly enough that the characteristic integral admits a first-order
+      endpoint expansion;
+\item the induced endpoint map is objective and has no preferred direction.
+\end{enumerate}
+Then there are unique scalar transport coefficients
+\(\mu_{\mathrm{ind}},\zeta_{\mathrm{ind}}\), induced by the selected cut, and a
+higher-order remainder \(\mathsf R_{\mathrm{hyd}}\) such that
+\[
+\Theta
+=
+-2\mu_{\mathrm{ind}}\,\mathsf D_0(w)
+-\zeta_{\mathrm{ind}}(\nabla\!\cdot w)I
++\mathsf R_{\mathrm{hyd}},
+\]
+where
+\[
+\mathsf D_0(w)
+:=
+\frac{1}{2}\bigl(\nabla w+\nabla w^\top\bigr)
+-\frac{1}{d}(\nabla\!\cdot w)I.
+\]
+Consequently
+\[
+\partial_t U_0 + \nabla\!\cdot(U_0 w)=0
+\]
+and
+\[
+\partial_t(U_0 w)
++
+\nabla\!\cdot(U_0 w\otimes w)
++
+\nabla s
+=
+\nabla\!\cdot\Bigl(
+2\mu_{\mathrm{ind}}\,\mathsf D_0(w)
++
+\zeta_{\mathrm{ind}}(\nabla\!\cdot w)I
+\Bigr)
+-\nabla\!\cdot \mathsf R_{\mathrm{hyd}}.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\subsubsection{Effective Closure Identification}
+
+The classification point can now be stated cleanly. The exact law on this lane
+is the moment hierarchy together with its selected endpoint reduction; the
+textbook continuum equation is the effective constitutive readout of that
+exact hierarchy. In the standard kinetic literature this endpoint is the
+compressible Navier--Stokes law
+\cite{ChapmanCowling1970,Cercignani1988,Navier1823,Stokes1845}, and in the
+present framework it appears with the same status: as the recognizable
+low-order closure induced by unresolved kinetic return, not as an additional
+primitive sector law.
+
+\begin{corollary}[Recognizable Navier--Stokes identity]
+\label{cor:recognizable-navier-stokes-form}\lean{HydrodynamicLane.navierStokesForm}
+Under the hypotheses of Theorem~\ref{cor:hydrodynamic-closure-law}, define
+\[
+\lambda_{\mathrm{ind}}
+:=
+\zeta_{\mathrm{ind}}-\frac{2}{d}\mu_{\mathrm{ind}}.
+\]
+Then the momentum law may be written in the standard compressible
+Navier--Stokes form
+\[
+\partial_t(U_0 w)
++
+\nabla\!\cdot(U_0 w\otimes w)
++
+\nabla s
+=
+\nabla\!\cdot\Bigl(
+\mu_{\mathrm{ind}}(\nabla w+\nabla w^\top)
++
+\lambda_{\mathrm{ind}}(\nabla\!\cdot w)I
+\Bigr)
+-\nabla\!\cdot \mathsf R_{\mathrm{hyd}}.
+\]
+Writing
+\[
+\rho:=U_0,
+\qquad
+\rho u:=U_1,
+\qquad
+p:=s,
+\]
+this is the continuity-plus-momentum sector of compressible Navier--Stokes.
+The familiar two-coefficient isotropic viscous stress is not inserted as an
+extra constitutive hypothesis here: it is the forced trace/traceless endpoint
+decomposition seen on the least-motion characteristic cut.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)
+
+\begin{corollary}[Exact Schur form of the selected hydrodynamic remainder]
+\label{cor:hydrodynamic-schur-remainder-identity}\lean{HydrodynamicLane.schurRemainder}
+Assume the hypotheses of Theorem~\ref{cor:hydrodynamic-closure-law}. Assume in
+addition that the same selected datum satisfies a canonical selected Schur
+bridge. Then there is a unique hydrodynamic-projected Schur correction
+\[
+\Sigma_{h,\mathrm{hyd}}(z)
+\]
+obtained by reading the common selected Schur correction \(\CCSigma{h}{z}\)
+through the selected resolution-integrated hydrodynamic endpoint map, and
+\[
+\mathsf R_{\mathrm{hyd}}=\Sigma_{h,\mathrm{hyd}}(z).
+\]
+Accordingly,
+\[
+\Theta
+=
+-2\mu_{\mathrm{ind}}\,\mathsf D_0(w)
+-\zeta_{\mathrm{ind}}(\nabla\!\cdot w)I
++
+\Sigma_{h,\mathrm{hyd}}(z),
+\]
+and hence
+\[
+\partial_t(U_0 w)
++
+\nabla\!\cdot(U_0 w\otimes w)
++
+\nabla s
+=
+\nabla\!\cdot\Bigl(
+2\mu_{\mathrm{ind}}\,\mathsf D_0(w)
++
+\zeta_{\mathrm{ind}}(\nabla\!\cdot w)I
+\Bigr)
+-\nabla\!\cdot \Sigma_{h,\mathrm{hyd}}(z).
+\]
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-dynamics}.)

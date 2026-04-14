@@ -1,0 +1,124 @@
+% ============================================================
+\section{Foundational Proof Patterns}
+\label{sec:foundational-lemmas}
+% ============================================================
+
+This section records the proof patterns used repeatedly in the clean horizon calculus.
+They isolate the resolution split, the block decomposition, the telescoping identity, and the Pythagorean split that drive the later arguments.
+
+% ------------------------------------------------------------
+\subsection{Resolution-of-Identity Expansion}
+\label{subsec:resolution-lemma}
+% ------------------------------------------------------------
+
+The basic split behind the calculus is the observable/shadow decomposition at a fixed horizon.
+
+\begin{lemma}[Resolution-of-Identity Expansion]
+\label{lem:resolution-identity}\lean{resolution_of_identity}
+Let $\CCPi{h}$ be a horizon projection with shadow $\CCPibar{h} = I - \CCPi{h}$.
+For any state $x$,
+\[
+x = \CCPi{h}x + \CCPibar{h}x.
+\]
+\end{lemma}
+
+\begin{proof}
+By definition, $\CCPibar{h}x = x - \CCPi{h}x$.
+Hence
+\[
+\CCPi{h}x + \CCPibar{h}x = \CCPi{h}x + (x - \CCPi{h}x) = x.
+\]
+\end{proof}
+
+\paragraph{Usage pattern.}
+Whenever a proof says ``insert the horizon split,'' it means: replace a state
+by its observable part plus its shadow part and then distribute.
+
+% ------------------------------------------------------------
+\subsection{Block Splitting Lemma}
+\label{subsec:block-splitting}
+% ------------------------------------------------------------
+
+\begin{lemma}[Block Splitting for Operator Products]
+\label{lem:block-splitting}\lean{block_splitting}
+For additive operators $A, B$ and horizon projection $\CCPi{h}$,
+\[
+\CCRestr{(AB)}{h} = \CCObs{A}{h}\CCObs{B}{h} + \CCLeakCorr{h}{A}{B},
+\]
+where
+\[
+\CCLeakCorr{h}{A}{B} := \CCPi{h} A \CCPibar{h} B \CCPi{h}.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-tower}.)
+
+% ------------------------------------------------------------
+\subsection{Three-Level Telescope}
+\label{subsec:telescoping-lemma}
+% ------------------------------------------------------------
+
+\begin{lemma}[Three-Level Telescope]
+\label{lem:orthogonal-telescoping}\lean{telescope_3_terms}
+Let $(\CCPi{h})_{h \in \bbN}$ be a transitive horizon tower.
+For horizons $h_0 \le h_1 \le h_2$ and any $x \in \cH$,
+\[
+(\CCPi{h_1} - \CCPi{h_0})x
++
+\Bigl((\CCPi{h_2} - \CCPi{h_1})x + (x - \CCPi{h_2}x)\Bigr)
+=
+x - \CCPi{h_0}x.
+\]
+\end{lemma}
+
+\begin{proof}
+This is a direct telescoping regrouping:
+\[
+x - \CCPi{h_0}x
+=
+(\CCPi{h_1}x - \CCPi{h_0}x) + (\CCPi{h_2}x - \CCPi{h_1}x) + (x - \CCPi{h_2}x).
+\]
+The intermediate horizon contributions cancel.
+\end{proof}
+
+\paragraph{Calculus interpretation.}
+This is the algebraic core of HFT-2: adjacent refinement layers close
+internally, so only the outer remainder survives.
+
+% ------------------------------------------------------------
+\subsection{Pythagorean Norm Splitting}
+\label{subsec:pythagorean-norm}
+% ------------------------------------------------------------
+
+\begin{lemma}[Pythagorean Norm Splitting]
+\label{lem:pythagorean-splitting}\lean{pythagorean_splitting}\lean{pythagorean_splitting_observed}\lean{defectEnergy}
+Assume the horizon tower is energy-orthogonal.
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{State splitting:} for any $x \in \cH$,
+\[
+\|x\|^2 = \|\CCPi{h} x\|^2 + \|\CCPibar{h} x\|^2.
+\]
+\item \textbf{Operator action splitting:} for a closure operator $d$ and $x \in \CCHobs{h}$,
+\[
+\|dx\|^2 = \|\CCObs{d}{h} x\|^2 + \CCDefEnergy{h}{x},
+\]
+where
+\[
+\CCDefEnergy{h}{x} := \|\CCLeakExpr{d}{h}x\|^2.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) This is the exact energy decomposition at the horizon cut.
+
+(ii) Apply (i) to $dx$.
+If $x \in \CCHobs{h}$, then $\CCPi{h}x = x$, so the observable and shadow pieces of $dx$ are exactly $\CCObs{d}{h}x$ and $\CCLeakExpr{d}{h}x$.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The horizon split does not create or destroy energy.
+It partitions it into what is already visible and what remains in shadow.
+\end{quote}

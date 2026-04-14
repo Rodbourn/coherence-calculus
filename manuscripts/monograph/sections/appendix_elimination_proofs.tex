@@ -1,0 +1,1294 @@
+% Appendix D: Elimination and Solver Proofs (Chapter 6)
+\label{sec:appendix-elimination}
+
+%%% --- resolvent_defect.tex proofs ---
+
+\begin{proof}[Proof of Theorem~\ref{thm:feshbach-schur}]
+\label{proof:thm:feshbach-schur}
+Write the block form of $(I - zA)$:
+\[
+I - zA = \begin{pmatrix} I - z \CCBlockPP{A} & -z \CCBlockPQ{A} \\ -z \CCBlockQP{A} & I - z \CCBlockQQ{A} \end{pmatrix}.
+\]
+The Schur complement formula for block matrix inversion gives:
+\[
+\bigl[(I - zA)^{-1}\bigr]_{PP}
+= \bigl( (I - z \CCBlockPP{A}) - (-z \CCBlockPQ{A})(I - z \CCBlockQQ{A})^{-1}(-z \CCBlockQP{A}) \bigr)^{-1}.
+\]
+Simplifying:
+\[
+\bigl[(I - zA)^{-1}\bigr]_{PP}
+= \bigl( I - z \CCBlockPP{A} - z^2 \CCBlockPQ{A}(I - z \CCBlockQQ{A})^{-1} \CCBlockQP{A} \bigr)^{-1}
+= \bigl( I - z \CCAeff{A}{P}(z) \bigr)^{-1}.
+\]
+Since $P (I - zA)^{-1} P$ acts as $[(I-zA)^{-1}]_{PP}$ on $\cH_P$, the identity follows.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:return-residual-is-schur}]
+\label{proof:prop:return-residual-is-schur}
+By Definition~\ref{def:residual-return-field},
+\[
+\mathcal F^{\mathrm{return}}_{P,A,z}(u)
+=
+\CCTransIn{P}R_Q\CCTransOut{P}u.
+\]
+Substituting
+\[
+\CCTransIn{P}=\CCBlockPQ{A},
+\qquad
+\CCTransOut{P}=\CCBlockQP{A}
+\]
+from Definition~\ref{def:residual-signature} gives
+\[
+\mathcal F^{\mathrm{return}}_{P,A,z}(u)
+=
+\CCBlockPQ{A}(I-z\CCBlockQQ{A})^{-1}\CCBlockQP{A}u
+=
+\CCSigmaP{P}{z}u.
+\]
+\end{proof}
+
+%%% --- observable_relative_closure.tex proofs ---
+
+\begin{proof}[Proof of Proposition~\ref{prop:typed-bilinear-defect-decomposition}]
+\label{proof:prop:typed-bilinear-defect-decomposition}
+Because \(I=P_X+Q_X\) and \(I=P_Y+Q_Y\),
+\begin{align*}
+B(y,x)
+&=
+B(P_Yy+Q_Yy,\ P_Xx+Q_Xx) \\
+&=
+B(P_Yy,P_Xx)
++
+B(P_Yy,Q_Xx)
++
+B(Q_Yy,P_Xx)
++
+B(Q_Yy,Q_Xx).
+\end{align*}
+Applying \(P_Z\) and using the visible-visible closure condition gives
+\begin{align*}
+P_ZB(y,x)
+&=
+B(P_Yy,P_Xx)
++
+P_ZB(P_Yy,Q_Xx) \\
+&\qquad
++
+P_ZB(Q_Yy,P_Xx)
++
+P_ZB(Q_Yy,Q_Xx).
+\end{align*}
+Subtracting \(B(P_Yy,P_Xx)\) from both sides is exactly the claimed identity.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:schur-transport-jet-order}]
+\label{proof:thm:schur-transport-jet-order}
+Because $\CCPi{h}$ and $\CCPibar{h}$ are diagonal in the tower bands, they have
+tower transport order $0$. Statement (i) therefore follows from
+Proposition~\ref{prop:tower-order-arithmetic}(ii): the product
+$\CCPi{h}A\CCPi{h}$ has the same order bound as $A$.
+
+For $n\ge1$, the coefficient $K_{h,n}(A)$ is a product of $n+1$ copies of $A$
+and diagonal order-$0$ projectors:
+\[
+K_{h,n}(A)
+=
+\CCPi{h}A(\CCPibar{h}A\CCPibar{h})^{n-1}\CCPibar{h}A\CCPi{h}.
+\]
+Repeatedly applying Proposition~\ref{prop:tower-order-arithmetic}(ii) shows
+that each multiplication by a copy of $A$ increases the order bound by at most
+$r$, while multiplication by $\CCPi{h}$ or $\CCPibar{h}$ does not increase the
+order at all. Hence $K_{h,n}(A)$ has order at most $(n+1)r$.
+
+Statement (iii) is then exactly the expansion of
+Definition~\ref{def:schur-transport-jet} together with the coefficient bounds
+just proved.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:observable-schur-jet-remainder}]
+\label{proof:thm:observable-schur-jet-remainder}
+Set \(B:=QAQ\). By Definition~\ref{def:schur-correction},
+\[
+\CCSigmaP{P}{z}=PAQ(I-zB)^{-1}QAP.
+\]
+The geometric-series remainder identity gives
+\[
+(I-zB)^{-1}
+=
+\sum_{n=0}^{N-1} z^n B^n
++
+z^N B^N (I-zB)^{-1}.
+\]
+Multiplying on the left by \(PAQ\), on the right by \(QAP\), and then
+composing with \(O\) and \(P\big|_S\) yields
+\begin{align*}
+\widetilde{\mathfrak R}_{\Omega}(P,A;z)
+&=
+O\left(
+\sum_{n=0}^{N-1} z^n PAQ B^n QAP
+\right)P\Big|_{S} \\
+&\qquad
++
+O\Bigl(
+z^N PAQ B^N (I-zB)^{-1}QAP
+\Bigr)P\Big|_{S}.
+\end{align*}
+Since \(B=QAQ\), the first term is
+\(\widetilde{\mathfrak R}_{\Omega}^{[N]}(P,A;z)\), and the second is exactly
+the displayed
+remainder formula.
+
+For the norm bound, use submultiplicativity:
+\begin{align*}
+\bigl\|
+\widetilde{\mathfrak R}_{\Omega}(P,A;z)
+-\widetilde{\mathfrak R}_{\Omega}^{[N]}(P,A;z)
+\bigr\|_{\mathrm{op}}
+&\le
+\|O\|\,
+\|PAQ\|\,
+\|z^N B^N\|\,
+\|(I-zB)^{-1}\|\,
+\|QAP\| \\
+&\le
+\|O\|\,
+\|PAQ\|\,
+\|zB\|^N\,
+\|(I-zB)^{-1}\|\,
+\|QAP\|,
+\end{align*}
+which is the stated estimate after substituting \(B=QAQ\).
+\end{proof}
+
+\begin{lemma}[Finite-dimensional spectral theorem for self-adjoint operators]
+\label{lem:finite-selfadjoint-spectral-theorem}
+Let \(H\) be a finite-dimensional inner-product space and let \(B:H\to H\) be
+self-adjoint. Then there exist an orthonormal basis \(u_1,\dots,u_n\) of \(H\)
+and real scalars \(\lambda_1,\dots,\lambda_n\) such that
+\[
+Bu_i=\lambda_i u_i
+\qquad (1\le i\le n).
+\]
+If \(B\) is positive semidefinite, then each \(\lambda_i\ge 0\).
+\end{lemma}
+
+\begin{proof}
+We argue by induction on \(n=\dim H\). If \(n=0\), there is nothing to prove.
+
+Assume \(n\ge 1\). The unit sphere in \(H\) is compact, and the Rayleigh
+quotient
+\[
+q(x):=\langle Bx,x\rangle
+\]
+is continuous on it. Therefore \(q\) attains a maximum at some unit vector
+\(u_1\in H\).
+
+Let \(w\perp u_1\) be a unit vector, and define
+\[
+f(t):=\bigl\langle B(\cos t\,u_1+\sin t\,w),\ \cos t\,u_1+\sin t\,w\bigr\rangle.
+\]
+Since \(u_1\) maximizes \(q\) on the unit sphere, \(t=0\) is a maximum for
+\(f\), hence \(f'(0)=0\). A direct differentiation gives
+\[
+f'(0)=2\,\operatorname{Re}\langle Bu_1,w\rangle,
+\]
+so \(\operatorname{Re}\langle Bu_1,w\rangle=0\) for all \(w\perp u_1\). In the
+complex case, replacing \(w\) by \(iw\) also gives
+\(\operatorname{Im}\langle Bu_1,w\rangle=0\). Therefore
+\[
+\langle Bu_1,w\rangle=0
+\qquad\text{for every }w\perp u_1.
+\]
+Hence \(Bu_1\) is orthogonal to \(u_1^\perp\), so \(Bu_1=\lambda_1 u_1\) for
+some scalar \(\lambda_1\). Since \(B\) is self-adjoint,
+\[
+\lambda_1
+=
+\langle Bu_1,u_1\rangle
+\]
+is real.
+
+Now let \(K:=u_1^\perp\). If \(x\in K\), then
+\[
+\langle Bx,u_1\rangle=\langle x,Bu_1\rangle=\lambda_1\langle x,u_1\rangle=0,
+\]
+so \(Bx\in K\). Thus \(K\) is \(B\)-invariant, and the restriction
+\(B|_K:K\to K\) is still self-adjoint. Since \(\dim K=n-1\), the induction
+hypothesis yields an orthonormal basis \(u_2,\dots,u_n\) of \(K\) consisting of
+eigenvectors of \(B|_K\). Together with \(u_1\), this gives the desired
+orthonormal eigenbasis of \(H\).
+
+If \(B\) is positive semidefinite, then for each basis vector \(u_i\),
+\[
+\lambda_i=\langle Bu_i,u_i\rangle\ge 0.
+\]
+\end{proof}
+
+\begin{lemma}[Finite-dimensional singular frame]
+\label{lem:finite-singular-frame}
+Let \(S\) and \(V\) be finite-dimensional inner-product spaces and let
+\(T:S\to V\) be linear. Then there exist orthonormal vectors
+\(u_1,\dots,u_{\dim S}\in S\), an orthonormal family
+\(v_1,\dots,v_r\in V\) with \(r=\rank(T)\), and nonnegative scalars
+\[
+\sigma_1\ge \cdots \ge \sigma_{\dim S}\ge 0
+\]
+such that
+\[
+Tx=\sum_{i=1}^{r}\sigma_i\,\langle x,u_i\rangle\,v_i
+\qquad (x\in S),
+\]
+and \(\sigma_1,\dots,\sigma_{\dim S}\) are exactly the singular values of
+\(T\).
+\end{lemma}
+
+\begin{proof}
+Apply Lemma~\ref{lem:finite-selfadjoint-spectral-theorem} to the positive
+semidefinite operator \(T^\ast T:S\to S\). This yields an orthonormal basis
+\(u_1,\dots,u_{\dim S}\) of \(S\) and nonnegative eigenvalues
+\(\lambda_1,\dots,\lambda_{\dim S}\), which we order so that
+\[
+\lambda_1\ge \cdots \ge \lambda_{\dim S}\ge 0.
+\]
+Set \(\sigma_i:=\sqrt{\lambda_i}\). By
+Definition~\ref{def:singular-values}, these are the singular values of \(T\).
+
+Let \(r\) be the number of positive \(\sigma_i\). For \(1\le i\le r\), define
+\[
+v_i:=\sigma_i^{-1}Tu_i.
+\]
+Then for \(1\le i,j\le r\),
+\begin{align*}
+\langle v_i,v_j\rangle
+&=
+\sigma_i^{-1}\sigma_j^{-1}\langle Tu_i,Tu_j\rangle \\
+&=
+\sigma_i^{-1}\sigma_j^{-1}\langle u_i,T^\ast T u_j\rangle \\
+&=
+\sigma_i^{-1}\sigma_j^{-1}\lambda_j\langle u_i,u_j\rangle \\
+&=
+\delta_{ij}.
+\end{align*}
+So \(v_1,\dots,v_r\) is an orthonormal family.
+
+Now write any \(x\in S\) as \(x=\sum_i \langle x,u_i\rangle u_i\). Then
+\begin{align*}
+Tx
+&=
+\sum_{i=1}^{\dim S}\langle x,u_i\rangle Tu_i \\
+&=
+\sum_{i=1}^{r}\langle x,u_i\rangle \sigma_i v_i,
+\end{align*}
+because \(Tu_i=0\) whenever \(\sigma_i=0\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:optimal-m-channel-approximation}]
+\label{proof:thm:optimal-m-channel-approximation}
+Lemma~\ref{lem:finite-singular-frame} gives orthonormal vectors
+\(u_1,\dots,u_{\dim S}\in S\) and an orthonormal family
+\(v_1,\dots,v_r\in V\) such that
+\[
+Tx=\sum_{i=1}^{r}\sigma_i(T)\,\langle x,u_i\rangle\,v_i.
+\]
+This is the first displayed formula in the theorem statement.
+
+For item \emph{(i)}, the image of \(T^{[m]}\) lies in
+\(\Span\{v_1,\dots,v_{\min(m,r)}\}\), so \(\rank(T^{[m]})\le m\).
+
+For the upper bound in item \emph{(ii)}, let \(R_m:=T-T^{[m]}\). For a unit
+vector \(x=\sum_i \alpha_i u_i\),
+\[
+R_mx=\sum_{i=m+1}^{r}\sigma_i(T)\,\alpha_i\,v_i.
+\]
+Because the \(v_i\) are orthonormal,
+\begin{align*}
+\|R_mx\|^2
+&=
+\sum_{i=m+1}^{r}\sigma_i(T)^2\,|\alpha_i|^2 \\
+&\le
+\sigma_{m+1}(T)^2\sum_{i=m+1}^{r}|\alpha_i|^2 \\
+&\le \sigma_{m+1}(T)^2.
+\end{align*}
+Hence
+\[
+\|T-T^{[m]}\|_{\mathrm{op}}\le \sigma_{m+1}(T).
+\]
+If \(m<r\), equality holds on \(x=u_{m+1}\), since
+\[
+\|(T-T^{[m]})u_{m+1}\|=\sigma_{m+1}(T).
+\]
+If \(m\ge r\), then \(T^{[m]}=T\), so both sides are \(0\).
+
+For the lower bound, let \(F:S\to V\) be any operator with \(\rank(F)\le m\).
+Since \(\dim\Ker(F)=\dim S-\rank(F)\), we have
+\[
+\dim\Ker(F)\ge \dim S-m.
+\]
+Let
+\[
+W_{m+1}:=\Span\{u_1,\dots,u_{m+1}\}.
+\]
+Then
+\[
+\dim W_{m+1}=m+1,
+\]
+so
+\[
+\dim\bigl(W_{m+1}\cap \Ker(F)\bigr)
+\ge
+\dim W_{m+1}+\dim\Ker(F)-\dim S
+\ge 1.
+\]
+Choose a unit vector \(x\in W_{m+1}\cap \Ker(F)\). Then \(Fx=0\), and writing
+\[
+x=\sum_{i=1}^{m+1}\alpha_i u_i
+\]
+gives, again by orthonormality of the \(v_i\),
+\begin{align*}
+\|Tx\|^2
+&=
+\sum_{i=1}^{m+1}\sigma_i(T)^2\,|\alpha_i|^2 \\
+&\ge
+\sigma_{m+1}(T)^2 \sum_{i=1}^{m+1}|\alpha_i|^2 \\
+&=
+\sigma_{m+1}(T)^2.
+\end{align*}
+Therefore
+\[
+\|T-F\|_{\mathrm{op}}
+\ge
+\|(T-F)x\|
+=
+\|Tx\|
+\ge
+\sigma_{m+1}(T).
+\]
+Since this holds for every rank-at-most-\(m\) map \(F\), Proposition~\ref{prop:best-m-correction-distance}
+implies
+\[
+e_m(T)\ge \sigma_{m+1}(T).
+\]
+Combining this with the upper bound from \(F=T^{[m]}\) gives
+\[
+e_m(T)=\|T-T^{[m]}\|_{\mathrm{op}}=\sigma_{m+1}(T).
+\]
+
+For item \emph{(iii)}, let \(U_m:=\Span\{u_1,\dots,u_{\min(m,r)}\}\), and let
+\(C_{T,m}\) be the orthogonal projector onto \(U_m\). Then
+\[
+C_{T,m}x=\sum_{i=1}^{\min(m,r)}\langle x,u_i\rangle u_i.
+\]
+By definition of \(D_{T,m}\),
+\begin{align*}
+D_{T,m}(C_{T,m}x)
+&=
+\sum_{i=1}^{\min(m,r)}\langle x,u_i\rangle D_{T,m}(u_i) \\
+&=
+\sum_{i=1}^{\min(m,r)}\sigma_i(T)\,\langle x,u_i\rangle\,v_i \\
+&=
+T^{[m]}x.
+\end{align*}
+So \(T^{[m]}=D_{T,m}\circ C_{T,m}\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:observable-closure-invariant-package}]
+\label{proof:thm:observable-closure-invariant-package}
+Write
+\[
+T:=T_{\Omega,P,z}
+=
+\widetilde{\mathfrak R}_{\Omega}(P,A;z):S\to V,
+\qquad
+G:=G_{\Omega}(P,A;z)=T^\ast T.
+\]
+
+For item \emph{(i)}, \(G\) is self-adjoint and positive semidefinite because
+\[
+\langle Gx,x\rangle
+=
+\langle T^\ast T x,x\rangle
+=
+\langle Tx,Tx\rangle
+=
+\|Tx\|^2
+\ge 0
+\qquad (x\in S).
+\]
+Therefore every eigenvalue of \(G\) is nonnegative by
+Lemma~\ref{lem:finite-selfadjoint-spectral-theorem}.
+
+For item \emph{(ii)}, if \(\Lambda_{\Omega}(P,A;z)=\{0,\dots,0\}\), then the
+spectral theorem gives \(G=0\). If \(G=0\), then
+\[
+\|Tx\|^2=\langle Gx,x\rangle=0
+\qquad (x\in S),
+\]
+so \(T=0\), i.e.
+\(\widetilde{\mathfrak R}_{\Omega}(P,A;z)=0\). Conversely, if \(T=0\), then
+\(G=T^\ast T=0\), so the spectrum is identically zero.
+
+For item \emph{(iii)}, by Definition~\ref{def:singular-values}, the singular
+values of \(T\) are exactly the square roots of the eigenvalues of \(T^\ast T=G\).
+Thus, after ordering the eigenvalues nonincreasingly,
+\[
+\sigma_i(T)=\sqrt{\lambda_i}
+\qquad (1\le i\le n).
+\]
+The number of positive singular values is \(\rank(T)\), hence
+\[
+\rho_{\Omega}(P,A;z)=\rank(T)=\#\{i:\lambda_i>0\}.
+\]
+Finally, Corollary~\ref{cor:optimal-returned-correction-for-workload} gives
+\[
+e_m(T)=\sigma_{m+1}(T)=\sqrt{\lambda_{m+1}},
+\]
+with the stated convention when \(m\ge \rho_{\Omega}(P,A;z)\).
+
+For item \emph{(iv)}, apply
+Lemma~\ref{lem:finite-selfadjoint-spectral-theorem} to the positive operator
+\(G\). If \(\lambda_1,\dots,\lambda_n\) are its eigenvalues with multiplicity,
+then
+\[
+\Tr(G^k)=\sum_{i=1}^{n}\lambda_i^k,
+\qquad
+\det(I+tG)=\prod_{i=1}^{n}(1+t\lambda_i).
+\]
+These are exactly the stated formulas for
+\(M_k^{\Omega}(P,A;z)\) and \(\Delta_{\Omega}(P,A;z;t)\).
+
+For item \emph{(v)}, let \(U\) be unitary and write
+\[
+T^U:=T_{\Omega^U,P^U,z}
+=
+\widetilde{\mathfrak R}_{\Omega^U}(P^U,A^U;z).
+\]
+By Theorem~\ref{thm:observable-transfer-covariance},
+\[
+T^U=T\circ W,
+\qquad
+W:=U^{-1}\big|_{US}:US\to S.
+\]
+Because \(U\) is unitary, so is \(W\). Therefore
+\[
+G_{\Omega^U}(P^U,A^U;z)
+=
+(T^U)^\ast T^U
+=
+W^\ast T^\ast T W
+=
+W^\ast G W.
+\]
+Thus \(G_{\Omega^U}(P^U,A^U;z)\) is unitarily conjugate to \(G\), so it has the
+same eigenvalue multiset. Trace of powers and determinant are invariant under
+unitary conjugation, giving the stated equalities for
+\(\Lambda_{\Omega^U}(P^U,A^U;z)\), \(M_k^{\Omega^U}(P^U,A^U;z)\), and
+\(\Delta_{\Omega^U}(P^U,A^U;z;t)\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exact-schur-coherence-general}]
+\label{proof:thm:exact-schur-coherence-general}
+Fix $h\le k$ and set $P_1:=\CCPi{h}$ and $P_2:=\CCPi{k}$. Then
+$P_1\le P_2$ because the tower is nested. By
+Lemma~\ref{lem:nested-schur},
+\[
+\CCSigmaP{P_1}{z}[A]
+=
+\CCSigmaP{P_1}{z}[\CCAeff{A}{P_2}(z)].
+\]
+Moreover, since $P_1\le P_2$, the $P_1$-block of the once-eliminated operator
+agrees with the original $P_1$-block:
+\[
+P_1\,\CCAeff{A}{P_2}(z)\,P_1
+=
+P_1AP_1.
+\]
+Indeed,
+\[
+P_1(I-P_2)=0=(I-P_2)P_1,
+\]
+so the Schur correction term in $\CCAeff{A}{P_2}(z)$ vanishes when bracketed
+on both sides by $P_1$. Therefore
+\begin{align*}
+\CCAeff{\CCAeff{A}{P_2}(z)}{P_1}(z)
+&=
+P_1\,\CCAeff{A}{P_2}(z)\,P_1
++
+z\,\CCSigmaP{P_1}{z}[\CCAeff{A}{P_2}(z)] \\
+&=
+P_1AP_1 + z\,\CCSigmaP{P_1}{z}[A] \\
+&=
+\CCAeff{A}{P_1}(z).
+\end{align*}
+Restricting $P_1$ to $P_2\cH$ gives exactly the induced projection
+$P_{h\mid k}$, so the stated identity follows.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:schur-tower-strong-recovery-general}]
+\label{proof:thm:schur-tower-strong-recovery-general}
+Fix $x\in\cH$ and abbreviate
+\[
+R_h(z):=(I-z\CCPibar{h}A\CCPibar{h})^{-1}.
+\]
+Then
+\begin{align*}
+A_{\mathrm{eff},h}(z)x-Ax
+&=
+\bigl(\CCPi{h}A\CCPi{h}x-Ax\bigr)
++
+z\,\CCPi{h}A\CCPibar{h}R_h(z)\CCPibar{h}A\CCPi{h}x.
+\end{align*}
+For the first term,
+\begin{align*}
+\|\CCPi{h}A\CCPi{h}x-Ax\|
+&\le
+\|\CCPi{h}A(\CCPi{h}x-x)\|
++
+\|(\CCPi{h}-I)Ax\| \\
+&\le
+\|A\|\,\|\CCPi{h}x-x\|
++
+\|\CCPibar{h}Ax\|.
+\end{align*}
+For the Schur correction term,
+\begin{align*}
+\left\|
+z\,\CCPi{h}A\CCPibar{h}R_h(z)\CCPibar{h}A\CCPi{h}x
+\right\|
+&\le
+|z|\,\|A\|\,M\,\|\CCPibar{h}A\CCPi{h}x\| \\
+&\le
+|z|\,\|A\|\,M
+\left(
+\|\CCPibar{h}Ax\|
++
+\|A\|\,\|\CCPi{h}x-x\|
+\right).
+\end{align*}
+Combining the two estimates gives
+\begin{align*}
+\|A_{\mathrm{eff},h}(z)x-Ax\|
+\le
+\bigl(1+|z|\,\|A\|\,M\bigr)\|\CCPibar{h}Ax\|
++
+\|A\|\bigl(1+|z|\,\|A\|\,M\bigr)\|\CCPi{h}x-x\|.
+\end{align*}
+Both terms tend to zero by faithfulness of the tower, applied to $x$ and to
+$Ax\in\cH$. Hence $A_{\mathrm{eff},h}(z)x\to Ax$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:selected-schur-recovery-general}]
+\label{proof:thm:selected-schur-recovery-general}
+For every $x\in\cH$,
+\begin{align*}
+\|\widetilde A_h(z)x-Ax\|
+&\le
+\|A_{\mathrm{eff},h}(z)x-Ax\|
++
+\|C_h\CCPi{h}x\|.
+\end{align*}
+The first term tends to zero by
+Theorem~\ref{thm:schur-tower-strong-recovery-general}, and the second tends to
+zero by hypothesis.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:det-factorization}]
+\label{proof:thm:det-factorization}
+Write the block decomposition:
+\[
+I - zA = \begin{pmatrix} I - z\CCBlockPP{A} & -z\CCBlockPQ{A} \\ -z\CCBlockQP{A} & I - z\CCBlockQQ{A} \end{pmatrix}.
+\]
+Using the standard block determinant formula for matrices with invertible $(2,2)$-block:
+\[
+\det\begin{pmatrix} M_{11} & M_{12} \\ M_{21} & M_{22} \end{pmatrix} = \det(M_{22}) \cdot \det(M_{11} - M_{12} M_{22}^{-1} M_{21}),
+\]
+we obtain
+\begin{align*}
+\det(I - zA) &= \det(I - z\CCBlockQQ{A}) \cdot \det\bigl( (I - z\CCBlockPP{A}) - (-z\CCBlockPQ{A})(I - z\CCBlockQQ{A})^{-1}(-z\CCBlockQP{A}) \bigr) \\
+&= \det(I - z\CCBlockQQ{A}) \cdot \det\bigl( I - z\CCBlockPP{A} - z^2 \CCSigmaP{P}{z} \bigr) \\
+&= \det(I - z\CCBlockQQ{A}) \cdot \det\bigl( I - z\CCAeff{A}{P}(z) \bigr).
+\end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:split-functoriality}]
+\label{proof:thm:split-functoriality}
+Let $\CCComp' = I - P' = U(I-P)U^* = U\CCComp U^*$.
+
+\medskip\noindent
+\textbf{Block relations:}
+\begin{align*}
+\CCBlockPP{A'} &= P' A' P' = (UPU^*)(UAU^*)(UPU^*) = U(PAP)U^* = U \CCBlockPP{A} U^*, \\
+\CCBlockPQ{A'} &= P' A' \CCComp' = U(PA\CCComp)U^* = U \CCBlockPQ{A} U^*, \\
+\CCBlockQP{A'} &= \CCComp' A' P' = U(\CCComp AP)U^* = U \CCBlockQP{A} U^*, \\
+\CCBlockQQ{A'} &= \CCComp' A' \CCComp' = U(\CCComp A\CCComp)U^* = U \CCBlockQQ{A} U^*.
+\end{align*}
+
+\medskip\noindent
+\textbf{Schur correction:}
+\begin{align*}
+\CCSigmaP{P'}{z}[A'] &= \CCBlockPQ{A'}(I - z\CCBlockQQ{A'})^{-1}\CCBlockQP{A'} \\
+&= (U \CCBlockPQ{A} U^*)(U(I - z\CCBlockQQ{A})^{-1}U^*)(U \CCBlockQP{A} U^*) \\
+&= U \CCBlockPQ{A}(I - z\CCBlockQQ{A})^{-1}\CCBlockQP{A} U^* \\
+&= U \CCSigmaP{P}{z}[A] U^*.
+\end{align*}
+
+\medskip\noindent
+\textbf{Effective operator:}
+\[
+\CCAeff{A'}{P'}(z) = \CCBlockPP{A'} + z\CCSigmaP{P'}{z}[A'] = U\CCBlockPP{A}U^* + zU\CCSigmaP{P}{z}[A]U^* = U\CCAeff{A}{P}(z)U^*.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:nonlinear-shadow-elimination}]
+\label{proof:thm:nonlinear-shadow-elimination}
+If $p\in U_P$ satisfies $F_{\mathrm{eff}}(p)=0$, then by definition
+$P F(p+\Psi(p))=0$. Assumption (i) gives
+$QF(p+\Psi(p))=F_Q(p,\Psi(p))=0$. Since $\cH=\cH_P\oplus\cH_Q$, both
+components vanish, so $F(p+\Psi(p))=0$.
+
+Conversely, let $u=p+q$ be a full solution with $p\in U_P$ and $q\in U_Q$.
+Then $F(u)=0$ implies $F_Q(p,q)=QF(u)=0$. By assumption (ii), $q=\Psi(p)$.
+Applying $P$ to $F(u)=0$ then gives
+\[
+F_{\mathrm{eff}}(p)=PF\bigl(p+\Psi(p)\bigr)=PF(u)=0.
+\]
+Thus every full solution arises uniquely from a reduced solution. The two
+constructions are inverse to one another because the observed component of
+$p+\Psi(p)$ is $P(p+\Psi(p))=p$ and the shadow component is uniquely fixed by
+assumption (ii).
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:semicolon-shadow-elimination}]
+\label{proof:prop:semicolon-shadow-elimination}
+Fix $p\in B_P$. By assumptions (ii) and (iii), the map $T_p:B_Q\to B_Q$ is a
+strict contraction on a complete metric space. The Banach fixed-point theorem
+therefore produces a unique fixed point $\Psi(p)\in B_Q$, and the iterates
+$T_p^{\,n}(q_0)$ converge to it for any initial $q_0\in B_Q$.
+
+The fixed-point identity
+\[
+\Psi(p)=(QLQ)^{-1}\bigl(Qf-QLP\,p-QN(p+\Psi(p))\bigr)
+\]
+is equivalent, after multiplication by $QLQ$, to
+\[
+QLQ\,\Psi(p)=Qf-QLP\,p-QN(p+\Psi(p)),
+\]
+which is precisely
+\[
+Q\bigl(L(p+\Psi(p))+N(p+\Psi(p))-f\bigr)=QF\bigl(p+\Psi(p)\bigr)=0.
+\]
+Uniqueness of the fixed point gives uniqueness of the shadow solve on
+$B_Q$. The exact equivalence with the reduced law now follows from
+Theorem~\ref{thm:nonlinear-shadow-elimination}, and the displayed formula for
+$F_{\mathrm{eff}}$ is simply the $P$-component of $F(p+\Psi(p))$ written in
+block notation.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:linear-shadow-specialization}]
+\label{proof:cor:linear-shadow-specialization}
+Apply Proposition~\ref{prop:semicolon-shadow-elimination} with $L=I-zA$,
+$N=0$, and $f=g$. The $Q$-equation is
+\[
+(I-z\CCBlockQQ{A})q = Qg + z\CCBlockQP{A}p,
+\]
+which gives the displayed formula for $\Psi(p)$. Substituting into the
+$P$-equation
+\[
+P\bigl((I-zA)(p+\Psi(p))-g\bigr)=0
+\]
+yields
+\[
+\bigl(I-z\CCBlockPP{A}\bigr)p - z\CCBlockPQ{A}\Psi(p)=Pg.
+\]
+Inserting the formula for $\Psi(p)$ gives
+\[
+\bigl(I-z\CCBlockPP{A}-z^2\CCSigmaP{P}{z}\bigr)p
+=
+Pg+z\CCBlockPQ{A}(I-z\CCBlockQQ{A})^{-1}Qg,
+\]
+with $\CCSigmaP{P}{z}$ from Definition~\ref{def:schur-correction}. If
+$Qg=0$, the right-hand side reduces to $Pg$ and
+$I-z\CCBlockPP{A}-z^2\CCSigmaP{P}{z}=I-z\CCAeff{A}{P}(z)$ by
+Definition~\ref{def:effective-operator}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:global-monotone-shadow}]
+\label{proof:thm:global-monotone-shadow}
+Fix $p\in U_P$. By hemicontinuity, strong monotonicity, and coercivity,
+the Browder--Minty theorem gives surjectivity of $G_p$ on $\cH_Q$.
+Applying it to the value $0$ produces some $q=\Psi(p)$ with
+$G_p(\Psi(p))=0$. Strong monotonicity implies uniqueness: if
+$G_p(q_1)=G_p(q_2)=0$, then
+\[
+m\|q_1-q_2\|^2
+\le
+\operatorname{Re}\langle G_p(q_1)-G_p(q_2),\,q_1-q_2\rangle
+=0,
+\]
+so $q_1=q_2$.
+
+For the Lipschitz estimate, let $\Psi_i:=\Psi(p_i)$. Since
+$G_{p_1}(\Psi_1)=0=G_{p_2}(\Psi_2)$,
+\begin{align*}
+m\|\Psi_1-\Psi_2\|^2
+&\le
+\operatorname{Re}\langle G_{p_1}(\Psi_1)-G_{p_1}(\Psi_2),\,\Psi_1-\Psi_2\rangle \\
+&=
+\operatorname{Re}\langle G_{p_2}(\Psi_2)-G_{p_1}(\Psi_2),\,\Psi_1-\Psi_2\rangle \\
+&\le
+\|G_{p_2}(\Psi_2)-G_{p_1}(\Psi_2)\|\cdot \|\Psi_1-\Psi_2\| \\
+&\le
+L\|p_1-p_2\|\cdot \|\Psi_1-\Psi_2\|.
+\end{align*}
+Cancelling the common factor gives
+$\|\Psi_1-\Psi_2\|\le \frac{L}{m}\|p_1-p_2\|$.
+The exact equivalence with the reduced law is then Theorem~\ref{thm:nonlinear-shadow-elimination}.
+\end{proof}
+
+%%% --- solver_layer.tex proofs ---
+
+\begin{proof}[Proof of Lemma~\ref{lem:laplacian-intertwining}]
+\label{proof:lem:laplacian-intertwining}
+Using $D_k D_{k-1} = 0$ and $D_{k+1} D_k = 0$,
+\[
+D_k \CCLap{k}
+=
+D_k D_{k-1} D_{k-1}^* + D_k D_k^* D_k
+=
+D_k D_k^* D_k
+=
+(D_k D_k^* + D_{k+1}^* D_{k+1}) D_k
+=
+\CCLap{k+1} D_k.
+\]
+If the Laplacians are invertible, multiply on the left by $\CCGreen{k+1}$ and
+on the right by $\CCGreen{k}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:homotopy-identity}]
+\label{proof:thm:homotopy-identity}
+By Lemma~\ref{lem:laplacian-intertwining},
+\[
+\CCHom{k+1} D_k
+=
+D_k^* \CCGreen{k+1} D_k
+=
+D_k^* D_k \CCGreen{k}.
+\]
+Therefore
+\[
+D_{k-1} \CCHom{k} + \CCHom{k+1} D_k
+=
+D_{k-1} D_{k-1}^* \CCGreen{k} + D_k^* D_k \CCGreen{k}
+=
+\CCLap{k} \CCGreen{k}
+=
+I_{H^k}.
+\]
+\end{proof}
+
+%%% --- projector_calculus.tex proofs ---
+
+\begin{proof}[Proof of Lemma~\ref{lem:tangent-characterization}]
+\label{proof:lem:tangent-characterization}
+(i) Differentiate $P^2 = P$: $\dot{P} P + P \dot{P} = \dot{P}$.
+
+(ii) Multiply (i) on left by $P$: $P \dot{P} P + P^2 \dot{P} = P \dot{P}$, so $P \dot{P} P = 0$.
+Similarly, multiply on right by $P$: $\dot{P} P^2 + P \dot{P} P = \dot{P} P$, confirming $P \dot{P} P = 0$.
+For the $\CCComp$-block: from (i), $\CCComp \dot{P} \CCComp = (I - P) \dot{P} (I - P) = \dot{P} - \dot{P} P - P \dot{P} + P \dot{P} P = \dot{P} - \dot{P} = 0$.
+
+(iii) Define $K := \dot{P} P - P \dot{P}$.
+Check skew-adjointness: $K^* = (P \dot{P} - \dot{P} P)^* = \dot{P}^* P^* - P^* \dot{P}^* = \dot{P} P - P \dot{P} = -K$ (using $P^* = P$ and, by differentiating $P^* = P$, $\dot{P}^* = \dot{P}$).
+Check $[K, P] = \dot{P}$:
+\begin{align*}
+[K, P] &= (\dot{P} P - P \dot{P}) P - P (\dot{P} P - P \dot{P}) \\
+&= \dot{P} P^2 - P \dot{P} P - P \dot{P} P + P^2 \dot{P} \\
+&= \dot{P} P + P \dot{P} - 2 P \dot{P} P \\
+&= \dot{P} P + P \dot{P} = \dot{P} \quad \text{(by (i) and (ii))}.
+\end{align*}
+
+For the converse: if $\dot{P} = [K, P]$ with $K^* = -K$, then:
+\begin{itemize}
+\item $\frac{d}{dt}(P^2) = \dot{P} P + P \dot{P} = [K, P] P + P [K, P] = [K, P^2] = [K, P] = \dot{P}$, so $P^2 = P$ is preserved if it holds initially.
+\item $\frac{d}{dt}(P^*) = \dot{P}^* = [K, P]^* = [P^*, K^*] = [P, -K] = [K, P] = \dot{P}$, so $P^* = P$ is preserved.
+\item $\frac{d}{dt}(\Tr(P)) = \Tr(\dot{P}) = \Tr([K, P]) = 0$, so rank is constant.
+\end{itemize}
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:stationarity-condition}]
+\label{proof:thm:stationarity-condition}
+By Lemma~\ref{lem:tangent-characterization}, every tangent vector at $P$ has the form $\dot{P} = [K, P]$ for some skew-adjoint $K$.
+The directional derivative is
+\[
+\frac{d}{dt} \CCDesign{P(t)} \big|_{t=0}
+= \Tr(\nabla \CCDesign{P}^* [K, P])
+= \Tr(\nabla \CCDesign{P}^* K P - \nabla \CCDesign{P}^* P K)
+= \Tr((P \nabla \CCDesign{P}^* - \nabla \CCDesign{P}^* P) K).
+\]
+Using $\Tr(AB) = \Tr(BA)$ and the skew-adjointness of $K$:
+\[
+= \Tr([\nabla \CCDesign{P}^*, P] K) = -\Tr([\nabla \CCDesign{P}, P]^* K).
+\]
+This vanishes for all skew-adjoint $K$ if and only if $[\nabla \CCDesign{P}, P] = 0$ (since the off-diagonal part of any operator can be paired with a suitable $K$).
+\end{proof}
+
+%%% --- complex_compatibility.tex proofs ---
+
+\begin{proof}[Proof of Theorem~\ref{thm:subcomplex}]
+\label{proof:thm:subcomplex}
+(i) For $x \in P_k H^k$, $D_k x \in P_{k+1} H^{k+1}$ by intertwining.
+Nilpotency: $D_{k+1} D_k x = 0$ since $D_{k+1} D_k = 0$ on the full complex.
+
+(ii) The inclusion commutes with $D$: $\iota_{k+1} D_k|_{P_k} = D_k \iota_k$ by definition.
+
+(iii) Let $\omega \in P_k H^k$ with $D_k \omega = 0$.
+By exactness of the full complex, $\omega = D_{k-1} \eta$ for some $\eta \in H^{k-1}$.
+Apply $P_k$: $\omega = P_k \omega = P_k D_{k-1} \eta = D_{k-1} P_{k-1} \eta$.
+Thus $\omega \in \Img(D_{k-1}|_{P_{k-1} H^{k-1}})$, so the restricted complex is exact.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:phase-compatible-schur-tower}]
+\label{proof:thm:phase-compatible-schur-tower}
+Because $J$ commutes with $P$, the operator $J_P=PJ=JP$ preserves $P\cH$. Since
+$J$ is unitary and $J^2=-I$,
+\[
+J_P^*J_P=PJ^*JP=P,
+\qquad
+J_P^2=PJPJ=PJ^2=-P,
+\]
+which is the identity and minus identity on the observed sector, proving (i).
+
+For (ii), set $Q:=I-P$. Since $J$ commutes with both $A$ and $P$, it also
+commutes with $Q$ and therefore with the blocks $PAQ$, $QAP$, and $QAQ$. Hence
+$J$ commutes with $I-z\,QAQ$ and therefore with its inverse. Using
+Definition~\ref{def:schur-correction},
+\[
+J_P\,\CCSigmaP{P}{z}
+=
+PJ\,PAQ(I-z\,QAQ)^{-1}QAP
+=
+PAQ(I-z\,QAQ)^{-1}QAP\,PJ
+=
+\CCSigmaP{P}{z}\,J_P.
+\]
+Statement (iii) now follows from the definition
+\[
+\CCAeff{A}{P}(z)=PAP+z\,\CCSigmaP{P}{z},
+\]
+because $J_P$ also commutes with $PAP$.
+
+The final statement is the horizon specialization obtained by setting
+$P=\CCPi{h}$ at each level.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:phase-carrier-sign-rigidity}]
+\label{proof:thm:phase-carrier-sign-rigidity}
+Because the representation on $P\cH$ is multiplicity-free and $J$ is
+$G$-equivariant, Theorem~\ref{thm:normal-form} implies that $J$ preserves each
+irreducible channel $V_{\rho}$. By
+Definition~\ref{def:complex-type-symmetry-package}(iii), the restriction of
+$J$ to $V_{\rho}$ has the form
+\[
+J|_{V_{\rho}} = a_{\rho} I_{V_{\rho}} + b_{\rho} J_{\rho}
+\qquad(a_{\rho},b_{\rho}\in\bbR).
+\]
+Since $J$ is a phase carrier, $J^2=-I$ on $P\cH$, so on $V_{\rho}$,
+\[
+(a_{\rho} I + b_{\rho} J_{\rho})^2
+=
+(a_{\rho}^2-b_{\rho}^2)I + 2a_{\rho}b_{\rho}J_{\rho}
+=
+-I.
+\]
+Hence
+\[
+2a_{\rho}b_{\rho}=0,
+\qquad
+a_{\rho}^2-b_{\rho}^2=-1.
+\]
+If $b_{\rho}=0$, then $a_{\rho}^2=-1$, impossible over $\bbR$. Therefore
+$a_{\rho}=0$, and then $-b_{\rho}^2=-1$, so $b_{\rho}=\pm1$. Thus
+\[
+J|_{V_{\rho}}=\varepsilon_{\rho}J_{\rho}
+\qquad(\varepsilon_{\rho}\in\{\pm1\}),
+\]
+which is the claimed form. The final statement is exactly
+Definition~\ref{def:phase-carrier-equivalence}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:phase-carrier-normal-form-multiplicity}]
+\label{proof:thm:phase-carrier-normal-form-multiplicity}
+By Definition~\ref{def:complex-type-multiplicity-package}(iii), every
+$G$-equivariant endomorphism of $V_{\rho}\otimes M_{\rho}$ has the displayed
+form, so the restriction of $J$ to that channel may be written as
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+I_{V_{\rho}}\otimes B_{\rho}
++ J_{\rho}\otimes C_{\rho}.
+\]
+Since $J$ is a phase carrier, it is skew-adjoint and satisfies $J^2=-I$.
+Using $J_{\rho}^*=-J_{\rho}$ and $J_{\rho}^2=-I_{V_{\rho}}$, one computes
+\begin{align*}
+J^*|_{V_{\rho}\otimes M_{\rho}}
+&=
+I_{V_{\rho}}\otimes B_{\rho}^*
+- J_{\rho}\otimes C_{\rho}^*, \\
+J^2|_{V_{\rho}\otimes M_{\rho}}
+&=
+I_{V_{\rho}}\otimes (B_{\rho}^2-C_{\rho}^2)
++ J_{\rho}\otimes (B_{\rho}C_{\rho}+C_{\rho}B_{\rho}).
+\end{align*}
+The identity $J^*=-J$ therefore forces
+\[
+B_{\rho}^*=-B_{\rho},
+\qquad
+C_{\rho}^*=C_{\rho},
+\]
+while the identity $J^2=-I$ forces
+\[
+B_{\rho}C_{\rho}+C_{\rho}B_{\rho}=0,
+\qquad
+B_{\rho}^2-C_{\rho}^2=-I_{M_{\rho}}.
+\]
+These are exactly the claimed relations.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:scalar-commutant-collapses-phase-gauge}]
+\label{proof:thm:scalar-commutant-collapses-phase-gauge}
+By Theorem~\ref{thm:phase-carrier-normal-form-multiplicity},
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+I_{V_{\rho}}\otimes B_{\rho}
++ J_{\rho}\otimes C_{\rho}
+\]
+for operators $B_{\rho},C_{\rho}$ obeying the relations displayed there.
+Because $J$ commutes with every operator of the form
+$I_{V_{\rho}}\otimes A_{\rho}$ with $A_{\rho}\in\mathcal A_{\rho}$, both
+$B_{\rho}$ and $C_{\rho}$ lie in $\mathrm{Comm}(\mathcal A_{\rho})$. By the
+scalar commutant hypothesis, there exist real scalars $\beta_{\rho}$ and
+$\gamma_{\rho}$ such that
+\[
+B_{\rho}=\beta_{\rho}I_{M_{\rho}},
+\qquad
+C_{\rho}=\gamma_{\rho}I_{M_{\rho}}.
+\]
+The skew-adjointness relation $B_{\rho}^*=-B_{\rho}$ now forces
+$\beta_{\rho}=0$, because the identity operator is self-adjoint. The relation
+$B_{\rho}^2-C_{\rho}^2=-I_{M_{\rho}}$ therefore becomes
+\[
+-\gamma_{\rho}^2I_{M_{\rho}}=-I_{M_{\rho}},
+\]
+so $\gamma_{\rho}=\pm1$. Hence
+\[
+J|_{V_{\rho}\otimes M_{\rho}}
+=
+\varepsilon_{\rho}\,J_{\rho}\otimes I_{M_{\rho}}
+\qquad(\varepsilon_{\rho}\in\{\pm1\}),
+\]
+as claimed.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:observable-completeness-irreducible}]
+\label{proof:thm:observable-completeness-irreducible}
+Suppose $W\subseteq M_{\rho}$ is a nonzero proper subspace invariant under
+every element of $\mathcal A_{\rho}$. Then $W$ is invariant under every
+polynomial expression in $\mathcal A_{\rho}$ and hence under the entire
+generated unital algebra. By observable completeness, this algebra is all of
+\[
+\mathrm{End}(M_{\rho}).
+\]
+Choose $0\neq w\in W$ and choose $v\in M_{\rho}\setminus W$. Since arbitrary
+endomorphisms are available, there exists $T\in\mathrm{End}(M_{\rho})$ with
+\[
+Tw=v.
+\]
+But $W$ is invariant under every endomorphism in the generated algebra, so
+$Tw\in W$, hence $v\in W$, a contradiction. Therefore no nonzero proper
+invariant subspace exists, and $\mathcal A_{\rho}$ is observable-irreducible.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:adjoint-closed-real-type-complete}]
+\label{proof:thm:adjoint-closed-real-type-complete}
+Let
+\[
+\mathfrak A_{\rho}:=\langle\mathcal A_{\rho}\rangle.
+\]
+The commutant of $\mathfrak A_{\rho}$ is the same as the commutant of the
+generating family:
+\[
+\mathrm{Comm}(\mathfrak A_{\rho})=\mathrm{Comm}(\mathcal A_{\rho}),
+\]
+because commuting with every generator is equivalent to commuting with every
+polynomial expression in those generators. By the real-type hypothesis,
+\[
+\mathrm{Comm}(\mathfrak A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+Since $\mathfrak A_{\rho}$ is a finite-dimensional unital real algebra closed
+under adjoint, the finite-dimensional real bicommutant theorem applies and
+gives
+\[
+\mathfrak A_{\rho}
+=
+\mathrm{Comm}(\mathrm{Comm}(\mathfrak A_{\rho}))
+=
+\mathrm{Comm}(\bbR\,I_{M_{\rho}})
+=
+\mathrm{End}(M_{\rho}).
+\]
+This is exactly observable completeness.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:simple-spectrum-gives-rank-one-seed}]
+\label{proof:thm:simple-spectrum-gives-rank-one-seed}
+Choose an orthonormal eigenbasis $\{e_i\}_{i=1}^m$ and pairwise distinct real
+eigenvalues $\lambda_1,\dots,\lambda_m$ for $S$ as in
+Definition~\ref{def:simple-spectrum-observable}. For each $i$, define the
+Lagrange interpolation polynomial
+\[
+p_i(t):=\prod_{j\neq i}\frac{t-\lambda_j}{\lambda_i-\lambda_j}.
+\]
+Then
+\[
+p_i(\lambda_k)=\delta_{ik}
+\qquad(k=1,\dots,m).
+\]
+Applying functional calculus by polynomial substitution gives
+\[
+p_i(S)e_k=p_i(\lambda_k)e_k=\delta_{ik}e_k,
+\]
+so
+\[
+p_i(S)=E_{ii},
+\]
+the orthogonal projection onto the line $\bbR e_i$. Since $S$ lies in the
+generated algebra, each polynomial expression $p_i(S)$ also lies in
+$\langle\mathcal A\rangle$. Thus the generated algebra contains a rank-one
+orthogonal projection, which is exactly a rank-one observable seed.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rank-one-seed-forces-completeness}]
+\label{proof:thm:rank-one-seed-forces-completeness}
+Let
+\[
+\mathfrak A:=\langle\mathcal A\rangle
+\]
+and let $P_{\ell}\in\mathfrak A$ be a rank-one orthogonal projection onto the
+line $\ell=\bbR e_1$, where $e_1$ is a unit vector. Consider the subspace
+\[
+\mathfrak A e_1:=\{Ae_1 : A\in\mathfrak A\}\subseteq M.
+\]
+This subspace is nonzero because $I\in\mathfrak A$, and it is
+$\mathfrak A$-invariant by construction. Since $\mathcal A$ is
+observable-irreducible, the same is true for the generated algebra
+$\mathfrak A$, so $\mathfrak A e_1=M$.
+
+Choose any orthonormal basis $\{e_i\}_{i=1}^m$ of $M$ with first vector $e_1$.
+For each $i$, since $\mathfrak A e_1=M$, there exists $A_i\in\mathfrak A$ such
+that
+\[
+A_i e_1=e_i.
+\]
+Then for any basis vector $e_k$,
+\[
+A_i P_{\ell}(e_k)=A_i(\delta_{1k}e_1)=\delta_{1k}e_i.
+\]
+Therefore
+\[
+A_i P_{\ell}=E_{i1},
+\]
+the matrix unit sending $e_1$ to $e_i$ and annihilating the orthogonal
+complement of $e_1$. Because $\mathfrak A$ is adjoint-closed,
+\[
+E_{1j}=E_{j1}^*\in\mathfrak A
+\qquad(j=1,\dots,m).
+\]
+Hence for all $i,j$,
+\[
+E_{ij}=E_{i1}E_{1j}\in\mathfrak A.
+\]
+The matrix units $\{E_{ij}\}_{i,j=1}^m$ span $\mathrm{End}(M)$, so
+\[
+\mathfrak A=\mathrm{End}(M).
+\]
+This is exactly observable completeness.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:rank-one-projection-invariant-subspace}]
+\label{proof:lem:rank-one-projection-invariant-subspace}
+If there exists $w\in W$ with $P_{\ell}w\neq 0$, then $P_{\ell}w$ is a nonzero
+vector in $\ell\cap W$, so $\ell\subseteq W$ because $\ell$ is one
+dimensional.
+
+Otherwise $P_{\ell}w=0$ for every $w\in W$, so
+\[
+W\subseteq \ker(P_{\ell})=\ell^{\perp}.
+\]
+Hence $\ell\subseteq W^{\perp}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:connected-rank-one-orbit-irreducible}]
+\label{proof:thm:connected-rank-one-orbit-irreducible}
+Let $W\subseteq M$ be a subspace invariant under every $P_g$.
+By Lemma~\ref{lem:rank-one-projection-invariant-subspace}, for every orbit
+line $\ell_g$ one has either
+\[
+\ell_g\subseteq W
+\qquad\text{or}\qquad
+\ell_g\subseteq W^{\perp}.
+\]
+
+Suppose $\ell_g\subseteq W$ and $\ell_h\subseteq W^{\perp}$ for two orbit
+lines. Then $\ell_g\perp \ell_h$ because $W\perp W^{\perp}$. Therefore two
+nonorthogonal orbit lines cannot lie on opposite sides of the decomposition
+$M=W\oplus W^{\perp}$. Since the nonorthogonality graph is connected, either
+every orbit line lies in $W$ or every orbit line lies in $W^{\perp}$.
+
+If every orbit line lies in $W$, then by hypothesis (i),
+\[
+M=\mathrm{span}\,\mathcal L(P_0)\subseteq W,
+\]
+so $W=M$. If every orbit line lies in $W^{\perp}$, then
+\[
+M=\mathrm{span}\,\mathcal L(P_0)\subseteq W^{\perp},
+\]
+so $W=0$. Thus no nonzero proper subspace is invariant under every $P_g$, and
+the family $\mathcal O(P_0)$ is observable-irreducible.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:sphere-transitive-orbit-observable-completeness}]
+\label{proof:cor:sphere-transitive-orbit-observable-completeness}
+Let $\ell_0$ be the range of $P_0$. Sphere transitivity implies that every
+one-dimensional subspace of $M$ is of the form $U(g)\ell_0$, so the orbit
+lines span $M$.
+
+To prove nonorthogonal connectedness, let $\ell_u,\ell_v\in\mathcal L(P_0)$ be
+two orbit lines with unit generators $u$ and $v$. If $\ell_u=\ell_v$ or
+$\ell_u\not\perp\ell_v$, there is nothing to show. If $\ell_u\perp\ell_v$,
+then $u+v\neq 0$, and the line
+\[
+\ell_{u+v}:=\bbR(u+v)
+\]
+is nonorthogonal to both $\ell_u$ and $\ell_v$. Since the action is
+transitive on the unit sphere, $\ell_{u+v}$ is also an orbit line. Thus any
+two orbit lines are joined by a path of length at most two in the
+nonorthogonality graph, so the graph is connected.
+
+Therefore Theorem~\ref{thm:connected-rank-one-orbit-irreducible} shows that
+the orbit family $\mathcal O(P_0)$ is observable-irreducible. Its generated
+algebra is adjoint-closed because every generator $U(g)P_0U(g)^*$ is
+self-adjoint, and it carries the rank-one seed $P_0$ itself. Hence
+Theorem~\ref{thm:rank-one-seed-forces-completeness} gives observable
+completeness for the orbit family. Since $\mathcal A$ contains that family,
+its generated algebra contains the full endomorphism algebra as well, so
+$\mathcal A$ is observable-complete.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:finite-observable-rigidity}]
+\label{proof:thm:finite-observable-rigidity}
+\textit{(i) $\Rightarrow$ (iv).}
+If $\mathcal A$ is observable-complete, then
+\[
+\mathfrak A=\mathrm{End}(M).
+\]
+Choose an orthonormal basis $\{e_i\}_{i=1}^m$ of $M$. For each pair $(i,j)$,
+the corresponding matrix unit
+\[
+E_{ij}(e_k)=\delta_{jk}e_i
+\]
+belongs to $\mathrm{End}(M)=\mathfrak A$. Thus $\mathfrak A$ contains a
+matrix-unit scaffold relative to that basis.
+
+\smallskip\noindent
+\textit{(iv) $\Rightarrow$ (i).}
+If $\mathfrak A$ contains a matrix-unit scaffold for some orthonormal basis,
+then Corollary~\ref{cor:matrix-unit-scaffold-complete} implies that
+$\mathfrak A$, hence $\mathcal A$, is observable-complete.
+
+\smallskip\noindent
+\textit{(i) $\Rightarrow$ (iii).}
+Assume $\mathfrak A=\mathrm{End}(M)$ and choose an orthonormal basis
+$\{e_i\}_{i=1}^m$ of $M$. Then each diagonal matrix unit $E_{ii}$ lies in
+$\mathfrak A$. Define
+\[
+S:=\sum_{i=1}^m i\,E_{ii}.
+\]
+The operator $S$ is self-adjoint, diagonal in the chosen basis, and its
+eigenvalues are the distinct scalars $1,\dots,m$. Hence $S$ has simple
+spectrum and belongs to $\mathfrak A$.
+
+\smallskip\noindent
+\textit{(iii) $\Rightarrow$ (ii).}
+This is exactly Theorem~\ref{thm:simple-spectrum-gives-rank-one-seed}.
+
+\smallskip\noindent
+\textit{(ii) $\Rightarrow$ (i).}
+This is exactly Theorem~\ref{thm:rank-one-seed-forces-completeness}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:phase-generation-forces-phase-rigidity}]
+\label{proof:cor:phase-generation-forces-phase-rigidity}
+By Definition~\ref{def:phase-generating-observable-family}, one of cases
+(iii.a)--(iii.c) holds. In case (iii.a), the conclusion is immediate from
+Definition~\ref{def:phase-rigid-observable-family}. In case (iii.b),
+Corollary~\ref{cor:finite-observable-rigidity-real-type} gives
+\[
+\mathrm{Comm}(\mathcal A_{\rho})=\bbR\,I_{M_{\rho}}.
+\]
+In case (iii.c), the hypothesis already states that $\mathcal A_{\rho}$ is of
+real type, which is exactly the same scalar-commutant condition. Therefore the
+selected-law family is phase-rigid in every case.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:local-unitary-covariance}]
+\label{proof:thm:local-unitary-covariance}
+For each edge $(x,y)\in\Lambda^1$,
+\[
+\psi_x' - U_{xy}'\psi_y'
+=
+V_x\psi_x - V_xU_{xy}V_y^{-1}V_y\psi_y
+=
+V_x(\psi_x-U_{xy}\psi_y).
+\]
+Because $V_x$ is unitary,
+\[
+\|\psi_x' - U_{xy}'\psi_y'\|
+=
+\|\psi_x-U_{xy}\psi_y\|.
+\]
+Squaring and summing over all edges gives
+\[
+E[\psi',U']=E[\psi,U].
+\]
+The final statement is exactly the interpretation of this invariance as local
+unitary covariance on the channel transport network.
+\end{proof}
+
+%%% --- coherence_gap.tex proofs ---
+
+\begin{proof}[Proof of Theorem~\ref{thm:shadow-transport-package}]
+\label{proof:thm:shadow-transport-package}
+(i) Since $T_h=\CCLeak{d}{h}^*\CCLeak{d}{h}$ is positive semidefinite, all its
+eigenvalues are nonnegative.
+
+(ii) If $\Lambda_h(d)=\{0,\dots,0\}$, then all eigenvalues of the self-adjoint
+operator $T_h$ vanish, so $T_h=0$. If $T_h=0$, then for every
+$x\in\cH_{\mathrm{obs}}$,
+\[
+\|\CCLeak{d}{h}x\|^2=\langle x,T_hx\rangle=0,
+\]
+so $\CCLeak{d}{h}x=0$. The converse is immediate from
+$T_h=\CCLeak{d}{h}^*\CCLeak{d}{h}$.
+
+(iii) If $U$ preserves both $d$ and $\CCPi{h}$, then it preserves
+$\CCLeak{d}{h}$ and therefore conjugates $T_h$ to itself on
+$\cH_{\mathrm{obs}}$. Spectrum, trace moments, and determinant are invariant
+under unitary conjugacy.
+
+(iv) Since $T_h$ is self-adjoint on a finite-dimensional space, it is
+unitarily diagonalizable with diagonal entries $\lambda_1,\dots,\lambda_r$.
+The formulas for $M_k(h)$ and $\Delta_h(t)$ follow immediately. The
+characteristic polynomial determines the multiset of eigenvalues with
+multiplicity, while Newton's identities recover the characteristic polynomial
+coefficients from the first $r$ power sums $M_1(h),\dots,M_r(h)$.
+\end{proof}

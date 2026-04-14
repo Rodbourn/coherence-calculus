@@ -1,0 +1,744 @@
+% ============================================================
+\section{The Balanced Dimension and $K_4$}
+\label{sec:balanced-dimension}
+% ============================================================
+
+The holographic violation $\cH(D) = \binom{D}{2} - (D{-}1)!$ measures the
+mismatch between pairwise couplings and orderings at an incidence of~$D$
+primitives. $\cH(D)=0$ selects the balanced dimensions where these two counts
+agree. This is a Diophantine equation with exactly two solutions: $D=2$
+(degenerate) and $D=4$ (the unique non-degenerate balanced dimension). The
+balanced complex~$K_4$ carries a six-slot edge carrier that decomposes as
+$1{+}2{+}3$ under the canonical~$S_4$ action. The representation theory
+of~$S_4$ is standard \cite{Serre1977,FultonHarris1991}; the intrinsic
+decomposition uses only the character table and the edge carrier.
+
+\subsection{The Completeness Equation}
+\label{subsec:completeness-equation}
+% ------------------------------------------------------------
+
+\begin{definition}[Dimension]\label{def:dimension}\lean{dimensionOfEvent}
+The \emph{dimension} $D$ of an incidence is the count of primitives meeting there.
+\end{definition}
+
+\begin{definition}[Primitive Normalization]\label{def:fundamental-scale}\lean{fundamentalScale}
+A single primitive fixes the unit normalization. All later counting scales are measured relative to that unit.
+\end{definition}
+
+At an incidence of dimension $D$, structure is counted two ways:
+
+\textbf{Pair count:} Pairwise couplings give $\binom{D}{2}$ unordered pairs.
+
+\textbf{Order count:} With one primitive distinguished, the remaining $D-1$ can be ordered in $(D-1)!$ ways.
+
+\begin{theorem}[Completeness]\label{thm:completeness}\lean{completeness_from_closure}\lean{stable_D2}\lean{stable_D4}
+If an incidence of dimension $D$ is counted so that its pair count is $\binom{D}{2}$ and its order count is $(D-1)!$, then Closure Balance forces:
+\begin{equation}
+\boxed{\binom{D}{2} = (D-1)!}
+\label{eq:completeness}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Closure Balance identifies the pair count and order count for the incidence. Under the counting model used here, those counts are $\binom{D}{2}$ and $(D-1)!$, so the displayed equation follows immediately.
+\end{proof}
+
+\begin{definition}[Closure Residual]\label{def:holographic-operator}\lean{holographicOperator}
+$\cH(D) := \binom{D}{2} - (D-1)!$
+\end{definition}
+
+\begin{definition}[Counting realization of the closure defect]
+\label{def:counting-realization-closure-defect}\lean{CoherenceCalculus.countingRealizationClosureDefect}
+Let \(I\) be a pure-dimensional incidence of dimension \(D\) in the sense of
+Definition~\ref{def:dimension}. Its \emph{counting realization} is
+\[
+\lambda(I):=\cH(D).
+\]
+This is the first scalar counting realization of the abstract closure defect
+\(\Lambda(I)\) from Definition~\ref{def:closure-defect}.
+\end{definition}
+
+\begin{proposition}[Pure-dimensional counting realization]
+\label{prop:pure-dimensional-counting-realization}\lean{CoherenceCalculus.pure_dimensional_counting_realization}
+If \(I\) is a pure-dimensional incidence of dimension \(D\), then
+\[
+\lambda(I)=\cH(D)=\binom{D}{2}-(D-1)!.
+\]
+In particular, the counting realization vanishes exactly on the
+closure-balanced dimensions and is nonzero exactly on the counting residual
+dimensions.
+\end{proposition}
+
+\begin{proof}
+The first identity is Definition~\ref{def:counting-realization-closure-defect}.
+The second statement is immediate from the definition of \(\cH(D)\).
+\end{proof}
+
+\begin{proposition}[Counting closure realizes closure balance on the pure-dimensional surface]
+\label{prop:counting-closure-realizes-terminality}\lean{CoherenceCalculus.counting_zero_implies_balanced, CoherenceCalculus.counting_balanced_implies_zero}
+Let \(I\) be a pure-dimensional incidence of dimension \(D\). On the counting
+surface,
+\[
+\lambda(I)=0
+\quad\Longleftrightarrow\quad
+\text{\(I\) is closure-balanced in the sense of Axiom~\ref{ax:closure}}.
+\]
+Hence, on pure-dimensional incidences, exact counting closure is represented by
+vanishing counting defect on that realized surface.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:pure-dimensional-counting-realization},
+\(\lambda(I)=\binom{D}{2}-(D-1)!\). Therefore \(\lambda(I)=0\) exactly when
+the pair count and order count agree, which is precisely Closure Balance in
+the counting model used here.
+\end{proof}
+
+\begin{proposition}[Counting realization reflects terminality on the pure-dimensional surface]
+\label{prop:counting-realization-reflects-terminality}\lean{CoherenceCalculus.counting_realization_reflects_terminality}
+Let \(I\) be a pure-dimensional incidence of dimension \(D\). Assume the
+counting realization is sound on this surface, in the sense that zero counting
+defect represents zero bedrock closure defect. Then
+\[
+\lambda(I)=0
+\quad\Longleftrightarrow\quad
+\Lambda(I)=0
+\quad\Longleftrightarrow\quad
+I\text{ is terminal.}
+\]
+In particular, on pure-dimensional incidences, exact counting closure is the
+realized surface of bedrock terminality.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:pure-dimensional-counting-realization},
+\(\lambda(I)=0\) exactly when the counting closure residual vanishes. By the
+soundness assumption on the pure-dimensional counting surface, this is
+precisely the condition \(\Lambda(I)=0\). Terminality is then equivalent to
+zero bedrock defect by Axiom~\ref{ax:termination}.
+\end{proof}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+$D$ & Pair Count & Order Count & $\cH(D)$ \\
+\midrule
+2 & 1 & 1 & 0 (Balanced) \\
+3 & 3 & 2 & $+1$ (Residual) \\
+4 & 6 & 6 & 0 (Balanced) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{theorem}[Uniqueness of the Residual Dimension]\label{thm:barrier-uniqueness}\lean{barrier_D3}
+$D = 3$ is the unique dimension with $\cH(D) > 0$.
+Equivalently, $D=3$ is the unique residual dimension.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Minimal nonterminal counting carrier]
+\label{cor:minimal-nonterminal-counting-carrier}\lean{CoherenceCalculus.minimal_nonterminal_counting_carrier}
+Among the nondegenerate counting dimensions, \(D=3\) is the minimal carrier on
+which the counting realization of the closure defect remains nonzero:
+\[
+\lambda(I)=\cH(3)=1.
+\]
+Thus \(D=3\) is the first nonterminal mediation layer between the unit seed and
+the balanced carrier.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:barrier-uniqueness}, \(D=3\) is the unique dimension with
+\(\cH(D)>0\). Since \(\cH(3)=1\), the claim follows.
+\end{proof}
+
+\begin{theorem}[Unique nondegenerate balanced dimension in the counting model]\label{thm:forced-stable-dimension}\lean{stable_dimension_classification}\lean{closureStableDimension_globally_forced}
+The only closure-balanced dimensions are $D = 2$ and $D = 4$.
+Among these, $D = 4$ is the unique nontrivial balanced dimension.
+\end{theorem}
+
+\begin{proof}
+Exact closure occurs at $D = 2$ and $D = 4$.
+For $D = 0,1,3$ the residual is nonzero by direct computation, and for every $D \geq 5$ the order count strictly dominates the pair count.
+Hence no balanced dimension exists beyond $D = 4$, and the only balanced dimension beyond the trivial case $D = 2$ is $D = 4$.
+\end{proof}
+
+\begin{remark}[Role of the \(D=4\) theorem]
+Theorem~\ref{thm:forced-stable-dimension} is a counting-classification theorem
+on the Part~I surface. It identifies the canonical nondegenerate balanced
+local carrier used in the later structural and physical layers. The physical
+reading begins only when the explicit Part~II three-law hypothesis is imposed
+on that Part~I carrier.
+\end{remark}
+
+\begin{corollary}[First nontrivial terminal counting carrier]
+\label{cor:first-nontrivial-terminal-counting-carrier}\lean{CoherenceCalculus.first_nontrivial_terminal_counting_carrier}
+The first nontrivial carrier on which the counting realization of the closure
+defect vanishes is \(D=4\):
+\[
+\lambda(I)=\cH(4)=0.
+\]
+Accordingly, \(D=4\) is the first nontrivial terminal carrier on the counting
+surface.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:forced-stable-dimension} identifies \(D=4\) as the unique
+nontrivial balanced dimension. By
+Proposition~\ref{prop:pure-dimensional-counting-realization}, balanced
+dimensions are exactly those on which the counting realization vanishes.
+\end{proof}
+
+% ------------------------------------------------------------
+
+\subsection{The Proof Chain}
+\label{subsec:proof-chain}
+% ------------------------------------------------------------
+
+From one primitive and three axioms:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Primitive:} & Constancy \\
+\textbf{Definition:} & Primitive \\
+\textbf{Axiom I:} & Existence \\
+\textbf{Definition:} & Incidence \\
+\textbf{Axiom II:} & Incidence \\
+\textbf{Axiom III:} & Closure Balance \\
+\midrule
+$\Downarrow$ & \\
+Distinction & (explicit in the primitive interface) \\
+Finiteness & (explicit in the incidence-count interface) \\
+Finite choice (constructive) & (from explicit finite enumerations) \\
+$\bbN$ and arithmetic & (from the canonical finite counting object) \\
+Completeness: $\binom{D}{2} = (D-1)!$ & (from Closure Balance) \\
+$D = 2, 4$ balanced; $D = 3$ residual & (from Completeness) \\
+Canonical nondegenerate balanced carrier at $D = 4$ & (from global closure-balance classification) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The operator calculus rests on this counting classification only at the moment
+one passes to the canonical realization. The structural layer of Part~I does
+not assume these coordinates in advance.
+
+\paragraph{Connection to Coherence Calculus.}
+In the canonical realization of the next section, the horizon projection
+$\CCPi{h}$ implements the pair-count/order-count duality of Closure Balance at
+each resolution level. The residual $\cH(D)$ becomes, after projection, a
+defect term recording failure of closure at finite horizon. In this sense the
+operator calculus organizes closure-balance failure under observation.
+
+% --- Intrinsic decomposition and channel structure ---
+
+\subsection{Primitive seed and local type profiles}
+
+The counting derivation also fixes the local finite carrier on which any later
+typed branch classification must act. At the bedrock level, this is not yet a
+catalog of physical laws. It is a constructive statement that the local
+closure algebra has only one primitive seed, one residual interface, and one
+nontrivial balanced carrier.
+
+\begin{definition}[Balanced closure slot count]
+\label{def:balanced-closure-slot-count}
+\lean{balancedClosureSlotCount}
+For a balanced dimension $D$, define its \emph{closure slot count} by
+\[
+N_{\mathrm{cl}}(D) := \binom{D}{2} = (D-1)!.
+\]
+This is the common pair/order count carried by a balanced local incidence.
+\end{definition}
+
+\begin{definition}[Local type profile]
+\label{def:local-type-profile}
+\lean{LocalTypeProfile}
+Let $D$ be balanced. A \emph{local type profile} at dimension $D$ is a finite
+decomposition of the closure slot count into positive channel sizes:
+\[
+N_{\mathrm{cl}}(D)=n_1+\cdots+n_r,
+\qquad
+n_i\in\bbN,\quad n_i\ge 1.
+\]
+Equivalently, a local type profile is a partition of $N_{\mathrm{cl}}(D)$.
+It records only the finite irreducible channel sizes. No symmetry group,
+continuum field interpretation, or physical label is assumed at this stage.
+\end{definition}
+
+\begin{theorem}[Unique unit seed and six-slot balanced carrier]
+\label{thm:unit-seed-and-six-slot-carrier}
+\lean{unit_seed_and_six_slot_carrier}
+The only balanced dimensions are $D=2$ and $D=4$, and their closure slot
+counts are
+\[
+N_{\mathrm{cl}}(2)=1,
+\qquad
+N_{\mathrm{cl}}(4)=6.
+\]
+Consequently:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item $D=2$ furnishes the unique unit-balanced seed;
+\item $D=4$ furnishes the unique nontrivial balanced local carrier, with six
+      closure slots.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Irreducibility of the primitive seed]
+\label{cor:primitive-seed-irreducible}
+\lean{primitive_seed_irreducible}
+The only local type profile at the unit-balanced seed is
+\[
+1.
+\]
+In particular, the primitive seed admits no nontrivial decomposition into
+smaller positive closure channels.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:unit-seed-and-six-slot-carrier},
+$N_{\mathrm{cl}}(2)=1$. The only partition of $1$ into positive integers is
+$1$ itself.
+\end{proof}
+
+\begin{corollary}[Single-channel unit seed]
+\label{cor:single-channel-unit-seed}\lean{CoherenceCalculus.single_channel_unit_seed}
+Any local law carried by the unit-balanced seed $D=2$ is necessarily
+single-channel. In particular, no nontrivial local carrier splitting can occur
+at the seed.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:primitive-seed-irreducible} says that the only local type
+profile at the seed is the one-part profile \(1\). Therefore every local law
+carried by that seed has exactly one irreducible local channel.
+\end{proof}
+
+\begin{corollary}[Repeated transport at the seed introduces no new carrier data]
+\label{cor:d2-repeat-no-new-carrier}\lean{CoherenceCalculus.repeat_cycle_monodromy_factorization}\lean{CoherenceCalculus.single_channel_unit_seed}
+Let the unit-balanced seed \(D=2\) carry a reversible transport cycle \(W\) in
+the sense of Definition~\ref{def:transport-cycle}. If a second cycle is a
+repeat \(W^{\times m}\) with \(m>1\), then:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item its monodromy is \(\mathcal M(W)^m\);
+\item it remains single-channel on the seed;
+\item it creates no new local type profile and no new local carrier splitting.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Part (i) is Proposition~\ref{prop:repeat-cycle-monodromy-factorization}. By
+Corollary~\ref{cor:single-channel-unit-seed}, every local law on the seed is
+single-channel, so the repeated cycle remains on that same one-channel carrier,
+proving (ii). Since the seed admits no local type profile other than \(1\), no
+repeat can create a new local type profile or a new carrier splitting, which is
+(iii).
+\end{proof}
+
+\begin{corollary}[Primitive supports control all seed spectral data]
+\label{cor:d2-primitive-support-profile}\lean{CoherenceCalculus.repeat_cycle_monodromy_factorization}\lean{CoherenceCalculus.PrimitiveTransportCycle}\lean{CoherenceCalculus.single_channel_unit_seed}
+Let \(\mathcal C\) be any finite family of reversible transport cycles carried
+by the unit-balanced seed \(D=2\). Then there exists a finite family
+\[
+\mathcal P
+\]
+of primitive transport cycles on that seed such that for every
+\[
+C\in\mathcal C
+\]
+there are \(P\in\mathcal P\) and \(m\ge 1\) with
+\[
+\mathcal M(C)=\mathcal M(P)^m.
+\]
+Consequently, every seed-side spectral datum is generated by primitive
+supports together with repeat exponents, and no non-primitive cycle introduces
+a new seed carrier type.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{theorem}[Residual mediation and finite local type profiles]
+\label{thm:finite-local-type-profiles}
+\lean{finite_local_type_profiles}
+The passage from the unit-balanced seed to the nontrivial balanced carrier is
+mediated by the unique residual dimension $D=3$. Moreover every local type
+profile on the canonical balanced carrier $D=4$ is one of the finitely many
+partitions of $6$:
+\[
+\begin{gathered}
+6,\quad
+5+1,\quad
+4+2,\quad
+4+1+1,\quad
+3+3,\quad
+3+2+1,\\
+3+1+1+1,\quad
+2+2+2,\quad
+2+2+1+1,\quad
+2+1+1+1+1,\quad
+1+1+1+1+1+1.
+\end{gathered}
+\]
+Consequently, bedrock admits only finitely many local type profiles before any
+additional symmetry, admissibility, or realization hypotheses are imposed.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Choice-free reduction of local type classification]
+\label{cor:choice-free-type-classification}
+\lean{choice_free_type_classification}
+Any later typed branch classification in this calculus reduces first to
+the finite counting data
+\[
+\text{unit seed }(1),\qquad
+\text{residual interface }(D=3),\qquad
+\text{balanced carrier }(6),
+\]
+and then to a choice among the finitely many local type profiles of
+Theorem~\ref{thm:finite-local-type-profiles}. No open-ended continuum of
+primitive types is introduced at bedrock level.
+\end{corollary}
+
+\begin{proof}
+The seed/interface/carrier trichotomy is exactly the content of
+Theorem~\ref{thm:unit-seed-and-six-slot-carrier} together with
+Theorem~\ref{thm:finite-local-type-profiles}. The final sentence records that
+the possible local profiles have already been explicitly enumerated.
+\end{proof}
+
+\begin{corollary}[Residual localization on the unique interface]
+\label{cor:residual-localization-on-d3}
+\lean{barrier_D3, finite_local_type_profiles}
+Any later local realization on the canonical balanced carrier that singles out
+one residual mediation layer compatible with the counting bedrock must localize
+that layer on the unique residual interface \(D=3\). There is no second
+counting-compatible local residual interface between the unit seed and the
+nontrivial balanced carrier.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:finite-local-type-profiles}, the passage from the
+unit-balanced seed to the nontrivial balanced carrier is mediated by the unique
+residual dimension \(D=3\). Therefore any local realized extension that marks a
+single residual mediation layer while remaining compatible with the counting
+bedrock must mark that same interface. No second such interface exists in the
+seed/interface/carrier trichotomy of
+Corollary~\ref{cor:choice-free-type-classification}.
+\end{proof}
+
+\begin{definition}[Logical type signature]
+\label{def:logical-type-signature}
+\lean{LogicalTypeSignature}
+A \emph{logical type signature} on the canonical balanced carrier is a local
+type profile at $D=4$. Equivalently, it is a partition of the six-slot closure
+count
+\[
+6=n_1+\cdots+n_r,
+\qquad
+n_i\in\bbN,\quad n_i\ge 1.
+\]
+The parts $n_i$ record only irreducible local channel sizes.
+\end{definition}
+
+\begin{definition}[Symmetry-refined logical type]
+\label{def:symmetry-refined-logical-type}
+\lean{SymmetryRefinedLogicalType}
+Let $V$ be a six-dimensional local carrier equipped with a finite unitary
+symmetry action of a group $G$, and decompose $V$ into its nonzero isotypic
+components:
+\[
+V=\bigoplus_{\rho}\,V_\rho.
+\]
+The \emph{symmetry-refined logical type} of $(V,G)$ is the multiset of positive
+dimensions
+\[
+\{\dim V_\rho : V_\rho\neq 0\}.
+\]
+\end{definition}
+
+\begin{proposition}[Every symmetry-refined logical type lies over a finite logical signature]
+\label{prop:symmetry-refined-logical-type}
+\lean{symmetry_refined_logical_type}
+Let $(V,G)$ be as in Definition~\ref{def:symmetry-refined-logical-type}. Then:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item the symmetry-refined logical type is a partition of $6$;
+\item its number of distinct symmetry channels is at most $6$;
+\item its underlying logical type signature is one of the finitely many
+      signatures listed in Theorem~\ref{thm:finite-local-type-profiles}.
+\end{enumerate}
+\end{proposition}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Possible logical types are finite at bedrock level]
+\label{cor:logical-types-finite}
+\lean{logical_types_finite}
+At bedrock level, possible logical types are
+finite and constructive: they are exactly the logical type signatures of
+Definition~\ref{def:logical-type-signature}, together with their
+symmetry-refined realizations of
+Definition~\ref{def:symmetry-refined-logical-type}. In particular, no later
+typed branch can introduce more than six irreducible local channels on the
+canonical balanced carrier.
+\end{corollary}
+
+\begin{proof}
+The finite list of logical type signatures is given by
+Theorem~\ref{thm:finite-local-type-profiles}. Any symmetry-refined realization
+of such a type lies over one of those signatures by
+Proposition~\ref{prop:symmetry-refined-logical-type}. The final sentence is
+exactly Proposition~\ref{prop:symmetry-refined-logical-type}(ii).
+\end{proof}
+
+\begin{definition}[Local slot carrier of a balanced four-incidence]
+\label{def:local-slot-carrier}
+\lean{LocalSlot}\lean{LocalSlotCarrier}
+Fix a balanced incidence with primitive set $\{1,2,3,4\}$. Its \emph{local slot
+set} is the set of unordered primitive pairs
+\[
+\mathcal S_4:=\{\{i,j\}:1\le i<j\le 4\},
+\]
+so $|\mathcal S_4|=6$. The associated \emph{local slot carrier} is the
+six-dimensional real vector space
+\[
+V_{\mathrm{slot}}:=\bbR[\mathcal S_4]
+\]
+with basis vectors $e_{ij}=e_{\{i,j\}}$ indexed by the six slots.
+\end{definition}
+
+\begin{definition}[Intrinsic relabeling action]
+\label{def:intrinsic-relabeling-action}
+\lean{Primitive4}\lean{IntrinsicRelabelingAction}
+The full relabeling group of the four primitives is the symmetric group
+$S_4$. It acts on the slot set by
+\[
+\sigma\cdot \{i,j\}:=\{\sigma(i),\sigma(j)\},
+\qquad
+\sigma\in S_4,
+\]
+and therefore linearly on $V_{\mathrm{slot}}$ by
+\[
+\sigma\cdot e_{ij}:=e_{\sigma(i)\sigma(j)}.
+\]
+\end{definition}
+
+\paragraph{No new axiom enters here.}
+\label{rem:no-new-axiom-s4}
+Definition~\ref{def:intrinsic-relabeling-action} introduces no additional
+bedrock axiom. Once a four-incidence is fixed, the set of all bijections of
+its four primitives is canonically $S_4$. The only extra hypothesis that could
+enter later is a realization-level equivariance assumption asserting that a
+particular operator law commutes with this intrinsic relabeling action.
+
+\begin{theorem}[Canonical intrinsic decomposition of the six-slot carrier]
+\label{thm:intrinsic-six-slot-decomposition}
+\lean{intrinsic_six_slot_decomposition}
+Under the intrinsic relabeling action of $S_4$, the six-slot carrier admits a
+canonical direct-sum decomposition
+\[
+V_{\mathrm{slot}}=U_1\oplus U_2\oplus U_3
+\]
+with
+\[
+\dim U_1=1,\qquad
+\dim U_2=2,\qquad
+\dim U_3=3.
+\]
+Consequently the intrinsic symmetry-refined logical type of the canonical
+balanced carrier is forced to be
+\[
+1+2+3.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Intrinsic symmetry removes the remaining signature ambiguity]
+\label{cor:intrinsic-symmetry-forces-123}
+\lean{intrinsic_symmetry_forces_123}
+If logical types are classified by the full intrinsic relabeling symmetry of a
+balanced four-incidence, then the finite list of bedrock signatures collapses
+to a unique canonical signature:
+\[
+1+2+3.
+\]
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:intrinsic-six-slot-decomposition} constructs the unique
+intrinsic $S_4$-invariant channel decomposition of the six-slot carrier. Its
+dimensions are exactly $1$, $2$, and $3$.
+\end{proof}
+
+\begin{theorem}[Algebraic closure of the edge carrier under exterior product]
+\label{thm:fermionic-sector-from-ext2}\lean{CoherenceCalculus.ExteriorSquareFermionicData, CoherenceCalculus.fermionic_sector_from_ext2}
+Let $V_{\mathrm{slot}} = U_1 \oplus U_2 \oplus U_3$ be the canonical
+$S_4$-decomposition of the edge carrier
+(Theorem~\ref{thm:intrinsic-six-slot-decomposition}). Then:
+\begin{enumerate}[label=\textup{(\alph*)}, itemsep=0.3em]
+\item $\mathrm{Ext}^2(U_2) \cong \mathrm{sign}$, the sign representation
+  of~$S_4$ (dimension~$1$).
+\item $\mathrm{Ext}^2(U_3) \cong \mathrm{sign} \otimes \mathrm{std}$, the
+  sign-twisted standard representation of~$S_4$ (dimension~$3$).
+\item The edge carrier $V_{\mathrm{slot}}$ contains only the irreducible
+  representations $\mathrm{trivial}(1) \oplus \mathrm{2\text{-}dim}(2)
+  \oplus \mathrm{std}(3)$. The $\mathrm{sign}(1)$ and
+  $\mathrm{sign} \otimes \mathrm{std}(3)$ representations are absent.
+\item The antisymmetric products of the bosonic channels therefore generate
+  representations not contained in the edge carrier. The algebraic closure
+  of $V_{\mathrm{slot}}$ under $\mathrm{Ext}^2$ is the full $S_4$
+  representation ring restricted to these five irreducibles, of total
+  dimension $1 + 2 + 3 + 1 + 3 = 10$.
+\end{enumerate}
+The additional $4$ dimensions ($\mathrm{sign} \oplus
+\mathrm{sign} \otimes \mathrm{std}$) carry the sign character of~$S_4$:
+under any odd permutation, they acquire a factor of~$-1$.
+\end{theorem}
+
+\begin{proof}
+For part~(a): $U_2$ is the $2$-dimensional irreducible representation
+of~$S_4$. Its exterior square $\mathrm{Ext}^2(U_2)$ has dimension
+$\binom{2}{2} = 1$. The character of $\mathrm{Ext}^2(U_2)$ at a group
+element~$g$ is $\frac{1}{2}(\chi_{U_2}(g)^2 - \chi_{U_2}(g^2))$. Direct
+computation from the $S_4$ character table gives
+$\chi_{\mathrm{Ext}^2(U_2)} = \chi_{\mathrm{sign}}$.
+
+For part~(b): $U_3 = \mathrm{std}$ has dimension~$3$.
+$\mathrm{Ext}^2(U_3)$ has dimension $\binom{3}{2} = 3$. The same character
+formula gives
+$\chi_{\mathrm{Ext}^2(\mathrm{std})} = \chi_{\mathrm{sign} \otimes
+\mathrm{std}}$.
+
+Parts~(c) and~(d) follow by comparing the irreducible content of
+$V_{\mathrm{slot}}$ with the outputs of the $\mathrm{Ext}^2$ operations.
+The edge carrier contains trivial, $2$-dim, and std. The $\mathrm{Ext}^2$
+products generate sign and $\mathrm{sign}\otimes\mathrm{std}$, which are
+absent from the edge carrier.
+The total dimension of the five irreducibles is
+$1 + 1 + 2 + 3 + 3 = 10$.
+\end{proof}
+
+\begin{remark}[Observation: the sign character and fermions]
+\label{rem:fermionic-observation}\lean{CoherenceCalculus.ExteriorSquareFermionicData, CoherenceCalculus.fermionic_sector_from_ext2}
+The additional representations $\mathrm{sign}(1)$ and
+$\mathrm{sign} \otimes \mathrm{std}(3)$ both carry the sign character
+of~$S_4$: they change sign under odd permutations. Under the continuum
+identification, permutations become spatial coordinate exchanges, and the
+sign character becomes the Pauli exclusion signature. The $1 + 3$ split of
+the fermionic sector is suggestive of the lepton/quark decomposition
+observed in the Standard Model~\cite{PeskinSchroeder1995}. This observation is recorded here as
+structural; the physical identification is not claimed as a theorem of the
+present manuscript.
+\end{remark}
+
+\begin{theorem}[The six-slot carrier is the symmetric square of the primitive \(3\)-channel]
+\label{thm:six-slot-carrier-is-symmetric-square-of-u3}
+\lean{six_slot_carrier_is_symmetric_square_of_u3}
+Let \(U_3\subseteq V_{\mathrm{slot}}\) be the primitive three-dimensional
+channel of Theorem~\ref{thm:intrinsic-six-slot-decomposition}. Then there is a
+canonical symmetric bilinear map
+\[
+\beta_{\mathrm{slot}}:U_3\times U_3\to V_{\mathrm{slot}}
+\]
+whose image generates \(V_{\mathrm{slot}}\). Consequently the induced linear map
+\[
+\overline\beta_{\mathrm{slot}}:\mathrm{Sym}^2(U_3)\to V_{\mathrm{slot}}
+\]
+is an isomorphism. In particular,
+\[
+V_{\mathrm{slot}}\cong \mathrm{Sym}^2(U_3)
+\]
+canonically, compatibly with the intrinsic relabeling action.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{definition}[Intrinsic adjacency classes on slot pairs]
+\label{def:intrinsic-slot-adjacency}
+\lean{IntrinsicSlotAdjacency}\lean{intrinsicSlotAdjacency}
+Let $\alpha,\beta\in\mathcal S_4$ be slots of a balanced four-incidence.
+They are:
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item \emph{equal} if $\alpha=\beta$;
+\item \emph{adjacent} if $\alpha\neq\beta$ and $\alpha\cap\beta$ contains one
+      primitive;
+\item \emph{disjoint} if $\alpha\cap\beta=\varnothing$.
+\end{enumerate}
+These are exactly the three orbit types of ordered slot pairs under the
+intrinsic relabeling action of $S_4$.
+\end{definition}
+
+\begin{theorem}[Intrinsic normal form of the six-slot operator algebra]
+\label{thm:intrinsic-slot-normal-form}
+\lean{intrinsic_slot_normal_form}
+Let $A:V_{\mathrm{slot}}\to V_{\mathrm{slot}}$ be a linear operator commuting
+with the intrinsic relabeling action of $S_4$. Then there exist unique scalars
+$a,b,c\in\bbR$ such that for every slot $\alpha\in\mathcal S_4$,
+\[
+A e_\alpha
+=
+a\,e_\alpha
++
+b\sum_{\beta\sim\alpha} e_\beta
++
+c\sum_{\beta\perp\alpha} e_\beta,
+\]
+where $\beta\sim\alpha$ denotes the four slots adjacent to $\alpha$ and
+$\beta\perp\alpha$ denotes the unique slot disjoint from $\alpha$.
+Equivalently, in the slot basis, the matrix entries of $A$ depend only on the
+three intrinsic classes of Definition~\ref{def:intrinsic-slot-adjacency}:
+\[
+A_{\alpha\beta}=
+\begin{cases}
+a,& \alpha=\beta,\\
+b,& \alpha,\beta\text{ adjacent},\\
+c,& \alpha,\beta\text{ disjoint}.
+\end{cases}
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Intrinsic channel eigenvalues]
+\label{cor:intrinsic-channel-eigenvalues}
+\lean{intrinsic_channel_eigenvalues}
+Let $A$ be as in Theorem~\ref{thm:intrinsic-slot-normal-form}, with parameters
+$a,b,c$. Then the canonical channels of
+Theorem~\ref{thm:intrinsic-six-slot-decomposition} are $A$-invariant, and $A$
+acts on them by the scalar eigenvalues
+\[
+\lambda_1=a+4b+c,\qquad
+\lambda_2=a-2b+c,\qquad
+\lambda_3=a-c
+\]
+on the $1$-, $2$-, and $3$-dimensional channels respectively.
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-topology}.)
+
+\begin{corollary}[Intrinsic-equivariant laws are three-parameter laws]
+\label{cor:intrinsic-equivariant-three-parameter}
+\lean{intrinsic_equivariant_three_parameter}
+Any local law on the canonical balanced carrier that commutes with the full
+intrinsic relabeling action of the four-incidence is determined by exactly
+three scalar channel parameters. Equivalently, such a law preserves the forced
+$1+2+3$ logical-type decomposition and cannot mix those three channels.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:intrinsic-slot-normal-form} shows that an intrinsic-equivariant
+local law is determined by the three scalars $a,b,c$. Corollary
+~\ref{cor:intrinsic-channel-eigenvalues} shows that the corresponding operator
+acts separately on the forced $1$-, $2$-, and $3$-dimensional channels.
+\end{proof}
+
+\paragraph{Relation to symmetry reduction.}
+\label{rem:type-profile-symmetry-reduction}
+Once a concrete finite symmetry action is imposed on the canonical balanced
+carrier, the symmetry reduction theorems of Chapter~4 refine one of the local
+type profiles above into isotypic operator blocks and multiplicity spaces.
+The counting bedrock therefore fixes the finite carrier size first; symmetry
+and admissibility only decide how that already forced carrier decomposes.

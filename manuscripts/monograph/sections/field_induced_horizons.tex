@@ -1,0 +1,62 @@
+% ============================================================
+\section{Field-Induced Horizons}
+\label{sec:field-induced-horizons}
+% ============================================================
+
+The original calculus begins from a discrete horizon tower. A second and more
+flexible source of horizons comes from self-adjoint fields via spectral
+projection. This lets observation be defined by an internal field cut rather
+than by an externally fixed scale index.
+
+\subsection{Spectral horizon projections}
+\label{subsec:field-induced-horizons}
+
+\begin{definition}[Field-induced horizon]
+\label{def:field-induced-horizon}\lean{fieldInducedHorizon}
+Let $\CCField$ be a self-adjoint operator on $\cH$, and let $S \subseteq \bbR$
+be a spectral window. The corresponding \emph{field-induced horizon} is the
+orthogonal projection
+\[
+P_S := \CCSpProj{\CCField}{S} = \mathbf{1}_S(\CCField).
+\]
+\end{definition}
+
+\begin{proposition}[Nested spectral cuts]
+\label{prop:field-induced-nesting}\lean{fieldInducedHorizon_nesting}
+If $S \subseteq T$, then
+\[
+P_S P_T = P_T P_S = P_S.
+\]
+Thus any increasing family of spectral windows determines a nested horizon
+family.
+\end{proposition}
+
+\begin{proof}
+Spectral projections for a self-adjoint operator commute, and the smaller
+spectral window projects onto a subspace of the larger one.
+\end{proof}
+
+\begin{definition}[Field-adapted observed operator]
+\label{def:field-adapted-observable}\lean{fieldAdaptedObservable}
+Given an operator $A$ and a field-induced horizon $P_S$, define the observed
+operator by
+\[
+A_{P_S} := P_S A P_S.
+\]
+All of the block constructions of the calculus then apply with
+$P = P_S$ and $\CCComp = I - P_S$.
+\end{definition}
+
+\paragraph{Relation to the discrete tower.}
+The discrete tower remains the cleanest setting for the finite proof spine.
+Field-induced horizons do not replace it. They enlarge the interface of the
+calculus by showing that the same observable/shadow split can arise from a
+spectral selection rule.
+
+\begin{quote}\small
+\textbf{Interpretation.}
+In applications, the field $\CCField$ may encode an energy, frequency,
+transport, or ordering observable. The horizon is then not ``what level $h$
+can be seen,'' but ``which spectral sector of $\CCField$ is retained.'' The
+same defect and elimination grammar survives unchanged.
+\end{quote}

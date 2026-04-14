@@ -1,0 +1,327 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:advanced-operators-ii}
+% ============================================================
+
+These operators extend the earlier toolbox (horizon flow, spectral selection, traces, polar decomposition) by adding symmetry projectors, capacity/entropy functionals, graded topological invariants, and stability indices.
+
+% ------------------------------------------------------------
+\subsection{Representation Projectors (Isotypic Decomposition under Horizon Symmetry)}
+\label{subsec:representation-projector}
+% ------------------------------------------------------------
+
+When the observable subspace carries a symmetry, representation projectors decompose it into invariant components.
+
+\begin{definition}[Group action on observable subspace]
+\label{def:group-action}\lean{CoherenceCalculus.AppendixOperators.GroupAction}
+Let $G$ be a finite group acting unitarily on the observable subspace $\cH_{\mathrm{obs}} := \CCPi{h} \cH$ via a representation $U: G \to U(\cH_{\mathrm{obs}})$, meaning $U(g)$ is unitary for each $g \in G$ and $U(gh) = U(g)U(h)$.
+\end{definition}
+
+\begin{definition}[Isotypic projector]
+\label{def:isotypic-projector}\lean{CoherenceCalculus.AppendixOperators.AppendixIsotypicProjector}
+For an irreducible representation $\rho$ of $G$ with character $\chi_\rho$ and dimension $d_\rho$, define the \emph{isotypic projector}
+\[
+P_\rho := \frac{d_\rho}{|G|} \sum_{g \in G} \overline{\chi_\rho(g)}\, U(g).
+\]
+(For unitary representations, $\overline{\chi_\rho(g)} = \chi_\rho(g^{-1})$.)
+This projects onto the $\rho$-isotypic component of $\cH_{\mathrm{obs}}$.
+\end{definition}
+
+\begin{proposition}[Properties of isotypic projectors]
+\label{prop:isotypic-properties}\lean{CoherenceCalculus.AppendixOperators.IsotypicProperties}
+The isotypic projectors satisfy:
+\begin{enumerate}[label=(\roman*)]
+\item $P_\rho^2 = P_\rho = P_\rho^*$ (orthogonal projector).
+\item $P_\rho P_{\rho'} = 0$ for distinct irreps $\rho \ne \rho'$.
+\item $\sum_{\rho} P_\rho = I$ on $\cH_{\mathrm{obs}}$ (sum over irreps appearing in the representation).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+These are the standard central idempotents attached to the finite-dimensional
+unitary representation \(U\).
+
+For self-adjointness, use \(U(g)^* = U(g^{-1})\) together with
+\(\overline{\chi_\rho(g)} = \chi_\rho(g^{-1})\):
+\[
+P_\rho^*
+=
+\frac{d_\rho}{|G|}\sum_{g\in G} \chi_\rho(g^{-1})\,U(g)^*
+=
+\frac{d_\rho}{|G|}\sum_{g\in G} \chi_\rho(g^{-1})\,U(g^{-1}).
+\]
+Reindexing \(g \mapsto g^{-1}\) gives \(P_\rho^* = P_\rho\).
+
+For the product, write
+\[
+P_\rho P_{\rho'}
+=
+\frac{d_\rho d_{\rho'}}{|G|^2}
+\sum_{g,h\in G}
+\overline{\chi_\rho(g)}\,
+\overline{\chi_{\rho'}(h)}\,
+U(gh).
+\]
+Reindex with \(k = gh\) and apply the Schur orthogonality relations for
+characters. This yields
+\[
+P_\rho P_{\rho'} = \delta_{\rho\rho'}\,P_\rho,
+\]
+so in particular \(P_\rho^2 = P_\rho\) and \(P_\rho P_{\rho'} = 0\) for
+\(\rho \neq \rho'\).
+
+Finally, the finite-dimensional unitary representation decomposes as the direct
+sum of its isotypic components, and the corresponding central idempotents sum
+to the identity on \(\cH_{\mathrm{obs}}\). Hence
+\[
+\sum_\rho P_\rho = I
+\]
+on the observable subspace.
+\end{proof}
+
+\begin{corollary}[Invariant subspace dimension]
+\label{cor:invariant-dimension}\lean{CoherenceCalculus.AppendixOperators.invariantDimension}
+The dimension of the $G$-invariant subspace is
+\[
+\dim(\cH_{\mathrm{obs}}^G) = \rank(P_{\mathrm{triv}}) = \frac{1}{|G|} \sum_{g \in G} \Tr(U(g)),
+\]
+where $P_{\mathrm{triv}} := \frac{1}{|G|} \sum_{g \in G} U(g)$ is the projector onto the trivial isotypic component.
+\end{corollary}
+
+\begin{example}[Symmetric group $S_2$ on $\bbR^2$]
+\lean{CoherenceCalculus.AppendixOperators.s2_projectors_example}
+\label{ex:s2-projectors}
+Let $G = S_2 = \{e, \sigma\}$ act on $\bbR^2$ by swapping coordinates: $U(\sigma)(x_1, x_2) = (x_2, x_1)$.
+In the standard basis, $U(\sigma) = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix}$.
+The two irreps are trivial ($\chi_{\mathrm{triv}}(e) = \chi_{\mathrm{triv}}(\sigma) = 1$) and sign ($\chi_{\mathrm{sign}}(e) = 1$, $\chi_{\mathrm{sign}}(\sigma) = -1$).
+\begin{align*}
+P_{\mathrm{triv}} &= \tfrac{1}{2}(I + U(\sigma)) = \tfrac{1}{2}\begin{psmallmatrix} 1 & 1 \\ 1 & 1 \end{psmallmatrix}, \\
+P_{\mathrm{sign}} &= \tfrac{1}{2}(I - U(\sigma)) = \tfrac{1}{2}\begin{psmallmatrix} 1 & -1 \\ -1 & 1 \end{psmallmatrix}.
+\end{align*}
+These project onto $\Span\{(1,1)\}$ and $\Span\{(1,-1)\}$ respectively.
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Constitutive laws and admissible forms often must be invariant under symmetries.
+Isotypic projectors compute the allowed (invariant or covariant) components directly.
+This connects to the completion-and-selection algebra
+(Section~\ref{sec:constraint-compiler}): symmetry is one of the constraints
+that reduces the rule space.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Rank-Log Functionals (Dimension Measures for Horizons)}
+\label{subsec:horizon-entropy}
+% ------------------------------------------------------------
+
+Entropy functionals measure the ``representational capacity'' of a horizon.
+
+\begin{definition}[Horizon density operator]
+\label{def:horizon-density}\lean{CoherenceCalculus.AppendixOperators.horizonDensity}
+For finite-dimensional $\cH$ (or when $\CCPi{h}$ has finite rank), define the normalized \emph{horizon density operator}
+\[
+\rho_h := \frac{\CCPi{h}}{\Tr(\CCPi{h})}.
+\]
+This is a density operator (positive semidefinite with trace 1) supported on $\cH_{\mathrm{obs}}$.
+\end{definition}
+
+\begin{definition}[Horizon entropy]
+\label{def:horizon-entropy}\lean{CoherenceCalculus.AppendixOperators.horizonEntropy}
+The \emph{horizon entropy} is the von Neumann entropy of the horizon density:
+\[
+S(\CCPi{h}) := -\Tr(\rho_h \log \rho_h).
+\]
+\end{definition}
+
+\begin{lemma}[Entropy of a projection]
+\label{lem:projection-entropy}\lean{CoherenceCalculus.AppendixOperators.projection_entropy}
+If $\CCPi{h}$ is an orthogonal projection of rank $r$, then
+\[
+S(\CCPi{h}) = \log r.
+\]
+\end{lemma}
+
+\begin{proof}
+The spectrum of $\rho_h = \CCPi{h} / r$ is $\{1/r\}$ with multiplicity $r$ and $\{0\}$ otherwise.
+Thus $-\Tr(\rho_h \log \rho_h) = -r \cdot (1/r) \log(1/r) = \log r$.
+\end{proof}
+
+\begin{remark}[Entropy and horizon refinement]
+\lean{CoherenceCalculus.AppendixOperators.entropy_horizon_refinement}
+For nested horizons $h \le h'$ with $\rank(\CCPi{h}) \le \rank(\CCPi{h'})$, we have $S(\CCPi{h}) \le S(\CCPi{h'})$.
+This is consistent with the telescoping identity (HFT-2, Theorem~\ref{thm:HFT}): finer horizons have greater representational capacity.
+\end{remark}
+
+\begin{definition}[Defect-corrected entropy (optional refinement)]
+\label{def:defect-entropy}\lean{CoherenceCalculus.AppendixOperators.defectCorrectedEntropy}
+For a state $x \in \cH$ with $\CCPi{h} x \ne 0$, and defect energy operator $\CCDefOp{d}{h} = \CCLeak{d}{h}^\ast \CCLeak{d}{h}$, define the \emph{defect-corrected entropy}
+\[
+S_{\mathrm{def},h}(x) := S(\CCPi{h}) + \lambda \frac{\langle x, \CCPi{h} \CCDefOp{d}{h} \CCPi{h} x \rangle}{\langle x, \CCPi{h} x \rangle},
+\]
+where $\lambda \ge 0$ is a weighting parameter.
+This adds a penalty proportional to the normalized defect cost of $x$.
+\end{definition}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Horizon entropy measures the log-count of observable degrees of freedom ($\log r$).
+The optional defect correction penalizes states that ``leak'' into the shadow, providing a combined capacity-plus-cost functional.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Topological Spectrograph (Graded Invariants from Complexes)}
+\label{subsec:topological-spectrograph}
+% ------------------------------------------------------------
+
+This subsection records additional structure built on cohomology.
+For the base definitions of Hilbert complexes, cohomology $\CCCoh{k}(D)$, Hodge Laplacian, Green operator, and homotopy operator, see \S\ref{subsec:solver-layer}.
+
+\begin{definition}[Topological spectrograph]
+\label{def:spectrograph}\lean{CoherenceCalculus.AppendixOperators.topologicalSpectrograph}
+The \emph{topological spectrograph} of a complex $(C^\bullet, D)$ is the sequence of cohomology dimensions:
+\[
+\mathrm{SpecTop}(C^\bullet) := \bigl( \dim \CCCoh{k}(D) \bigr)_{k}.
+\]
+\end{definition}
+
+\begin{definition}[Graded volume functional]
+\label{def:graded-volume}\lean{CoherenceCalculus.AppendixOperators.gradedVolume}
+For a weight sequence $w = (w_k)_{k \ge 0}$ with $w_k \ge 0$, define the \emph{weighted graded volume}
+\[
+V_w(C^\bullet) := \sum_k w_k \dim \CCCoh{k}(D).
+\]
+Natural choices: $w_k = 1$ (total dimension) or $w_k = (-1)^k$ (Euler characteristic $\chi$).
+\end{definition}
+
+\begin{lemma}[Additivity under direct sums]
+\label{lem:spectrograph-additivity}\lean{CoherenceCalculus.AppendixOperators.spectrograph_additivity}
+For complexes $(C^\bullet, D)$ and $(C'^\bullet, D')$:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathrm{SpecTop}(C^\bullet \oplus C'^\bullet) = \mathrm{SpecTop}(C^\bullet) + \mathrm{SpecTop}(C'^\bullet)$ (componentwise).
+\item $V_w(C^\bullet \oplus C'^\bullet) = V_w(C^\bullet) + V_w(C'^\bullet)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Cohomology respects direct sums: $\CCCoh{k}(C \oplus C') \cong \CCCoh{k}(C) \oplus \CCCoh{k}(C')$.
+Dimensions add, giving (i). Linearity of summation gives (ii).
+\end{proof}
+
+\begin{remark}[Euler characteristic and exactness]
+\lean{CoherenceCalculus.AppendixOperators.exact_complex_spectrograph_zero}
+The Euler characteristic $\chi(C^\bullet) := \sum_k (-1)^k \dim \CCCoh{k}(D)$ vanishes if and only if the alternating sum of Betti numbers is zero.
+For an exact complex ($\CCCoh{k}(D) = 0$ for all $k$), trivially $\chi = 0$ and the spectrograph is the zero sequence.
+\end{remark}
+
+% ------------------------------------------------------------
+\subsection{Flow--Stability Indices (Fixed Points of Iteration Maps)}
+\label{subsec:flow-stability}
+% ------------------------------------------------------------
+
+Stability analysis concerns fixed points of iteration maps, without reference to continuous parameter evolution.
+
+\begin{definition}[Iteration map and fixed point]
+\label{def:iteration-map}\lean{CoherenceCalculus.AppendixOperators.IterationMap}\lean{CoherenceCalculus.AppendixOperators.isFixedPoint}
+Let $F_h: X_h \to X_h$ be a map on an observable state space $X_h$ (finite-dimensional for accessibility).
+A point $x^* \in X_h$ is a \emph{fixed point} if $F_h(x^*) = x^*$.
+\end{definition}
+
+\begin{definition}[Linearization at a fixed point]
+\label{def:linearization}\lean{CoherenceCalculus.AppendixOperators.Linearization}
+If $F_h$ is differentiable at a fixed point $x^*$, the \emph{linearization} is the Jacobian
+\[
+J := DF_h(x^*).
+\]
+For a linear map $F_h$, the linearization is $F_h$ itself.
+\end{definition}
+
+\begin{definition}[Stability index]
+\label{def:stability-index}\lean{CoherenceCalculus.AppendixOperators.stabilityIndex}
+The \emph{stability index} of a fixed point $x^*$ is
+\[
+\mathrm{Ind}_{\mathrm{stab}}(x^*) := \#\{ \text{eigenvalues } \lambda \text{ of } J \text{ with } |\lambda| > 1 \},
+\]
+counted with algebraic multiplicity.
+\end{definition}
+
+\begin{definition}[Linearized stable and unstable types]
+\label{def:stable-unstable}\lean{CoherenceCalculus.AppendixOperators.isStableFixedPoint}\lean{CoherenceCalculus.AppendixOperators.isUnstableFixedPoint}
+A fixed point $x^*$ is of:
+\begin{itemize}[itemsep=0.2em]
+\item \emph{linearly stable type} if the spectral radius $\rho(J) < 1$, i.e., all eigenvalues satisfy $|\lambda| < 1$.
+\item \emph{linearly unstable type} if $\rho(J) > 1$, i.e., at least one eigenvalue satisfies $|\lambda| > 1$.
+\end{itemize}
+This is a classification of the Jacobian \(J = DF_h(x^*)\). Turning it into a
+nonlinear local-attractor theorem requires additional hypotheses and standard
+results from discrete dynamical systems, which are not developed here.
+\end{definition}
+
+\begin{lemma}[Exact criterion for linear iteration maps]
+\label{lem:stability-criterion}\lean{CoherenceCalculus.AppendixOperators.stability_criterion}\lean{CoherenceCalculus.AppendixOperators.instability_criterion}
+Assume \(X_h\) is finite-dimensional and \(F_h : X_h \to X_h\) is linear.
+Let \(x^* = 0\), so \(J = F_h\).
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item if \(\rho(J) < 1\), then \(0\) is globally attracting and
+      \(F_h^n(x_0) \to 0\) for every \(x_0 \in X_h\);
+\item if \(\rho(J) > 1\), then \(0\) is unstable, and every initial condition
+      with nonzero component in the direct sum of generalized eigenspaces for
+      eigenvalues \(|\lambda| > 1\) has iterates whose norms do not converge to
+      \(0\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Because \(X_h\) is finite-dimensional, \(J\) admits a Jordan normal form over
+\(\mathbb C\). Every Jordan block for an eigenvalue \(\lambda\) contributes a
+factor of the form \(n^m \lambda^n\) to \(J^n\).
+
+If \(\rho(J) < 1\), then every eigenvalue satisfies \(|\lambda| < 1\), so
+every such factor tends to \(0\). Hence \(J^n \to 0\), and therefore
+\(F_h^n(x_0) = J^n x_0 \to 0\) for every \(x_0\).
+
+If \(\rho(J) > 1\), then there is at least one generalized eigenspace
+corresponding to an eigenvalue with \(|\lambda| > 1\). On any nonzero vector in
+that generalized eigenspace, the Jordan-block formula shows that the iterates
+cannot converge to \(0\). Therefore \(0\) is unstable.
+\end{proof}
+
+\begin{remark}[Connection to admissibility]
+\lean{CoherenceCalculus.AppendixOperators.stabilityIndex}
+In the context of admissibility and branch selection (Section~\ref{sec:admissibility}), the selected branch corresponds to the stable fixed point of an associated iteration.
+The stability index counts ``unstable directions,'' namely the number of
+constraints violated by perturbations.
+\end{remark}
+
+\begin{remark}[Nonlinear extension]
+\lean{CoherenceCalculus.AppendixOperators.instability_criterion}
+For genuinely nonlinear iteration maps, promoting the linearized type of
+Definition~\ref{def:stable-unstable} to a local-attractor or local-instability
+statement requires additional hypotheses and standard discrete-dynamical
+results such as the stable-manifold or Hartman--Grobman theorems. Those
+extensions are outside the present appendix.
+\end{remark}
+
+\begin{example}[Linear iteration in $\bbR$]
+\lean{CoherenceCalculus.AppendixOperators.linear_stability_example}
+\label{ex:linear-stability}
+Let $F(x) = ax$ for $a \in \bbR$.
+The fixed point is $x^* = 0$ with $J = a$.
+\begin{itemize}[itemsep=0.2em]
+\item $|a| < 1$: stable, $\mathrm{Ind}_{\mathrm{stab}} = 0$.
+\item $|a| > 1$: unstable, $\mathrm{Ind}_{\mathrm{stab}} = 1$.
+\end{itemize}
+\end{example}
+
+\begin{quote}\small
+\textbf{Intuition.}
+Stability here is about iteration under an admissibility or solver map, not about evolution in an external parameter.
+The stability index counts the number of ``expanding directions'' at a fixed point.
+\end{quote}
+
+\begin{remark}[Alternative indices]
+\lean{CoherenceCalculus.AppendixOperators.alternative_stability_indices}
+For more refined invariants (e.g., Morse index, Conley index), additional structure is required.
+These are not developed here but follow similar principles: counting dimensions of unstable/stable manifolds.
+\end{remark}

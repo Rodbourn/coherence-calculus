@@ -1,0 +1,128 @@
+% ============================================================
+\section{Cross-Block Commutator Defect (Observable/Shadow Mismatch)}
+\label{sec:holographic-defect}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this automates.}
+When two operators do not commute, the ordering matters.
+Under a horizon projection, the \emph{observed} commutator may differ from the commutator of \emph{observed} operators.
+This section provides the language for ``holographic'' or ``bulk/boundary'' defects: mismatches between structure computed in the full space versus structure computed in the observable subspace.
+\end{quote}
+
+\subsection{Abstract pairing and ordering operators}
+
+\begin{definition}[Pairing and ordering operators]
+\label{def:pairing-ordering}\lean{PairingOrdering}
+Let $\cH$ be a Hilbert space.
+A \emph{pairing operator} $P:\cH \to \cH$ and an \emph{ordering operator} $O:\cH \to \cH$ are linear operators encoding two distinct structural operations on $\cH$.
+
+No specific combinatorial or algebraic form is assumed; the operators are abstract.
+\end{definition}
+
+\paragraph{Motivation.}
+In applications, $P$ might encode ``matching'' or ``coupling'' structure, while
+$O$ encodes ``sequencing'' or ``precedence'' structure. The commutator $[P, O]$
+measures the extent to which these structures interfere.
+
+\subsection{Commutator defect under projection}
+
+\begin{definition}[Commutator]
+\label{def:commutator}\lean{commutator}
+For operators $P, O:\cH \to \cH$, the \emph{commutator} is
+\[
+[P, O] := PO - OP.
+\]
+\end{definition}
+
+\begin{definition}[Observed commutator]
+\label{def:observed-commutator}\lean{observedCommutator}
+The \emph{observed commutator} at horizon $h$ is
+\[
+[P, O]_h := \CCPi{h} [P, O] \CCPi{h} = \CCPi{h} (PO - OP) \CCPi{h}.
+\]
+\end{definition}
+
+\begin{definition}[Commutator coherence defect]
+\label{def:commutator-defect}\lean{commutatorCoherenceDefect}
+The \emph{commutator coherence defect} is the coherence defect (Definition~\ref{def:coherence-defect}) applied to the commutator:
+\[
+\CCTau{h}{[P,O]}{x} := \CCPi{h} [P,O](x) - [P,O](\CCPi{h} x).
+\]
+This measures the mismatch between:
+\begin{itemize}[itemsep=0.2em]
+\item projecting the commutator's action on $x$, versus
+\item computing the commutator's action on the projected state $\CCPi{h} x$.
+\end{itemize}
+\end{definition}
+
+\paragraph{Two sources of mismatch.}
+For the observed commutator $[P,O]_h$, there are two potential sources of
+defect:
+\begin{enumerate}[label=(\roman*)]
+\item The commutator $[P,O]$ itself may be nonzero.
+\item The coherence defect $\CCTau{h}{[P,O]}{x}$ may be nonzero even when
+      $[P,O] \ne 0$.
+\end{enumerate}
+Full ``coherent commutativity'' requires both $[P,O] = 0$ and
+$\CCTau{h}{[P,O]}{x} = 0$.
+
+\subsection{Coherent stability}
+
+\begin{definition}[Coherently stable state]
+\label{def:coherently-stable}\lean{isCoherentlyStable}
+A state $x \in \cH$ is \emph{coherently stable} (with respect to $P$, $O$, and $\CCPi{h}$) if
+\[
+[P, O]_h \, \CCPi{h} x = 0,
+\]
+i.e., the observed commutator annihilates the observable part of $x$.
+\end{definition}
+
+\paragraph{Interpretation.}
+Coherent stability means the ordering ambiguity between $P$ and $O$ is
+invisible to an observer at horizon $h$ when acting on $x$. The bulk structure
+(full commutator) may be nontrivial, but its observable projection on $x$
+vanishes.
+
+\begin{proposition}[Coherent stability and defect vanishing]
+\label{prop:coherent-stability}\lean{coherent_stability_observable}
+If $x \in \cH_{\mathrm{obs}} = \CCPi{h} \cH$ (i.e., $\CCPi{h} x = x$), then $x$ is coherently stable if and only if
+\[
+\CCPi{h} [P, O] x = 0.
+\]
+\end{proposition}
+
+\begin{proof}
+For $x \in \cH_{\mathrm{obs}}$, we have $\CCPi{h} x = x$, so $[P,O]_h \CCPi{h} x = \CCPi{h} [P,O] \CCPi{h} x = \CCPi{h} [P,O] x$.
+\end{proof}
+
+\paragraph{No dimension selection claimed.}
+This section provides only definitions and elementary consequences. Any claim
+that coherent stability selects specific dimensions, subspaces, or critical
+points would require additional structure and proof; such claims are not made
+here.
+
+\subsection{Cross-block decomposition}
+
+\begin{proposition}[Cross-block commutator decomposition]
+\label{prop:holographic-decomposition}\lean{crossBlockCommutatorDefect}
+The commutator $[P,O]$ decomposes into observable and shadow contributions:
+\[
+[P,O] = [P,O]_h + \CCPibar{h} [P,O] \CCPi{h} + \CCPi{h} [P,O] \CCPibar{h} + \CCPibar{h} [P,O] \CCPibar{h}.
+\]
+The \emph{cross-block defect} is the sum of off-diagonal terms:
+\[
+\Xi_h^{\mathrm{cross}}[P,O] := \CCPibar{h} [P,O] \CCPi{h} + \CCPi{h} [P,O] \CCPibar{h}.
+\]
+(We write $\Xi$ rather than $\Delta$ to avoid collision with the increment projector $\CCDelta{h}$.)
+\end{proposition}
+
+\begin{proof}
+Expand using $I = \CCPi{h} + \CCPibar{h}$ on both sides of $[P,O]$.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+The cross-block defect $\Xi_h^{\mathrm{cross}}$ captures the ``boundary'' terms: commutator contributions that cross between observable and shadow subspaces.
+These are the terms lost when restricting attention to the observed commutator $[P,O]_h$ alone.
+\end{quote}

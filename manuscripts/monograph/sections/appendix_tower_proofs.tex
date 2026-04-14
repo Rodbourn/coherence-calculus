@@ -1,0 +1,677 @@
+% Appendix C: Tower Calculus Proofs (Chapter 5)
+\label{sec:appendix-tower}
+
+% ============================================================
+% Proofs from foundational_lemmas.tex
+% ============================================================
+
+\begin{proof}[Proof of Lemma~\ref{lem:block-splitting}]
+\label{proof:lem:block-splitting}
+Apply Lemma~\ref{lem:resolution-identity} to $B\CCPi{h}x$:
+\[
+\CCPi{h}AB\CCPi{h}
+=
+\CCPi{h}A(\CCPi{h} + \CCPibar{h})B\CCPi{h}
+=
+\CCPi{h}A\CCPi{h}B\CCPi{h} + \CCPi{h}A\CCPibar{h}B\CCPi{h}.
+\]
+The first term is the observed composition and the second is the cross-shadow correction.
+\end{proof}
+
+% ============================================================
+% Proofs from hft.tex
+% ============================================================
+
+\begin{proof}[Proof of Lemma~\ref{lem:silent-leak}]
+\label{proof:lem:silent-leak}
+Take the rebuilt finite state space and let $\Pi$ project onto the first coordinate:
+\[
+\Pi(x_0,x_1,x_2,x_3) = (x_0,0,0,0).
+\]
+Let $d$ send the first coordinate into the second and annihilate the others:
+\[
+d(x_0,x_1,x_2,x_3) = (0,x_0,0,0).
+\]
+Then $d^2 = 0$. The observed operator $d_\Pi = \Pi d \Pi$ vanishes, so $d_\Pi^2 = 0$.
+But $L(1,0,0,0) = (0,1,0,0) \neq 0$, while the return map vanishes on that shadow image, so $\delta = RL = 0$.
+\end{proof}
+
+% ============================================================
+% Proofs from tower_calculus.tex
+% ============================================================
+
+\begin{proof}[Proof of Lemma~\ref{lem:tower-derivative-block}]
+\label{proof:lem:tower-derivative-block}
+On the $(h,k)$ block,
+\[
+\Delta_h \CCIndexOp A \Delta_k = h\, \CCBlock{A}{h}{k},
+\qquad
+\Delta_h A \CCIndexOp \Delta_k = k\, \CCBlock{A}{h}{k},
+\]
+so the commutator contributes the factor $(h-k)$. The Leibniz rule is the
+usual commutator identity
+\[
+[\CCIndexOp, AB] = [\CCIndexOp, A]B + A[\CCIndexOp, B].
+\]
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:tower-order-arithmetic}]
+\label{proof:prop:tower-order-arithmetic}
+Statement (i) is immediate from the definition of block support.
+
+For (ii), if $|j-k|>m+n$, then for every intermediate band index $\ell$ one has
+either $|j-\ell|>m$ or $|\ell-k|>n$. Hence every term in the block expansion
+\[
+\CCDelta{j}AB\CCDelta{k}
+=
+\sum_{\ell}\CCDelta{j}A\CCDelta{\ell}B\CCDelta{k}
+\]
+vanishes, so $\CCDelta{j}AB\CCDelta{k}=0$.
+
+For (iii), Lemma~\ref{lem:tower-derivative-block} gives
+\[
+\CCBlock{\CCDer{A}}{j}{k}=(j-k)\,\CCBlock{A}{j}{k}.
+\]
+Thus the block support of $\CCDer{A}$ is exactly the block support of $A$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:transport-recursion-compatibility}]
+\label{proof:prop:transport-recursion-compatibility}
+For $g\in G$ and $x\in F^{\bbZ}$,
+\[
+(\mathcal R_B\mathcal U(g)x)_n
+=
+U(g)x_{n+1}-BU(g)x_n+U(g)x_{n-1}
+=
+U(g)(x_{n+1}-Bx_n+x_{n-1})
+=
+(\mathcal U(g)\mathcal R_Bx)_n,
+\]
+which proves (a). The same calculation with $J_F$ in place of $U(g)$ gives
+\[
+(\mathcal R_B\mathcal Jx)_n
+=
+J_Fx_{n+1}-BJ_Fx_n+J_Fx_{n-1}
+=
+J_F(x_{n+1}-Bx_n+x_{n-1})
+=
+(\mathcal J\mathcal R_Bx)_n,
+\]
+proving (b).
+
+For (c), let $x,y$ be finitely supported sequences. Using the sum inner
+product and shifting indices in the finite sums,
+\begin{align*}
+\langle \mathcal R_Bx,y\rangle
+&=
+\sum_n \langle x_{n+1},y_n\rangle
+-\sum_n \langle Bx_n,y_n\rangle
++\sum_n \langle x_{n-1},y_n\rangle \\
+&=
+\sum_n \langle x_n,y_{n-1}\rangle
+-\sum_n \langle x_n,B^*y_n\rangle
++\sum_n \langle x_n,y_{n+1}\rangle \\
+&=
+\sum_n \langle x_n,y_{n-1}-By_n+y_{n+1}\rangle \\
+&=
+\langle x,\mathcal R_By\rangle,
+\end{align*}
+because $B=B^*$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:repeat-cycle-monodromy-factorization}]
+\label{proof:prop:repeat-cycle-monodromy-factorization}
+By definition, the monodromy of \(W^{\times m}\) is the product of the same
+block \(T_r\cdots T_1\) repeated \(m\) times. Associativity of composition gives
+\[
+\mathcal M(W^{\times m})
+=
+(T_r\cdots T_1)\cdots(T_r\cdots T_1)
+=
+\mathcal M(W)^m.
+\]
+The final statement is exactly this factorization.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:cyclic-refinement-prime-step}]
+\label{proof:prop:cyclic-refinement-prime-step}
+Since \(H\) is a subgroup of a cyclic group, it is itself cyclic. Write
+\[
+H\cong C_m
+\]
+for some \(m\). Subgroups of a cyclic group correspond to divisors of its
+order. If \(H'\subsetneq H\) is maximal, then there is no intermediate
+subgroup, equivalently no divisor strictly between \(|H'|\) and \(|H|\).
+Therefore the quotient \(|H|/|H'|\) has no nontrivial factor and must be
+prime. Since \([H:H']=|H|/|H'|\), the index is prime.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:cyclic-refinement-prime-invariant}]
+\label{proof:thm:cyclic-refinement-prime-invariant}
+Let
+\[
+C_k=H_0\supset H_1\supset\cdots\supset H_r=\{0\}
+\]
+be a maximal refinement chain. Taking orders gives
+\[
+k=|C_k|=\prod_{i=0}^{r-1}\frac{|H_i|}{|H_{i+1}|}
+=
+\prod_{i=0}^{r-1}[H_i:H_{i+1}].
+\]
+By Proposition~\ref{prop:cyclic-refinement-prime-step}, each factor is prime.
+Because \(C_k\) is cyclic, for every divisor \(d\mid k\) there is a unique
+subgroup of order \(d\). Hence a maximal refinement chain is exactly a strict
+descending divisor chain with no intermediate divisor steps, so its step
+indices are prime and their product is \(k\). The uniqueness of the multiset of
+prime factors of \(k\) therefore implies that every maximal cyclic refinement
+chain has the same multiset of prime indices, up to permutation.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:isotropic-quadratic-transport}]
+\label{proof:thm:isotropic-quadratic-transport}
+Because $B$ commutes with the orthogonal action $U(g)$, the operator $B^*B$
+also commutes with every $U(g)$. It is self-adjoint by construction. Since the
+representation of $K$ on $F$ is irreducible, Corollary~\ref{cor:self-adjoint-commutant-scalarization}
+forces every self-adjoint operator commuting with the action to be a scalar
+multiple of the identity. Thus
+\[
+B^*B=\kappa(B)\,I_F
+\]
+for a unique real scalar $\kappa(B)$. Positivity of $B^*B$ implies
+$\kappa(B)\ge 0$. The energy formula is then immediate.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:sphere-transitive-implies-irreducible}]
+\label{proof:thm:sphere-transitive-implies-irreducible}
+Suppose $W\subseteq F$ is a nonzero proper $K$-invariant subspace. Choose a
+unit vector $w\in W$. Since $W$ is proper, there exists a unit vector
+$v\in W^{\perp}$. By sphere transitivity, there exists $g\in K$ such that
+\[
+U(g)w=v.
+\]
+But $W$ is $K$-invariant, so $U(g)w\in W$, hence $v\in W\cap W^{\perp}$, which
+forces $v=0$. This contradicts the choice of $v$ as a unit vector. Therefore
+no nonzero proper invariant subspace exists, and $F$ is irreducible.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:metric-isotropic-quadratic-scalar}]
+\label{proof:thm:metric-isotropic-quadratic-scalar}
+Choose an orthonormal basis $\{e_i\}_{i=1}^m$ of $F$. By metric isotropy,
+\[
+\langle Qe_i,e_i\rangle=\kappa(Q)
+\qquad(i=1,\dots,m).
+\]
+Thus every diagonal coefficient of $Q$ in this basis equals $\kappa(Q)$.
+
+For $i\neq j$, the unit vector
+\[
+u_{ij}^{+}:=\frac{e_i+e_j}{\sqrt2}
+\]
+satisfies
+\[
+\kappa(Q)=\langle Qu_{ij}^{+},u_{ij}^{+}\rangle
+=
+\frac12\langle Qe_i,e_i\rangle
+\frac12\langle Qe_j,e_j\rangle
+\langle Qe_i,e_j\rangle
+=
+\kappa(Q)+\langle Qe_i,e_j\rangle.
+\]
+Hence
+\[
+\langle Qe_i,e_j\rangle=0
+\qquad(i\neq j).
+\]
+So the matrix of $Q$ in the orthonormal basis $\{e_i\}$ is diagonal with every
+diagonal entry equal to $\kappa(Q)$, which means
+\[
+Q=\kappa(Q)\,I_F.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:transitive-direction-isotropy}]
+\label{proof:thm:transitive-direction-isotropy}
+For $g\in K$,
+\[
+U(g)QU(g)^*
+=
+\sum_{\alpha\in\mathcal D} q_{\alpha}\,U(g)\Pi_{\alpha}U(g)^*
+=
+\sum_{\alpha\in\mathcal D} q_{\alpha}\,\Pi_{g\cdot\alpha}.
+\]
+Because $Q$ commutes with the action, this must equal
+\[
+Q=\sum_{\alpha\in\mathcal D} q_{\alpha}\Pi_{\alpha}.
+\]
+Since the group acts transitively on $\mathcal D$, the coefficients are
+constant on the orbit and hence there exists a real number $q$ such that
+\[
+q_{\alpha}=q
+\qquad(\alpha\in\mathcal D).
+\]
+Therefore
+\[
+Q=q\sum_{\alpha\in\mathcal D}\Pi_{\alpha}=qc\,I_F.
+\]
+Setting $\kappa(Q):=qc$ gives the claim, and uniqueness is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:quadratic-transport-rigidity}]
+\label{proof:thm:quadratic-transport-rigidity}
+If $B$ carries data of type (i), the conclusion is exactly
+Theorem~\ref{thm:isotropic-quadratic-transport}. If it carries data of type
+(ii), the conclusion is exactly
+Corollary~\ref{cor:sphere-transitive-quadratic-transport}. If it carries data
+of type (iii), the conclusion is exactly
+Corollary~\ref{cor:full-orthogonal-quadratic-transport}. If it carries data of
+type (iv), the conclusion is exactly
+Corollary~\ref{cor:metric-isotropic-transport}. Finally, if it carries data of
+type (v), the conclusion is exactly
+Corollary~\ref{cor:direction-frame-quadratic-coefficient}. In every case
+$B^*B$ is positive semidefinite, so the scalar $\kappa(B)$ is nonnegative, and
+uniqueness is immediate.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:orbit-generated-direction-frame}]
+\label{proof:thm:orbit-generated-direction-frame}
+By construction, each $\Pi_{\alpha}$ is a rank-one orthogonal projection and
+the group acts transitively on the orbit $\mathcal D$. Define
+\[
+S:=\sum_{\alpha\in\mathcal D}\Pi_{\alpha}.
+\]
+Since the family is a single orbit, $S$ commutes with the orthogonal action of
+$K$. It is also self-adjoint. Because $(F,U)$ is an isotropic transport
+channel, the representation of $K$ on $F$ is irreducible. Therefore
+Corollary~\ref{cor:self-adjoint-commutant-scalarization} forces
+\[
+S=c\,I_F
+\]
+for some real scalar $c$. Taking traces gives
+\[
+|\mathcal D|
+=
+\sum_{\alpha\in\mathcal D}\operatorname{Tr}(\Pi_{\alpha})
+=
+\operatorname{Tr}(S)
+=
+c\,\dim F,
+\]
+because each rank-one projection has trace $1$. Hence
+\[
+c=\frac{|\mathcal D|}{\dim F}.
+\]
+This proves both statements.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:ftc-tower}]
+\label{proof:thm:ftc-tower}
+If $h=k$, the right-hand side has block $\CCBlock{A}{h}{h}$. If $h \neq k$,
+Lemma~\ref{lem:tower-derivative-block} gives
+\[
+\CCBlock{(\CCInt{\CCDer{A}})}{h}{k}
+=
+\frac{1}{h-k}\, \CCBlock{\CCDer{A}}{h}{k}
+=
+\frac{1}{h-k}(h-k)\, \CCBlock{A}{h}{k}
+=
+\CCBlock{A}{h}{k}.
+\]
+So every block agrees.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:tower-ibp}]
+\label{proof:prop:tower-ibp}
+Using the block formula from Lemma~\ref{lem:tower-derivative-block},
+\[
+\Tr(\CCDer{A}\, B)
+=
+\sum_{h,k} (h-k)\, \Tr(\CCBlock{A}{h}{k}\CCBlock{B}{k}{h}),
+\]
+while
+\[
+\Tr(A\, \CCDer{B})
+=
+\sum_{h,k} (k-h)\, \Tr(\CCBlock{A}{h}{k}\CCBlock{B}{k}{h}).
+\]
+The two sums are negatives of each other.
+\end{proof}
+
+% ============================================================
+% Proofs from defect_rules.tex
+% ============================================================
+
+\begin{proof}[Proof of Proposition~\ref{prop:product-rule}]
+\label{proof:prop:product-rule}
+Decompose $x = \CCPi{h} x + \CCPibar{h} x$ and $y = \CCPi{h} y + \CCPibar{h} y$.
+By bilinearity,
+\begin{align*}
+B(x,y) &= B(\CCPi{h} x + \CCPibar{h} x,\, \CCPi{h} y + \CCPibar{h} y) \\
+&= B(\CCPi{h} x, \CCPi{h} y) + B(\CCPi{h} x, \CCPibar{h} y) + B(\CCPibar{h} x, \CCPi{h} y) + B(\CCPibar{h} x, \CCPibar{h} y).
+\end{align*}
+Apply $\CCPi{h}$ and use the closure condition $\CCPi{h} B(\CCPi{h} x, \CCPi{h} y) = B(\CCPi{h} x, \CCPi{h} y)$:
+\begin{align*}
+\CCTauBi{h}{B}{x}{y} &= \CCPi{h} B(x,y) - B(\CCPi{h} x, \CCPi{h} y) \\
+&= B(\CCPi{h} x, \CCPi{h} y) + \CCPi{h} B(\CCPi{h} x, \CCPibar{h} y) + \CCPi{h} B(\CCPibar{h} x, \CCPi{h} y) + \CCPi{h} B(\CCPibar{h} x, \CCPibar{h} y) - B(\CCPi{h} x, \CCPi{h} y)\\
+&= \CCPi{h} B(\CCPi{h} x, \CCPibar{h} y) + \CCPi{h} B(\CCPibar{h} x, \CCPi{h} y) + \CCPi{h} B(\CCPibar{h} x, \CCPibar{h} y). \qedhere
+\end{align*}
+\end{proof}
+
+% ============================================================
+% Proofs from constraint_compiler.tex
+% ============================================================
+
+\begin{proof}[Proof of Theorem~\ref{thm:compiler-contract}]
+\label{proof:thm:compiler-contract}
+This is a schema theorem asserting that the calculus provides a compositional route to a well-posed completion constraint.
+\begin{itemize}[itemsep=0.1em]
+\item Defect propagation (Section~\ref{sec:defect-rules}) composes via chain/product rules, yielding a derived defect contribution.
+\item Elimination (Section~\ref{sec:resolvent-defect}) produces residual terms (Schur corrections) on the observable space.
+\item These contributions aggregate into a ``required lower bound'' $D$ for stability.
+\item Admissibility (Definition~\ref{def:admissibility}) selects completions $Q$ satisfying $D + Q \succeq 0$ that are minimal in PSD order.
+\item Minimality in a partial order either yields a unique minimum or a minimal face (non-uniqueness certificate).
+\end{itemize}
+The theorem does not claim uniqueness of $D$; it states that once a bound is fixed, the completion constraint and certificate mechanism are canonical.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:operator-norm-selector-exists}]
+\label{proof:prop:operator-norm-selector-exists}
+By Definition~\ref{def:minimal-scalar-repair}, the operator
+\[
+\nu(D)I_{\mathcal K}
+\]
+is admissible, so the admissible set
+\[
+\mathcal A
+:=
+\{Q\in\mathcal Q: D+Q\succeq 0\}
+\]
+is nonempty. It is closed because the positive semidefinite cone is closed and
+$Q\mapsto D+Q$ is continuous. Since $\mathcal Q$ is finite-dimensional, any
+norm-minimizing sequence in $\mathcal A$ is bounded and therefore has a
+convergent subsequence whose limit still lies in $\mathcal A$. Continuity of
+the operator norm gives a minimizer.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:minimal-selectors-vanish}]
+\label{proof:thm:minimal-selectors-vanish}
+By Definition~\ref{def:minimal-scalar-repair}, the scalar correction
+\[
+\nu(D_h)I_{\CCPi{h}\cH}
+\]
+is admissible. Since $C_h^\ast$ minimizes operator norm among admissible
+corrections,
+\[
+\|C_h^\ast\|
+\le
+\|\nu(D_h)I_{\CCPi{h}\cH}\|
+=
+\nu(D_h),
+\]
+proving (i). For $x\in\cH$,
+\[
+\|C_h^\ast \CCPi{h}x\|
+\le
+\|C_h^\ast\|\,\|\CCPi{h}x\|
+\le
+\nu(D_h)\,\|\CCPi{h}x\|.
+\]
+Because $\CCPi{h}$ is an orthogonal projection, $\|\CCPi{h}x\|\le \|x\|$, and
+since $\nu(D_h)\to 0$, statement (ii) follows. Statement (iii) is exactly
+Theorem~\ref{thm:selected-schur-recovery-general}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:normal-form}]
+\label{proof:thm:normal-form}
+Each isotypic projector $P_\rho$ is constructed from the group action via $P_\rho = \frac{d_\rho}{|G|} \sum_{g \in G} \overline{\chi_\rho(g)}\, U(g)$, so $P_\rho$ commutes with every $U(g)$.
+Since $A$ commutes with every $U(g)$ by hypothesis, $A$ commutes with $P_\rho$.
+
+For distinct irreps $\rho \ne \rho'$, orthogonality of characters gives $P_\rho P_{\rho'} = 0$.
+Thus:
+\[
+P_\rho \, A \, P_{\rho'} = P_\rho \, P_{\rho'} \, A = 0 \cdot A = 0.
+\]
+Since $\sum_\rho P_\rho = I$ on $\cH_{\mathrm{obs}}$, we have $A = \sum_{\rho, \rho'} P_\rho A P_{\rho'} = \sum_\rho P_\rho A P_\rho$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:equivariant-coupling-decomposition}]
+\label{proof:thm:equivariant-coupling-decomposition}
+Let $P_\rho^X$ and $P_\rho^Y$ be the isotypic projectors for $X$ and $Y$.
+Because $T$ intertwines the $G$-actions, it commutes with the projector
+construction on both sides:
+\[
+P_\rho^Y T = T P_\rho^X
+\qquad\text{for every }\rho.
+\]
+If $\rho\neq \rho'$, then orthogonality of isotypic projectors gives
+\[
+P_\rho^Y T P_{\rho'}^X = P_\rho^Y P_{\rho'}^Y T = 0,
+\]
+so $T$ is block-diagonal across isotypic channels:
+\[
+T=\sum_\rho P_\rho^Y T P_\rho^X.
+\]
+On the $\rho$-channel, Schur's lemma gives the standard normal form
+\[
+P_\rho^Y T P_\rho^X \cong I_{V_\rho}\otimes T_\rho
+\]
+for a unique linear map $T_\rho:M_\rho^X\to M_\rho^Y$. This proves the stated
+decomposition.
+
+For the dimension formula, each block contributes
+\[
+\dim \mathrm{Hom}_G(V_\rho\otimes M_\rho^X,\;V_\rho\otimes M_\rho^Y)
+=
+(\dim M_\rho^X)(\dim M_\rho^Y)\,\dim \mathrm{End}_G(V_\rho),
+\]
+and the block decomposition is a direct sum across $\rho$. Summing over the
+appearing channels gives the stated formula.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:multiplicity-free-closures-scalar}]
+\label{proof:thm:multiplicity-free-closures-scalar}
+By Corollary~\ref{cor:isotypic-block}, every $G$-equivariant operator on the
+$\rho$-isotypic component has the form
+\[
+P_{\rho}AP_{\rho}\cong I_{V_{\rho}}\otimes B_{\rho}
+\]
+for some operator $B_{\rho}$ on the multiplicity space $M_{\rho}$. If the
+representation is multiplicity-free, then $\dim M_{\rho}=1$ for every appearing
+$\rho$. Hence each $B_{\rho}$ is multiplication by a real scalar
+$\lambda_{\rho}$ because $A$ is self-adjoint. Therefore $A$ is scalar on every
+channel, which is exactly Definition~\ref{def:symmetry-scalar-closure}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:orthogonal-symmetric-tensor-scalarization}]
+\label{proof:thm:orthogonal-symmetric-tensor-scalarization}
+Because $QIQ^\top=I$ for every $Q\in O(d)$, the equivariance relation gives
+\[
+L(I)=Q\,L(I)\,Q^\top
+\qquad\text{for every }Q\in O(d).
+\]
+Thus $L(I)$ is fixed by every orthogonal conjugation, so there is a unique
+scalar $\beta$ with
+\[
+L(I)=\beta I.
+\]
+
+For $i<j$, let
+\[
+F_{ij}:=E_{ij}+E_{ji},
+\qquad
+D_{ij}:=E_{ii}-E_{jj},
+\]
+where $E_{ab}$ are the standard matrix units. First consider $F_{12}$. Let
+$R_1=\operatorname{diag}(-1,1,\dots,1)$ and
+$R_2=\operatorname{diag}(1,-1,1,\dots,1)$. Then
+\[
+R_1F_{12}R_1^\top=-F_{12},
+\qquad
+R_2F_{12}R_2^\top=-F_{12}.
+\]
+Equivariance therefore yields
+\[
+R_1L(F_{12})R_1^\top=-L(F_{12}),
+\qquad
+R_2L(F_{12})R_2^\top=-L(F_{12}).
+\]
+These sign conditions force $L(F_{12})$ to have support only in the
+$(1,2)$ and $(2,1)$ entries, hence
+\[
+L(F_{12})=a_{12}F_{12}
+\]
+for some scalar $a_{12}$. By permutation equivariance, the same scalar occurs
+for every $F_{ij}$, so there is $\alpha\in\bbR$ with
+\[
+L(F_{ij})=\alpha F_{ij}
+\qquad\text{for all }i<j.
+\]
+
+Now consider $D_{12}$. Every diagonal sign flip fixes $D_{12}$, so $L(D_{12})$
+is fixed by all diagonal sign conjugations. Therefore $L(D_{12})$ is diagonal.
+Permutations of coordinates $3,\dots,d$ show that all diagonal entries outside
+the first two are equal, so
+\[
+L(D_{12})=\operatorname{diag}(a,b,c,\dots,c).
+\]
+Let $P_{12}$ be the permutation matrix exchanging coordinates $1$ and $2$.
+Because
+\[
+P_{12}D_{12}P_{12}^\top=-D_{12},
+\]
+equivariance gives
+\[
+P_{12}L(D_{12})P_{12}^\top=-L(D_{12}).
+\]
+Thus $b=-a$ and $c=0$, hence
+\[
+L(D_{12})=aD_{12}.
+\]
+Let $Q_{\pi/4}$ be the rotation by $\pi/4$ in the $(1,2)$-plane. A direct
+calculation gives
+\[
+Q_{\pi/4}D_{12}Q_{\pi/4}^\top=F_{12}.
+\]
+Equivariance then yields
+\[
+L(F_{12})
+=
+L(Q_{\pi/4}D_{12}Q_{\pi/4}^\top)
+=
+Q_{\pi/4}L(D_{12})Q_{\pi/4}^\top
+=
+aF_{12}.
+\]
+Since already $L(F_{12})=\alpha F_{12}$, one has $a=\alpha$. By permutation
+equivariance,
+\[
+L(D_{ij})=\alpha D_{ij}
+\qquad\text{for all }i<j.
+\]
+
+The matrices $\{F_{ij}\}_{i<j}$ together with the differences
+$\{D_{ij}\}_{i<j}$ span the traceless symmetric carrier
+$\mathrm{Sym}^2_0(\bbR^d)$. Hence
+\[
+L(S_0)=\alpha S_0
+\qquad\text{for every }S_0\in \mathrm{Sym}^2_0(\bbR^d).
+\]
+Every symmetric tensor decomposes uniquely as
+\[
+S=\Bigl(S-\frac{\operatorname{tr}(S)}{d}I\Bigr)
++\frac{\operatorname{tr}(S)}{d}I
+\]
+with traceless part and trace part. Using the formulas above gives
+\[
+L(S)
+=
+\alpha\Bigl(S-\frac{\operatorname{tr}(S)}{d}I\Bigr)
++
+\beta\,\frac{\operatorname{tr}(S)}{d}I.
+\]
+Uniqueness of $\alpha$ and $\beta$ follows from the direct-sum decomposition
+\[
+\mathrm{Sym}^2(\bbR^d)=\mathrm{Sym}^2_0(\bbR^d)\oplus \bbR I.
+\qedhere
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:symmetry-reduction-admissibility}]
+\label{proof:thm:symmetry-reduction-admissibility}
+(i) Equivariant operators preserve isotypic components: $P_\rho A P_{\rho'} = 0$ for $\rho \ne \rho'$ when $A \in \mathrm{End}_G(\cH_{\mathrm{obs}})$.
+
+(ii) For $x = \sum_\rho x_\rho$ with $x_\rho \in \cH_\rho$,
+\[
+\langle x, (D + Q) x \rangle = \sum_\rho \langle x_\rho, (D_\rho + Q_\rho) x_\rho \rangle.
+\]
+This is nonnegative for all $x$ iff each block summand is nonnegative.
+
+(iii) Suppose $Q' \in \mathrm{End}_G(\cH_{\mathrm{obs}})$ satisfies $Q' \preceq Q$ with $D + Q' \succeq 0$.
+Then $Q'_\rho \preceq Q_\rho$ and $D_\rho + Q'_\rho \succeq 0$ for each $\rho$.
+Minimality of $Q_\rho$ forces $Q'_\rho = Q_\rho$, hence $Q' = Q$.
+The converse assembles blockwise minima into a global minimum.
+
+(iv) If $\langle x_*, (D + Q) x_* \rangle = 0$ with $x_* = \sum_\rho x_{*,\rho}$, then each summand $\langle x_{*,\rho}, (D_\rho + Q_\rho) x_{*,\rho} \rangle = 0$ (nonnegative terms summing to zero).
+Any nonzero $x_{*,\rho}$ is a tight mode.
+Minimal faces factor because the PSD cone in $\mathrm{End}_G(\cH_{\mathrm{obs}})$ is the product of PSD cones in each $\mathrm{End}_G(\cH_\rho)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:minimal-admissible-transport-order}]
+\label{proof:thm:minimal-admissible-transport-order}
+Because every admissible candidate has finite transport order, the set
+\[
+\{\operatorname{ord}_{\mathcal T}(A):A\in\mathcal F_{\mathrm{adm}}\}
+\subseteq \bbN
+\]
+is nonempty. Every nonempty subset of $\bbN$ has a least element, which is
+exactly $m_\ast$, proving (i). Statement (ii) is then just the definition of
+the minimal-order admissible subclass. Statement (iii) follows because once the
+minimal admissible order class has only one equivalence class, no second
+inequivalent admissible candidate of the same minimal order remains.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:transport-generation-forces-scalar-recursion}]
+\label{proof:thm:transport-generation-forces-scalar-recursion}
+By item (i) of
+Definition~\ref{def:transport-generated-admissible-family},
+Theorem~\ref{thm:order-one-forcing-criterion} gives
+\[
+m_\ast=1.
+\]
+By item (iii) of
+Definition~\ref{def:transport-generated-admissible-family},
+Corollary~\ref{cor:no-preferred-direction-quadratic-transport} gives a unique
+scalar $\kappa(B)\ge 0$ such that
+\[
+B^*B=\kappa(B)\,I_F.
+\]
+Finally, Theorem~\ref{thm:reversible-transport-recursion} gives the recursion
+identity
+\[
+\mathcal R_Bx=0
+\qquad\Longleftrightarrow\qquad
+x_{n+1}=Bx_n-x_{n-1}
+\]
+for every bi-infinite sequence propagated by $B$. This proves all three
+statements.
+\end{proof}
+
+% ============================================================
+% Proofs from admissibility.tex
+% ============================================================
+
+\begin{proof}[Proof of Theorem~\ref{thm:scalar-completion}]
+\label{proof:thm:scalar-completion}
+(i) The condition $D + \nu L \succeq 0$ means $\langle x, (D + \nu L) x \rangle \ge 0$ for all $x$.
+For $x \in \Ker(L)$, this reduces to $\langle x, D x \rangle \ge 0$, which holds by kernel compatibility.
+For $x \notin \Ker(L)$, we have $\langle x, L x \rangle > 0$, so
+\[
+\langle x, (D + \nu L) x \rangle \ge 0
+\quad\Leftrightarrow\quad
+\nu \ge \frac{-\langle x, D x \rangle}{\langle x, L x \rangle}.
+\]
+Taking the supremum over all such $x$ gives the threshold $\nu_*$.
+
+(ii) Since $\nu \mapsto \nu L$ is monotone in PSD order, $\nu_*$ is the unique minimal $\nu$ satisfying (i).
+
+(iii) The maximizer $x_*$ achieves equality in the Rayleigh quotient, so $\langle x_*, (D + \nu_* L) x_* \rangle = 0$.
+\end{proof}

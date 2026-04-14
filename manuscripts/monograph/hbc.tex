@@ -1,0 +1,605 @@
+% Coherence Calculus -- main document
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[expansion=false]{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,matrix}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{P}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+\makeatletter
+\def\toclevel@section{2}
+\def\toclevel@subsection{3}
+\def\toclevel@subsubsection{4}
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty{-\@highpenalty}%
+    \addvspace{1.0em \@plus\p@}%
+    \begingroup
+      \parindent\z@
+      \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode
+      \bfseries #1\hfil \hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi
+}
+\makeatother
+
+% ---------------------------
+% TikZ diagram styles (monochrome, compact)
+% ---------------------------
+\tikzset{
+  ccnode/.style={draw, rounded corners=2pt, inner sep=4pt, font=\small},
+  ccbox/.style={draw, rectangle, rounded corners=2pt, inner sep=5pt, font=\small},
+  ccarrow/.style={-{Latex[length=2mm]}, thin},
+  ccdarrow/.style={-{Latex[length=2mm]}, dashed, thin},
+  ccband/.style={draw, fill=black!8, rounded corners=1pt},
+  cclabel/.style={font=\scriptsize, midway},
+}
+
+% ---------------------------
+% Theorem environments
+% ---------------------------
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{law}{Law}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+% Diophantine foundations
+\theoremstyle{definition}
+\newtheorem{primitive}{Primitive}
+\newtheorem{axiom}{Axiom}
+
+% ---------------------------
+% Notation shortcuts
+% ---------------------------
+\newcommand{\HBC}{\textsc{hbc}}
+\newcommand{\Obs}{\mathrm{Obs}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Img}{\mathrm{Im}}
+\newcommand{\Span}{\mathrm{span}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cB}{\mathcal{B}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COHERENCE CALCULUS MACRO API (DO NOT INLINE OPERATIONS)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% All core operations must use these macros for consistency.
+% Direct notation like \Pi_h, \bar\Pi_h, d_h, etc. should NOT appear in math mode.
+%
+% --- A) Horizon projections / complements / increments ---
+\newcommand{\CCPi}[1]{\Pi_{#1}}                      % horizon projection
+\newcommand{\CCPibar}[1]{\bar{\Pi}_{#1}}             % shadow projection (complement)
+\newcommand{\CCDelta}[1]{\Delta_{#1}}                % increment projector
+\newcommand{\CCHobs}[1]{\cH_{\le #1}}                % observable subspace at h
+\newcommand{\CCHsh}[1]{\cH_{> #1}}                   % shadow subspace at h
+%
+% --- B) Observed/restricted operator constructors ---
+\newcommand{\CCRestr}[2]{\CCPi{#2}\, #1 \,\CCPi{#2}} % horizon restriction: Pi_h A Pi_h
+\newcommand{\CCObs}[2]{#1_{#2}}                      % observed operator notation: d_h
+%
+% --- C) Leakage / defect / energies ---
+\newcommand{\CCLeak}[2]{B_{#2}}                      % leakage operator: B_h = \bar\Pi_h d \Pi_h
+\newcommand{\CCLeakExpr}[2]{\CCPibar{#2}\, #1 \,\CCPi{#2}} % explicit leakage expression
+\newcommand{\CCDefect}[2]{\delta_{#2}}               % defect operator: delta_h
+\newcommand{\CCDefectExpr}[2]{\CCPi{#2}\, #1 \,\CCPibar{#2}\, #1 \,\CCPi{#2}} % explicit
+\newcommand{\CCDefEnergy}[2]{\Gamma_{#1}(#2)}        % defect energy: Gamma_h(x)
+\newcommand{\CCDefOp}[2]{L_{#2}}                     % defect operator L_h = B_h^* B_h
+%
+% --- D) Coherence defect for maps ---
+\newcommand{\CCTau}[3]{\tau_{#1}(#2;\, #3)}          % tau_h(F; x)
+\newcommand{\CCTauBi}[4]{\tau_{#1}(#2;\, #3, #4)}    % tau_h(B; x, y) for bilinear
+%
+% --- E) Tower calculus (scale index, derivative, antiderivative) ---
+\newcommand{\CCIndexOp}{N}                           % scale index operator
+\newcommand{\CCDer}[1]{\partial(#1)}                 % tower derivative: partial(A)
+\newcommand{\CCComm}[2]{[#1,\, #2]}                  % commutator: [X, Y]
+\newcommand{\CCDiag}[1]{\mathrm{Diag}(#1)}           % diagonal part
+\newcommand{\CCOffDiag}[1]{\mathrm{OffDiag}(#1)}     % off-diagonal part
+\newcommand{\CCInt}[1]{\mathcal{I}(#1)}              % tower antiderivative
+\newcommand{\CCBlock}[3]{#1_{#2 #3}}                 % block notation: A_{hk}
+%
+% --- F) Horizon flow (finite difference, distinct from increment projector) ---
+\newcommand{\CCFlow}[2]{\nabla_{#2} #1}              % horizon flow: nabla_h A
+%
+% --- G) Schur complement / resolvent ---
+\newcommand{\CCSigma}[2]{\Sigma_{#1}(#2)}            % Schur correction: Sigma_h(z)
+\newcommand{\CCRes}[2]{(I - #2 \cdot #1)^{-1}}       % resolvent: (I - zA)^{-1}
+%
+% --- H) Traces ---
+\newcommand{\CCHTrace}[2]{\mathrm{Tr}_{#1}(#2)}      % horizon trace: Tr_h(A)
+%
+% --- I) Shadow commutator ---
+\newcommand{\CCShadowComm}[2]{\mathcal{S}_{#2}(#1)}  % shadow commutator: S_h(A)
+%
+% --- J) Leakage correction for products ---
+\newcommand{\CCLeakCorr}[3]{\mathrm{Leak}_{#1}(#2,\, #3)} % Leak_h(A, B)
+%
+% --- K) Solver layer (Hilbert complexes, Hodge, Green, homotopy) ---
+\newcommand{\CCLap}[1]{\mathcal{L}_{#1}}                   % Hodge Laplacian at degree k (script L avoids collision with \CCDelta)
+\newcommand{\CCGreen}[1]{G_{#1}}                          % Green operator at degree k
+\newcommand{\CCHom}[1]{K_{#1}}                            % Homotopy/integration operator
+\newcommand{\CCHarm}[1]{P_{\mathrm{harm},#1}}             % Harmonic projector at degree k
+\newcommand{\CCCoh}[1]{H^{#1}}                            % Cohomology at degree k
+\newcommand{\CCCohRel}[2]{H^{#1}(#2)}                     % Relative cohomology H^k(D,R)
+%
+% --- L) Field-induced horizons and split transform ---
+\newcommand{\CCField}{\mathsf{F}}                          % Field operator (self-adjoint)
+\newcommand{\CCSpProj}[2]{\mathbf{1}_{#2}(#1)}            % Spectral projector: 1_S(F)
+\newcommand{\CCComp}{Q}                                    % Complement projector (I - P)
+\newcommand{\CCBlockPP}[1]{#1_{PP}}                       % PP block
+\newcommand{\CCBlockPQ}[1]{#1_{PQ}}                       % PQ block (P -> Q transport)
+\newcommand{\CCBlockQP}[1]{#1_{QP}}                       % QP block (Q -> P transport)
+\newcommand{\CCBlockQQ}[1]{#1_{QQ}}                       % QQ block
+\newcommand{\CCSigmaP}[2]{\Sigma_{#1}(#2)}                % Schur correction for projection P: Sigma_P(z)
+\newcommand{\CCAeff}[2]{#1_{\mathrm{eff},#2}}             % Effective operator: A_{eff,P}
+\newcommand{\CCSplit}[3]{\mathrm{Split}_{#1}(#2;\,#3)}    % Split transform: Split_P(A; z)
+\newcommand{\CCGrass}[1]{\mathcal{P}_{#1}}                % Grassmannian of rank-r projections
+\newcommand{\CCDesign}[1]{J(#1)}                          % Design objective functional
+%
+% --- M) Residual signature ---
+\newcommand{\CCTransIn}[1]{T_{\mathrm{in}}^{#1}}          % Transport in: A_PQ
+\newcommand{\CCTransOut}[1]{T_{\mathrm{out}}^{#1}}        % Transport out: A_QP
+%
+% --- N) Certificate labels (for cross-referencing) ---
+\newcommand{\CertA}{\textbf{(Cert-A)}}                    % Perfect coherence / zero residual
+\newcommand{\CertB}{\textbf{(Cert-B)}}                    % Solver exactness H^k(D)=0
+\newcommand{\CertC}{\textbf{(Cert-C)}}                    % Holographic saturation
+%
+% --- O) Lean 4 formalization references ---
+% These macros link LaTeX definitions/theorems to their Lean counterparts.
+% Usage: \lean{CoherenceCalculus.HorizonTower} after a \label{}
+% Usage: \uses{def:horizon, def:shadow} to declare dependencies
+\newif\ifshowleanlabels
+\showleanlabelsfalse
+% Set \showleanlabelstrue for internal audit builds that should render Lean tags.
+\newcommand{\lean}[1]{\ifshowleanlabels\marginpar{\tiny\textsf{Lean: \detokenize{#1}}}\fi}
+\newcommand{\leaninline}[1]{\ifshowleanlabels{\footnotesize\textsf{[Lean: \detokenize{#1}]}}\fi}
+\newcommand{\uses}[1]{}                                    % Dependencies (parsed by dashboard)
+\newcommand{\leanstatus}[1]{%                              % Status indicator
+  \ifx#1p\textcolor{green!70!black}{$\checkmark$}\fi%      % p = proved
+  \ifx#1s\textcolor{orange}{$\circ$}\fi%                   % s = sorry
+  \ifx#1a\textcolor{blue}{$\bullet$}\fi%                   % a = axiom
+}
+\newcommand{\manuscriptchapter}[2]{%
+  \clearpage
+  \phantomsection
+  \pdfbookmark[1]{#2}{chap.#1}%
+  \addtocontents{toc}{\protect\contentsline {section}{Chapter #1: #2}{\thepage}{\csname @currentHref\endcsname}}%
+  \begin{center}
+    \Large\bfseries Chapter #1: #2
+  \end{center}
+  \vspace{0.5em}
+}
+\newcommand{\manuscriptpart}[2]{%
+  \clearpage
+  \phantomsection
+  \pdfbookmark[0]{#1}{#2}%
+  \addtocontents{toc}{\protect\contentsline {part}{#1}{\thepage}{\csname @currentHref\endcsname}}%
+  \begin{center}
+    \LARGE\bfseries #1
+  \end{center}
+  \vspace{0.75em}
+}
+\newcommand{\manuscriptappendix}[1]{%
+  \clearpage
+  \refstepcounter{section}%
+  \setcounter{subsection}{0}%
+  \setcounter{subsubsection}{0}%
+  \setcounter{paragraph}{0}%
+  \setcounter{subparagraph}{0}%
+  \phantomsection
+  \pdfbookmark[1]{Appendix \thesection: #1}{appendix.\thesection}%
+  \addtocontents{toc}{\protect\contentsline {section}{\protect\numberline{\thesection}#1}{\thepage}{\csname @currentHref\endcsname}}%
+  \begingroup
+    \edef\x{\endgroup
+      \noexpand\gdef\noexpand\@currentlabelname{#1}}%
+  \x
+  \begin{center}
+    \Large\bfseries Appendix \thesection: #1
+  \end{center}
+  \vspace{0.5em}
+}
+%
+% --- Legacy aliases (for transition; avoid in new code) ---
+\newcommand{\PiH}{\CCPi{h}}
+\newcommand{\PiHp}{\CCPi{h'}}
+\newcommand{\PibarH}{\CCPibar{h}}
+\newcommand{\PibarHp}{\CCPibar{h'}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Git version (injected by build.sh; not shown in rendered PDF)
+\ifdefined\githash\else\def\githash{dev}\fi
+
+\title{Coherence Calculus:\\
+An Operator Calculus for Finite Observability under Horizon Projections}
+\author{Charles Rodbourn Cook}
+\date{April 2026 - v0.9}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This monograph studies operator application under finite observability: when a
+system is restricted to a horizon, what visible law survives, what defect is
+returned from the hidden complement, and which closure classes are forced by
+that projection? It develops \emph{Coherence Calculus} as a horizon-based
+operator calculus for elimination, returned defect, and scale-law closure. Its
+formal spine starts from the stated bedrock declarations and develops the
+structural elimination and closure theory on that basis.
+
+Part~I proves the structural calculus and continuum bridge. Starting from the
+bedrock declarations, it derives the counting and boundary layers, the
+horizon/tower calculus, Schur elimination, solver and selection interfaces,
+the horizon complex as the native object of the theory, the carrier-forcing
+results, and the continuum bridge culminating in the temporal interface
+carried by the unique \(D=3\) residual.
+
+Part~II assumes the explicit three-law physical hypothesis and proves its
+carrier-level consequences. The three laws are temporal realization on the
+faithful selected cut, terminal exactification on fixed selected bridges, and
+endpoint completion on the fixed four-state local assembly. From that
+hypothesis it derives the coherent selected-cut
+realization and the exact physical field. Under the later endpoint-rigidity
+and representative hypotheses used for carrier identification, it further
+derives the recognizable Schr\"odinger, wave/Klein--Gordon, Maxwell, and
+Einstein equations as carrier realizations of one common selected state-field
+law on one same selected realization, together with the classification theorem
+that the complete fundamental set on the present intrinsic family consists of
+the three primitive direct channels together with the unique geometric lift of
+the primitive \(3\)-channel. Those equations are proved on one same selected
+realization, not as four independent starting laws. Hydrodynamic and
+thermodynamic laws are then read as
+effective closures of unresolved return.
+
+These standard equation forms are proved conditionally on the explicit
+three-law Part~II hypothesis and the later endpoint-rigidity and
+representative hypotheses used for carrier identification, not from Part~I
+alone and not from the first two laws alone. A separate Lean~4 development
+certifies the rebuilt bedrock-and-tower spine and audits the separate PartIII
+and PartIV developments independently. The present scope does not yet include
+coupling constants, mass ratios, or the particle spectrum.
+\end{abstract}
+
+\begin{tcolorbox}[colback=white, colframe=black!70, title={Claim Boundary}]
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}P{0.40\linewidth}Y@{}}
+\textbf{Layer} & \textbf{Status} \\
+\midrule
+Part~I structural spine & proved from the stated bedrock declarations, up to the explicit hypotheses that remain local in the counting-to-terminality bridge and the later continuum interfaces \\
+Part~II physical hypothesis & assumed as the explicit three-law hypothesis of temporal realization, terminal exactification, and endpoint completion \\
+Part~II derived consequences & proved from that three-law hypothesis: coherent selected-cut realization, fixed-bridge exactification, endpoint-complete microscopic structure, and the exact physical field; with the later endpoint-rigidity and representative hypotheses used for carrier identification, one common selected state-field law on one same selected realization and the recognizable carrier-level equation forms as realizations of that same law \\
+Fundamental/effective boundary & proved on the current intrinsic family: the three primitive direct laws together with the unique geometric lift are fundamental, while hydrodynamic and thermodynamic laws are effective closures \\
+Auxiliary completion-side formulation & retained as an alternative completion-side formulation on the same selected data; it is not the hypothesis of the proved Part~II theorems and the standard equations no longer depend on it \\
+Open items & whether endpoint completion is independent of the first two laws, and the quantitative data of coupling constants, mass ratios, and particle spectrum \\
+\end{tabularx}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white, colframe=black!70, title={First-Pass Synopsis}]
+\footnotesize
+\begin{description}[leftmargin=1.9em, itemsep=0.3em]
+\item[Core object.] The recurring object is the horizon complex together with
+      the visible law induced on an observed bundle after eliminating the
+      hidden complement.
+\item[Part~I proves.] The structural calculus and continuum bridge: counting
+      and boundary layers, horizon/tower calculus, Schur elimination, the
+      horizon complex, carrier forcing, and the temporal interface carried by
+      the unique \(D=3\) residual.
+\item[Part~II assumes.] The explicit three-law physical hypothesis: temporal
+      realization, terminal exactification, and endpoint completion.
+\item[Part~II proves.] The coherent selected-cut realization, the exact
+      physical field, and, with the later endpoint-rigidity and
+      representative hypotheses used for carrier identification, one common
+      selected state-field law on one same selected realization, the
+      recognizable Schr\"odinger, wave/Klein--Gordon, Maxwell, and Einstein
+      forms as carrier realizations of that same law, and the scoped
+      complete-fundamental-set theorem on the present intrinsic family.
+\item[Not claimed.] The Part~II theorems are not derived from Part~I alone and
+      not from the first two laws alone. The present scope does not yet derive
+      coupling constants, mass ratios, the particle spectrum, or any named
+      phenomenology for nonzero returned remainders.
+\item[Dependency spine.] Bedrock declarations \(\to\) structural calculus
+      \(\to\) carrier forcing \(\to\) continuum bridge \(\to\) explicit
+      three-law physical hypothesis \(\to\) selected-cut realization and exact
+      physical field \(\to\) carrier realizations and the scoped
+      complete-fundamental-set theorem.
+\end{description}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white, colframe=black!70, title={Falsifiability, Empirical Stakes, and Portability}]
+\footnotesize
+\begin{description}[leftmargin=1.9em, itemsep=0.3em]
+\item[Structural falsifiers.] On the present scope, the framework is falsified
+      by any genuinely fourth primitive direct carrier, any geometric law
+      algebraically independent of the unique lift of the primitive
+      \(3\)-channel, any primitive visible creation on a closed selected
+      sector, or any fluid law that is fundamental rather than effective.
+\item[Model-dependent predictions.] Once a concrete realized cut is fixed, the
+      returned-remainder theorems furnish exact correction slots around the
+      leading Schr\"odinger, wave/Klein--Gordon, Maxwell, Einstein, and
+      hydrodynamic forms.
+\item[Not yet claimed.] The present scope does not yet give universal
+      numerical values for coupling constants, mass ratios, or the particle
+      spectrum, and it does not identify named phenomenology for nonzero
+      returned remainders in advance.
+\item[Portability.] The Part~II law surface is stated at the exported
+      interface level: any external host realizing the same ordered-persistence
+      datum, faithful cut class, selected visible law, and residual-return
+      grammar carries the same Part~II law-side interpretation.
+\end{description}
+\end{tcolorbox}
+
+\section*{Reader's Guide}
+This is an archival monograph. It is not meant to be read linearly on a first
+pass.
+
+\begin{description}[leftmargin=1.9em, itemsep=0.35em]
+\item[Core object.] The recurring object is the horizon complex together with
+      the visible law induced on an observed bundle after eliminating the
+      hidden complement. Schur elimination, returned defect, closure
+      transport, and the later carrier realizations are all organized around
+      that object.
+\item[Boundary.] Part~I proves the structural calculus and continuum bridge.
+      Part~II assumes the explicit three-law physical hypothesis and proves
+      its carrier-level consequences on one same selected realization.
+      Hydrodynamic and thermodynamic laws are treated here as effective
+      closures, not as additional fundamental laws.
+\item[Read first.] For a first pass, read the abstract, this claim-boundary
+      table, the first-pass synopsis, Chapters~5--6 for elimination and defect
+      transport, Chapter~9 for the continuum bridge, Chapter~10 for the
+      Part~II hypothesis and closure theorem, Chapter~12 for the carrier
+      realizations and classification theorem, and Chapter~16, especially the
+      falsifiability and empirical-stakes subsection.
+\item[Can skip first.] On a first pass, the longer appendix decompositions, the
+      more detailed carrier-specific derivations, and the Lean tags may be
+      deferred. The tags are audit metadata, not part of the mathematical
+      prose.
+\item[What remains open.] The main structural open problem is whether endpoint
+      completion is independent of temporal realization and terminal
+      exactification. The main quantitative open problems are coupling
+      constants, mass ratios, and the particle spectrum.
+\end{description}
+
+\tableofcontents
+
+% ============================================================
+% PART I: MATHEMATICS FROM LOGICAL BEDROCK
+% ============================================================
+\manuscriptpart{Part I: Mathematics from Logical Bedrock}{part.i}
+
+Part~I develops the structural calculus used later, but it does so without
+assuming a physical law. Chapters~1--4 derive the counting and boundary
+layers: signed-count arithmetic, the canonical finite realization, the
+boundary operator~$d$ with $d^2=0$, the horizon tower, and the intrinsic
+$1{+}2{+}3$ decomposition under the~$S_4$ action. Chapters~5--6 develop the
+horizon/tower calculus, Schur elimination, solver and selection interfaces,
+and the horizon complex as the native object on which the later bridge and
+physical fields live. Chapters~7--9 then force the carrier taxonomy, close the
+intrinsic carrier grammar, and complete the continuum bridge culminating in
+the derived temporal interface.
+
+\manuscriptchapter{1}{Distinction}
+\input{sections/ch1_distinction}
+
+\manuscriptchapter{2}{From Distinction to Counting}
+\input{sections/ch2_counting}
+
+\manuscriptchapter{3}{From Composites to $\partial^2=0$}
+\input{sections/ch3_boundary}
+
+\manuscriptchapter{4}{From the Balanced Dimension to $K_4$}
+\input{sections/ch4_balanced_dimension}
+
+\manuscriptchapter{5}{The Operator Interface}
+\input{sections/orientation}
+\input{sections/positioning}
+\input{sections/bedrock}
+\input{sections/foundational_lemmas}
+\input{sections/hft}
+\input{sections/tower_calculus}
+\input{sections/defect_rules}
+\input{sections/constraint_compiler}
+\input{sections/admissibility}
+
+\manuscriptchapter{6}{Elimination and Solvers}
+\input{sections/field_induced_horizons}
+\input{sections/resolvent_defect}
+\input{sections/observable_relative_closure}
+\input{sections/realization_calculus}
+\input{sections/solver_layer}
+\input{sections/targets}
+\input{sections/projector_calculus}
+\input{sections/complex_compatibility}
+\input{sections/holographic_defect}
+\input{sections/coherence_gap}
+\input{sections/log_periodic}
+
+\manuscriptchapter{7}{From $\partial^2=0$ to the Carrier Taxonomy and Persistence Modes}
+\input{sections/ch7_carrier_forcing}
+
+\manuscriptchapter{8}{The Intrinsic Carriers}
+\section{Intrinsic Laws on the Selected Cut}
+\label{sec:intrinsic-visible-laws}
+This chapter treats the intrinsic visible laws whose leading form is already
+fixed once the earlier carrier-forcing and endpoint-rigidity theorems are in
+place: the three primitive channels (local-state, propagative, and
+comparative) together with the canonical geometric lift of the primitive
+\(3\)-channel. Their full physical reading is taken up in Part~II; here the
+focus is the intrinsic carrier-level normal forms themselves rather than any
+effective constitutive closure.
+\input{sections/flagship_quantum}
+\input{sections/flagship_wave}
+\input{sections/flagship_gauge}
+\input{sections/flagship_geometry}
+
+\manuscriptchapter{9}{From the Discrete to the Continuum}
+\input{sections/classical_limit_bridge}
+\input{sections/continuum_identification}
+
+% ============================================================
+% PART II: PHYSICAL DYNAMICS FROM THE TEMPORAL REALIZATION LAW
+% ============================================================
+\manuscriptpart{Part II: Physical Dynamics under the Three-Law Physical Hypothesis}{part.ii}
+
+Part~I proves the structural calculus and continuum bridge. Part~II assumes
+the explicit three-law physical hypothesis and proves its carrier-level
+consequences. The three laws are temporal realization on the faithful visible
+cut, terminal exactification on fixed selected bridges, and endpoint
+completion on the fixed four-state local assembly. Chapter~10 states that
+hypothesis and derives the coherent realization, fixed-bridge exactification,
+and endpoint-complete microscopic structures that it determines.
+Chapter~11 records the common selected-cut structure and the universal
+consequences that already follow before any carrier-specific realization is
+taken. Chapter~12 identifies the canonical carrier realizations and proves the
+scoped complete-fundamental-set theorem: within the current intrinsic family,
+the only fundamental laws are the three primitive direct channels together
+with the unique geometric lift.
+Chapter~13 supplies the characteristic realization of that same structure.
+Chapter~14 collects the hydrodynamic and thermodynamic effective closures.
+Chapter~15 isolates the external interface on which the same Part~II
+hypothesis may be read.
+
+The temporal interface derived in Part~I becomes causal before/after on the
+realized cut class. On that class one selected observed bundle carries one
+exact visible law, visible source is interpreted only as balanced exchange or
+returned residual of that same bundle, and no independent constitutive
+completion is admitted. Terminal exactification then fixes the bridge-local
+exactified assembly, and endpoint completion closes that same assembly with no
+further hidden stage. The recognizable Schr\"odinger, wave/Klein--Gordon,
+Maxwell, and Einstein equations are proved under that explicit three-law
+hypothesis. The auxiliary completion-side normal form gives an alternative
+presentation on the same selected data, while the
+fundamental/effective classification theorem states what is intrinsic and what
+remains effective on the present scope.
+
+\manuscriptchapter{10}{The Three-Law Physical Hypothesis: Temporal Realization, Terminal Exactification, and Endpoint Completion}
+\input{sections/ch10_physical_dynamics}
+
+\manuscriptchapter{11}{Selected-Cut Consequences of the Three-Law Hypothesis}
+\input{sections/ch11_temporal_realization}
+
+\manuscriptchapter{12}{Endpoint Completion, Carrier Realizations, and Classification}
+\input{sections/ch12_carrier_faces}
+
+\manuscriptchapter{13}{Characteristic Realization}
+\input{sections/bridge_program}
+
+\manuscriptchapter{14}{Hydrodynamic and Thermodynamic Effective Closures}
+\section{Effective Closures and Thermodynamic Forms}
+\label{sec:effective-constitutive-closures}
+This section collects the laws whose recognizable forms appear only after an
+unresolved hierarchy has been compressed to a selected-cut endpoint. They are
+therefore effective rather than fundamental on the present scope. The
+hydrodynamic law is the main example: the exact object is the
+collision-invariant moment hierarchy, while the Navier--Stokes form is its
+isotropic endpoint closure after higher-moment return has been integrated out.
+On the same selected bundle, residual-return bookkeeping forces a canonical
+thermodynamic state space on the selected tower, together with
+entropy-production and equilibrium laws. Both theories are physical, but neither
+introduces a new primitive direct channel or a new intrinsic lift.
+\input{sections/flagship_hydrodynamics}
+\input{sections/flagship_thermodynamics}
+
+\manuscriptchapter{15}{External Realizations of the Pre-Dynamical Interface}
+\input{sections/interface_portability}
+
+% ============================================================
+% CONCLUSION
+% ============================================================
+\manuscriptchapter{16}{Synthesis and Open Frontier}
+\input{sections/discussion}
+
+% ============================================================
+% APPENDICES
+% ============================================================
+\appendix
+\makeatletter
+\def\toclevel@subsection{2}
+\def\toclevel@subsubsection{3}
+\makeatother
+\manuscriptpart{Appendices}{part.appendices}
+
+The first group of appendices (A--G) collects proofs that have been moved from
+the main text to keep the derivation chain readable. Each proof is labeled and
+cross-referenced from the theorem statement it supports. The second group
+collects supplementary operator-theoretic extensions and the formal
+certification boundary.
+
+\manuscriptappendix{Foundations Proofs (Chapters 1--2)}
+\input{sections/appendix_foundations_proofs}
+
+\manuscriptappendix{Topology and Dimension Proofs (Chapters 3--4)}
+\input{sections/appendix_topology_dimension_proofs}
+
+\manuscriptappendix{Tower Calculus Proofs (Chapter 5)}
+\input{sections/appendix_tower_proofs}
+
+\manuscriptappendix{Elimination and Solver Proofs (Chapter 6)}
+\input{sections/appendix_elimination_proofs}
+
+\manuscriptappendix{Carrier Forcing Proofs (Chapters 7--8)}
+\input{sections/appendix_carrier_proofs}
+
+\manuscriptappendix{Part I Continuum Bridge Proofs (Chapter 9)}
+\input{sections/appendix_continuum_proofs}
+
+\manuscriptappendix{Part II Physical Dynamics Proofs (Chapters 10--16)}
+\input{sections/appendix_dynamics_proofs}
+
+\manuscriptappendix{Advanced Operators}
+\input{sections/advanced_operators}
+\manuscriptappendix{Advanced Operators II: Symmetry, Entropy, Topology, Stability}
+\input{sections/advanced_operators_ii}
+\manuscriptappendix{Advanced Operators III: Principal Angles, Field Filters, Unitary Splittings}
+\input{sections/advanced_operators_iii}
+\manuscriptappendix{Advanced Operators IV: Orthogonality, Shadow Commutators, Interference}
+\input{sections/advanced_operators_iv}
+\manuscriptappendix{Kernel Defect and Constraint Maps}
+\input{sections/boundary}
+\manuscriptappendix{Oblique Horizons (Petrov--Galerkin Observation)}
+\input{sections/appendix_oblique_horizons}
+\manuscriptappendix{Continuous Resolution via Spectral Horizon Families}
+\input{sections/appendix_continuous_spectral_horizons}
+\manuscriptappendix{Trace-Level Coherence Laws}
+\input{sections/appendix_trace_level_coherence_laws}
+\manuscriptappendix{Formal Certification Boundary and Separate Lean/mathlib Validation Realizations}
+\input{sections/appendix_formal_certification}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{part}{References}
+\input{sections/references}
+
+\end{document}

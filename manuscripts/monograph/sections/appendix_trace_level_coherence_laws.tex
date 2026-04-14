@@ -1,0 +1,110 @@
+% ============================================================
+% Title supplied by appendix wrapper.
+\label{sec:trace-level-laws}
+% ============================================================
+
+This appendix collects trace-level aggregation laws compatible with both
+discrete towers and continuous spectral horizon families.
+
+\subsection{Tower Trace Telescoping}
+\label{subsec:trace-level-tower}
+
+\begin{definition}[Horizon trace and band trace]
+\label{def:horizon-trace-band-trace}\lean{CoherenceCalculus.AppendixHorizons.horizonTraceBandTrace}
+Let $A$ be trace-class on $\cH$ and let $\Pi$ be an orthogonal projection.
+Define the \emph{horizon trace} at $\Pi$ by $\CCHTrace{\Pi}{A}:=\Tr(\Pi A\Pi)$.
+If $\Delta$ is an orthogonal projection (e.g.\ a tower increment or spectral band), define the \emph{band trace} by $\mathrm{tr}_\Delta(A):=\Tr(\Delta A\Delta)$.
+\end{definition}
+
+\begin{lemma}[Two-level trace splitting]
+\label{lem:two-level-trace-splitting}\lean{CoherenceCalculus.AppendixHorizons.two_level_trace_splitting}
+Let $P,Q$ be orthogonal projections with $P\le Q$ (i.e.\ $PQ=QP=P$). Let $A$ be trace-class.
+Then
+\[
+\Tr(Q A Q) = \Tr(P A P) + \Tr\big((Q-P)A(Q-P)\big).
+\]
+\end{lemma}
+
+\begin{proof}
+Write $Q=P+(Q-P)$ with $P(Q-P)=(Q-P)P=0$.
+Expand:
+\[
+QAQ = (P+(Q-P))A(P+(Q-P))
+= PAP + (Q-P)A(Q-P) + PA(Q-P) + (Q-P)AP.
+\]
+Take traces. Using cyclicity and $P(Q-P)=0$,
+\[
+\Tr(PA(Q-P)) = \Tr((Q-P)PA)=0,\quad
+\Tr((Q-P)AP)=\Tr(P(Q-P)A)=0.
+\]
+\end{proof}
+
+\begin{theorem}[Trace telescoping on a discrete tower]
+\label{thm:trace-telescoping-tower}\lean{CoherenceCalculus.AppendixHorizons.trace_telescope_tower}
+Let $\{\CCPi{h}\}_{h\in\bbN}$ be a transitive orthogonal horizon tower with increments $\CCDelta{h}:=\CCPi{h}-\CCPi{h-1}$ (with $\CCPi{-1}:=0$).
+For any trace-class $A$ and any $h$,
+\[
+\Tr(\CCPi{h} A\CCPi{h})=\sum_{k=0}^{h}\Tr(\CCDelta{k} A\CCDelta{k}).
+\]
+\end{theorem}
+
+\begin{proof}
+Apply Lemma~\ref{lem:two-level-trace-splitting} iteratively to the chain $0=\CCPi{-1}\le \CCPi{0}\le \cdots \le \CCPi{h}$.
+\end{proof}
+
+\subsection{Spectral-Band Trace Measures}
+\label{subsec:trace-level-spectral}
+
+\begin{definition}[Spectral trace measure]
+\label{def:spectral-trace-measure}\lean{CoherenceCalculus.AppendixHorizons.spectralTraceMeasure}
+Let $\CCField$ be self-adjoint with spectral measure $E_{\CCField}$ and let $A$ be trace-class.
+Define a (complex) Borel measure $\nu_A$ by
+\[
+\nu_A(B) := \Tr(E_{\CCField}(B)\,A).
+\]
+If $A\succeq 0$ then $\nu_A$ is a finite positive measure.
+\end{definition}
+
+\begin{lemma}[Band trace equals measure mass]
+\label{lem:band-trace-measure}\lean{CoherenceCalculus.AppendixHorizons.band_trace_measure}
+For $a<b$ and $\CCDelta{(a,b]}=E_{\CCField}((a,b])$,
+\[
+\Tr(\CCDelta{(a,b]}A\CCDelta{(a,b]}) = \nu_A((a,b]).
+\]
+\end{lemma}
+
+\begin{proof}
+Since $\CCDelta{(a,b]}$ is a projection, $\CCDelta{(a,b]}A\CCDelta{(a,b]}$ is trace-class and
+\[
+\Tr(\CCDelta{(a,b]}A\CCDelta{(a,b]})
+=\Tr(E_{\CCField}((a,b])A)
+=\nu_A((a,b]).
+\]
+\end{proof}
+
+\begin{theorem}[Trace telescoping over a spectral horizon family]
+\label{thm:trace-telescoping-spectral}\lean{CoherenceCalculus.AppendixHorizons.trace_telescope_spectral}
+Let $\CCPi{\lambda}=E_{\CCField}((-\infty,\lambda])$ be a spectral horizon family and $A$ trace-class.
+Then for $a<b$,
+\[
+\Tr(\CCPi{b} A\CCPi{b})-\Tr(\CCPi{a} A\CCPi{a})=\nu_A((a,b]).
+\]
+Equivalently, for any partition $a=\lambda_0<\cdots<\lambda_N=b$,
+\[
+\Tr(\CCPi{b} A\CCPi{b})-\Tr(\CCPi{a} A\CCPi{a})=\sum_{j=1}^N \Tr\big(\CCDelta{(\lambda_{j-1},\lambda_j]}A\CCDelta{(\lambda_{j-1},\lambda_j]}\big).
+\]
+\end{theorem}
+
+\begin{proof}
+Use $\CCPi{b}=\CCPi{a}+\CCDelta{(a,b]}$ with orthogonality $\CCPi{a}\CCDelta{(a,b]}=0$ and apply the same trace-splitting argument as Lemma~\ref{lem:two-level-trace-splitting}, then invoke Lemma~\ref{lem:band-trace-measure}.
+\end{proof}
+
+\subsection{Dependency Graph (Proof Chain)}
+\label{subsec:layer2-dependency-graph}
+
+\noindent\textbf{Proof chain summary.}
+\begin{itemize}[itemsep=0.3em]
+\item \textbf{Oblique horizons} (Section~\ref{sec:oblique-horizons}) depend only on idempotence ($P^2=P$), the algebra $I=P+Q$, and associativity/linearity. No Hilbert orthogonality is used.
+\item \textbf{Continuous spectral horizons} (Section~\ref{sec:continuous-spectral-horizons}) depend on the Spectral Theorem to obtain projection-valued measures and orthogonality of disjoint bands, then apply Pythagorean additivity to band decompositions.
+\item \textbf{Trace telescoping} (Section~\ref{sec:trace-level-laws}) depends on (i) orthogonality of increments/bands and (ii) cyclicity of trace for trace-class products, yielding exact cancellation of cross terms.
+\end{itemize}

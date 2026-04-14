@@ -1,0 +1,125 @@
+% ============================================================
+\section{Log-Periodic Horizons (Log-Scale Coherence Towers)}
+\label{sec:log-periodic}
+% ============================================================
+
+\begin{quote}\small
+\textbf{What this automates.}
+Many natural horizon towers are indexed by a logarithmic scale rather than a linear one: doubling resolution, octave decompositions, dyadic refinements.
+This section provides the specialized framework for log-scale horizons and derives how the telescoping identity adapts to this setting.
+\end{quote}
+
+\subsection{Log-scale horizon family}
+
+\begin{definition}[Log-scale horizon tower]
+\label{def:log-horizon}\lean{LogScaleHorizonTower}
+A \emph{log-scale horizon tower} on $\cH$ is a family of orthogonal projections $(\CCPi{\ell})_{\ell \in \bbR}$ (or $\ell \in \bbZ$ for the discrete case) such that:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Nestedness:} $\ell \le \ell'$ implies $\CCPi{\ell} \CCPi{\ell'} = \CCPi{\ell}$.
+\item \textbf{Log-scale interpretation:} The parameter $\ell$ represents a logarithmic scale, e.g., $\ell = \log_2(\text{resolution})$.
+\end{enumerate}
+\end{definition}
+
+\paragraph{Model example (Fourier bandlimiting).}
+\label{ex:fourier-bandlimit}
+Let $\cH = L^2(\bbR)$ and define $\CCPi{\ell}$ as the Fourier bandlimiting operator to frequencies $|\xi| \le e^\ell$:
+\[
+(\CCPi{\ell} f)\,\widehat{}\,(\xi) :=
+\begin{cases}
+\hat f(\xi) & \text{if } |\xi| \le e^\ell, \\
+0 & \text{otherwise}.
+\end{cases}
+\]
+Then $\ell \le \ell'$ implies $\CCPi{\ell} \CCPi{\ell'} = \CCPi{\ell}$ (lower bandwidth is contained in higher bandwidth).
+
+\paragraph{Model example (Dyadic resolution).}
+\label{ex:dyadic}
+Let $\cH = L^2([0,1])$ and define $\CCPi{n}$ (for $n \in \bbZ_{\ge 0}$) as the orthogonal projection onto piecewise-constant functions on $2^n$ equal bins.
+Setting $\ell = n$ gives a discrete log-scale tower with ``resolution $= 2^\ell$.''
+
+\subsection{Telescoping in log-scale}
+
+\begin{theorem}[Log-scale telescoping identity]
+\label{thm:log-telescoping}\lean{log_telescope_3}
+Let $(\CCPi{\ell})$ be a log-scale horizon tower and let $\ell_0 < \ell_1 < \cdots < \ell_N$ be an increasing sequence of log-scale indices.
+For any $x \in \cH$:
+\[
+\|x - \CCPi{\ell_0} x\|^2
+=
+\sum_{j=0}^{N-1} \|(\CCPi{\ell_{j+1}} - \CCPi{\ell_j}) x\|^2 + \|x - \CCPi{\ell_N} x\|^2.
+\]
+If the tower is faithful ($\CCPi{\ell} \to I$ as $\ell \to \infty$), then
+\[
+\|x - \CCPi{\ell_0} x\|^2 = \sum_{j=0}^{\infty} \|(\CCPi{\ell_{j+1}} - \CCPi{\ell_j}) x\|^2.
+\]
+\end{theorem}
+
+\begin{proof}
+This is a direct application of the Horizon Fundamental Theorem (HFT-2, Theorem~\ref{thm:HFT}) to the sequence of projections $\CCPi{\ell_j}$.
+The projections are nested and orthogonal, so the increments $(\CCPi{\ell_{j+1}} - \CCPi{\ell_j}) x$ are pairwise orthogonal.
+The Pythagorean theorem gives the decomposition.
+\end{proof}
+
+\begin{quote}\small
+\textbf{Intuition.}
+When horizons are indexed logarithmically, the telescoping identity decomposes deviation into contributions from each ``octave'' or ``scale band.''
+Each term $\|(\CCPi{\ell_{j+1}} - \CCPi{\ell_j}) x\|^2$ measures how much of $x$ lives in the scale band between $\ell_j$ and $\ell_{j+1}$.
+\end{quote}
+
+\subsection{Uniform log-spacing}
+
+\begin{corollary}[Dyadic telescoping]
+\label{cor:dyadic-telescoping}\lean{DyadicTower.dyadic_telescoping}
+For uniformly spaced log-indices $\ell_j = \ell_0 + j \Delta\ell$ with spacing $\Delta\ell > 0$:
+\[
+\|x - \CCPi{\ell_0} x\|^2 = \sum_{j=0}^{N-1} \|(\CCPi{\ell_0 + (j+1)\Delta\ell} - \CCPi{\ell_0 + j\Delta\ell}) x\|^2 + \|x - \CCPi{\ell_0 + N\Delta\ell} x\|^2.
+\]
+Each term corresponds to one ``log-band'' of width $\Delta\ell$.
+\end{corollary}
+
+\paragraph{Scale-invariant decomposition.}
+When $\Delta\ell = \log 2$ (octave spacing), each band corresponds to a doubling of resolution.
+The decomposition is then scale-invariant in the sense that each band spans the same multiplicative factor in resolution, regardless of absolute scale.
+
+\subsection{Defect across log-scales}
+
+The defect energy $\CCDefEnergy{\ell}{x} = \|\CCLeakExpr{d}{\ell} x\|^2$ depends on \emph{both} the shadow projection $\CCPibar{\ell}$ and the compressed state $\CCPi{\ell} x$.
+As $\ell$ varies, both factors change, so monotonicity requires care.
+
+\paragraph{Worked example (Non-monotonicity without assumptions).}
+\label{ex:defect-nonmonotone}
+Let $\cH = \bbR^3$, with nested tower $\CCPi{0} = e_1 e_1^*$, $\CCPi{1} = e_1 e_1^* + e_2 e_2^*$, $\CCPi{2} = I$.
+Define $d = e_1 e_1^* + e_3 e_2^*$, so $d e_1 = e_1$, $d e_2 = e_3$, $d e_3 = 0$.
+For $x = e_1 + e_2$:
+\begin{align*}
+\CCDefEnergy{0}{x} &= \|\CCPibar{0} d \CCPi{0} x\|^2 = \|\CCPibar{0} d e_1\|^2 = \|\CCPibar{0} e_1\|^2 = 0, \\
+\CCDefEnergy{1}{x} &= \|\CCPibar{1} d \CCPi{1} x\|^2 = \|\CCPibar{1} d(e_1 + e_2)\|^2 = \|\CCPibar{1} (e_1 + e_3)\|^2 = \|e_3\|^2 = 1.
+\end{align*}
+Thus $\CCDefEnergy{0}{x} = 0 < 1 = \CCDefEnergy{1}{x}$: refining the horizon from $\CCPi{0}$ to $\CCPi{1}$ \emph{increased} the defect energy, because the newly visible component $e_2$ leaks into the shadow under $d$.
+
+\begin{proposition}[Log-scale defect monotonicity under fixed representability]
+\label{prop:log-defect}\lean{log_defect_monotonicity}
+Let $d$ be a nilpotent differential ($d^2 = 0$) and $(\CCPi{\ell})$ a nested horizon tower.
+Suppose $x \in \Img(\CCPi{\ell_0})$ for some $\ell_0$, i.e., $\CCPi{\ell_0} x = x$.
+Then for all $\ell \ge \ell_0$:
+\[
+\CCDefEnergy{\ell}{x} = \|\CCPibar{\ell} d x\|^2 \quad\text{is monotone non-increasing in } \ell.
+\]
+\end{proposition}
+
+\begin{proof}
+Since $x \in \Img(\CCPi{\ell_0})$ and horizons are nested, $\CCPi{\ell} x = x$ for all $\ell \ge \ell_0$.
+Thus $\CCDefEnergy{\ell}{x} = \|\CCPibar{\ell} d \CCPi{\ell} x\|^2 = \|\CCPibar{\ell} d x\|^2$.
+For $\ell \le \ell'$, we have $\CCPibar{\ell'} = I - \CCPi{\ell'} \preceq I - \CCPi{\ell} = \CCPibar{\ell}$ in the PSD order (since $\CCPi{\ell} \preceq \CCPi{\ell'}$).
+Therefore $\|\CCPibar{\ell'} d x\|^2 \le \|\CCPibar{\ell} d x\|^2$.
+\end{proof}
+
+\paragraph{Interpretation.}
+The monotonicity holds when the state $x$ is ``already representable'' at some base scale $\ell_0$.
+In this case, refining the horizon (increasing $\ell$) only shrinks the shadow, reducing leakage.
+For states not yet representable at the base scale, $\CCPi{\ell} x$ varies with $\ell$, and defect energy may fluctuate.
+
+\paragraph{Log-periodic structure.}
+In some applications, the defect energy exhibits approximate periodicity in the log-scale variable $\ell$.
+This can occur when the underlying operator $d$ has scale-invariant structure.
+The log-scale framework provides the natural setting for detecting and characterizing such periodicity.

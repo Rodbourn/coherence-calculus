@@ -1,0 +1,188 @@
+% ============================================================
+\section{Operator Interface: Additive Horizon Systems}
+\label{sec:bedrock}
+% ============================================================
+
+This section isolates the interface on which the structural calculus depends.
+Only the algebraic and energetic data needed for projection identities, defect
+identities, tower calculus, elimination, and solver constructions are fixed
+here. No preferred coordinate model and no counting realization are imposed at
+this stage.
+
+% ------------------------------------------------------------
+\subsection{Additive state spaces and energy}
+\label{subsec:algebraic-foundations}
+% ------------------------------------------------------------
+
+\begin{definition}[Additive state space]\label{def:vector-space}\lean{AdditiveStateSpace}
+An \emph{additive state space} is a set $\cH$ equipped with operations
+\[
+0 \in \cH,
+\qquad
++ : \cH \times \cH \to \cH,
+\qquad
+- : \cH \to \cH,
+\]
+such that for all $x,y,z \in \cH$,
+\begin{enumerate}[label=(\roman*), itemsep=0.2em]
+\item $(x+y)+z = x+(y+z)$,
+\item $x+y = y+x$,
+\item $x+0 = x$,
+\item $x+(-x)=0$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Energy pairing]\label{def:inner-product}\lean{EnergyPairing}
+An \emph{energy pairing} on an additive state space $\cH$ is a symmetric
+positive bilinear form
+\[
+\langle \cdot,\cdot\rangle : \cH \times \cH \to \bbR
+\]
+such that
+\[
+\langle x,x\rangle \ge 0
+\qquad\text{for all }x\in\cH,
+\]
+and $\langle x,x\rangle = 0$ only when $x=0$.
+The induced energy norm is
+\[
+\|x\|^2 := \langle x,x\rangle.
+\]
+\end{definition}
+
+\begin{definition}[Finite coherence space]\label{def:hilbert-space}\lean{FiniteCoherenceSpace}
+A \emph{finite coherence space} is an additive state space equipped with an
+energy pairing. Whenever orthogonality, adjoints, or defect energies are used
+in later chapters, they are understood relative to that fixed pairing.
+\end{definition}
+
+% ------------------------------------------------------------
+\subsection{Horizon towers and observed operators}
+
+\begin{definition}[Horizon tower]
+\label{def:horizon-tower}\lean{HorizonTower}
+A \emph{horizon tower} on $\cH$ is a nested family of idempotent observable
+projections $(\CCPi{h})_{h\in\bbN}$.
+Nestedness means that coarse observation after finer observation changes
+nothing:
+\[
+\CCPi{h}\CCPi{h'}=\CCPi{h}
+\qquad (h\le h').
+\]
+\end{definition}
+
+\begin{definition}[Shadow projector]\label{def:shadow-projector}\lean{shadowProj}
+The shadow at horizon $h$ is the complementary operator
+\[
+\CCPibar{h}:=\id-\CCPi{h}.
+\]
+Thus every state splits into visible part plus shadow:
+\[
+x=\CCPi{h}x+\CCPibar{h}x.
+\]
+\end{definition}
+
+\begin{definition}[Transitivity of horizons]\label{def:transitivity}\lean{nested_proj_comp}\lean{nested_proj_comp_ge}
+For a nested horizon tower,
+\[
+\CCPi{h}\CCPi{h'}=\CCPi{h}
+\qquad (h\le h'),
+\qquad
+\CCPi{h'}\CCPi{h}=\CCPi{h}
+\qquad (h\le h').
+\]
+This is the algebraic coherence law for observation across different
+resolutions.
+\end{definition}
+
+\begin{definition}[Energy-orthogonal tower]\label{def:orthogonal-tower}\lean{EnergyOrthogonalTower}
+Let $\cH$ carry an energy pairing. A horizon tower is
+\emph{energy-orthogonal} if each projection $\CCPi{h}$ is self-adjoint for that
+pairing and
+\[
+\langle \CCPi{h}x,\CCPibar{h}y\rangle = 0
+\qquad
+\text{for all }x,y\in\cH.
+\]
+Equivalently, each horizon cut splits the state space into an orthogonal
+observable sector and an orthogonal shadow sector.
+\end{definition}
+
+\begin{definition}[Additive operator]\label{def:linear-operator}\lean{AddMap}
+An \emph{additive operator} on $\cH$ is a map $A:\cH\to\cH$ preserving addition
+and zero:
+\[
+A(x+y)=Ax+Ay,
+\qquad
+A(0)=0.
+\]
+\end{definition}
+
+\begin{definition}[Energy adjoint]\label{def:adjoint}\lean{HasEnergyAdjoint}\lean{defectEnergy_operator_form}
+Given additive operators $A$ and $A^\ast$, one says that $A^\ast$ is an
+\emph{energy adjoint} of $A$ if
+\[
+\langle Ax,y\rangle = \langle x,A^\ast y\rangle
+\qquad
+\text{for all }x,y\in\cH.
+\]
+This is exactly the adjoint structure needed for the operator form of defect
+energy.
+\end{definition}
+
+\begin{definition}[Graded differential and nilpotency]
+\label{def:nilpotent-differential}\lean{isNilpotent}
+A \emph{nilpotent differential} on $\cH$ is an additive operator $d$ satisfying
+\[
+d^2=0.
+\]
+\end{definition}
+
+\begin{definition}[Observed operator]
+\label{def:observed-operator}\lean{observedOp}
+Given a horizon tower and an additive operator $A$, the observed operator at
+horizon $h$ is
+\[
+\CCObs{A}{h}:=\CCPi{h}A\CCPi{h}.
+\]
+\end{definition}
+
+\begin{definition}[Leakage operator]
+\label{def:leakage-operator}\lean{leakageOp}
+The leakage operator is
+\[
+\CCLeak{A}{h}:=\CCPibar{h}A\CCPi{h}.
+\]
+It measures what leaves the observable sector when $A$ acts on visible input.
+\end{definition}
+
+\begin{definition}[Return operator]
+\label{def:return-operator}\lean{returnOp}
+The return operator is
+\[
+R_h:=\CCPi{h}A\CCPibar{h}.
+\]
+It measures what returns from shadow to the observable sector.
+\end{definition}
+
+\begin{remark}[Defect as round trip]
+\label{rem:defect-round-trip}\lean{defect_factorization}
+The defect is the observable round trip through shadow:
+\[
+\CCDefect{A}{h}=R_h\,\CCLeak{A}{h}
+=\CCPi{h}A\CCPibar{h}A\CCPi{h}.
+\]
+Leakage and defect are therefore different objects. Leakage is escape;
+defect is returned nonclosure.
+\end{remark}
+
+\paragraph{Interface principle.}
+The structural theorems of Part~II depend only on the data above together with
+the additional hypotheses stated locally in each chapter. No coordinate
+realization, counting model, or physical interpretation is used at this stage.
+
+\paragraph{Realizations enter later.}
+Part~I proves that Closure Balance supplies a distinguished finite
+realization of this interface. Chapter~13 proves that conservative
+characteristic transport can furnish another realization. Both belong to the
+realized-model layer, not to the structural interface itself.

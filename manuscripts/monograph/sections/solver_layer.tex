@@ -1,0 +1,109 @@
+% ============================================================
+\section{Solver Layer: Exactness, Green Operators, and Homotopy}
+\label{subsec:solver-layer}
+% ============================================================
+
+The preceding chapters require only projection algebra and additive closure.
+Sometimes, however, the observable operator data sits inside a finite
+Hilbert-complex package. In that case an additional solver layer becomes
+available: exactness, Green operators, and canonical homotopies.
+
+\begin{definition}[Finite Hilbert complex]
+\label{def:hilbert-complex}\lean{finiteHilbertComplex}
+A \emph{finite Hilbert complex} is a sequence of finite-dimensional inner
+product spaces and linear maps
+\[
+0 \longrightarrow H^0 \xrightarrow{D_0} H^1 \xrightarrow{D_1} \cdots
+\xrightarrow{D_{m-1}} H^m \longrightarrow 0
+\]
+such that
+\[
+D_{k+1} D_k = 0
+\qquad
+\text{for every } k.
+\]
+\end{definition}
+
+\begin{definition}[Exactness]
+\label{def:exactness}\lean{complexExactness}
+The complex is \emph{exact at degree $k$} if
+\[
+\Ker(D_k) = \Img(D_{k-1}).
+\]
+Equivalently, the $k$th cohomology group vanishes:
+\[
+\CCCoh{k}(D) = 0.
+\]
+\end{definition}
+
+\begin{definition}[Hodge Laplacian and Green operator]
+\label{def:green-operator}\lean{hodgeLaplacian, greenOperator}
+At degree $k$, define the Hodge Laplacian by
+\[
+\CCLap{k} := D_{k-1} D_{k-1}^* + D_k^* D_k.
+\]
+When $\CCLap{k}$ is invertible, its inverse
+\[
+\CCGreen{k} := \CCLap{k}^{-1}
+\]
+is the \emph{Green operator} at degree $k$.
+\end{definition}
+
+\begin{lemma}[Intertwining of the Laplacian with the differential]
+\label{lem:laplacian-intertwining}\lean{laplacian_intertwines_differential}
+For every degree $k$,
+\[
+D_k \CCLap{k} = \CCLap{k+1} D_k.
+\]
+Consequently, whenever the Green operators exist,
+\[
+D_k \CCGreen{k} = \CCGreen{k+1} D_k.
+\]
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{theorem}[Homotopy identity with adjacent Green operators]
+\label{thm:homotopy-identity}\lean{homotopyIdentity}
+Assume the Green operators \(\CCGreen{k}\) and \(\CCGreen{k+1}\) both exist.
+Define
+\[
+\CCHom{k} := D_{k-1}^* \CCGreen{k},
+\qquad
+\CCHom{k+1} := D_k^* \CCGreen{k+1}.
+\]
+Then
+\[
+D_{k-1} \CCHom{k} + \CCHom{k+1} D_k = I_{H^k}.
+\]
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{remark}[Lean boundary for the solver layer]
+\label{rem:solver-layer-lean-boundary}
+\lean{homotopyIdentity}
+On the active Lean surface, the homotopy identity is treated as an explicit
+solver-interface property rather than as a bedrock theorem forced from
+exactness alone. The theorem above is therefore one sufficient realization of
+that interface when adjacent Green operators are available, not part of the
+primitive calculus itself.
+\end{remark}
+
+\begin{definition}[Holographic saturation]
+\label{def:holographic-saturation}\lean{holographicSaturation}
+Let $R_k : H^k \to B^k$ be a boundary restriction map. The degree-$k$ layer is
+\emph{holographically saturated} if
+\[
+\Ker(R_k) = \Img(D_{k-1}).
+\]
+Equivalently, the relative cohomology at degree $k$ vanishes:
+\[
+\CCCohRel{k}{D,R} = 0.
+\]
+\end{definition}
+
+\paragraph{Scope of the solver layer.}
+This layer is optional. It is not part of the bedrock axioms of the calculus.
+Rather, it is the exact package that becomes available once the operator data
+is known to form an exact finite Hilbert complex.

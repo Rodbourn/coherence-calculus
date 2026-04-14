@@ -1,0 +1,650 @@
+% ============================================================
+\section{From $\partial^2=0$ to the Carrier Taxonomy and Persistence Modes}
+\label{sec:carrier-forcing}
+% ============================================================
+
+This chapter proves the structural theorem that the single identity
+$\partial^2=0$ on the balanced complex~$K_4$, propagated through the defect
+tower of the intrinsic $1{+}2{+}3$ decomposition, determines the common carrier
+taxonomy and closure grammar. The defect tower first fixes the finite carrier
+classes, the common closure grammar, and the admissible law-side channels on
+those carriers. Once the carrier-specific endpoint-rigidity and representative
+hypotheses are imposed, the corresponding canonical normal forms coincide with
+the familiar Schr\"odinger, Klein--Gordon, Maxwell, and Einstein equations.
+The claim carried forward to Part~II is stronger than four separate symmetry
+recoveries: one selected bundle carries one common selected law, and the later
+standard equations are its carrier-level realizations.
+The references below are included only to situate those later identifications
+in the standard mathematical-physics literature:
+Schr\"odinger~\cite{Schrodinger1926,Sakurai2020},
+Klein--Gordon~\cite{Klein1926,Gordon1926,PeskinSchroeder1995},
+Maxwell~\cite{Maxwell1865,Jackson1999},
+Einstein~\cite{Einstein1915,Wald1984}. For uniqueness of the Einstein tensor
+in four dimensions, see Lovelock's theorem~\cite{Lovelock1971}; the framework
+derives the same constraint ($b=-a/2$) internally via contracted Bianchi
+from~$d^2=0$.
+
+\subsection{Primitive Channels and Geometric Lift}
+
+\begin{definition}[Visible persistence mode]
+\label{def:visible-persistence-mode}\lean{SelectedBundle.FirstReading, SelectedBundle.CarrierClassification}
+Fix a realized family satisfying the temporal realization principle on a
+selected cut. A \emph{visible persistence mode} on that cut consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item a visible law class on the selected observed bundle;
+\item a compatibility signature specifying what must be preserved by that law;
+\item a source-admissibility profile specifying how exchange and returned
+      residual may enter visibly;
+\item a minimality condition asserting that no proper visible subcarrier still
+      preserves the same compatibility signature and the same source profile on
+      the realized temporal class.
+\end{enumerate}
+Such a mode is \emph{irreducible} if the minimality condition holds.
+\end{definition}
+
+\subsection{Defect-Tower Carrier Forcing}
+\label{subsec:defect-tower-forcing}
+
+The intrinsic \(1+2+3\) decomposition induces a finite carrier filtration on
+the selected bundle:
+\[
+U_1
+\subset
+U_1\oplus U_2
+\subset
+U_1\oplus U_2\oplus U_3 = V_{\mathrm{slot}}.
+\]
+The direct channels are the successive bands of this three-step refinement,
+while geometry is the symmetric-response lift of the last direct band rather
+than a fourth primitive channel. Thus the carrier taxonomy is fixed before any
+carrier-specific representative is chosen, and the later endpoint-rigidity
+hypotheses identify representatives within already forced classes.
+The role of \(D=4\) here is structural: Chapter~4 identifies the balanced
+four-incidence as the canonical nondegenerate local carrier in the counting
+model, and the explicit Part~II three-law hypothesis later gives that carrier
+its physical-law reading.
+
+\begin{theorem}[Defect-tower complete carrier forcing]
+\label{thm:defect-tower-complete-carrier-forcing}\lean{SelectedBundle.Reduction.defectTowerCompleteCarrierForcing}
+Assume the structural interface of Part~II, the canonical balanced
+realization of Part~I with its intrinsic $1{+}2{+}3$ decomposition
+(Theorem~\ref{thm:intrinsic-six-slot-decomposition}), and the temporal
+realization on a faithful visible selected cut. Then the defect tower of the
+intrinsic channel filtration forces exactly four intrinsic carrier classes.
+Under the endpoint-rigidity and representative hypotheses used in the flagship
+sections, their canonical normal forms are:
+\begin{enumerate}[label=\textup{(\alph*)}, itemsep=0.3em]
+\item \textbf{Phase carrier $\to$ Schr\"odinger equation.}
+  The reversible recursion on the $U_1$ channel
+  (Theorem~\ref{thm:reversible-transport-recursion}) produces a monodromy
+  whose eigenvalues are constrained by the HFT-2 energy budget
+  (Theorem~\ref{thm:HFT2-general}) to satisfy $|B|<2$
+  (Proposition~\ref{prop:monodromy-2x2}). This forces complex eigenvalues,
+  hence a canonical complex generator $J^2=-I$. Isotropic scalarization
+  (Theorem~\ref{thm:isotropic-quadratic-transport}) then yields
+  $i\partial_t\psi = (-\kappa\Delta + V)\psi$.
+\item \textbf{Wave carrier $\to$ Klein--Gordon equation.}
+  The HFT-1 defect (Theorem~\ref{thm:HFT1-general}) through the first
+  correction band $U_2\oplus U_3$ generates the first defect correction to
+  scalar observation. Scalarization on $U_2$ yields
+  $(\partial_t^2 - c^2\Delta + m^2)\varphi = 0$.
+\item \textbf{Gauge carrier $\to$ Maxwell equations.}
+  The inherited $d^2=0$ on the $U_3$ channel restricts to de~Rham exactness
+  on the gauge band. The Hodge solver
+  (Theorem~\ref{thm:stencil-forcing-principle}) then yields
+  $\delta F = J$, $dF = 0$.
+\item \textbf{Geometric carrier $\to$ Einstein equation.}
+  The symmetric-square lift $\mathrm{Sym}^2(U_3)$
+  (Theorem~\ref{thm:six-slot-carrier-is-symmetric-square-of-u3}) carries an
+  $O(n)$ decomposition. Isotropic symmetric-response scalarization
+  (Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization})
+  yields $\mathrm{div}(a\,\mathrm{Ric} + b\,R\,g) = (a/2+b)\,dR = 0$,
+  forcing $b = -a/2$ and hence $G + \Lambda g = \kappa T$.
+\end{enumerate}
+The tower terminates in exactly three refinement steps (the three stages of
+the $1{+}2{+}3$ filtration). There are exactly three primitive channels and
+exactly one geometric lift. No carrier-level free parameter survives.
+\end{theorem}
+
+\begin{proof}
+Part~(a): The recursion interface of Part~II
+(Theorem~\ref{thm:reversible-transport-recursion}) on the $U_1$ channel
+produces the monodromy $\mathcal M = \bigl(\begin{smallmatrix} B & -1 \\ 1 &
+0 \end{smallmatrix}\bigr)$ with trace $B$. By Proposition~\ref{prop:monodromy-2x2},
+the eigenvalues are $\lambda_\pm = (B \pm \sqrt{B^2 - 4})/2$. The HFT-2
+energy budget (Theorem~\ref{thm:HFT2-general}) forces
+$\sum_n \|x_n\|^2 < \infty$, which requires $|\lambda_\pm| \le 1$, hence
+$|B| < 2$. This forces $B^2 - 4 < 0$, giving complex conjugate eigenvalues
+on the unit circle and the canonical complex generator $J^2 = -I$. Isotropic
+scalarization (Theorem~\ref{thm:isotropic-quadratic-transport}) on the
+resulting complex line yields the Schr\"odinger form.
+
+Part~(b): The HFT-1 identity (Theorem~\ref{thm:HFT1-general}) gives
+$d_h^2 = -\delta_h$, where $\delta_h$ is the defect. The first correction
+band $U_2$ inherits this defect structure. Scalarization under the isotropic
+quadratic transport theorem yields a second-order equation. The mass term
+arises from the constant part of the defect operator restricted to $U_2$.
+
+Part~(c): On $U_3$, the full $d^2 = 0$ restricts to de~Rham exactness on
+the gauge band. The solver layer produces the Green operator when
+$H^k(D) = 0$ (exactness). The Hodge decomposition and the stencil-forcing
+principle (Theorem~\ref{thm:stencil-forcing-principle}) yield $\delta F = J$
+and $dF = 0$.
+
+Part~(d): The symmetric-square lift
+(Theorem~\ref{thm:six-slot-carrier-is-symmetric-square-of-u3}) on
+$\mathrm{Sym}^2(U_3)$ inherits $d^2 = 0$ as the contracted Bianchi
+identity. Isotropic symmetric-response scalarization
+(Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization})
+decomposes the divergence as
+$\mathrm{div}(a\,\mathrm{Ric} + b\,R\,g) = (a/2 + b)\,dR$. Setting
+this to zero forces $b = -a/2$, which is exactly the Einstein tensor
+$G = \mathrm{Ric} - \frac{1}{2}R\,g$.
+\end{proof}
+
+\begin{remark}[Endpoint-rigidity hypotheses identify representatives]
+\label{rem:endpoint-rigidity-packages-as-consequences}\lean{EndpointRigidity.CommonReduction.surface}
+The carrier-specific endpoint-rigidity hypotheses of the flagship sections
+identify canonical representatives for the carrier classes forced here. The
+defect tower already determines the intrinsic carrier types and their common
+closure grammar. When the local rigidity hypotheses are available, the
+representative theorem is immediate; when they remain explicit, they serve
+only to identify the endpoint normal form within an already forced class.
+\end{remark}
+
+\begin{remark}[Scope of the present carrier theorem]
+\label{rem:still-missing-autonomous-normal-form-collapse}\lean{SelectedBundle.Reduction.defectTowerCompleteCarrierForcing, EndpointRigidity.CommonReduction.surface}
+The present chapter proves the common carrier taxonomy and closure grammar. A
+stronger theorem would remove the remaining endpoint hypotheses by showing
+directly that, on an autonomous carrier satisfying locality, compatibility,
+symmetry, and minimality, the only admissible local normal forms are the
+flagship representative equations. That autonomous normal-form collapse is not
+part of the present certified surface, so the endpoint hypotheses remain
+explicit.
+\end{remark}
+
+\begin{corollary}[Single-source carrier taxonomy and closure grammar]
+\label{cor:single-source}\lean{SelectedBundle.Reduction.singleSourceIdentification}
+The common carrier taxonomy and closure grammar derive from the single
+structural identity \(\partial^2=0\) on the canonical balanced clique complex,
+together with the tower calculus of Part~II. Under the explicit
+endpoint-rigidity and representative hypotheses stated in the flagship
+sections, the canonical normal forms on those carriers coincide with the
+familiar equations. No additional structural law appears at the common
+law-side level.
+\end{corollary}
+
+\begin{proof}
+The carrier taxonomy and closure grammar are forced by
+Theorem~\ref{thm:defect-tower-complete-carrier-forcing}. The later endpoint
+identifications require exactly the endpoint-rigidity and representative
+hypotheses recorded in the flagship sections, as emphasized in
+Remark~\ref{rem:still-missing-autonomous-normal-form-collapse}.
+\end{proof}
+
+\begin{definition}[Three primitive persistence channels and one intrinsic lift]
+\label{def:five-persistence-modes}\lean{SelectedBundle.CanonicalGeneration}
+Assume the setting of Definition~\ref{def:physical-realization-principle} on a
+selected observed bundle whose local balanced channel algebra carries the
+intrinsic \(1+2+3\) decomposition of
+Corollary~\ref{cor:intrinsic-symmetry-forces-123}. The primitive visible
+classification considered in this chapter consists of three direct persistence
+channels together with one intrinsic lift:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item \emph{local-state persistence:} the primitive \(1\)-channel, a
+      reversible scalar mode whose
+      compatibility signature is phase-compatible transport and whose visible
+      source profile is source-free up to exchange or returned residual;
+\item \emph{propagative persistence:} the primitive \(2\)-channel, a
+      reversible scalar mode whose
+      compatibility signature is second-order transport with no preferred
+      direction and whose visible source profile is again source-free up to
+      exchange or returned residual;
+\item \emph{comparative persistence:} the primitive \(3\)-channel, a
+      one-form comparison mode whose
+      compatibility signature is exactness and local gauge covariance, so that
+      only local comparison class is physical and visible source appears as an
+      exchange current;
+\item \emph{causal-structural persistence:} not a fourth primitive channel,
+      but the canonical symmetric-response lift of the primitive \(3\)-channel
+      on the time-realizing cut. Its compatibility signature is
+      divergence-compatible response on the selected symmetric-square lift, and
+      its visible source appears as a preceding exchange tensor.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Primitive-channel and lift separation on the selected cut]
+\label{thm:persistence-mode-separation}\lean{SelectedBundle.CanonicalGeneration.surface}
+Assume temporal realization on a selected cut and the compatibility packages
+described in Definition~\ref{def:five-persistence-modes}. Then the three
+primitive persistence channels and the causal-structural lift of
+Definition~\ref{def:five-persistence-modes} are pairwise distinct in role.
+More precisely, no one of the three primitive channels can be identified with
+another without destroying its compatibility signature, and the
+causal-structural lift cannot be identified with its comparative base without
+replacing a comparison-class law by a symmetric-response law with a different
+source profile.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{theorem}[Resolution-integrated balance closure is not a primitive channel or intrinsic lift]
+\label{thm:resolution_integrated_balance_closure_not_intrinsic_mode}\lean{SelectedBundle.Reduction.surface}
+Assume temporal realization on a selected cut and let a visible balance
+hierarchy be obtained there by integrating unresolved exchange over a
+resolution family, so that its recognizable hydrodynamic law appears only
+after closure of that hierarchy. Then this hydrodynamic closure is neither an
+additional primitive persistence channel nor a further intrinsic lift on the
+selected cut. It is an effective closure read from the
+resolution-integrated balance hierarchy.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{remark}[Interpretation of the primitive channels and geometric lift]
+\label{rem:persistence-mode-physical-reading}\lean{SelectedBundle.FirstReading, SelectedBundle.CanonicalGeneration}
+These roles distinguish four structurally different ways in which coherence can
+persist through realized time:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item persistence of a local state on the primitive \(1\)-channel;
+\item persistence by reversible propagation on the primitive \(2\)-channel;
+\item persistence of local comparison on the primitive \(3\)-channel;
+\item persistence of causal structure under symmetric response on the
+      canonical lift of that primitive \(3\)-channel.
+\end{enumerate}
+The carrier language supplies minimal mathematical realizations of the three
+primitive channels and of the geometric lift. Effective balance laws such as
+hydrodynamics belong to a different layer: they are read only after
+resolution integration and closure of an unresolved hierarchy.
+\end{remark}
+
+\subsection{Canonical Carrier Realizations}
+
+\begin{definition}[Canonical realization of persistence modes on the selected bundle]
+\label{def:canonical-sector-generation}\lean{SelectedBundle.CanonicalGeneration}
+Assume the setting of Definition~\ref{def:physical-realization-principle} on a
+selected observed bundle whose local balanced channel algebra carries the
+intrinsic \(1+2+3\) decomposition of
+Corollary~\ref{cor:intrinsic-symmetry-forces-123}. The bundle satisfies
+\emph{canonical realization of persistence modes} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item local-state persistence admits a minimal phase-generating realization,
+      yielding the phase carrier class;
+\item propagative persistence admits a minimal reversible second-order
+      realization, yielding the wave carrier class;
+\item comparative persistence admits a minimal exactness-compatible one-form
+      realization, yielding the gauge carrier class;
+\item the primitive \(3\)-channel admits a minimal divergence-compatible
+      symmetric-response lift, yielding the geometric carrier class.
+\end{enumerate}
+This is not a primitive dictionary from the dimensions \(1+2+3\) to named
+laws. It states that the visible carrier classes are the three canonical
+direct realizations of the primitive channels together with the canonical
+symmetric-response lift carried by the same intrinsic channel algebra.
+\end{definition}
+
+\begin{definition}[Resolution-integrated effective balance closure]
+\label{def:resolution-integrated-effective-balance-closure}\lean{SelectedBundle.CarrierClassification, SelectedBundle.Reduction.surface}
+A selected observed bundle carries a
+\emph{resolution-integrated effective balance closure} if the bundle supports a
+faithful balance hierarchy obtained by integrating unresolved exchange over a
+resolution family, and the recognizable hydrodynamic law on that hierarchy is
+read only as the effective constitutive closure of its exact low-order balance
+content.
+\end{definition}
+
+\begin{definition}[Carrier-level classification of the persistence modes]
+\label{def:carrier-level-classification}\lean{SelectedBundle.CarrierClassification}
+A \emph{carrier-level classification} of the persistence modes on the selected
+observed bundle consists in proving that each generated visible carrier carries
+a unique
+canonical representative of its distinguished minimal compatible closure class:
+phase, wave, gauge, and geometric, together with proving that any
+resolution-integrated effective balance hierarchy on that bundle carries a
+canonical effective hydrodynamic closure normal form.
+\end{definition}
+
+\begin{theorem}[Persistence-mode realization reduction]
+\label{thm:canonical-sector-generation-reduction}\lean{SelectedBundle.Reduction.surface}
+Fix a realized family satisfying the temporal realization principle on a
+selected cut. Assume:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected visible effective law on that cut is exactly the law
+      obtained by eliminating a residual return field on the hidden/interface
+      sector;
+\item the four intrinsic flagship carriers together with the
+      resolution-integrated hydrodynamic lane are faithfully visible on one selected
+      observed bundle in the sense of
+      Theorem~\ref{thm:common-selected-bundle-assembly};
+\item the selected observed bundle satisfies canonical realization of
+      persistence modes in the sense of
+      Definition~\ref{def:canonical-sector-generation};
+\item the same selected observed bundle carries a resolution-integrated
+      effective balance closure in the sense of
+      Definition~\ref{def:resolution-integrated-effective-balance-closure}.
+\end{enumerate}
+Then the phase, wave, gauge, and geometric carriers are the canonical
+realizations of the three primitive persistence channels together with the
+canonical geometric lift on one selected observed bundle, the kinetic lane is
+the resolution-integrated effective balance
+hierarchy on that same bundle, and the carrier-level next step is exactly the
+classification of
+Definition~\ref{def:carrier-level-classification}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{theorem}[Existence of the three primitive channels and the geometric lift on the selected bundle]
+\label{thm:existence-of-five-persistence-modes}\lean{SelectedBundle.Reduction.surface}
+Assume the hypotheses of
+Theorem~\ref{thm:canonical-sector-generation-reduction}. Then each of the three
+primitive persistence channels and the geometric lift of
+Definition~\ref{def:five-persistence-modes} is realized on the selected
+observed bundle. More precisely:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item local-state persistence is realized by the phase carrier class;
+\item propagative persistence is realized by the wave carrier class;
+\item comparative persistence is realized by the gauge carrier class;
+\item causal-structural persistence is realized by the geometric carrier class
+      as the canonical symmetric-response lift of the primitive \(3\)-channel.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{theorem}[Mode classification for the intrinsic flagship family]
+\label{thm:flagship-mode-classification}\lean{SelectedBundle.CarrierClassification.surface, SelectedBundle.Reduction.surface}
+Assume the hypotheses of
+Theorem~\ref{thm:canonical-sector-generation-reduction}. Then every intrinsic
+flagship visible law on the selected observed bundle, namely the phase, wave,
+gauge, and geometric lanes, belongs to exactly one of the three primitive
+persistence channels or the geometric lift of
+Definition~\ref{def:five-persistence-modes}.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{corollary}[Scoped exhaustion of the intrinsic flagship primitive-channel family]
+\label{cor:flagship-family-exhausts-five-persistence-modes}\lean{SelectedBundle.CarrierClassification.surface, SelectedBundle.Reduction.surface}
+Assume the hypotheses of
+Theorem~\ref{thm:canonical-sector-generation-reduction}. Then, within the
+intrinsic flagship family on the selected observed bundle:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item each intrinsic flagship carrier class realizes exactly one structural
+      role from Definition~\ref{def:five-persistence-modes};
+\item each of the three primitive persistence channels is realized by exactly
+      one intrinsic flagship carrier class, and the geometric carrier is
+      exactly the canonical symmetric-response lift of the primitive
+      \(3\)-channel;
+\item there is no fourth primitive persistence channel in the intrinsic
+      flagship family, and no additional intrinsic lift beyond the geometric
+      one.
+\end{enumerate}
+\end{corollary}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{remark}[Hydrodynamic and thermodynamic closure are not additional primitive channels or intrinsic lifts]
+\label{rem:thermodynamic-closure-not-sixth-mode}\lean{SelectedBundle.Reduction.surface, SelectedCut.effectiveThermodynamicClosure}
+The corollary above concerns the intrinsic flagship family carried by the
+selected observed bundle. It does not create an additional intrinsic mode for
+hydrodynamics or thermodynamics. In the present chapter, hydrodynamics is read
+as a resolution-integrated effective balance closure, while thermodynamic
+irreversibility is read as a closure law on returned residual and unrecovered
+stock. Neither is an additional primitive channel nor an additional intrinsic
+lift beside the three primitive channels and geometric lift listed in
+Definition~\ref{def:five-persistence-modes}.
+\end{remark}
+
+\subsubsection{\texorpdfstring{The \(D=2\) Spectral Seed}{The D=2 Spectral Seed}}
+\label{subsec:d2-spectral-seed}
+\label{rem:d2-spectral-seed}\lean{d2_spectral_seed_package}
+
+By Corollary~\ref{cor:single-channel-unit-seed}, the unit-balanced seed admits
+only one irreducible local channel. Therefore applying the temporal
+realization bridge at that seed cannot produce scalar/vector/tensor branching:
+the selected visible law there must remain one-fiber.
+Theorem~\ref{thm:temporal-realization-forbids-primitive-internal-creation}
+then rules out primitive source creation on that seed, so its leading visible
+law is source-free unless an exchange remainder is induced by coupling or
+hidden-sector return.
+
+Combined with the reversible transport/recursion interface of
+Section~\ref{subsec:reversible-transport-recursion} and the phase-carrier
+rigidity machinery of Part~II, this identifies the natural seed visible law as
+a reversible phase/recursion law. Corollary~\ref{cor:d2-repeat-no-new-carrier}
+adds that repeat transport cycles on the seed contribute only powers of the
+same one-channel monodromy and therefore do not create new visible persistence
+modes. Corollary~\ref{cor:d2-primitive-support-profile},
+Corollary~\ref{cor:primitive-support-prime-refinement}, and
+Corollary~\ref{cor:primitive-support-continuum-spectral-defect} then identify
+that same seed as a canonical primitive-support tower with prime-index maximal
+cyclic refinement steps and a unique continuum spectral defect form.
+
+\begin{figure}[ht]
+\centering
+\resizebox{0.8\textwidth}{!}{%
+\begin{tikzpicture}[node distance=1.6cm]
+  \node[ccbox, align=center, minimum width=3.0cm] (seed) at (0,1.8)
+    {$D=2$ unit-balanced seed};
+  \node[ccbox, align=center, minimum width=3.1cm] (channel) at (0,0.0)
+    {one irreducible\\local channel};
+  \node[ccbox, align=center, minimum width=3.2cm] (law) at (0,-1.9)
+    {reversible phase/recursion\\visible law};
+  \node[ccbox, align=center, minimum width=3.2cm] (support) at (0,-3.8)
+    {primitive-support tower};
+  \node[ccbox, align=center, minimum width=3.4cm] (continuum) at (0,-5.7)
+    {unique continuum spectral\\defect form};
+
+  \node[ccbox, align=center, minimum width=3.0cm] (repeat) at (4.8,-2.6)
+    {repeat cycles contribute\\powers only};
+  \node[ccbox, align=center, minimum width=3.0cm] (prime) at (4.8,-4.7)
+    {maximal cyclic refinement\\is prime-index};
+
+  \draw[ccarrow] (seed) -- (channel);
+  \draw[ccarrow] (channel) -- (law);
+  \draw[ccarrow] (law) -- (support);
+  \draw[ccarrow] (support) -- (continuum);
+  \draw[ccdarrow] (law.east) -- ++(0.55,0) |- (repeat.west);
+  \draw[ccdarrow] (support.east) -- ++(0.55,0) |- (prime.west);
+\end{tikzpicture}%
+}
+\caption{The \(D=2\) spectral seed. The one-channel seed forces a reversible
+phase/recursion law; new spectral data arise only on primitive supports.}
+\label{fig:d2-spectral-seed}
+\end{figure}
+
+This statement is operator-theoretic only: no arithmetic prime
+identification is used. The \(D=2\) seed remains separate from the flagship
+carrier class and furnishes the spectral stage beneath the nontrivial
+\(D=4\) bundle.
+
+Writing the forced continuum form as
+\[
+\mathcal E_{\infty}^{\mathrm{prim}},
+\]
+one natural external bridge problem is the identification
+\[
+\mathcal E_{\infty}^{\mathrm{prim}} = W_{\xi},
+\]
+where \(W_{\xi}\) denotes the classical completed Weil quadratic form on the
+same log-time test class in Weil's positivity formulation of the explicit
+formula \cite{Weil1952,Bombieri2000}. Any arithmetic realization of this
+bridge would lie outside the operator calculus developed here. No such
+identification is assumed here.
+
+\subsubsection{Inherited Compatibility and Closure}
+
+The flagship sections use these laws in five concrete representation
+types. In each case, the carrier statement is proved inside the corresponding
+section from the realized compatibility data, and the closure statement is the
+inherited minimal-order closure mechanism already proved on the exported
+structural interfaces.
+
+\begin{remark}[Compatibility and order are inherited from the earlier structural interfaces]
+\label{rem:compatibility-is-inherited}\lean{ObserverSelection.InheritedCompatibility}
+No new compatibility identity is introduced at this stage. The compatibility
+identities are already present in the exported theorem interfaces of
+the earlier structural development and are only filtered by the selected
+observer cut. Depending on
+the realized family, these already include:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item characteristic cut conservation and characteristic boundary reduction, by
+      Theorem~\ref{thm:cut-conservation} and
+      Corollary~\ref{cor:characteristic-boundary-reduction};
+\item observer-side and dynamics-side triad compatibility, by
+      Proposition~\ref{prop:observer-triad} and
+      Theorem~\ref{thm:dynamics-triad};
+\item reversible recursion and second-order wave transport on selected
+      carriers, by
+      Section~\ref{subsec:reversible-transport-recursion} together with the
+      local datum-forcing interfaces cited in the wave and phase flagships;
+\item nilpotent complex compatibility \(D_{k+1}D_k=0\) and the exactness/solver
+      layer on finite Hilbert complexes, by
+      Definition~\ref{def:hilbert-complex},
+      Definition~\ref{def:exactness}, and
+      Definition~\ref{def:solver-exactness};
+\item local gauge covariance and unique gauge-compatible local datum on
+      selected channels, by
+      Corollary~\ref{cor:realized-local-gauge-covariance} and
+      Theorem~\ref{thm:gauge-compatible-local-datum-forcing};
+\item intrinsic symmetry scalarization on selected carriers, by
+      Corollary~\ref{cor:realized-self-adjoint-scalarization} and
+      Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization};
+\item distinguished admissible minimal-order classes and their realized
+      forcing, by
+      Theorem~\ref{thm:minimal-admissible-transport-order},
+      Corollary~\ref{cor:minimal-transport-order-controls-jet}, and
+      Corollary~\ref{cor:realized-transport-order-forcing}; whenever a local
+      representative family is later exhibited, Chapter~9 then verifies that
+      representative by exact-core realization or constructive continuum
+      forcing.
+\end{enumerate}
+Accordingly the later carrier sections ask only two questions: which inherited
+compatibility identities are faithfully visible on the selected cut, and which
+inherited minimal admissible closures preserve them there? Temporal
+realization contributes the observer-side selection of the cut together with
+the restriction that visible productions enter only as exact balanced
+exchange.
+\end{remark}
+
+\subsubsection{Least-Motion Realization Data}
+
+\begin{definition}[Characteristic observer datum]
+\label{def:characteristic-observer-datum}\lean{ObserverSelection.CharacteristicDatum}
+Fix a horizon \(h\), a characteristic horizon realization \(R\), and a
+selection datum \(\mathsf S_h(R)\) in the sense of
+Definition~\ref{def:selection-datum}. A \emph{characteristic observer datum}
+at scale \(h\) consists of:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item the selected horizon projector \(P_h\) and visible carrier
+      \[
+      \mathcal X_h:=P_h\cH^\bullet;
+      \]
+\item the lower-bound operator \(D_h\), candidate reduced-law family
+      \(\mathcal Q_h(R)\), compatibility package, local-order filtration, and
+      normalization package \(\mathcal N_h\) carried by \(\mathsf S_h(R)\);
+\item the reconstruction and promotion data needed to place the selected family
+      in the continuum-identification and admissible-promotion interfaces of
+      the continuum bridge, together with the induced continuum carrier
+      \(\mathcal X_{\chi^\ast}\) and continuum law space
+      \(\mathcal Y_{\chi^\ast}\).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Least-motion characteristic observer]
+\label{def:least-motion-characteristic-observer}\lean{ObserverSelection.LeastMotion}
+A characteristic observer datum at scale \(h\) is a
+\emph{least-motion characteristic observer} if:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item it is faithful and reconstruction-compatible in the sense required by
+      the continuum bridge;
+\item it is closure-admissible, so the reduced admissible set
+      \[
+      \{Q\in\mathcal Q_h(R): D_h+Q\succeq 0\}
+      \]
+      is nonempty and well posed;
+\item no proper visible subcarrier of \(\mathcal X_h\) still satisfies
+      faithful reconstruction, compatibility preservation, and
+      closure-admissibility;
+\item its selected law class is stable under the admissible-promotion map of
+      the continuum bridge;
+\item among observer data satisfying (i)--(iv), it minimizes observer motion,
+      meaning the combined representational drift of the projection, the
+      minimal admissible completion, and the promoted law across the chosen
+      horizon family;
+\item it is unique up to horizon-preserving equivalence.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Triad consequence]
+\label{rem:triad-consequence-observer-selection}\lean{ObserverSelection.TriadConsequence}
+When a least-motion characteristic observer exists and is unique, the
+Lagrangian/Eulerian/characteristic triad is read as a consequence of the
+selected cut:
+\[
+\begin{aligned}
+\Pi_{\chi^\ast}(\text{bulk-following description})
+&=
+\Pi_{\chi^\ast}(\text{boundary-observing description})\\
+&=
+\Pi_{\chi^\ast}(\text{action/generator description}).
+\end{aligned}
+\]
+The surviving symmetry is then recovered as the stabilizer of the minimizing
+observer datum rather than inserted by hand. In this sense, observer
+covariance is the abstract symmetry statement, and the triad is its first
+realized instance.
+\end{remark}
+
+\subsection{Common Structural Consequences}
+
+\begin{theorem}[Common selected-bundle assembly]
+\label{thm:common-selected-bundle-assembly}\lean{SelectedBundle.Assembly.surface}
+Fix a realized family satisfying the temporal realization principle on a
+least-motion characteristic observer datum with selected visible effective law
+\(\mathcal L_{\mathrm{vis},h}(z)\). Assume that the phase, wave, kinetic,
+gauge, and geometric intrinsic carriers together with the hydrodynamic balance
+carrier on the selected cut are all faithful,
+reconstruction-compatible, and stable under admissible promotion in the sense
+of Definition~\ref{def:characteristic-observer-datum}.
+Then:
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=0.2em]
+\item these carriers are associated visible carriers of one selected observed
+      bundle
+      \[
+      \mathcal X_h=P_h\cH^\bullet;
+      \]
+\item each induced visible law is obtained from the same selected
+      visible effective law by restriction to the corresponding carrier
+      together with the inherited selected endpoint closure class of
+      Definition~\ref{def:selected-visible-effective-law};
+\item once a canonical representative has been fixed on each carrier, the
+      distinction between the flagship laws enters only at the final
+      carrier-level endpoint classification and notation.
+\end{enumerate}
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)
+
+\begin{theorem}[Common endpoint-rigidity reduction on the selected cut]
+\label{thm:common-endpoint-rigidity-reduction}\lean{EndpointRigidity.CommonReduction.surface}
+Fix a realized family satisfying the temporal realization principle on a
+least-motion characteristic observer and an associated visible carrier
+\(\mathcal X_h^{\mathrm{vis}}\) on the selected cut whose intrinsic symmetry
+decomposition lies in the scalarization surfaces already forced upstream:
+every non-geometric irreducible channel is an observable-irreducible selected
+channel in the sense of
+Definition~\ref{def:observable-irreducible-realized-class}, while every
+geometric symmetric-response sector is an isotropic orthogonally equivariant
+symmetric-tensor channel in the sense of
+Corollary~\ref{cor:realized-isotropic-symmetric-response-scalarization}.
+Then the selected endpoint closure class on
+\(\mathcal X_h^{\mathrm{vis}}\) already has a unique exact carrier-side
+representative, hence is unique modulo continuum equivalence, and is determined
+entirely by scalar data on the intrinsic symmetry channels of that carrier.
+Consequently the remaining carrier-level step is only to identify a natural
+representative of that constructively forced class.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-carrier}.)

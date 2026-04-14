@@ -1,0 +1,145 @@
+% ============================================================
+\section{Projector Calculus on the Grassmannian}
+\label{sec:projector-calculus}
+% ============================================================
+
+\begin{quote}\small
+\textbf{Goal:} Develop the differential calculus on the manifold of fixed-rank orthogonal projections.\\
+\textbf{Payoff:} Enables rigorous derivation of stationarity conditions for inverse split problems.
+\end{quote}
+
+% ------------------------------------------------------------
+\subsection{Tangent Space Characterization}
+\label{subsec:tangent-space}
+% ------------------------------------------------------------
+
+\begin{lemma}[Tangent space of $\CCGrass{r}$]
+\label{lem:tangent-characterization}\lean{isTangentAt, commutator_is_tangent, tangent_is_offdiag, tangent_PP_zero, tangent_QQ_zero}
+Let $P(t)$ be a $C^1$ curve in $\CCGrass{r}$ (the manifold of rank-$r$ orthogonal projections on $\cH$).
+Then the velocity $\dot{P} := \frac{d}{dt} P(t)$ satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item $\dot{P} = \dot{P} P + P \dot{P}$ (off-diagonal structure).
+\item $P \dot{P} P = 0$ and $\CCComp \dot{P} \CCComp = 0$ where $\CCComp = I - P$.
+\item There exists a skew-adjoint operator $K$ (i.e., $K^* = -K$) such that $\dot{P} = [K, P]$.
+\end{enumerate}
+Conversely, for any skew-adjoint $K$, the ODE $\dot{P} = [K, P]$ with $P(0) \in \CCGrass{r}$ preserves $P^2 = P = P^*$ and $\rank(P) = r$.
+\end{lemma}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\paragraph{Geometric comment.}
+The tangent space $T_P \CCGrass{r}$ has dimension $2r(n - r)$ (real) or $r(n - r)$ (complex), matching $\dim \CCGrass{r}$.
+Tangent vectors $\dot{P}$ are characterized by being ``off-diagonal'' in the $P$/$\CCComp$ decomposition.
+
+% ------------------------------------------------------------
+\subsection{Variations of Block Components}
+\label{subsec:block-variations}
+% ------------------------------------------------------------
+
+\begin{lemma}[First variation of compression]
+\label{lem:variation-compression}\lean{variationPP, variationQQ, variationPQ, variationQP, variation_compression_PP, variation_compression_QQ, variation_compression_PQ}
+Let $P(t)$ be a $C^1$ curve of projections with $\dot{P} = [K, P]$.
+For a fixed operator $A$:
+\begin{enumerate}[label=(\roman*)]
+\item $\frac{d}{dt}(PAP) = \dot{P} A P + P A \dot{P} = [K, P] A P + P A [K, P]$.
+\item $\frac{d}{dt}(\CCComp A \CCComp) = -\dot{P} A \CCComp - \CCComp A \dot{P}$ (since $\dot{\CCComp} = -\dot{P}$).
+\item $\frac{d}{dt}(P A \CCComp) = \dot{P} A \CCComp - P A \dot{P}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Direct differentiation using the product rule and $\frac{d}{dt}(\CCComp) = -\frac{d}{dt}(P) = -\dot{P}$.
+\end{proof}
+
+\begin{lemma}[Variation of inverse]
+\label{lem:variation-inverse}\lean{HasInverse, variationInverse, variation_inverse_formula, variation_inverse_derivation}
+Let $B(t)$ be a $C^1$ family of invertible operators.
+Then
+\[
+\frac{d}{dt}(B^{-1}) = -B^{-1} \dot{B} B^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+Differentiate $B B^{-1} = I$: $\dot{B} B^{-1} + B \frac{d}{dt}(B^{-1}) = 0$.
+Solve for $\frac{d}{dt}(B^{-1})$.
+\end{proof}
+
+\begin{proposition}[First variation of Schur correction]
+\label{prop:variation-sigma}\lean{schur_complement_variation_structure}
+Let $P(t)$ be a $C^1$ curve in $\CCGrass{r}$ with $\dot{P} = \delta P$.
+Let $R_Q := (I - z\CCBlockQQ{A})^{-1}$.
+Then the first variation of $\CCSigmaP{P}{z}$ is
+\[
+\delta \CCSigmaP{P}{z}
+= (\delta \CCBlockPQ{A}) R_Q \CCBlockQP{A}
++ \CCBlockPQ{A} (\delta R_Q) \CCBlockQP{A}
++ \CCBlockPQ{A} R_Q (\delta \CCBlockQP{A}),
+\]
+where the variations of the blocks are given by Lemma~\ref{lem:variation-compression} and
+\[
+\delta R_Q = z R_Q (\delta \CCBlockQQ{A}) R_Q.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply the product rule to $\CCSigmaP{P}{z} = \CCBlockPQ{A} R_Q \CCBlockQP{A}$ and use Lemma~\ref{lem:variation-inverse} with $B = I - z\CCBlockQQ{A}$.
+\end{proof}
+
+% ------------------------------------------------------------
+\subsection{Stationarity on the Grassmannian}
+\label{subsec:stationarity}
+% ------------------------------------------------------------
+
+\begin{definition}[Euclidean gradient]
+\label{def:euclidean-gradient}\lean{GradientFunctional, directionalDerivative}
+For a smooth functional $\CCDesign{P}$ on $\CCGrass{r}$, the \emph{Euclidean gradient} $\nabla \CCDesign{P} \in \cB(\cH)$ is defined by
+\[
+\frac{d}{dt} \CCDesign{P(t)} \big|_{t=0} = \langle \nabla \CCDesign{P}, \dot{P} \rangle_{\mathrm{HS}} = \Tr(\nabla \CCDesign{P}^* \, \dot{P})
+\]
+for any curve $P(t)$ with $P(0) = P$ and $\dot{P}(0) = \dot{P}$.
+\end{definition}
+
+\begin{theorem}[Stationarity condition]
+\label{thm:stationarity-condition}\lean{stationarity_condition, stationarity_blockdiag, isStationaryFor, isStationary, stationary_iff_commutator_zero}
+A projection $P^\star \in \CCGrass{r}$ is a stationary point of $\CCDesign{\cdot}$ on $\CCGrass{r}$ if and only if
+\[
+[\nabla \CCDesign{P^\star}, P^\star] = 0.
+\]
+Equivalently, $\nabla \CCDesign{P^\star}$ commutes with $P^\star$, or $\nabla \CCDesign{P^\star}$ is block-diagonal in the $P^\star / (I - P^\star)$ decomposition.
+\end{theorem}
+
+(Proof in Appendix~\ref{sec:appendix-elimination}.)
+
+\begin{corollary}[Checking stationarity]
+\label{cor:check-stationarity}\lean{check_stationarity, check_stationarity_blockdiag, stationary_implies_offdiag_zero}
+To verify that $P^\star$ is stationary:
+\begin{enumerate}[label=(\roman*)]
+\item Compute $\nabla \CCDesign{P^\star}$ (the Euclidean gradient at $P^\star$).
+\item Check whether $[\nabla \CCDesign{P^\star}, P^\star] = 0$.
+\item If the commutator vanishes, $P^\star$ is stationary.
+\end{enumerate}
+\end{corollary}
+
+% ------------------------------------------------------------
+\subsection{Special Case: Quadratic Objectives}
+\label{subsec:quadratic-objectives}
+% ------------------------------------------------------------
+
+\paragraph{Model objective (Frobenius norm).}
+\label{ex:frobenius-objective}
+For $\CCDesign{P} = \|\CCSigmaP{P}{z}\|_F^2 = \Tr(\CCSigmaP{P}{z}^* \CCSigmaP{P}{z})$, the gradient is
+\[
+\nabla \CCDesign{P} = 2 \, \frac{\partial \CCSigmaP{P}{z}^*}{\partial P} \CCSigmaP{P}{z} + 2 \, \CCSigmaP{P}{z}^* \frac{\partial \CCSigmaP{P}{z}}{\partial P},
+\]
+where $\frac{\partial}{\partial P}$ denotes the appropriate block-wise partial.
+The stationarity condition $[\nabla J, P] = 0$ becomes a nonlinear equation in $P$.
+
+\paragraph{Numerical methods.}
+The stationarity condition $[\nabla J, P] = 0$ can be solved numerically by:
+\begin{itemize}[itemsep=0.2em]
+\item Gradient descent on $\CCGrass{r}$ with the Riemannian metric.
+\item Newton-type methods using the Hessian.
+\item Fixed-point iteration for specific objective structures.
+\end{itemize}
+This is standard optimization on manifolds; see references on Grassmannian optimization.
